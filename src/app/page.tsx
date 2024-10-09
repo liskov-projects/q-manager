@@ -61,7 +61,10 @@ const App = () => {
     console.log(shortestQueue);
 
     // Create a new object with assignedToQueue set to true
-    const updatedItem = {...itemToUpdate, assignedToQueue: true};
+    const updatedItem = {
+      ...itemToUpdate,
+      assignedToQueue: true
+    };
     console.log(updatedItem);
 
     shortestQueue.queueItems.push(updatedItem);
@@ -80,7 +83,7 @@ const App = () => {
     const newPlayers = players.map(player =>
       player.id === itemId ? updatedItem : player
     );
-
+    console.log("clicked on a processed item");
     // Update both players and queues state
     setPlayers(newPlayers);
     setQueues(newQueues);
@@ -131,14 +134,17 @@ const App = () => {
   const progressQueueOneStep = queueIndex => {
     const newQueues = [...queues];
     const processedPlayer = newQueues[queueIndex].queueItems.shift();
+
     processedPlayer.processedThroughQueue = true;
+    processedPlayer.assignedToQueue = false;
+
     const newPlayers = players.map(player => {
       if (player.id == processedPlayer.id) {
-        return processedPlayer
+        return processedPlayer;
       }
       return player;
-    })
-    setPlayers(newPlayers)
+    });
+    setPlayers(newPlayers);
     setQueues(newQueues);
   };
 
@@ -190,7 +196,10 @@ const App = () => {
         </header>
 
         {/* Grid of Processed Player Cards */}
-        <ProcessedPlayers players={players} addItemToShortestQueue={addAllToQueues} />
+        <ProcessedPlayers
+          players={players}
+          addItemToShortestQueue={addItemToShortestQueue}
+        />
       </div>
     </div>
   );
@@ -200,7 +209,8 @@ export default App;
 
 // COMPONENT: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 function PlayersList({players, addItemToShortestQueue}) {
-  const unprocessedPlayers = players.filter(player => !player.assignedToQueue)
+  const unprocessedPlayers = players.filter(player => !player.assignedToQueue);
+  // console.log(unprocessedPlayers);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {unprocessedPlayers.map(player => (
@@ -208,11 +218,45 @@ function PlayersList({players, addItemToShortestQueue}) {
           key={player.id}
           className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
           <span className="text-white font-bold">{player.name}</span>
+          {!player.assignedToQueue && (
             <button
-              onClick={() => addItemToShortestQueue(player.id)} // Add to first queue as an example
+              onClick={() => addItemToShortestQueue(player.id)}
               className="bg-white text-purple-500 px-4 py-2 rounded hover:bg-purple-500 hover:text-white transition-colors duration-200 ease-in-out">
               Add to Shortest Queue
             </button>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// COMPONENT: procesed Players
+function ProcessedPlayers({players, addItemToShortestQueue}) {
+  console.log("PLAYERS ********");
+  console.log(players);
+  const processedPlayers = players.filter(player => {
+    // console.log(player)
+    return player.processedThroughQueue;
+  });
+  console.log("PROCESSED PLAYERS");
+  console.log(processedPlayers);
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {processedPlayers.map(player => (
+        <div
+          key={player.id}
+          className="bg-blue-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
+          <span className="text-white font-bold">{player.name}</span>
+
+          {!player.assignedToQueue && (
+            <button
+              onClick={() => addItemToShortestQueue(player.id)}
+              className="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition-colors duration-200 ease-in-out">
+              Add to Shortest Queue
+            </button>
+          )}
         </div>
       ))}
     </div>
@@ -255,37 +299,6 @@ function QueuesGrid({queues, setQueues, players, setPlayers, onProgress}) {
               Progress Queue
             </button>
           )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// COMPONENT: procesed Players
-function ProcessedPlayers({players, addItemToShortestQueue}) {
-  console.log("PLAYERS ********")
-  console.log(players)
-  const processedPlayers = players.filter(player => {
-    // console.log(player)
-    return player.processedThroughQueue
-  })
-    ;
-  console.log("PROCESSED PLAYERS")
-  console.log(processedPlayers)
-
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {processedPlayers.map(player => (
-        <div
-          key={player.id}
-          className="bg-blue-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
-          <span className="text-white font-bold">{player.name}</span>
-
-          <button
-            onClick={() => addItemToShortestQueue(player)} // Add to first queue as an example
-            className="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition-colors duration-200 ease-in-out">
-            Add to Shortest Queue
-          </button>
         </div>
       ))}
     </div>
