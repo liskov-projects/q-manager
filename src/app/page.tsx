@@ -89,18 +89,17 @@ const App = () => {
     setQueues(newQueues);
   };
 
-  // FIXME:
   function addAllToQueues(items, queues) {
     //get how many items in a queue
     const totalItems = items.length;
 
-    let j = 0;
+    // let j = 0;
     for (let i = 0; i < totalItems; i++) {
-      const totalQueues = queues.length;
+      // const totalQueues = queues.length;
       // console.log("item: ", items[i], "queue stump: ", queues[j]);
-      if (j == totalQueues) j = 0;
-      addItemToShortestQueue(items[i]);
-      j++;
+      // if (j == totalQueues) j = 0;
+      addItemToShortestQueue(items[i].id);
+      // j++;
     }
   }
 
@@ -163,6 +162,7 @@ const App = () => {
           players={players}
           addItemToShortestQueue={addItemToShortestQueue}
         />
+        {/* <Players players={players} addItemToShortestQueue={addItemToShortestQueue}/> */}
       </div>
 
       <button
@@ -200,6 +200,7 @@ const App = () => {
           players={players}
           addItemToShortestQueue={addItemToShortestQueue}
         />
+        {/* <Players players={players} addItemToShortestQueue={addItemToShortestQueue}/> */}
       </div>
     </div>
   );
@@ -207,10 +208,37 @@ const App = () => {
 
 export default App;
 
+// FIXME: trying to extract both player fields into one comp
+function Players({players, addItemToShortestQueue}) {
+  const unprocessedPlayers = players.filter(player => !player.assignedToQueue);
+  const processedPlayers = players.filter(player => {
+    // console.log(player)
+    return player.processedThroughQueue;
+  });
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {players.map(player => (
+        <div
+          key={player.id}
+          className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
+          <span className="text-white font-bold">{player.name}</span>
+          {!player.assignedToQueue && (
+            <button
+              onClick={() => addItemToShortestQueue(player.id)}
+              className="bg-white text-purple-500 px-4 py-2 rounded hover:bg-purple-500 hover:text-white transition-colors duration-200 ease-in-out">
+              Add to Shortest Queue
+            </button>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
 // COMPONENT: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 function PlayersList({players, addItemToShortestQueue}) {
   const unprocessedPlayers = players.filter(player => !player.assignedToQueue);
-  // console.log(unprocessedPlayers);
+  console.log(unprocessedPlayers);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {unprocessedPlayers.map(player => (
