@@ -50,7 +50,7 @@ const App = () => {
     // Find the item based on itemId
     const itemToUpdate = players.find(player => player.id === itemId);
 
-    console.log(itemToUpdate);
+    // console.log(itemToUpdate);
 
     if (!itemToUpdate) {
       console.error("Item not found");
@@ -58,14 +58,14 @@ const App = () => {
     }
 
     const shortestQueue = findShortestQueue(queues);
-    console.log(shortestQueue);
+    // console.log(shortestQueue);
 
     // Create a new object with assignedToQueue set to true
     const updatedItem = {
       ...itemToUpdate,
       assignedToQueue: true
     };
-    console.log(updatedItem);
+    // console.log(updatedItem);
 
     shortestQueue.queueItems.push(updatedItem);
 
@@ -76,34 +76,32 @@ const App = () => {
       return queue;
     });
 
-    console.log("NEW QUEUES");
-    console.log(newQueues);
+    // console.log("NEW QUEUES");
+    // console.log(newQueues);
 
     // Update the players array immutably, ensuring assignedToQueue is set to true
     const newPlayers = players.map(player =>
       player.id === itemId ? updatedItem : player
     );
-    console.log("clicked on a processed item");
-    // Update both players and queues state
+    // console.log("clicked a processed item");
+    // Update both players and queues state based on previous state
     setPlayers(newPlayers);
     setQueues(newQueues);
   };
 
-  function addAllToQueues(items, queues) {
+  // UPDATED: current bug
+  function addAllToQueues(items) {
     //get how many items in a queue
     const totalItems = items.length;
 
-    // let j = 0;
     for (let i = 0; i < totalItems; i++) {
-      // const totalQueues = queues.length;
-      // console.log("item: ", items[i], "queue stump: ", queues[j]);
-      // if (j == totalQueues) j = 0;
-      addItemToShortestQueue(items[i].id);
-      // j++;
+      if (!items[i].assignedToQueue) {
+        items[i].assignedToQueue = true;
+        addItemToShortestQueue(items[i].id);
+      } else return;
     }
   }
 
-  // NEW:
   const findShortestQueue = queues => {
     let shortestQueue = queues[0];
     queues.forEach(queue => {
@@ -167,7 +165,11 @@ const App = () => {
 
       <button
         className="bg-gray-300 text-black py-2 h-[45px] w-[250px] px-4 rounded"
-        onClick={() => addAllToQueues(players, queues)}>
+        onClick={() => {
+          console.log("adding all to qs");
+          console.log(players);
+          addAllToQueues(players);
+        }}>
         Add All Players to Queues
       </button>
 
@@ -261,14 +263,14 @@ function PlayersList({players, addItemToShortestQueue}) {
 
 // COMPONENT: procesed Players
 function ProcessedPlayers({players, addItemToShortestQueue}) {
-  console.log("PLAYERS ********");
-  console.log(players);
+  // console.log("PLAYERS ********");
+  // console.log(players);
   const processedPlayers = players.filter(player => {
     // console.log(player)
     return player.processedThroughQueue;
   });
-  console.log("PROCESSED PLAYERS");
-  console.log(processedPlayers);
+  // console.log("PROCESSED PLAYERS");
+  // console.log(processedPlayers);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
