@@ -86,19 +86,6 @@ const App = () => {
     setQueues(newQueues);
   };
 
-  // OLD:
-  // // Function to add a player to a queue
-  // const addItemToShortestQueue = (item, queueIndex) => {
-  //   const newQueues = [...queues];
-  //   const newPlayers = [...players];
-
-  //   newPlayers[item.id - 1].assignedToQueue = true;
-  //   newQueues[queueIndex].queueItems.push(newPlayers[item.id - 1]);
-
-  //   setPlayers(newPlayers);
-  //   setQueues(newQueues);
-  // };
-
   // FIXME:
   function addAllToQueues(items, queues) {
     //get how many items in a queue
@@ -143,8 +130,15 @@ const App = () => {
   // NOTE: seems to work
   const progressQueueOneStep = queueIndex => {
     const newQueues = [...queues];
-    const item = newQueues[queueIndex].queueItems.shift();
-    item.processedThroughQueue;
+    const processedPlayer = newQueues[queueIndex].queueItems.shift();
+    processedPlayer.processedThroughQueue = true;
+    const newPlayers = players.map(player => {
+      if (player.id == processedPlayer.id) {
+        return processedPlayer
+      }
+      return player;
+    })
+    setPlayers(newPlayers)
     setQueues(newQueues);
   };
 
@@ -206,20 +200,19 @@ export default App;
 
 // COMPONENT: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 function PlayersList({players, addItemToShortestQueue}) {
+  const unprocessedPlayers = players.filter(player => !player.assignedToQueue)
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {players.map(player => (
+      {unprocessedPlayers.map(player => (
         <div
           key={player.id}
           className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
           <span className="text-white font-bold">{player.name}</span>
-          {!player.assignedToQueue && (
             <button
               onClick={() => addItemToShortestQueue(player.id)} // Add to first queue as an example
               className="bg-white text-purple-500 px-4 py-2 rounded hover:bg-purple-500 hover:text-white transition-colors duration-200 ease-in-out">
               Add to Shortest Queue
             </button>
-          )}
         </div>
       ))}
     </div>
@@ -270,7 +263,15 @@ function QueuesGrid({queues, setQueues, players, setPlayers, onProgress}) {
 
 // COMPONENT: procesed Players
 function ProcessedPlayers({players, addItemToShortestQueue}) {
-  const processedPlayers = players.filter(player => player.processedThroughQueue);
+  console.log("PLAYERS ********")
+  console.log(players)
+  const processedPlayers = players.filter(player => {
+    // console.log(player)
+    return player.processedThroughQueue
+  })
+    ;
+  console.log("PROCESSED PLAYERS")
+  console.log(processedPlayers)
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
