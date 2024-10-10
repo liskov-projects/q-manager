@@ -12,6 +12,31 @@ import {useState} from "react";
 
 import players from "../data/players.js";
 
+// TYPES:
+type Player = {
+  // as in Mongo later
+  id: string;
+  name: string;
+  category: string;
+  mobileNumber: string;
+  assignedToQueue: boolean;
+  processedThroughQueue: boolean;
+};
+
+type Queue = {
+  queueName: string;
+  queueItems: Player[];
+  id: string;
+};
+
+// Initial queue setup
+const initialQueues: Queue[] = [
+  {queueName: "1", queueItems: [], id: "0987"},
+  {queueName: "2", queueItems: [], id: "1234"},
+  {queueName: "3", queueItems: [], id: "5678"},
+  {queueName: "4", queueItems: [], id: "4321"}
+];
+
 // Initialize players with assignedToQueue property
 const playersUpdated = players.map(player => {
   player.assignedToQueue = false;
@@ -19,35 +44,12 @@ const playersUpdated = players.map(player => {
   return player;
 });
 
-// TYPES:
-// type Player = {
-//   id: number;
-//   name: string;
-//   category: string;
-//   mobileNumber: string;
-// };
-
-// type Queue = {
-//   queueName: string;
-//   queueItems: Player[];
-//   id: string;
-// };
-
-// Initial queue setup
-const initialQueues = [
-  {queueName: "1", queueItems: [], id: "0987"},
-  {queueName: "2", queueItems: [], id: "1234"},
-  {queueName: "3", queueItems: [], id: "5678"},
-  {queueName: "4", queueItems: [], id: "4321"}
-];
-
 const App = () => {
-  // loos like this:  [ {queueName: 1, queueItems: []}, ... ],
-  const [queues, setQueues] = useState(initialQueues);
-  const [players, setPlayers] = useState(playersUpdated);
+  const [queues, setQueues] = useState<Queue[]>(initialQueues);
+  const [players, setPlayers] = useState<Player[]>(playersUpdated);
 
-  // NOTE: seems to work | itemID ~ player.id | queueId ~ 3
-  const addItemToShortestQueue = async itemId => {
+  // NOTE: seems to work
+  const addItemToShortestQueue = async (itemId: string) => {
     // Find the item based on itemId
     const itemToUpdate = players.find(player => player.id === itemId);
 
@@ -62,7 +64,6 @@ const App = () => {
     // console.log(shortestQueue);
 
     // Create a new object with assignedToQueue set to true
-
     const updatedItem = {
       ...itemToUpdate,
       assignedToQueue: true
@@ -83,24 +84,18 @@ const App = () => {
     console.log("NEW QUEUES");
     console.log(newQueues);
 
-    // Update the players array immutably, ensuring assignedToQueue is set to true
-    // const newPlayers = players.map(player =>
-    //   player.id === itemId ? updatedItem : player
-    // );
     setPlayers(prevPlayers =>
       prevPlayers.map(player => (player.id === itemId ? updatedItem : player))
     );
     // console.log("NEW PLAYERS");
     // console.log(newPlayers);
 
-    // console.log("clicked a processed item");
-    // Update both players and queues state based on previous state
-    // await setPlayers(newPlayers);
+    // do the same as with Players?
     await setQueues(newQueues);
   };
 
   // UPDATED: current bug
-  async function addAllToQueues(items) {
+  async function addAllToQueues(items: Player[]) {
     //get how many items in a queue
     // const totalItems = items.length;
 
@@ -120,7 +115,7 @@ const App = () => {
     // setPlayers(newItems);
   }
 
-  const findShortestQueue = queues => {
+  const findShortestQueue = (queues: Queue[]) => {
     let shortestQueue = queues[0];
     queues.forEach(queue => {
       if (queue.queueItems.length < shortestQueue.queueItems.length) {
@@ -146,7 +141,7 @@ const App = () => {
   // Function to progress a queue one step
 
   // NOTE: seems to work
-  const progressQueueOneStep = queueIndex => {
+  const progressQueueOneStep = (queueIndex: number) => {
     const newQueues = [...queues];
     const processedPlayer = newQueues[queueIndex].queueItems.shift();
 
@@ -229,35 +224,45 @@ const App = () => {
 export default App;
 
 // FIXME: trying to extract both player fields into one comp
-function Players({players, addItemToShortestQueue, isProcessed}) {
-  const unprocessedPlayers = players.filter(player => !player.assignedToQueue);
-  const processedPlayers = players.filter(player => {
-    // console.log(player)
-    return player.processedThroughQueue;
-  });
+// function Players({players, addItemToShortestQueue, isProcessed}) {
+//   const unprocessedPlayers = players.filter(player => !player.assignedToQueue);
+//   const processedPlayers = players.filter(player => {
+//     // console.log(player)
+//     return player.processedThroughQueue;
+//   });
 
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {players.map(player => (
-        <div
-          key={player.id}
-          className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
-          <span className="text-white font-bold">{player.name}</span>
-          {!player.assignedToQueue && (
-            <button
-              onClick={() => addItemToShortestQueue(player.id)}
-              className="bg-white text-purple-500 px-4 py-2 rounded hover:bg-purple-500 hover:text-white transition-colors duration-200 ease-in-out">
-              Add to Shortest Queue
-            </button>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
+//   return (
+//     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+//       {players.map(player => (
+//         <div
+//           key={player.id}
+//           className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
+//           <span className="text-white font-bold">{player.name}</span>
+//           {!player.assignedToQueue && (
+//             <button
+//               onClick={() => addItemToShortestQueue(player.id)}
+//               className="bg-white text-purple-500 px-4 py-2 rounded hover:bg-purple-500 hover:text-white transition-colors duration-200 ease-in-out">
+//               Add to Shortest Queue
+//             </button>
+//           )}
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
 // COMPONENT: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
-function PlayersList({players, addItemToShortestQueue}) {
-  const unprocessedPlayers = players.filter(player => !player.assignedToQueue);
+function PlayersList({
+  players,
+  addItemToShortestQueue
+}: {
+  players: Player[];
+  addItemToShortestQueue: (id: string) => Queue[];
+}) {
+  const unprocessedPlayers = players.filter(
+    // added !player.processedThroughQueue to ensure item doesn't appear in the top area again
+    player => !player.assignedToQueue && !player.processedThroughQueue
+  );
   // console.log(unprocessedPlayers);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -280,7 +285,13 @@ function PlayersList({players, addItemToShortestQueue}) {
 }
 
 // COMPONENT: procesed Players
-function ProcessedPlayers({players, addItemToShortestQueue}) {
+function ProcessedPlayers({
+  players,
+  addItemToShortestQueue
+}: {
+  players: Player[];
+  addItemToShorttestQueue: (id: string) => Queue[];
+}) {
   // console.log("PLAYERS ********");
   // console.log(players);
   const processedPlayers = players.filter(player => {
@@ -292,7 +303,7 @@ function ProcessedPlayers({players, addItemToShortestQueue}) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {processedPlayers.map(player => (
+      {processedPlayers.map((player: Player) => (
         <div
           key={player.id}
           className="bg-blue-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
