@@ -143,7 +143,8 @@ const App = () => {
   // NOTE: seems to work
   const progressQueueOneStep = (queueIndex: number) => {
     const newQueues = [...queues];
-    const processedPlayer = newQueues[queueIndex].queueItems.shift();
+    const processedPlayer: Player | undefined =
+      newQueues[queueIndex].queueItems.shift();
 
     processedPlayer.processedThroughQueue = true;
     processedPlayer.assignedToQueue = false;
@@ -290,7 +291,7 @@ function ProcessedPlayers({
   addItemToShortestQueue
 }: {
   players: Player[];
-  addItemToShorttestQueue: (id: string) => Queue[];
+  addItemToShortestQueue: (id: string) => Queue[];
 }) {
   // console.log("PLAYERS ********");
   // console.log(players);
@@ -323,7 +324,16 @@ function ProcessedPlayers({
 }
 
 // COMPONENT: {/* Queues Grid */}
-function QueuesGrid({queues, setQueues, players, setPlayers, onProgress}) {
+function QueuesGrid({
+  queues,
+  onProgress
+}: // setQueues,
+// players,
+// setPlayers, // should be inside props
+{
+  queues: Queue[];
+  onProgress: (index: number) => Queue[];
+}) {
   // console.log(queues);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
