@@ -32,6 +32,7 @@ const playersUpdated = players.map(player => {
 //   queueItems: Player[];
 //   id: string;
 // };
+
 // Initial queue setup
 const initialQueues = [
   {queueName: "1", queueItems: [], id: "0987"},
@@ -46,11 +47,11 @@ const App = () => {
   const [players, setPlayers] = useState(playersUpdated);
 
   // NOTE: seems to work | itemID ~ player.id | queueId ~ 3
-  const addItemToShortestQueue = itemId => {
+  const addItemToShortestQueue = async itemId => {
     // Find the item based on itemId
     const itemToUpdate = players.find(player => player.id === itemId);
 
-    // console.log(itemToUpdate);
+    console.log(itemToUpdate);
 
     if (!itemToUpdate) {
       console.error("Item not found");
@@ -61,11 +62,14 @@ const App = () => {
     // console.log(shortestQueue);
 
     // Create a new object with assignedToQueue set to true
+
     const updatedItem = {
       ...itemToUpdate,
       assignedToQueue: true
     };
-    // console.log(updatedItem);
+
+    console.log("UPDATED ITEM");
+    console.log(updatedItem);
 
     shortestQueue.queueItems.push(updatedItem);
 
@@ -76,30 +80,44 @@ const App = () => {
       return queue;
     });
 
-    // console.log("NEW QUEUES");
-    // console.log(newQueues);
+    console.log("NEW QUEUES");
+    console.log(newQueues);
 
     // Update the players array immutably, ensuring assignedToQueue is set to true
-    const newPlayers = players.map(player =>
-      player.id === itemId ? updatedItem : player
+    // const newPlayers = players.map(player =>
+    //   player.id === itemId ? updatedItem : player
+    // );
+    setPlayers(prevPlayers =>
+      prevPlayers.map(player => (player.id === itemId ? updatedItem : player))
     );
+    // console.log("NEW PLAYERS");
+    // console.log(newPlayers);
+
     // console.log("clicked a processed item");
     // Update both players and queues state based on previous state
-    setPlayers(newPlayers);
-    setQueues(newQueues);
+    // await setPlayers(newPlayers);
+    await setQueues(newQueues);
   };
 
   // UPDATED: current bug
-  function addAllToQueues(items) {
+  async function addAllToQueues(items) {
     //get how many items in a queue
-    const totalItems = items.length;
+    // const totalItems = items.length;
 
-    for (let i = 0; i < totalItems; i++) {
-      if (!items[i].assignedToQueue) {
-        items[i].assignedToQueue = true;
-        addItemToShortestQueue(items[i].id);
-      } else return;
+    // for (let i = 0; i < totalItems; i++) {
+    // const newItems = items.map(async item => {
+    for (const item of items) {
+      if (!item.assignedToQueue) {
+        // doesn't update the state properly
+        // item.assignedToQueue = true;
+        console.log("SENDING ITEM TO QUEUE");
+        console.log(item);
+        console.log("CURRENT QUEUEs");
+        console.log(queues);
+        await addItemToShortestQueue(item.id);
+      }
     }
+    // setPlayers(newItems);
   }
 
   const findShortestQueue = queues => {
@@ -166,9 +184,9 @@ const App = () => {
       <button
         className="bg-gray-300 text-black py-2 h-[45px] w-[250px] px-4 rounded"
         onClick={() => {
-          console.log("adding all to qs");
-          console.log(players);
-          addAllToQueues(players);
+          // console.log("adding all to qs");
+          // console.log(players);
+          addAllToQueues(players.filter(player => !player.assignedToQueue));
         }}>
         Add All Players to Queues
       </button>
@@ -211,7 +229,7 @@ const App = () => {
 export default App;
 
 // FIXME: trying to extract both player fields into one comp
-function Players({players, addItemToShortestQueue}) {
+function Players({players, addItemToShortestQueue, isProcessed}) {
   const unprocessedPlayers = players.filter(player => !player.assignedToQueue);
   const processedPlayers = players.filter(player => {
     // console.log(player)
@@ -240,7 +258,7 @@ function Players({players, addItemToShortestQueue}) {
 // COMPONENT: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 function PlayersList({players, addItemToShortestQueue}) {
   const unprocessedPlayers = players.filter(player => !player.assignedToQueue);
-  console.log(unprocessedPlayers);
+  // console.log(unprocessedPlayers);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {unprocessedPlayers.map(player => (
@@ -295,7 +313,7 @@ function ProcessedPlayers({players, addItemToShortestQueue}) {
 
 // COMPONENT: {/* Queues Grid */}
 function QueuesGrid({queues, setQueues, players, setPlayers, onProgress}) {
-  console.log(queues);
+  // console.log(queues);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {queues.map((queue, index) => (
