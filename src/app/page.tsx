@@ -227,13 +227,19 @@ const App = () => {
     //this is what we expect to have & in the right order
     console.log("tempQ", tempQ);
 
-    setQueues(prevQueues =>
-      prevQueues.map((queue, idx) => ({
-        ...queue, // Preserve other properties (queueName, id, etc.)
-        queueItems: stumps[idx] // Set the updated items
-      }))
-    );
-    // addAllToQueues(tempQ, stumps);
+    // this make sure we update state correctly
+    const newQueues = queues.map((queue, idx) => {
+      return {...queue, queueItems: stumps[idx]};
+    });
+    // FIXME:
+    // for (let i = 0; i < tempQ.length; i++) {
+    //   newQueues.forEach(queue => {
+    //     if (!queue.queueItems.includes(tempQ[i])) queue.queueItems.push(tempQ[i]);
+    //   });
+    // }
+    // console.log("newQueues ", newQueues);
+
+    setQueues(newQueues);
   }
 
   return (
