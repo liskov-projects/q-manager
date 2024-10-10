@@ -33,8 +33,8 @@ type Queue = {
 const initialQueues: Queue[] = [
   {queueName: "1", queueItems: [], id: "0987"},
   {queueName: "2", queueItems: [], id: "1234"},
-  {queueName: "3", queueItems: [], id: "5678"},
-  {queueName: "4", queueItems: [], id: "4321"}
+  {queueName: "3", queueItems: [], id: "5678"}
+  // {queueName: "4", queueItems: [], id: "4321"}
 ];
 
 // Initialize players with assignedToQueue property
@@ -48,12 +48,14 @@ const App = () => {
   const [queues, setQueues] = useState<Queue[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>(playersUpdated);
 
-  // NOTE: seems to work
+  // FIXME:
   const addItemToShortestQueue = async (itemId: string) => {
     // Find the item based on itemId
     const itemToUpdate = players.find(player => player.id === itemId);
 
-    console.log(itemToUpdate);
+    // console.log(itemToUpdate);
+    // this is a tempQ item
+    // console.log(itemId);
 
     if (!itemToUpdate) {
       console.error("Item not found");
@@ -69,8 +71,8 @@ const App = () => {
       assignedToQueue: true
     };
 
-    console.log("UPDATED ITEM");
-    console.log(updatedItem);
+    // console.log("UPDATED ITEM");
+    // console.log(updatedItem);
 
     shortestQueue.queueItems.push(updatedItem);
 
@@ -81,34 +83,34 @@ const App = () => {
       return queue;
     });
 
-    console.log("NEW QUEUES");
-    console.log(newQueues);
+    // console.log("NEW QUEUES");
+    // console.log(newQueues);
 
     setPlayers(prevPlayers =>
       prevPlayers.map(player => (player.id === itemId ? updatedItem : player))
     );
     // console.log("NEW PLAYERS");
-    // console.log(newPlayers);
+    // console.log(players);
 
     // do the same as with Players?
     await setQueues(newQueues);
   };
 
-  // UPDATED: current bug
+  // don't need async await?
   async function addAllToQueues(items: Player[]) {
     //get how many items in a queue
     // const totalItems = items.length;
-
+    console.log("these are items:", items);
     // for (let i = 0; i < totalItems; i++) {
     // const newItems = items.map(async item => {
     for (const item of items) {
       if (!item.assignedToQueue) {
         // doesn't update the state properly
-        // item.assignedToQueue = true;
-        console.log("SENDING ITEM TO QUEUE");
-        console.log(item);
-        console.log("CURRENT QUEUEs");
-        console.log(queues);
+        item.assignedToQueue = true;
+        // console.log("SENDING ITEM TO QUEUE");
+        // console.log(item);
+        // console.log("CURRENT QUEUEs");
+        // console.log(queues);
         await addItemToShortestQueue(item.id);
       }
     }
@@ -159,6 +161,81 @@ const App = () => {
     setQueues(newQueues);
   };
 
+  // REVIEW: potential trouble with state update
+  //seems to work | candidate to go into utils file
+  // function queueSlicer(queues) {
+  //   // console.log("these are queues entering queueSlicer", queues);
+  //   const shortestQueue = findShortestQueue(queues);
+  //   // console.log("these this is the shortest q", shortestQueue);
+
+  //   const idxStart = shortestQueue.queueItems.length;
+  //   // console.log(
+  //   //   "these this is the IDX to use to slice (shortest q length)",
+  //   //   idxStart
+  //   // );
+
+  //   const slicedCollection = [];
+  //   const stumps = [];
+  //   for (let i = 0; i < queues.length; i++) {
+  //     slicedCollection.push(queues[i].queueItems.slice(idxStart));
+  //     stumps.push(queues[i].queueItems.slice(0, idxStart));
+  //   }
+  //   console.log("SLICER stumps are: ", stumps);
+  //   console.log("SLICER slicedCollectios are: ", slicedCollection);
+
+  //   return {stumps, slicedCollection};
+  // }
+
+  // NEW:
+  function redestributeQueues(queues) {
+    console.log("these are queues entering redistributor", queues);
+    const shortestQueue = findShortestQueue(queues);
+    console.log("these this is the shortest q", shortestQueue);
+
+    const idxStart = shortestQueue.queueItems.length;
+    console.log(
+      "these this is the IDX to use to slice (shortest q length)",
+      idxStart
+    );
+
+    const slicedCollection = [];
+    const stumps = [];
+
+    for (let i = 0; i < queues.length; i++) {
+      console.log("queue at idx ", queues[i].queueItems);
+      const itemToAdd = queues[i].queueItems.slice(idxStart);
+      console.log("item to push ", itemToAdd);
+      slicedCollection.push(itemToAdd);
+      // works as expected
+      stumps.push(queues[i].queueItems.slice(0, idxStart));
+    }
+
+    console.log("stumps are: ", stumps);
+    console.log("slicedCollectios are: ", slicedCollection);
+
+    const tempQ = [];
+    // runs if there's someone left in the any of the slices
+    while (slicedCollection.some(q => q.length > 0)) {
+      // for every sliceCollection if it's not empty run .shift & .push into tempQ
+      for (let i = 0; i < slicedCollection.length; i++) {
+        if (slicedCollection[i].length > 0) {
+          const itemToPush = slicedCollection[i].shift();
+          tempQ.push(itemToPush);
+        }
+      }
+    }
+    //this is what we expect to have & in the right order
+    console.log("tempQ", tempQ);
+
+    setQueues(prevQueues =>
+      prevQueues.map((queue, idx) => ({
+        ...queue, // Preserve other properties (queueName, id, etc.)
+        queueItems: stumps[idx] // Set the updated items
+      }))
+    );
+    // addAllToQueues(tempQ, stumps);
+  }
+
   return (
     <div className="flex flex-col bg-red-300">
       <h1>Queue Management</h1>
@@ -176,16 +253,26 @@ const App = () => {
         />
         {/* <Players players={players} addItemToShortestQueue={addItemToShortestQueue}/> */}
       </div>
-
-      <button
-        className="bg-gray-300 text-black py-2 h-[45px] w-[250px] px-4 rounded"
-        onClick={() => {
-          // console.log("adding all to qs");
-          // console.log(players);
-          addAllToQueues(players.filter(player => !player.assignedToQueue));
-        }}>
-        Add All Players to Queues
-      </button>
+      <div className="flex flex-row justify-around">
+        <button
+          className="bg-gray-300 text-black py-2 h-[45px] w-[250px] px-4 rounded"
+          onClick={() => {
+            // console.log("adding all to qs");
+            // console.log(players);
+            addAllToQueues(players.filter(player => !player.assignedToQueue));
+          }}>
+          Add All Players to Queues
+        </button>
+        <button
+          className="bg-blue-500 text-black py-2 h-[45px] w-[250px] px-4 rounded"
+          onClick={() => {
+            // will do queues redestribution
+            // console.log("clicked");
+            redestributeQueues(queues);
+          }}>
+          Redestribute Players
+        </button>
+      </div>
 
       <div className=" p-8 bg-blue-100">
         {/* Header */}
