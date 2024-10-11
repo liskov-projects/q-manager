@@ -1,14 +1,14 @@
 // get rid of id before feeding into Mongo
 const players = [
-  {id: "1", name: "1", category: "male", phoneNumber: "0495 333 222"},
-  {id: "2", name: "2", category: "male", phoneNumber: "0495 321 123"},
-  {id: "3", name: "3", category: "male", phoneNumber: "0455 535 321"},
-  {id: "4", name: "4", category: "female", phoneNumber: "0444 434 341"},
-  {id: "5", name: "5", category: "male", phoneNumber: "0455 905 900"},
-  {id: "6", name: "6", category: "male", phoneNumber: "0475 396 099"},
-  {id: "7", name: "7", category: "male", phoneNumber: "0434 335 654"},
-  {id: "8", name: "8", category: "male", phoneNumber: "0484 392 201"},
-  {id: "9", name: "9", category: "male", phoneNumber: "0465 478 512"}
+  {id: "1", name: "Jo", category: "male", phoneNumber: "0495 333 222"},
+  {id: "2", name: "Mike", category: "male", phoneNumber: "0495 321 123"},
+  {id: "3", name: "Phil", category: "male", phoneNumber: "0455 535 321"},
+  {id: "5", name: "Clive", category: "female", phoneNumber: "0444 434 341"},
+  {id: "6", name: "Rick", category: "male", phoneNumber: "0455 905 900"},
+  {id: "7", name: "Nick", category: "male", phoneNumber: "0475 396 099"},
+  {id: "8", name: "Moe", category: "male", phoneNumber: "0434 335 654"},
+  {id: "9", name: "Alan", category: "male", phoneNumber: "0484 392 201"},
+  {id: "10", name: "Jack", category: "male", phoneNumber: "0465 478 512"}
   //   {id: "11", name: "Kyle", category: "male", phoneNumber: "0493 372 282"},
   //   {id: "12", name: "Dan", category: "male", phoneNumber: "0433 562 728"},
   //   {id: "13", name: "Chris", category: "male", phoneNumber: "0462 563 487"},

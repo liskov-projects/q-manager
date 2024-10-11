@@ -186,7 +186,7 @@ const App = () => {
   //   return {stumps, slicedQTailCollection};
   // }
 
-  // NEW:
+  // REVIEW:
   function redestributeQueues(queues) {
     console.log("these are queues entering redistributor", queues);
     const shortestQueue = findShortestQueue(queues);
@@ -216,9 +216,9 @@ const App = () => {
     const tempQ = [];
     // runs if there's someone left in the any of the slices
     while (slicedQTailCollection.some(q => q.length > 0)) {
-      console.log("WHILE LOOP")
-      console.log("SLICED Q TAIL COLLECTION")
-      console.log(slicedQTailCollection)
+      console.log("WHILE LOOP");
+      console.log("SLICED Q TAIL COLLECTION");
+      console.log(slicedQTailCollection);
       // for every sliceCollection if it's not empty run .shift & .push into tempQ
       // for (let i = 0; i < slicedQTailCollection.length; i++) {
       slicedQTailCollection.forEach(tail => {
@@ -226,7 +226,7 @@ const App = () => {
           const itemToPush = tail.shift();
           tempQ.push(itemToPush);
         }
-      })
+      });
     }
 
     //this is what we expect to have & in the right order
@@ -246,14 +246,14 @@ const App = () => {
     // add the tempQ to the stumps
     tempQ.forEach((qItem, index) => {
       const stumpIndex = index % stumps.length;
-      stumps[stumpIndex].push(qItem)
-    })
+      stumps[stumpIndex].push(qItem);
+    });
 
     console.log("STUMPS FINAL - to be added to QUEUES ", stumps);
 
     const newQueues = queues.map((queue, index) => {
-      return {...queue, queueItems: stumps[index]}
-    })
+      return {...queue, queueItems: stumps[index]};
+    });
 
     setQueues(newQueues);
   }
@@ -279,8 +279,6 @@ const App = () => {
         <button
           className="bg-gray-300 text-black py-2 h-[45px] w-[250px] px-4 rounded"
           onClick={() => {
-            // console.log("adding all to qs");
-            // console.log(players);
             addAllToQueues(players.filter(player => !player.assignedToQueue));
           }}>
           Add All Players to Queues
@@ -288,8 +286,6 @@ const App = () => {
         <button
           className="bg-blue-500 text-black py-2 h-[45px] w-[250px] px-4 rounded"
           onClick={() => {
-            // will do queues redestribution
-            // console.log("clicked");
             redestributeQueues(queues);
           }}>
           Redestribute Players
@@ -394,7 +390,7 @@ function PlayersList({
   );
 }
 
-// COMPONENT: procesed Players
+// COMPONENT:
 function ProcessedPlayers({
   players,
   addItemToShortestQueue
@@ -432,14 +428,11 @@ function ProcessedPlayers({
   );
 }
 
-// COMPONENT: {/* Queues Grid */}
+// COMPONENT:
 function QueuesGrid({
   queues,
   onProgress
-}: // setQueues,
-// players,
-// setPlayers, // should be inside props
-{
+}: {
   queues: Queue[];
   onProgress: (index: number) => Queue[];
 }) {
@@ -447,61 +440,55 @@ function QueuesGrid({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {queues.map((queue, index) => (
-        <div
+        <Queue
           key={queue.id}
-          className="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between">
-          <h3 className="text-xl font-semibold text-purple-600 mb-4">
-            Queue {queue.queueName}
-          </h3>
-
-          {/* Queue Items extract later */}
-          {queues[index].queueItems.length > 0 ? (
-            <ul className="mb-4">
-              {queue.queueItems.map((item, idx) => (
-                <li
-                  key={idx}
-                  className="bg-purple-200 text-purple-800 p-2 rounded-lg mb-2">
-                  {item.name}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-600 mb-4">No items in queue</p>
-          )}
-          {/* <QueueItems queues={queues} /> */}
-          {/* Progress Button */}
-          {queue.queueItems.length > 0 && (
-            <button
-              className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition-colors duration-200"
-              onClick={() => onProgress(index)}>
-              Progress Queue
-            </button>
-          )}
-        </div>
+          className={
+            "bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between"
+          }
+          onProgress={onProgress}
+          queue={queue}
+          index={index}
+        />
       ))}
     </div>
   );
 }
 
-// function QueueItems({queues}) {
-//   return (
-//     <>
-//       {queues.map((queue, index) => {
-//         queue.queueItems.length > 0 ? (
-//           <ul className="mb-4">
-//             {queue.queueItems.map((item, idx) => (
-//               <li
-//                 key={idx}
-//                 className="bg-purple-200 text-purple-800 p-2 rounded-lg mb-2">
-//                 {item.name}
-//               </li>
-//             ))}
-//           </ul>
-//         ) : (
-//           <p className="text-gray-600 mb-4">No items in queue</p>
-//         );
-//       })}
-//       ;
-//     </>
-//   );
-// }
+// getting ready to implement drag and drop
+// COMPONENT:
+function Queue({queue, className, onProgress, index}) {
+  return (
+    <div className={className}>
+      <h3 className="text-xl font-semibold text-purple-600 mb-4">
+        Queue {queue.queueName}
+      </h3>
+      {queue.queueItems.length > 0 ? (
+        <ul className="mb-4">
+          {queue.queueItems.map((item, idx) => (
+            <QueueItem
+              key={idx}
+              className={"bg-purple-200 text-purple-800 p-2 rounded-lg mb-2"}
+              item={item}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-600 mb-4">No items in queue</p>
+      )}
+
+      {/* Progress Button */}
+      {queue.queueItems.length > 0 && (
+        <button
+          className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition-colors duration-200"
+          onClick={() => onProgress(index)}>
+          Progress Queue
+        </button>
+      )}
+    </div>
+  );
+}
+
+// COMPONENT:
+function QueueItem({item, className}) {
+  return <li className={className}>{item.name}</li>;
+}
