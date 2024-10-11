@@ -168,22 +168,22 @@ const App = () => {
   //   const shortestQueue = findShortestQueue(queues);
   //   // console.log("these this is the shortest q", shortestQueue);
 
-  //   const idxStart = shortestQueue.queueItems.length;
+  //   const shortestQLength = shortestQueue.queueItems.length;
   //   // console.log(
   //   //   "these this is the IDX to use to slice (shortest q length)",
-  //   //   idxStart
+  //   //   shortestQLength
   //   // );
 
-  //   const slicedCollection = [];
+  //   const slicedQTailCollection = [];
   //   const stumps = [];
   //   for (let i = 0; i < queues.length; i++) {
-  //     slicedCollection.push(queues[i].queueItems.slice(idxStart));
-  //     stumps.push(queues[i].queueItems.slice(0, idxStart));
+  //     slicedQTailCollection.push(queues[i].queueItems.slice(shortestQLength));
+  //     stumps.push(queues[i].queueItems.slice(0, shortestQLength));
   //   }
   //   console.log("SLICER stumps are: ", stumps);
-  //   console.log("SLICER slicedCollectios are: ", slicedCollection);
+  //   console.log("SLICER slicedCollectios are: ", slicedQTailCollection);
 
-  //   return {stumps, slicedCollection};
+  //   return {stumps, slicedQTailCollection};
   // }
 
   // NEW:
@@ -192,52 +192,68 @@ const App = () => {
     const shortestQueue = findShortestQueue(queues);
     console.log("these this is the shortest q", shortestQueue);
 
-    const idxStart = shortestQueue.queueItems.length;
+    const shortestQLength = shortestQueue.queueItems.length;
     console.log(
       "these this is the IDX to use to slice (shortest q length)",
-      idxStart
+      shortestQLength
     );
 
-    const slicedCollection = [];
+    const slicedQTailCollection = [];
     const stumps = [];
 
     for (let i = 0; i < queues.length; i++) {
       console.log("queue at idx ", queues[i].queueItems);
-      const itemToAdd = queues[i].queueItems.slice(idxStart);
-      console.log("item to push ", itemToAdd);
-      slicedCollection.push(itemToAdd);
+      const slicedTail = queues[i].queueItems.slice(shortestQLength);
+      console.log("item to push ", slicedTail);
+      slicedQTailCollection.push(slicedTail);
       // works as expected
-      stumps.push(queues[i].queueItems.slice(0, idxStart));
+      stumps.push(queues[i].queueItems.slice(0, shortestQLength));
     }
 
     console.log("stumps are: ", stumps);
-    console.log("slicedCollectios are: ", slicedCollection);
+    console.log("slicedQTailCollection is: ", slicedQTailCollection);
 
     const tempQ = [];
     // runs if there's someone left in the any of the slices
-    while (slicedCollection.some(q => q.length > 0)) {
+    while (slicedQTailCollection.some(q => q.length > 0)) {
+      console.log("WHILE LOOP")
+      console.log("SLICED Q TAIL COLLECTION")
+      console.log(slicedQTailCollection)
       // for every sliceCollection if it's not empty run .shift & .push into tempQ
-      for (let i = 0; i < slicedCollection.length; i++) {
-        if (slicedCollection[i].length > 0) {
-          const itemToPush = slicedCollection[i].shift();
+      // for (let i = 0; i < slicedQTailCollection.length; i++) {
+      slicedQTailCollection.forEach(tail => {
+        if (tail.length > 0) {
+          const itemToPush = tail.shift();
           tempQ.push(itemToPush);
         }
-      }
+      })
     }
+
     //this is what we expect to have & in the right order
     console.log("tempQ", tempQ);
 
     // this make sure we update state correctly
-    const newQueues = queues.map((queue, idx) => {
-      return {...queue, queueItems: stumps[idx]};
-    });
-    // FIXME:
+    // const newQueues = queues.map((queue, idx) => {
+    //   return {...queue, queueItems: stumps[idx]};
+    // });
+    // // FIXME:
     // for (let i = 0; i < tempQ.length; i++) {
     //   newQueues.forEach(queue => {
-    //     if (!queue.queueItems.includes(tempQ[i])) queue.queueItems.push(tempQ[i]);
+    //     // if (!queue.queueItems.includes(tempQ[i])) queue.queueItems.push(tempQ[i]);
+    //     queue.queueItems.push(tempQ[i]);
     //   });
     // }
-    // console.log("newQueues ", newQueues);
+    // add the tempQ to the stumps
+    tempQ.forEach((qItem, index) => {
+      const stumpIndex = index % stumps.length;
+      stumps[stumpIndex].push(qItem)
+    })
+
+    console.log("STUMPS FINAL - to be added to QUEUES ", stumps);
+
+    const newQueues = queues.map((queue, index) => {
+      return {...queue, queueItems: stumps[index]}
+    })
 
     setQueues(newQueues);
   }
