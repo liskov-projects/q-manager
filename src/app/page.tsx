@@ -431,7 +431,8 @@ function ProcessedPlayers({
 // COMPONENT:
 function QueuesGrid({
   queues,
-  onProgress
+  onProgress,
+  setQueues
 }: {
   queues: Queue[];
   onProgress: (index: number) => Queue[];
@@ -448,6 +449,7 @@ function QueuesGrid({
           onProgress={onProgress}
           queue={queue}
           index={index}
+          setQueues={setQueues}
         />
       ))}
     </div>
@@ -456,7 +458,40 @@ function QueuesGrid({
 
 // getting ready to implement drag and drop
 // COMPONENT:
-function Queue({queue, className, onProgress, index}) {
+function Queue({queue, setQueues, className, onProgress, index}) {
+  // DRAG N DROP
+  const [draggedItem, setDraggedItem] = useState(null);
+
+  // don't need to use prevDragged cause we don't care?
+  const handleDragStart = draggedItem => setDraggedItem(draggedItem);
+  const handleDragOver = (e, targetItem) => e.preventDefault();
+
+  // does the bulk of the drag n drop
+  const handleDrop = (e, targetItem) => {
+    e.preventDefault();
+
+    if (!draggedItem || draggedItem.id === targetItem.id) return;
+
+    const draggedIndex = queue.queueItems.findIndex(
+      item => item.id === draggedItem.id
+    );
+    const targetIndex = queue.queueItems.findIndex(item => item.id === targetItem.id);
+
+    // modifying the queue
+    const updatedOrder = [...queue.queueItems];
+    // removes the draggeed item
+    updatedOrder.splice(draggedIndex, 1);
+    // inserts it back
+    updatedOrder.splice(targetIndex, 0, draggedItem);
+
+    // FIXME: potential cause of the crash when the item is released
+    setQueues(prevQueues => {
+      prevQueues.map((q, idx) => ({...q, updatedOrder}));
+    });
+
+    setDraggedItem(null);
+  };
+
   return (
     <div className={className}>
       <h3 className="text-xl font-semibold text-purple-600 mb-4">
@@ -469,6 +504,9 @@ function Queue({queue, className, onProgress, index}) {
               key={idx}
               className={"bg-purple-200 text-purple-800 p-2 rounded-lg mb-2"}
               item={item}
+              onDragStart={handleDragStart}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
             />
           ))}
         </ul>
@@ -489,6 +527,16 @@ function Queue({queue, className, onProgress, index}) {
 }
 
 // COMPONENT:
-function QueueItem({item, className}) {
-  return <li className={className}>{item.name}</li>;
+function QueueItem({item, className, onDragStart, onDragOver, onDrop}) {
+  return (
+    <li
+      className={className}
+      // for DRAGNDROP
+      draggable
+      onDragStart={() => onDragStart(item)}
+      onDragOver={e => onDragOver(e, item)}
+      onDrop={e => onDrop(e, item)}>
+      {item.name}
+    </li>
+  );
 }
