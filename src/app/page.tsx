@@ -1,15 +1,7 @@
 "use client";
-
-// import "./App.css";
-//components
-// import Button from "./components/Button";
-// import CourtForm from "./components/CourtForms";
-// import NewPlayerForm from "./components/NewPlayerForm";
-// import PlayersList from "./components/PlayersList";
 //NOTE: hooks
 import {useState} from "react";
 //mock data
-
 import players from "../data/players.js";
 
 // TYPES:
@@ -21,6 +13,7 @@ type Player = {
   mobileNumber: string;
   assignedToQueue: boolean;
   processedThroughQueue: boolean;
+  currentMatch: boolean;
 };
 
 type Queue = {
@@ -41,14 +34,16 @@ const initialQueues: Queue[] = [
 const playersUpdated = players.map(player => {
   player.assignedToQueue = false;
   player.processedThroughQueue = false;
+  player.currentMatch = false;
   return player;
 });
 
 const App = () => {
   const [queues, setQueues] = useState<Queue[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>(playersUpdated);
+  //FIXME: Current match setup
+  const [match, setMatch] = useState<Player>(null);
 
-  // FIXME:
   const addItemToShortestQueue = async (itemId: string) => {
     // Find the item based on itemId
     const itemToUpdate = players.find(player => player.id === itemId);
@@ -142,7 +137,16 @@ const App = () => {
 
   // Function to progress a queue one step
 
-  // NOTE: seems to work
+  //FIXME: this causes too many re-renders - crash
+  // a potential solution: wrap in useEffect [queue.queueItems]
+  // if (queue.queueItems.length > 0) {
+  // );
+
+  //   setMatch(newMatch);
+  //   console.log("this is new match", newMatch);
+  // }
+
+  // FIXME: working on match state here || should be elsewhere?
   const progressQueueOneStep = (queueIndex: number) => {
     const newQueues = [...queues];
     const processedPlayer: Player | undefined =
@@ -157,8 +161,17 @@ const App = () => {
       }
       return player;
     });
+
+    const newMatch = newQueues[queueIndex].queueItems.map((item, idx) => {
+      if (idx === 0) {
+        return {...item, currentMatch: true};
+      }
+      return item;
+    });
+
     setPlayers(newPlayers);
     setQueues(newQueues);
+    setMatch(newMatch);
   };
 
   // REVIEW: potential trouble with state update
@@ -236,7 +249,7 @@ const App = () => {
     // const newQueues = queues.map((queue, idx) => {
     //   return {...queue, queueItems: stumps[idx]};
     // });
-    // // FIXME:
+
     // for (let i = 0; i < tempQ.length; i++) {
     //   newQueues.forEach(queue => {
     //     // if (!queue.queueItems.includes(tempQ[i])) queue.queueItems.push(tempQ[i]);
@@ -306,6 +319,7 @@ const App = () => {
           players={players}
           setPlayers={setPlayers}
           onProgress={progressQueueOneStep}
+          match={match}
         />
       </div>
 
@@ -432,7 +446,8 @@ function ProcessedPlayers({
 function QueuesGrid({
   queues,
   onProgress,
-  setQueues
+  setQueues,
+  match
 }: {
   queues: Queue[];
   onProgress: (index: number) => Queue[];
@@ -450,6 +465,7 @@ function QueuesGrid({
           queue={queue}
           index={index}
           setQueues={setQueues}
+          match={match}
         />
       ))}
     </div>
@@ -458,10 +474,9 @@ function QueuesGrid({
 
 // getting ready to implement drag and drop
 // COMPONENT:
-function Queue({queue, setQueues, className, onProgress, index}) {
+function Queue({queue, setQueues, className, onProgress, index, match}) {
   // DRAG N DROP
-  const [draggedItem, setDraggedItem] = useState(null);
-
+  const [draggedItem, setDraggedItem] = useState<Player>(null);
   // don't need to use prevDragged cause we don't care?
   const handleDragStart = draggedItem => setDraggedItem(draggedItem);
   const handleDragOver = (e, targetItem) => e.preventDefault();
@@ -511,9 +526,14 @@ function Queue({queue, setQueues, className, onProgress, index}) {
 
   return (
     <div className={className}>
-      <h3 className="text-xl font-semibold text-purple-600 mb-4">
-        Queue {queue.queueName}
-      </h3>
+      <div className="flex flex-row justify-around">
+        <h3 className="text-xl font-semibold text-purple-600 mb-4">
+          Queue {queue.queueName}
+        </h3>
+        <span className="bg-green-300 mx-2 text-white py-2 px-4 rounded">
+          {match?.name}
+        </span>
+      </div>
       {/* Progress Button */}
       {queue.queueItems.length > 0 && (
         <button
