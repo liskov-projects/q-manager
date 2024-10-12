@@ -376,7 +376,7 @@ function PlayersList({
         <div
           key={player.id}
           className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
-          <span className="text-white font-bold">{player.name}</span>
+          <span className="text-white font-bold">{player.names}</span>
           {!player.assignedToQueue && (
             <button
               onClick={() => addItemToShortestQueue(player.id)}
@@ -413,7 +413,7 @@ function ProcessedPlayers({
         <div
           key={player.id}
           className="bg-blue-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
-          <span className="text-white font-bold">{player.name}</span>
+          <span className="text-white font-bold">{player.names}</span>
 
           {!player.assignedToQueue && (
             <button
@@ -470,23 +470,28 @@ function Queue({queue, setQueues, className, onProgress, index}) {
   const handleDrop = (e, targetItem) => {
     e.preventDefault();
 
+    console.log("TARGET ITEM FOR DROPPING ");
+    console.log(targetItem);
+    console.log("THE EVENT");
+    console.log(e.target.parentElement);
+
     if (!draggedItem || draggedItem.id === targetItem.id) return;
 
     const draggedIndex = queue.queueItems.findIndex(
       item => item.id === draggedItem.id
     );
-    console.log("DRAGGED INDEX ", draggedIndex);
+    // console.log("DRAGGED INDEX ", draggedIndex);
 
     const targetIndex = queue.queueItems.findIndex(item => item.id === targetItem.id);
-    console.log("TARGET INDEX ", targetIndex);
+    // console.log("TARGET INDEX ", targetIndex);
     // modifying the queue
     const updatedOrder = [...queue.queueItems];
-    console.log("UPDATEDORDER before splice ", updatedOrder);
+    // console.log("UPDATEDORDER before splice ", updatedOrder);
     // removes the draggeed item (draggedItem - what we move, 1 - how many items are removed)
     updatedOrder.splice(draggedIndex, 1); //this removes the item and places it where we want
     // inserts it back without removing any elements (target - where we're moving to; 0 - how many items are removed; draggedItem - what is placed)
     updatedOrder.splice(targetIndex, 0, draggedItem);
-    console.log("UPDATEDORDER after splice ", updatedOrder);
+    // console.log("UPDATEDORDER after splice ", updatedOrder);
 
     // FIXME: potential cause of the crash when the item is released
     setQueues(prevQueues => {
@@ -496,7 +501,7 @@ function Queue({queue, setQueues, className, onProgress, index}) {
         }
         // filter to find the Queue =>
         // ({...q, updatedOrder})
-        console.log(q);
+        // console.log(q);
         return q;
       });
     });
@@ -509,6 +514,14 @@ function Queue({queue, setQueues, className, onProgress, index}) {
       <h3 className="text-xl font-semibold text-purple-600 mb-4">
         Queue {queue.queueName}
       </h3>
+      {/* Progress Button */}
+      {queue.queueItems.length > 0 && (
+        <button
+          className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition-colors duration-200"
+          onClick={() => onProgress(index)}>
+          Progress Queue
+        </button>
+      )}
       {queue.queueItems.length > 0 ? (
         <ul className="mb-4">
           {queue.queueItems.map((item, idx) => (
@@ -525,15 +538,6 @@ function Queue({queue, setQueues, className, onProgress, index}) {
       ) : (
         <p className="text-gray-600 mb-4">No items in queue</p>
       )}
-
-      {/* Progress Button */}
-      {queue.queueItems.length > 0 && (
-        <button
-          className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition-colors duration-200"
-          onClick={() => onProgress(index)}>
-          Progress Queue
-        </button>
-      )}
     </div>
   );
 }
@@ -548,7 +552,7 @@ function QueueItem({item, className, onDragStart, onDragOver, onDrop}) {
       onDragStart={() => onDragStart(item)}
       onDragOver={e => onDragOver(e, item)}
       onDrop={e => onDrop(e, item)}>
-      {item.name}
+      {item.names}
     </li>
   );
 }
