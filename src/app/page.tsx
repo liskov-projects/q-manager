@@ -475,18 +475,30 @@ function Queue({queue, setQueues, className, onProgress, index}) {
     const draggedIndex = queue.queueItems.findIndex(
       item => item.id === draggedItem.id
     );
-    const targetIndex = queue.queueItems.findIndex(item => item.id === targetItem.id);
+    console.log("DRAGGED INDEX ", draggedIndex);
 
+    const targetIndex = queue.queueItems.findIndex(item => item.id === targetItem.id);
+    console.log("TARGET INDEX ", targetIndex);
     // modifying the queue
     const updatedOrder = [...queue.queueItems];
-    // removes the draggeed item
-    updatedOrder.splice(draggedIndex, 1);
-    // inserts it back
+    console.log("UPDATEDORDER before splice ", updatedOrder);
+    // removes the draggeed item (draggedItem - what we move, 1 - how many items are removed)
+    updatedOrder.splice(draggedIndex, 1); //this removes the item and places it where we want
+    // inserts it back without removing any elements (target - where we're moving to; 0 - how many items are removed; draggedItem - what is placed)
     updatedOrder.splice(targetIndex, 0, draggedItem);
+    console.log("UPDATEDORDER after splice ", updatedOrder);
 
     // FIXME: potential cause of the crash when the item is released
     setQueues(prevQueues => {
-      prevQueues.map((q, idx) => ({...q, updatedOrder}));
+      return prevQueues.map((q, idx) => {
+        if (q.id === queue.id) {
+          q.queueItems = updatedOrder;
+        }
+        // filter to find the Queue =>
+        // ({...q, updatedOrder})
+        console.log(q);
+        return q;
+      });
     });
 
     setDraggedItem(null);
