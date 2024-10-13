@@ -2,12 +2,11 @@
 type Player = {
   // as in Mongo later
   id: string;
-  name: string;
+  names: string;
   category: string;
-  mobileNumber: string;
+  mobileNumbers: string;
   assignedToQueue: boolean;
   processedThroughQueue: boolean;
-  currentMatch: boolean;
 };
 
 export default Player;
