@@ -1,10 +1,8 @@
+import React, {createContext, useContext, useState, ReactNode} from "react";
 // types
 import QueueType from "@/types/Queue";
 import Player from "@/types/Player";
-//
-import React, {createContext, useContext, useState, ReactNode} from "react";
-// import useAddToQueues from "@/Hooks/useAddToQueues";
-// //mock data
+// mock data
 import players from "../Data/players.js";
 
 // context type
@@ -46,8 +44,6 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
       prev.map(p => (p.id === playerId ? {...p, processedThroughQueue: true} : p));
     });
   };
-
-  //   NEW: xperimenting with dnd context
 
   return (
     <AppContext.Provider

@@ -1,7 +1,4 @@
 import Button from "./Button";
-// types
-// import Player from "@/types/Player";
-// context
 import {useAppContext} from "@/Context/AppContext";
 import useAddToQueues from "@/Hooks/useAddToQueues";
 

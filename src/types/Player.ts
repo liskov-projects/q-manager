@@ -1,4 +1,3 @@
-// TYPES:
 type Player = {
   // as in Mongo later
   id: string;

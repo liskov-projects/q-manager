@@ -1,7 +1,5 @@
 import useAddToQueues from "@/Hooks/useAddToQueues";
 import Button from "./Button";
-// types
-// import Player from "@/types/Player.js";
 // context
 import {useAppContext} from "@/Context/AppContext";
 
@@ -9,6 +7,7 @@ import {useAppContext} from "@/Context/AppContext";
 export default function PlayersList() {
   const {players} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
+
   const unprocessedPlayers = players.filter(
     player => !player.assignedToQueue && !player.processedThroughQueue
   );
