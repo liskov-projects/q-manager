@@ -1,16 +1,13 @@
 import Button from "./Button";
 // types
-import Player from "@/types/Player.js";
-import QueueType from "@/types/Queue.js";
+// import Player from "@/types/Player.js";
+// context
+import {useAppContext} from "@/Context/AppContext";
 
 // NOTE: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
-export default function PlayersList({
-  players,
-  addItemToShortestQueue
-}: {
-  players: Player[];
-  addItemToShortestQueue: (id: string) => QueueType[];
-}) {
+export default function PlayersList() {
+  const {players, handleAddToShortestQueue} = useAppContext();
+
   const unprocessedPlayers = players.filter(
     player => !player.assignedToQueue && !player.processedThroughQueue
   );
@@ -23,7 +20,7 @@ export default function PlayersList({
           <span className="text-white font-bold">{player.names}</span>
           {!player.assignedToQueue && (
             <Button
-              onClick={() => addItemToShortestQueue(player.id)}
+              onClick={() => handleAddToShortestQueue(player.id)}
               className="bg-white text-purple-500 px-4 py-2 rounded hover:bg-purple-500 hover:text-white transition-colors duration-200 ease-in-out">
               Add to Shortest Queue
             </Button>

@@ -1,3 +1,6 @@
+// context
+import {useAppContext} from "@/Context/AppContext";
+//
 import {useState} from "react";
 //types
 import Player from "@/types/Player";
@@ -5,12 +8,13 @@ import Player from "@/types/Player";
 import Button from "@/Components/Button";
 import QueueItem from "./QueueItem";
 import QueueType from "@/types/Queue";
+import useAddToQueues from "@/Hooks/useAddToQueues";
 
 export default function Queue({
-  queue,
-  setQueues,
+  // queue,
+  // setQueues,
   className,
-  onProgress,
+  // onProgress,
   index
 }: {
   queue: QueueType;
@@ -20,6 +24,10 @@ export default function Queue({
   onProgress: (index: number) => QueueType[];
   index: number;
 }) {
+  const {queues, setQueues} = useAppContext();
+  const {handelProgressOneStep} = useAddToQueues();
+
+  // TODO: drag and drop will be context
   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
   const handleDragStart = (draggedItem: Player) => setDraggedItem(draggedItem);
   // type for the event object
@@ -66,7 +74,7 @@ export default function Queue({
       {queue.queueItems.length > 0 && (
         <Button
           className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition-colors duration-200"
-          onClick={() => onProgress(index)}>
+          onClick={() => handelProgressOneStep(index)}>
           Progress Queue
         </Button>
       )}

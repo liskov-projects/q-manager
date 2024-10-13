@@ -4,7 +4,8 @@ import QueueType from "@/types/Queue.js";
 
 const useAddToQueues = (
   queues: QueueType[],
-  setQueues: (queues: QueueType) => QueueType[],
+  // doesn't use callback but complains if any different
+  setQueues: React.Dispatch<React.SetStateAction<QueueType[]>>,
   players: Player[],
   setPlayers: React.Dispatch<React.SetStateAction<Player[]>>
 ) => {
@@ -57,6 +58,11 @@ const useAddToQueues = (
     });
     return shortestQueue;
   };
+
+  //helper
+  function findAssignedToQueue(players: Player[]) {
+    return players.filter(player => !player.assignedToQueue);
+  }
 
   const handleProgressOneStep = (queueIndex: number) => {
     const newQueues = [...queues];
@@ -115,7 +121,8 @@ const useAddToQueues = (
     handleAddToShortestQueue,
     handleAddAllToQueues,
     handleProgressOneStep,
-    handleRedistributeQueues
+    handleRedistributeQueues,
+    findAssignedToQueue
   };
 };
 
