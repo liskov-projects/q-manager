@@ -7,7 +7,8 @@ import PlayersList from "@/Components/PlayersList";
 import QueuesGrid from "@/Components/Queue/QueuesGrid";
 import ProcessedPlayers from "@/Components/ProcessedPlayers";
 import ButtonGroup from "@/Components/ButtonGroup";
-
+// NEW:
+import Players from "@/Components/Players";
 const App = () => {
   return (
     <AppProvider>
@@ -20,6 +21,9 @@ const App = () => {
           <SectionHeader>Unprocessed Players</SectionHeader>
 
           <PlayersList />
+          {/* FIXME: trying to make one component for both players groups
+          to do drag n drop */}
+          {/* <Players /> */}
         </div>
 
         <ButtonGroup />
@@ -33,6 +37,9 @@ const App = () => {
           <SectionHeader>Processed Players</SectionHeader>
 
           <ProcessedPlayers />
+          {/* FIXME: trying to make one component for both players groups
+          to do drag n drop */}
+          {/* <Players /> */}
         </div>
       </div>
     </AppProvider>
