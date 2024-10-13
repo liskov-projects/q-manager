@@ -1,29 +1,14 @@
 "use client";
 //NOTE: hooks
 import {useState} from "react";
+// types
+import Player from "@/types/Player.js";
+import QueueType from "@/types/Queue.js";
 //mock data
 import players from "../data/players.js";
 
-// TYPES:
-type Player = {
-  // as in Mongo later
-  id: string;
-  name: string;
-  category: string;
-  mobileNumber: string;
-  assignedToQueue: boolean;
-  processedThroughQueue: boolean;
-  currentMatch: boolean;
-};
-
-type Queue = {
-  queueName: string;
-  queueItems: Player[];
-  id: string;
-};
-
 // Initial queue setup
-const initialQueues: Queue[] = [
+const initialQueues: QueueType[] = [
   {queueName: "1", queueItems: [], id: "0987"},
   {queueName: "2", queueItems: [], id: "1234"},
   {queueName: "3", queueItems: [], id: "5678"},
@@ -39,7 +24,7 @@ const playersUpdated = players.map(player => {
 });
 
 const App = () => {
-  const [queues, setQueues] = useState<Queue[]>(initialQueues);
+  const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>(playersUpdated);
 
   // REVIEW: rename to handleAddToShortestQueue ?
@@ -85,7 +70,7 @@ const App = () => {
   }
 
   // REVIEW: helper
-  const findShortestQueue = (queues: Queue[]) => {
+  const findShortestQueue = (queues: QueueType[]) => {
     let shortestQueue = queues[0];
     queues.forEach(queue => {
       if (queue.queueItems.length < shortestQueue.queueItems.length) {
@@ -247,7 +232,7 @@ function PlayersList({
   addItemToShortestQueue
 }: {
   players: Player[];
-  addItemToShortestQueue: (id: string) => Queue[];
+  addItemToShortestQueue: (id: string) => QueueType[];
 }) {
   const unprocessedPlayers = players.filter(
     player => !player.assignedToQueue && !player.processedThroughQueue
@@ -278,7 +263,7 @@ function ProcessedPlayers({
   addItemToShortestQueue
 }: {
   players: Player[];
-  addItemToShortestQueue: (id: string) => Queue[];
+  addItemToShortestQueue: (id: string) => QueueType[];
 }) {
   const processedPlayers = players.filter(player => {
     return player.processedThroughQueue;
@@ -311,8 +296,8 @@ function QueuesGrid({
   onProgress,
   setQueues
 }: {
-  queues: Queue[];
-  onProgress: (index: number) => Queue[];
+  queues: QueueType[];
+  onProgress: (index: number) => QueueType[];
 }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
