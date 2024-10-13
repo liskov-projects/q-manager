@@ -26,8 +26,8 @@ type Queue = {
 const initialQueues: Queue[] = [
   {queueName: "1", queueItems: [], id: "0987"},
   {queueName: "2", queueItems: [], id: "1234"},
-  {queueName: "3", queueItems: [], id: "5678"}
-  // {queueName: "4", queueItems: [], id: "4321"}
+  {queueName: "3", queueItems: [], id: "5678"},
+  {queueName: "4", queueItems: [], id: "4321"}
 ];
 
 // Initialize players with assignedToQueue property
@@ -41,8 +41,6 @@ const playersUpdated = players.map(player => {
 const App = () => {
   const [queues, setQueues] = useState<Queue[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>(playersUpdated);
-  //FIXME: Current match setup
-  const [match, setMatch] = useState<Player>(null);
 
   const addItemToShortestQueue = async (itemId: string) => {
     // Find the item based on itemId
@@ -136,17 +134,6 @@ const App = () => {
   // };
 
   // Function to progress a queue one step
-
-  //FIXME: this causes too many re-renders - crash
-  // a potential solution: wrap in useEffect [queue.queueItems]
-  // if (queue.queueItems.length > 0) {
-  // );
-
-  //   setMatch(newMatch);
-  //   console.log("this is new match", newMatch);
-  // }
-
-  // FIXME: working on match state here || should be elsewhere?
   const progressQueueOneStep = (queueIndex: number) => {
     const newQueues = [...queues];
     const processedPlayer: Player | undefined =
@@ -161,17 +148,8 @@ const App = () => {
       }
       return player;
     });
-
-    const newMatch = newQueues[queueIndex].queueItems.map((item, idx) => {
-      if (idx === 0) {
-        return {...item, currentMatch: true};
-      }
-      return item;
-    });
-
     setPlayers(newPlayers);
     setQueues(newQueues);
-    setMatch(newMatch);
   };
 
   // REVIEW: potential trouble with state update
@@ -319,7 +297,6 @@ const App = () => {
           players={players}
           setPlayers={setPlayers}
           onProgress={progressQueueOneStep}
-          match={match}
         />
       </div>
 
@@ -446,8 +423,7 @@ function ProcessedPlayers({
 function QueuesGrid({
   queues,
   onProgress,
-  setQueues,
-  match
+  setQueues
 }: {
   queues: Queue[];
   onProgress: (index: number) => Queue[];
@@ -465,7 +441,6 @@ function QueuesGrid({
           queue={queue}
           index={index}
           setQueues={setQueues}
-          match={match}
         />
       ))}
     </div>
@@ -474,7 +449,7 @@ function QueuesGrid({
 
 // getting ready to implement drag and drop
 // COMPONENT:
-function Queue({queue, setQueues, className, onProgress, index, match}) {
+function Queue({queue, setQueues, className, onProgress, index}) {
   // DRAG N DROP
   const [draggedItem, setDraggedItem] = useState<Player>(null);
   // don't need to use prevDragged cause we don't care?
@@ -531,7 +506,7 @@ function Queue({queue, setQueues, className, onProgress, index, match}) {
           Queue {queue.queueName}
         </h3>
         <span className="bg-green-300 mx-2 text-white py-2 px-4 rounded">
-          {match?.name}
+          {/* {match?.name} */}
         </span>
       </div>
       {/* Progress Button */}
