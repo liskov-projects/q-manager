@@ -2,6 +2,7 @@
 import QueueType from "@/types/Queue";
 //components
 import Queue from "./Queue";
+import React from "react";
 
 export default function QueuesGrid({
   queues,
@@ -11,7 +12,8 @@ export default function QueuesGrid({
   queues: QueueType[];
   // this function returns a promise that resolves to a QueueType => Promise<QueueType[]>?
   onProgress: (index: number) => QueueType[];
-  setQueues: (queues: QueueType[]) => QueueType[];
+  // because of a callback in setQueues
+  setQueues: React.Dispatch<React.SetStateAction<QueueType[]>>;
 }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
