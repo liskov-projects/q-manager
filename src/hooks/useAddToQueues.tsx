@@ -2,7 +2,12 @@
 import Player from "@/types/Player.js";
 import QueueType from "@/types/Queue.js";
 
-const useAddToQueues = (queues, setQueues, players, setPlayers) => {
+const useAddToQueues = (
+  queues: QueueType[],
+  setQueues: (queues: QueueType) => QueueType[],
+  players: Player[],
+  setPlayers: React.Dispatch<React.SetStateAction<Player[]>>
+) => {
   const handleAddToShortestQueue = (itemId: string) => {
     // Find the item based on itemId
     const itemToUpdate = players.find(player => player.id === itemId);
@@ -71,7 +76,7 @@ const useAddToQueues = (queues, setQueues, players, setPlayers) => {
     setQueues(newQueues);
   };
 
-  const handleRedistributeQueues = queues => {
+  const handleRedistributeQueues = (queues: QueueType[]) => {
     const shortestQueue = findShortestQueue(queues);
 
     const shortestQLength = shortestQueue.queueItems.length;
@@ -99,7 +104,7 @@ const useAddToQueues = (queues, setQueues, players, setPlayers) => {
       stumps[stumpIndex].push(qItem);
     });
 
-    const newQueues = queues.map((queue, index) => {
+    const newQueues: QueueType[] = queues.map((queue, index) => {
       return {...queue, queueItems: stumps[index]};
     });
 
