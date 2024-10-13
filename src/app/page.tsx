@@ -41,7 +41,7 @@ const App = () => {
   } = useAddToQueues(queues, setQueues, players, setPlayers);
 
   //helper
-  function findAssignedToQueue(players) {
+  function findAssignedToQueue(players: Player[]) {
     return players.filter(player => !player.assignedToQueue);
   }
 
@@ -84,9 +84,6 @@ const App = () => {
         <QueuesGrid
           queues={queues}
           setQueues={setQueues}
-          //REVIEW: the player state & its setter aren't used in QueuesGrid
-          players={players}
-          setPlayers={setPlayers}
           onProgress={handleProgressOneStep}
         />
       </div>

@@ -3,7 +3,7 @@ import Player from "@/types/Player.js";
 import QueueType from "@/types/Queue.js";
 
 const useAddToQueues = (queues, setQueues, players, setPlayers) => {
-  const handleAddToShortestQueue = async (itemId: string) => {
+  const handleAddToShortestQueue = (itemId: string) => {
     // Find the item based on itemId
     const itemToUpdate = players.find(player => player.id === itemId);
 

@@ -9,7 +9,9 @@ export default function QueuesGrid({
   setQueues
 }: {
   queues: QueueType[];
+  // this function returns a promise that resolves to a QueueType => Promise<QueueType[]>?
   onProgress: (index: number) => QueueType[];
+  setQueues: (queues: QueueType[]) => QueueType[];
 }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -4,14 +4,30 @@ import Player from "@/types/Player";
 //components
 import Button from "@/Components/Button";
 import QueueItem from "./QueueItem";
+import QueueType from "@/types/Queue";
 
-export default function Queue({queue, setQueues, className, onProgress, index}) {
-  const [draggedItem, setDraggedItem] = useState<Player>(null);
-  const handleDragStart = draggedItem => setDraggedItem(draggedItem);
-  const handleDragOver = (e, targetItem) => e.preventDefault();
+export default function Queue({
+  queue,
+  setQueues,
+  className,
+  onProgress,
+  index
+}: {
+  queue: QueueType;
+  // because we use a callback in setQueues
+  setQueues: React.Dispatch<React.SetStateAction<QueueType[]>>;
+  className: string;
+  onProgress: (index: number) => QueueType[];
+  index: number;
+}) {
+  const [draggedItem, setDraggedItem] = useState<Player | null>(null);
+  const handleDragStart = (draggedItem: Player) => setDraggedItem(draggedItem);
+  // type for the event object
+  const handleDragOver = (e: React.MouseEvent<HTMLButtonElement>) =>
+    e.preventDefault();
 
   // does the main dragndrop
-  const handleDrop = (e, targetItem) => {
+  const handleDrop = (e: React.MouseEvent<HTMLButtonElement>, targetItem: Player) => {
     e.preventDefault();
 
     if (!draggedItem || draggedItem.id === targetItem.id) return;
@@ -27,8 +43,8 @@ export default function Queue({queue, setQueues, className, onProgress, index}) 
     // inserts without removing elements (target - where to; 0 - items to remove; draggedItem - what is moved)
     updatedOrder.splice(targetIndex, 0, draggedItem);
 
-    setQueues(prevQueues => {
-      return prevQueues.map((q, idx) => {
+    setQueues((prevQueues: QueueType[]) => {
+      return prevQueues.map((q: QueueType) => {
         if (q.id === queue.id) {
           q.queueItems = updatedOrder;
         }
