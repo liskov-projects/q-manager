@@ -22,14 +22,11 @@ export default function QueuesGrid({}: // queues,
       {queues.map((queue, index) => (
         <Queue
           key={queue.id}
-          //REVIEW: move classname directly on the returned div? = fewer props to pass
           className={
             "bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between"
           }
-          // onProgress={onProgress}
-          //           queue={queue}
+          queue={queue}
           index={index}
-          // setQueues={setQueues}
         />
       ))}
     </div>

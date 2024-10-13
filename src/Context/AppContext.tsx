@@ -40,20 +40,14 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>(playersUpdated);
 
-  // unpacking functions from the hook
-  //   const {
-  //     handleAddToShortestQueue,
-  //     handleAddAllToQueues,
-  //     handleProgressOneStep,
-  //     handleRedistributeQueues
-  //   } = useAddToQueues(queues, setQueues, players, setPlayers);
-
   // mark player as processed
   const markPlayerAsProcessed = (playerId: string) => {
     setPlayers((prev: QueueType[]) => {
       prev.map(p => (p.id === playerId ? {...p, processedThroughQueue: true} : p));
     });
   };
+
+  //   NEW: xperimenting with dnd context
 
   return (
     <AppContext.Provider
@@ -62,10 +56,6 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
         queues,
         setQueues,
         setPlayers,
-        // handleAddToShortestQueue,
-        // handleAddAllToQueues,
-        // handleProgressOneStep,
-        // handleRedistributeQueues,
         markPlayerAsProcessed
       }}>
       {children}

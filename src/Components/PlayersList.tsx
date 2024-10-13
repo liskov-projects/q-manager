@@ -1,3 +1,4 @@
+import useAddToQueues from "@/Hooks/useAddToQueues";
 import Button from "./Button";
 // types
 // import Player from "@/types/Player.js";
@@ -6,8 +7,8 @@ import {useAppContext} from "@/Context/AppContext";
 
 // NOTE: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 export default function PlayersList() {
-  const {players, handleAddToShortestQueue} = useAppContext();
-
+  const {players} = useAppContext();
+  const {handleAddToShortestQueue} = useAddToQueues();
   const unprocessedPlayers = players.filter(
     player => !player.assignedToQueue && !player.processedThroughQueue
   );

@@ -48,48 +48,20 @@ const App = () => {
         <div className="p-8 bg-green-200">
           <SectionHeader>Unprocessed Players</SectionHeader>
 
-          <PlayersList
-          // players={players}
-          // addItemToShortestQueue={handleAddToShortestQueue}
-          />
+          <PlayersList />
         </div>
 
-        {/* FIXME: source of problem - wrap in another component to do context */}
-        {/* <div className="flex flex-row justify-around">
-          <Button
-            className="bg-gray-300 text-black py-2 h-[45px] w-[250px] px-4 rounded"
-            onClick={() => {
-              // helper works here
-              handleAddAllToQueues(findAssignedToQueue(players));
-            }}>
-            Add All Players to Queues
-          </Button>
-          <Button
-            className="bg-blue-500 text-black py-2 h-[45px] w-[250px] px-4 rounded"
-            onClick={() => {
-              handleRedistributeQueues(queues);
-            }}>
-            Redestribute Players
-          </Button>
-        </div> */}
         <ButtonGroup />
         <div className=" p-8 bg-blue-100">
           <SectionHeader>Queues</SectionHeader>
 
-          <QueuesGrid
-          // queues={queues}
-          // setQueues={setQueues}
-          // onProgress={handleProgressOneStep}
-          />
+          <QueuesGrid />
         </div>
 
         <div className="p-8 bg-yellow-200">
           <SectionHeader>Processed Players</SectionHeader>
 
-          <ProcessedPlayers
-          // players={players}
-          // addItemToShortestQueue={handleAddToShortestQueue}
-          />
+          <ProcessedPlayers />
         </div>
       </div>
     </AppProvider>

@@ -11,10 +11,8 @@ import QueueType from "@/types/Queue";
 import useAddToQueues from "@/Hooks/useAddToQueues";
 
 export default function Queue({
-  // queue,
-  // setQueues,
+  queue,
   className,
-  // onProgress,
   index
 }: {
   queue: QueueType;
@@ -24,8 +22,8 @@ export default function Queue({
   onProgress: (index: number) => QueueType[];
   index: number;
 }) {
-  const {queues, setQueues} = useAppContext();
-  const {handelProgressOneStep} = useAddToQueues();
+  const {setQueues} = useAppContext();
+  const {handleProgressOneStep} = useAddToQueues();
 
   // TODO: drag and drop will be context
   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
@@ -36,6 +34,8 @@ export default function Queue({
 
   // does the main dragndrop
   const handleDrop = (e: React.MouseEvent<HTMLButtonElement>, targetItem: Player) => {
+    // NOTE: S T A R T
+
     e.preventDefault();
 
     if (!draggedItem || draggedItem.id === targetItem.id) return;
@@ -74,7 +74,7 @@ export default function Queue({
       {queue.queueItems.length > 0 && (
         <Button
           className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition-colors duration-200"
-          onClick={() => handelProgressOneStep(index)}>
+          onClick={() => handleProgressOneStep(index)}>
           Progress Queue
         </Button>
       )}

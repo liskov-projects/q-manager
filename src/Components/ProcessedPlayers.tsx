@@ -3,9 +3,11 @@ import Button from "./Button";
 import Player from "@/types/Player";
 // context
 import {useAppContext} from "@/Context/AppContext";
+import useAddToQueues from "@/Hooks/useAddToQueues";
 
 export default function ProcessedPlayers() {
-  const {players, handleAddToShortestQueue} = useAppContext();
+  const {players} = useAppContext();
+  const {handleAddToShortestQueue} = useAddToQueues();
 
   const processedPlayers = players.filter(player => {
     return player.processedThroughQueue;
