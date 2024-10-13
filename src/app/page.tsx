@@ -32,8 +32,8 @@ const App = () => {
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>(playersUpdated);
 
-  // REVIEW: rename to handleAddToShortestQueue ?
-  const addItemToShortestQueue = async (itemId: string) => {
+  // TODO: make into a hook
+  const handleAddToShortestQueue = async (itemId: string) => {
     // Find the item based on itemId
     const itemToUpdate = players.find(player => player.id === itemId);
 
@@ -63,18 +63,17 @@ const App = () => {
     setQueues(newQueues);
   };
 
-  // REVIEW: rename to handleAddToAllQueues ?
-  // don't need async await?
-  async function addAllToQueues(items: Player[]) {
+  // TODO: make into a hook
+  function handleAddAllToQueues(items: Player[]) {
     for (const item of items) {
       if (!item.assignedToQueue) {
         item.assignedToQueue = true;
-        await addItemToShortestQueue(item.id);
+        handleAddToShortestQueue(item.id);
       }
     }
   }
 
-  // REVIEW: helper
+  // TODO: helper
   const findShortestQueue = (queues: QueueType[]) => {
     let shortestQueue = queues[0];
     queues.forEach(queue => {
@@ -85,8 +84,8 @@ const App = () => {
     return shortestQueue;
   };
 
-  // REVIEW: rename to handleProgressOneStep ?
-  const progressQueueOneStep = (queueIndex: number) => {
+  // TODO: make into a hook
+  const handleProgressOneStep = (queueIndex: number) => {
     const newQueues = [...queues];
     const processedPlayer: Player | undefined =
       newQueues[queueIndex].queueItems.shift();
@@ -104,21 +103,21 @@ const App = () => {
     setQueues(newQueues);
   };
 
-  // REVIEW: rename to handleRedistributeQueues ?
-  function redestributeQueues(queues) {
+  // TODO: make into a hook
+  function handleRedistributeQueues(queues) {
     const shortestQueue = findShortestQueue(queues);
 
     const shortestQLength = shortestQueue.queueItems.length;
 
     const slicedQTailCollection = [];
-    const stumps = [];
+    const stumps: string[] = [];
 
     for (let i = 0; i < queues.length; i++) {
       const slicedTail = queues[i].queueItems.slice(shortestQLength);
       slicedQTailCollection.push(slicedTail);
       stumps.push(queues[i].queueItems.slice(0, shortestQLength));
     }
-    const tempQ = [];
+    const tempQ: string[] = [];
     while (slicedQTailCollection.some(q => q.length > 0)) {
       slicedQTailCollection.forEach(tail => {
         if (tail.length > 0) {
@@ -139,6 +138,10 @@ const App = () => {
 
     setQueues(newQueues);
   }
+  // TODO: helper
+  function findAssignedToQueue(players) {
+    return players.filter(player => !player.assignedToQueue);
+  }
 
   return (
     <div className="flex flex-col bg-red-300">
@@ -151,7 +154,7 @@ const App = () => {
 
         <PlayersList
           players={players}
-          addItemToShortestQueue={addItemToShortestQueue}
+          addItemToShortestQueue={handleAddToShortestQueue}
         />
       </div>
 
@@ -160,14 +163,14 @@ const App = () => {
           className="bg-gray-300 text-black py-2 h-[45px] w-[250px] px-4 rounded"
           onClick={() => {
             //TODO: extract the argument to make it shorter here
-            addAllToQueues(players.filter(player => !player.assignedToQueue));
+            handleAddAllToQueues(findAssignedToQueue(players));
           }}>
           Add All Players to Queues
         </Button>
         <Button
           className="bg-blue-500 text-black py-2 h-[45px] w-[250px] px-4 rounded"
           onClick={() => {
-            redestributeQueues(queues);
+            handleRedistributeQueues(queues);
           }}>
           Redestribute Players
         </Button>
@@ -182,7 +185,7 @@ const App = () => {
           //REVIEW: the player state & its setter aren't used in QueuesGrid
           players={players}
           setPlayers={setPlayers}
-          onProgress={progressQueueOneStep}
+          onProgress={handleProgressOneStep}
         />
       </div>
 
@@ -191,7 +194,7 @@ const App = () => {
 
         <ProcessedPlayers
           players={players}
-          addItemToShortestQueue={addItemToShortestQueue}
+          addItemToShortestQueue={handleAddToShortestQueue}
         />
       </div>
     </div>
