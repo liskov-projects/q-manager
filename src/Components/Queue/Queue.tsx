@@ -1,14 +1,7 @@
-// context
-// import {useAppContext} from "@/Context/AppContext";
-//
-// import {useState} from "react";
-//types
-// import Player from "@/types/Player";
-//components
 import Button from "@/Components/Button";
-import QueueItem from "./QueueItem";
 import QueueType from "@/types/Queue";
 import useAddToQueues from "@/Hooks/useAddToQueues";
+import PlayerItem from "../PlayerItem";
 
 export default function Queue({
   queue,
@@ -22,46 +15,7 @@ export default function Queue({
   onProgress: (index: number) => QueueType[];
   index: number;
 }) {
-  // const {setQueues} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
-  // NOTE: if uncomment the app works as before
-  // // TODO: drag and drop will be context
-  // const [draggedItem, setDraggedItem] = useState<Player | null>(null);
-  // const handleDragStart = (draggedItem: Player) => setDraggedItem(draggedItem);
-  // // type for the event object
-  // const handleDragOver = (e: React.MouseEvent<HTMLButtonElement>) =>
-  //   e.preventDefault();
-
-  // // does the main dragndrop
-  // const handleDrop = (e: React.MouseEvent<HTMLButtonElement>, targetItem: Player) => {
-  //   // NOTE: S T A R T
-
-  //   e.preventDefault();
-
-  //   if (!draggedItem || draggedItem.id === targetItem.id) return;
-
-  //   const draggedIndex = queue.queueItems.findIndex(
-  //     item => item.id === draggedItem.id
-  //   );
-  //   const targetIndex = queue.queueItems.findIndex(item => item.id === targetItem.id);
-
-  //   const updatedOrder = [...queue.queueItems];
-  //   // removes the draggeed item (draggedItem - what to move, 1 - items to remove)
-  //   updatedOrder.splice(draggedIndex, 1); //this removes the item and places it where we want
-  //   // inserts without removing elements (target - where to; 0 - items to remove; draggedItem - what is moved)
-  //   updatedOrder.splice(targetIndex, 0, draggedItem);
-
-  //   setQueues((prevQueues: QueueType[]) => {
-  //     return prevQueues.map((q: QueueType) => {
-  //       if (q.id === queue.id) {
-  //         q.queueItems = updatedOrder;
-  //       }
-  //       return q;
-  //     });
-  //   });
-
-  //   setDraggedItem(null);
-  // };
 
   return (
     <div className={className}>
@@ -70,7 +24,7 @@ export default function Queue({
           Queue {queue.queueName}
         </h3>
       </div>
-      {/* Progress Button */}
+
       {queue.queueItems.length > 0 && (
         <Button
           className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition-colors duration-200"
@@ -80,18 +34,15 @@ export default function Queue({
       )}
       {queue.queueItems.length > 0 ? (
         <ul className="mb-4">
-          {/* REVIEW: item should be a player */}
           {queue.queueItems.map((item, index) => (
-            <QueueItem
+            <PlayerItem
               key={item.id}
-              className={`${
+              className={` text-bear-50 ${
                 index === 0 ? "bg-purple-200" : "bg-red-100"
               }  text-purple-800 p-2 rounded-lg mb-2`}
-              item={item}
-              // onDragStart={handleDragStart}
-              // onDragOver={handleDragOver}
-              // onDrop={handleDrop}
-            />
+              item={item}>
+              {item.names}
+            </PlayerItem>
           ))}
         </ul>
       ) : (

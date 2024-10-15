@@ -7,7 +7,7 @@ import useAddToQueues from "@/Hooks/useAddToQueues";
 import PlayerItem from "./PlayerItem";
 
 export default function ProcessedPlayers() {
-  const {players} = useAppContext();
+  const {players, handleDragStart, handleDragOver, handleDrop} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
 
   const processedPlayers = players.filter(player => {
@@ -15,16 +15,16 @@ export default function ProcessedPlayers() {
   });
 
   return (
-    <div
-      className="flex flex-col"
-
-      // className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-    >
+    <div className="flex flex-col">
       {processedPlayers.map((player: Player) => (
         <div
           key={player.id}
-          className="bg-blue-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
-          <PlayerItem>{player.names}</PlayerItem>
+          className="bg-blue-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between"
+          draggable
+          onDragStart={() => handleDragStart(player)}
+          onDragOver={e => handleDragOver(e)}
+          onDrop={e => handleDrop(e, player)}>
+          <PlayerItem item={player}>{player.names}</PlayerItem>
           {/* <span className="text-white font-bold">{player.names}</span> */}
 
           {!player.assignedToQueue && (

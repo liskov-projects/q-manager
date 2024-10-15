@@ -2,18 +2,9 @@ import React, {createContext, useContext, useState, ReactNode} from "react";
 // types
 import QueueType from "@/types/Queue";
 import Player from "@/types/Player";
+import AppContextType from "@/types/AppContextInterface";
 // mock data
 import players from "../Data/players.js";
-
-// context type
-interface AppContextType {
-  players: Player[];
-  queues: QueueType[];
-  setQueues: React.Dispatch<React.SetStateAction<QueueType[]>>;
-  setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
-  // should return QueueTyep[]?
-  markPlayerAsProcessed: (playerId: string) => QueueType[];
-}
 
 // creating Context
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -52,18 +43,13 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
 
 
   //   NEW: D N D    x p e r i m e n t
-
   const handleDragStart = (draggedItem: Player) => setDraggedItem(draggedItem);
   // type for the event object
   const handleDragOver = (e: React.MouseEvent<HTMLButtonElement>) =>
     e.preventDefault();
 
-  // does the main dragndrop
-  const handleDrop = (e: React.MouseEvent<HTMLButtonElement>, targetItem: Player) => {
-    e.preventDefault();
-
-    if (!draggedItem) return;
-
+  const dragNdropInQueues = (draggedItem, targetItem) => {
+    // OLD: works for items ALREADY in the queue
     // Find the queues containing dragged and target items
     const draggedQueueIndex = queues.findIndex(q =>
       q.queueItems.some(item => item.id === draggedItem.id)
@@ -105,7 +91,71 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
         return q;
       });
     });
+  };
 
+  //   NEW:
+  //   const dragNdropPlayers = (draggedItem, targetItem) => {
+  //     // Find the indexes of the dragged and target items in the Players []
+  //     const draggedItemIndex = players.findIndex(item => item.id === draggedItem.id);
+  //     const targetItemIndex = players.findIndex(item => item.id === targetItem.id);
+
+  //     // make a copy
+  //     const updatedPlayers = [...players];
+
+  //     // removes the draggeed item (draggedItem - what to move, 1 - items to remove)
+  //     updatedPlayers.splice(draggedItemIndex, 1);
+
+  //     // inserts without removing elements (target - where to; 0 - items to remove; draggedItem - what is moved)
+  //     updatedPlayers.splice(targetItemIndex, 0, draggedItem);
+
+  //     setPlayers(updatedPlayers);
+  //   };
+
+  // does the main dragndrop
+  const handleDrop = (e: React.MouseEvent<HTMLButtonElement>, targetItem: Player) => {
+    e.preventDefault();
+
+    if (!draggedItem) return;
+
+    // console.log(e);
+    // console.log(players);
+
+    // globally look for what we drag & drop
+    const draggedObject = players.find(player => player.id === draggedItem.id);
+    const droppedOnObject = players.find(player => player.id === targetItem.id);
+
+    console.log("this is WHAT we drop ", draggedObject);
+    console.log("this is WHERE we drop ", droppedOnObject);
+    // check where items is going to
+    if (
+      // into PROCESSED
+      droppedOnObject.processedThroughQueue
+    ) {
+      //   dragNdropPlayers(draggedItem, targetItem);
+      setPlayers(prevPlayers =>
+        prevPlayers.map(p =>
+          p.id === draggedObject.id ? {...p, processedThroughQueue: true} : p
+        )
+      );
+    } else if (
+      // into UPROCESSED
+      !droppedOnObject.assignedToQueue &&
+      !droppedOnObject.processedThroughQueue
+    ) {
+      setPlayers(prevPlayers =>
+        prevPlayers.map(p =>
+          p.id === draggedItem.id
+            ? {...p, assignedToQueue: false, processedThroughQueue: false}
+            : p
+        )
+      );
+    } else if (
+      // into the QUEUES
+      droppedOnObject.assignedToQueue
+    ) {
+      // works for items already in the queues
+      dragNdropInQueues(draggedItem, targetItem);
+    }
     setDraggedItem(null);
   };
 
