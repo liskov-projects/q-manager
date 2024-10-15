@@ -3,7 +3,6 @@ import Button from "./Button";
 // context
 import {useAppContext} from "@/Context/AppContext";
 import PlayerItem from "./PlayerItem";
-import QueueItem from "./Queue/QueueItem";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 export default function PlayersList() {
@@ -22,12 +21,12 @@ export default function PlayersList() {
         <div
           draggable
           onDragStart={() => handleDragStart(player)}
-          onDragOver={e => handleDragOver(e, player)}
+          onDragOver={e => handleDragOver(e)}
           onDrop={e => handleDrop(e, player)}
           key={player.id}
           className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between my-2">
           {/* <QueueItem>{player.names}</QueueItem> */}
-          <PlayerItem>{player.names}</PlayerItem>
+          <PlayerItem item={player}>{player.names}</PlayerItem>
           {/* <span className="text-white font-bold">{player.names}</span> */}
           {!player.assignedToQueue && (
             <Button

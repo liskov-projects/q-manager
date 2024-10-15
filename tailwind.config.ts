@@ -18,7 +18,7 @@ const config: Config = {
           50: "#ABDBE3",
           100: "#76B5C5"
         },
-        indigodye: {
+        indigod: {
           50: "#1E81B0",
           100: "#164C78",
           200: "#053970"

@@ -4,17 +4,10 @@ import React from "react";
 import {useAppContext} from "@/Context/AppContext";
 export default function QueueItem({
   item,
-  className,
-  children
-}: // onDragStart,
-// onDragOver,
-// onDrop
-{
+  className
+}: {
   item: Player;
   className: string;
-  // onDragStart: (item: Player) => Player;
-  // onDragOver: (e: React.MouseEvent<HTMLButtonElement>, item: Player) => void;
-  // onDrop: (e: React.MouseEvent<HTMLButtonElement>, item: Player) => QueueType[];
 }) {
   const {handleDragStart, handleDragOver, handleDrop} = useAppContext();
   return (

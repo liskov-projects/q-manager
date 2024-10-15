@@ -9,6 +9,7 @@ import Button from "@/Components/Button";
 import QueueItem from "./QueueItem";
 import QueueType from "@/types/Queue";
 import useAddToQueues from "@/Hooks/useAddToQueues";
+import PlayerItem from "../PlayerItem";
 
 export default function Queue({
   queue,
@@ -24,44 +25,6 @@ export default function Queue({
 }) {
   // const {setQueues} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
-  // NOTE: if uncomment the app works as before
-  // // TODO: drag and drop will be context
-  // const [draggedItem, setDraggedItem] = useState<Player | null>(null);
-  // const handleDragStart = (draggedItem: Player) => setDraggedItem(draggedItem);
-  // // type for the event object
-  // const handleDragOver = (e: React.MouseEvent<HTMLButtonElement>) =>
-  //   e.preventDefault();
-
-  // // does the main dragndrop
-  // const handleDrop = (e: React.MouseEvent<HTMLButtonElement>, targetItem: Player) => {
-  //   // NOTE: S T A R T
-
-  //   e.preventDefault();
-
-  //   if (!draggedItem || draggedItem.id === targetItem.id) return;
-
-  //   const draggedIndex = queue.queueItems.findIndex(
-  //     item => item.id === draggedItem.id
-  //   );
-  //   const targetIndex = queue.queueItems.findIndex(item => item.id === targetItem.id);
-
-  //   const updatedOrder = [...queue.queueItems];
-  //   // removes the draggeed item (draggedItem - what to move, 1 - items to remove)
-  //   updatedOrder.splice(draggedIndex, 1); //this removes the item and places it where we want
-  //   // inserts without removing elements (target - where to; 0 - items to remove; draggedItem - what is moved)
-  //   updatedOrder.splice(targetIndex, 0, draggedItem);
-
-  //   setQueues((prevQueues: QueueType[]) => {
-  //     return prevQueues.map((q: QueueType) => {
-  //       if (q.id === queue.id) {
-  //         q.queueItems = updatedOrder;
-  //       }
-  //       return q;
-  //     });
-  //   });
-
-  //   setDraggedItem(null);
-  // };
 
   return (
     <div className={className}>
@@ -82,7 +45,8 @@ export default function Queue({
         <ul className="mb-4">
           {/* REVIEW: item should be a player */}
           {queue.queueItems.map((item, index) => (
-            <QueueItem
+            <PlayerItem
+              // <QueueItem
               key={item.id}
               className={`${
                 index === 0 ? "bg-purple-200" : "bg-red-100"
@@ -91,7 +55,9 @@ export default function Queue({
               // onDragStart={handleDragStart}
               // onDragOver={handleDragOver}
               // onDrop={handleDrop}
-            />
+            >
+              {item.names}
+            </PlayerItem>
           ))}
         </ul>
       ) : (
