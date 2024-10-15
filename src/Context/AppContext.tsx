@@ -94,76 +94,44 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
 
     if (!draggedItem) return;
 
-    // console.log(targetItem.assignedToQueue === false);
+    // console.log(e);
+    // console.log(players);
+
+    // globally look for what we drag & drop
+    const draggedObject = players.find(player => player.id === draggedItem.id);
+    const droppedOnObject = players.find(player => player.id === targetItem.id);
+
+    console.log("this is WHAT we drop ", draggedObject);
+    console.log("this is WHERE we drop ", droppedOnObject);
     // check where items is going to
     if (
-      // if target is has processedThoughQueue == it's in the processed field
-      targetItem.processedThroughQueue === true
+      // into PROCESSED
+      droppedOnObject.processedThroughQueue
     ) {
-      //   setPlayers(prevPlayers =>
-      //     prevPlayers.map(p =>
-      //       p.id === draggedItem.id ? {...p, processedThroughQueue: true} : p
-      //     )
-      //   );
+      setPlayers(prevPlayers =>
+        prevPlayers.map(p =>
+          p.id === draggedObject.id ? {...p, processedThroughQueue: true} : p
+        )
+      );
     } else if (
-      // both properties set to false show it's unprocesseed list
-      targetItem.assignedToQueue === false &&
-      targetItem.processedThroughQueue === false
+      // into UPROCESSED
+      droppedOnObject.assignedToQueue === false &&
+      droppedOnObject.processedThroughQueue === false
     ) {
-      //   setPlayers(prevPlayers =>
-      //     prevPlayers.map(p =>
-      //       p.id === draggedItem.id ? {...p, assignedToQueue: false} : p
-      //     )
-      //   );
+      setPlayers(prevPlayers =>
+        prevPlayers.map(p =>
+          p.id === draggedItem.id
+            ? {...p, assignedToQueue: false, processedThroughQueue: false}
+            : p
+        )
+      );
     } else if (
-      // if target has assignedToQueue it's in the queue
+      // into the QUEUES
       targetItem.assignedToQueue === true
     ) {
+      // works for items already in the queues
       dragNdropInQueues(draggedItem, targetItem);
     }
-
-    // // Find the queues containing dragged and target items
-    // const draggedQueueIndex = queues.findIndex(q =>
-    //   q.queueItems.some(item => item.id === draggedItem.id)
-    // );
-    // const targetQueueIndex = queues.findIndex(q =>
-    //   q.queueItems.some(item => item.id === targetItem.id)
-    // );
-
-    // // check if the indexes are found
-    // if (draggedQueueIndex === -1 || targetQueueIndex === -1) return;
-
-    // // Find the indexes of the dragged and target items in queues
-    // const draggedItemIndex = queues[draggedQueueIndex].queueItems.findIndex(
-    //   item => item.id === draggedItem.id
-    // );
-    // const targetItemIndex = queues[targetQueueIndex].queueItems.findIndex(
-    //   item => item.id === targetItem.id
-    // );
-
-    // // Copy the queues
-    // const updatedDraggedQueueItems = [...queues[draggedQueueIndex].queueItems];
-    // const updatedTargetQueueItems = [...queues[targetQueueIndex].queueItems];
-
-    // // removes the draggeed item (draggedItem - what to move, 1 - items to remove)
-    // updatedDraggedQueueItems.splice(draggedItemIndex, 1);
-
-    // // inserts without removing elements (target - where to; 0 - items to remove; draggedItem - what is moved)
-    // updatedTargetQueueItems.splice(targetItemIndex, 0, draggedItem);
-
-    // // Update the state with modified items
-    // setQueues((prevQueues: QueueType[]) => {
-    //   return prevQueues.map((q, index) => {
-    //     if (index === draggedQueueIndex) {
-    //       return {...q, queueItems: updatedDraggedQueueItems};
-    //     }
-    //     if (index === targetQueueIndex) {
-    //       return {...q, queueItems: updatedTargetQueueItems};
-    //     }
-    //     return q;
-    //   });
-    // });
-
     setDraggedItem(null);
   };
 
