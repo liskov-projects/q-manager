@@ -4,6 +4,7 @@ import Player from "@/types/Player";
 // context
 import {useAppContext} from "@/Context/AppContext";
 import useAddToQueues from "@/Hooks/useAddToQueues";
+import PlayerItem from "./PlayerItem";
 
 export default function ProcessedPlayers() {
   const {players} = useAppContext();
@@ -14,12 +15,17 @@ export default function ProcessedPlayers() {
   });
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div
+      className="flex flex-col"
+
+      // className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
       {processedPlayers.map((player: Player) => (
         <div
           key={player.id}
           className="bg-blue-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
-          <span className="text-white font-bold">{player.names}</span>
+          <PlayerItem>{player.names}</PlayerItem>
+          {/* <span className="text-white font-bold">{player.names}</span> */}
 
           {!player.assignedToQueue && (
             <Button

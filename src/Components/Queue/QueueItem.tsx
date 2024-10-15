@@ -4,7 +4,8 @@ import React from "react";
 import {useAppContext} from "@/Context/AppContext";
 export default function QueueItem({
   item,
-  className
+  className,
+  children
 }: // onDragStart,
 // onDragOver,
 // onDrop
