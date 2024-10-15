@@ -5,7 +5,7 @@ export default function PlayerItem({item, className, children}) {
 
   return (
     <li
-      className={children}
+      className={className}
       draggable
       onDragStart={() => handleDragStart(item)}
       onDragOver={e => handleDragOver(e, item)}

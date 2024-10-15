@@ -25,9 +25,7 @@ export default function PlayersList() {
           onDrop={e => handleDrop(e, player)}
           key={player.id}
           className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between my-2">
-          {/* <QueueItem>{player.names}</QueueItem> */}
           <PlayerItem item={player}>{player.names}</PlayerItem>
-          {/* <span className="text-white font-bold">{player.names}</span> */}
           {!player.assignedToQueue && (
             <Button
               onClick={() => handleAddToShortestQueue(player.id)}

@@ -88,6 +88,24 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     });
   };
 
+  //   NEW:
+  //   const dragNdropPlayers = (draggedItem, targetItem) => {
+  //     // Find the indexes of the dragged and target items in the Players []
+  //     const draggedItemIndex = players.findIndex(item => item.id === draggedItem.id);
+  //     const targetItemIndex = players.findIndex(item => item.id === targetItem.id);
+
+  //     // make a copy
+  //     const updatedPlayers = [...players];
+
+  //     // removes the draggeed item (draggedItem - what to move, 1 - items to remove)
+  //     updatedPlayers.splice(draggedItemIndex, 1);
+
+  //     // inserts without removing elements (target - where to; 0 - items to remove; draggedItem - what is moved)
+  //     updatedPlayers.splice(targetItemIndex, 0, draggedItem);
+
+  //     setPlayers(updatedPlayers);
+  //   };
+
   // does the main dragndrop
   const handleDrop = (e: React.MouseEvent<HTMLButtonElement>, targetItem: Player) => {
     e.preventDefault();
@@ -108,6 +126,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
       // into PROCESSED
       droppedOnObject.processedThroughQueue
     ) {
+      //   dragNdropPlayers(draggedItem, targetItem);
       setPlayers(prevPlayers =>
         prevPlayers.map(p =>
           p.id === draggedObject.id ? {...p, processedThroughQueue: true} : p
@@ -115,8 +134,8 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
       );
     } else if (
       // into UPROCESSED
-      droppedOnObject.assignedToQueue === false &&
-      droppedOnObject.processedThroughQueue === false
+      !droppedOnObject.assignedToQueue &&
+      !droppedOnObject.processedThroughQueue
     ) {
       setPlayers(prevPlayers =>
         prevPlayers.map(p =>
@@ -127,7 +146,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
       );
     } else if (
       // into the QUEUES
-      targetItem.assignedToQueue === true
+      droppedOnObject.assignedToQueue
     ) {
       // works for items already in the queues
       dragNdropInQueues(draggedItem, targetItem);

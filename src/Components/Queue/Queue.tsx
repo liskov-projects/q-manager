@@ -1,12 +1,4 @@
-// context
-// import {useAppContext} from "@/Context/AppContext";
-//
-// import {useState} from "react";
-//types
-// import Player from "@/types/Player";
-//components
 import Button from "@/Components/Button";
-import QueueItem from "./QueueItem";
 import QueueType from "@/types/Queue";
 import useAddToQueues from "@/Hooks/useAddToQueues";
 import PlayerItem from "../PlayerItem";
@@ -23,7 +15,6 @@ export default function Queue({
   onProgress: (index: number) => QueueType[];
   index: number;
 }) {
-  // const {setQueues} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
 
   return (
@@ -33,7 +24,7 @@ export default function Queue({
           Queue {queue.queueName}
         </h3>
       </div>
-      {/* Progress Button */}
+
       {queue.queueItems.length > 0 && (
         <Button
           className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition-colors duration-200"
@@ -43,19 +34,13 @@ export default function Queue({
       )}
       {queue.queueItems.length > 0 ? (
         <ul className="mb-4">
-          {/* REVIEW: item should be a player */}
           {queue.queueItems.map((item, index) => (
             <PlayerItem
-              // <QueueItem
               key={item.id}
-              className={`${
+              className={` text-bear-50 ${
                 index === 0 ? "bg-purple-200" : "bg-red-100"
               }  text-purple-800 p-2 rounded-lg mb-2`}
-              item={item}
-              // onDragStart={handleDragStart}
-              // onDragOver={handleDragOver}
-              // onDrop={handleDrop}
-            >
+              item={item}>
               {item.names}
             </PlayerItem>
           ))}
