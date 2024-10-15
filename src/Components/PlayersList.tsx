@@ -2,6 +2,8 @@ import useAddToQueues from "@/Hooks/useAddToQueues";
 import Button from "./Button";
 // context
 import {useAppContext} from "@/Context/AppContext";
+import PlayerItem from "./PlayerItem";
+import QueueItem from "./Queue/QueueItem";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 export default function PlayersList() {
@@ -12,7 +14,10 @@ export default function PlayersList() {
     player => !player.assignedToQueue && !player.processedThroughQueue
   );
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div
+      className="flex flex-col"
+      // className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
       {unprocessedPlayers.map(player => (
         <div
           draggable
@@ -20,8 +25,10 @@ export default function PlayersList() {
           onDragOver={e => handleDragOver(e, player)}
           onDrop={e => handleDrop(e, player)}
           key={player.id}
-          className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
-          <span className="text-white font-bold">{player.names}</span>
+          className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between my-2">
+          {/* <QueueItem>{player.names}</QueueItem> */}
+          <PlayerItem>{player.names}</PlayerItem>
+          {/* <span className="text-white font-bold">{player.names}</span> */}
           {!player.assignedToQueue && (
             <Button
               onClick={() => handleAddToShortestQueue(player.id)}

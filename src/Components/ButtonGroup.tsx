@@ -8,7 +8,7 @@ export default function ButtonGroup() {
     useAddToQueues();
 
   return (
-    <div className="flex flex-row justify-around">
+    <div className="flex flex-row justify-around m-6">
       <Button
         className="bg-gray-300 text-black py-2 h-[45px] w-[250px] px-4 rounded"
         onClick={() => {

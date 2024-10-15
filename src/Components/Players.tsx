@@ -1,6 +1,7 @@
 import {useAppContext} from "@/Context/AppContext";
 import useAddToQueues from "@/Hooks/useAddToQueues";
 import Button from "./Button";
+import PlayerItem from "./PlayerItem";
 // FIXME: trying to extract both player fields into one comp
 export default function Players({}) {
   const {players} = useAppContext();
@@ -18,7 +19,8 @@ export default function Players({}) {
           <div
             key={player.id}
             className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between">
-            <span className="text-white font-bold">{player.name}</span>
+            <PlayerItem>{player.name}</PlayerItem>
+            {/* <span className="text-white font-bold">{player.name}</span> */}
             {!player.assignedToQueue && (
               <Button
                 onClick={() => addItemToShortestQueue(player.id)}
