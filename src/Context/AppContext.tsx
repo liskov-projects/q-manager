@@ -41,10 +41,15 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
 
   // mark player as processed
   const markPlayerAsProcessed = (playerId: string) => {
-    setPlayers((prev: QueueType[]) => {
-      prev.map(p => (p.id === playerId ? {...p, processedThroughQueue: true} : p));
-    });
+    setPlayers((prev: Player[]) =>
+      prev.map(player =>
+        player.id === playerId
+          ? { ...player, processedThroughQueue: true }
+          : player
+      )
+    );
   };
+
 
   //   NEW: D N D    x p e r i m e n t
 
