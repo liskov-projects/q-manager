@@ -34,13 +34,10 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   const markPlayerAsProcessed = (playerId: string) => {
     setPlayers((prev: Player[]) =>
       prev.map(player =>
-        player.id === playerId
-          ? { ...player, processedThroughQueue: true }
-          : player
+        player.id === playerId ? {...player, processedThroughQueue: true} : player
       )
     );
   };
-
 
   //   NEW: D N D    x p e r i m e n t
   const handleDragStart = (draggedItem: Player) => setDraggedItem(draggedItem);
@@ -114,7 +111,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   // does the main dragndrop
   const handleDrop = (e: React.MouseEvent<HTMLButtonElement>, targetItem: Player) => {
     e.preventDefault();
-
+    console.log(targetItem);
     if (!draggedItem) return;
 
     // console.log(e);

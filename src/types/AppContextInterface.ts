@@ -1,3 +1,5 @@
+import Player from "./Player";
+import QueueType from "./Queue";
 // context type
 interface AppContextType {
   players: Player[];

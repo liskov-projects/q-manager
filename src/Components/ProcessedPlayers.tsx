@@ -15,27 +15,25 @@ export default function ProcessedPlayers() {
   });
 
   return (
-    <div className="flex flex-col">
+    <ul className="flex flex-col bg-green-600">
       {processedPlayers.map((player: Player) => (
         <div
           key={player.id}
-          className="bg-blue-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between"
+          className="bg-blue-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between my-2"
           draggable
           onDragStart={() => handleDragStart(player)}
           onDragOver={e => handleDragOver(e)}
           onDrop={e => handleDrop(e, player)}>
           <PlayerItem item={player}>{player.names}</PlayerItem>
-          {/* <span className="text-white font-bold">{player.names}</span> */}
-
-          {!player.assignedToQueue && (
+          {!player.assignedToQueue ? (
             <Button
               onClick={() => handleAddToShortestQueue(player.id)}
               className="bg-white text-blue-500 px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition-colors duration-200 ease-in-out">
               Add to Shortest Queue
             </Button>
-          )}
+          ) : null}
         </div>
       ))}
-    </div>
+    </ul>
   );
 }
