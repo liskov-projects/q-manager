@@ -40,7 +40,13 @@ export default function Queue({
               className={` text-bear-50 ${
                 index === 0 ? "bg-purple-200" : "bg-red-100"
               }  text-purple-800 p-2 rounded-lg mb-2`}
-              item={item}>
+              item={item}
+              // move these here from PlayerItem to declutter (double drag in (un)processed)
+              // draggable
+              // onDragStart={() => handleDragStart(item)}
+              // onDragOver={e => handleDragOver(e, item)}
+              // onDrop={e => handleDrop(e, item)}
+            >
               {item.names}
             </PlayerItem>
           ))}

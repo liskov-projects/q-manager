@@ -1,6 +1,6 @@
 import {useAppContext} from "@/Context/AppContext";
 
-export default function PlayerItem({item, className, children}) {
+export default function PlayerItem({item, className, children, ...rest}) {
   const {handleDragStart, handleDragOver, handleDrop} = useAppContext();
 
   return (

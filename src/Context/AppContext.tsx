@@ -108,7 +108,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   //     setPlayers(updatedPlayers);
   //   };
 
-  // does the main dragndrop
+  //OLD: does the main dragndrop
   const handleDrop = (e: React.MouseEvent<HTMLButtonElement>, targetItem: Player) => {
     e.preventDefault();
     console.log(targetItem);
