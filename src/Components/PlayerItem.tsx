@@ -1,11 +1,13 @@
 import {useAppContext} from "@/Context/AppContext";
 import {ReactNode} from "react";
 import Player from "@/types/Player";
+import ButtonUpDown from "./ButtonUpDown";
 
 export default function PlayerItem({
   item,
   className,
-  children
+  children,
+  queueId
 }: {
   item: Player;
   className: string;
@@ -14,13 +16,18 @@ export default function PlayerItem({
   const {handleDragStart, handleDragOver, handleDrop} = useAppContext();
 
   return (
-    <li
-      className={className}
-      draggable
-      onDragStart={() => handleDragStart(item)}
-      onDragOver={e => handleDragOver(e)}
-      onDrop={e => handleDrop(e, item)}>
-      {children}
-    </li>
+    <div className="flex, flex-row">
+      <li
+        className={className}
+        draggable
+        onDragStart={() => handleDragStart(item)}
+        onDragOver={e => handleDragOver(e)}
+        onDrop={e => handleDrop(e, item)}>
+        {children}
+        {item.assignedToQueue && !item.processedThroughQueue && (
+          <ButtonUpDown item={item} queueId={queueId} />
+        )}
+      </li>
+    </div>
   );
 }

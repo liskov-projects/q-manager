@@ -40,7 +40,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     console.log(players);
   }, []);
 
-  // mark player as processed | void because we're changin state with setState
+  //NOTE: use for process all btn? mark player as processed | void because we're changin state with setState
   const markPlayerAsProcessed = (playerId: string) => {
     setPlayers(prev =>
       prev.map(player =>

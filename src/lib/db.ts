@@ -8,7 +8,7 @@ if (!MONGO_URI) throw new Error("Define MONGO_URI");
 
 // will allow to reuse the established connection
 let cached = global.mongoose;
-
+// tried to resolve this with global.d.ts
 if (!cached) cached = global.mongoose = {conn: null, promise: null};
 
 async function dbConnect() {

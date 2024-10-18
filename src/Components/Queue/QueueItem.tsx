@@ -12,14 +12,16 @@ export default function QueueItem({
 }) {
   const {handleDragStart, handleDragOver, handleDrop} = useAppContext();
   return (
-    <li
-      className={className}
-      // for DRAGNDROP
-      draggable
-      onDragStart={() => handleDragStart(item)}
-      onDragOver={e => handleDragOver(e)}
-      onDrop={e => handleDrop(e, item)}>
-      {item.names}
-    </li>
+    <>
+      <li
+        className={className}
+        // for DRAGNDROP
+        draggable
+        onDragStart={() => handleDragStart(item)}
+        onDragOver={e => handleDragOver(e)}
+        onDrop={e => handleDrop(e, item)}>
+        {item.names}
+      </li>
+    </>
   );
 }

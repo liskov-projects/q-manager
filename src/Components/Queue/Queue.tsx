@@ -36,8 +36,10 @@ export default function Queue({
               key={item.id}
               className={` text-bear-50 ${
                 index === 0 ? "bg-purple-200" : "bg-red-100"
-              }  text-purple-800 p-2 rounded-lg mb-2`}
+              }  text-purple-800 p-2 rounded-lg mb-2 text-center`}
+              // are passed down to ButtonUpDown
               item={item}
+              queueId={queue.id}
               // move these here from PlayerItem to declutter (double drag in (un)processed)
               // draggable
               // onDragStart={() => handleDragStart(item)}

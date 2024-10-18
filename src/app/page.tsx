@@ -7,8 +7,9 @@ import PlayersList from "@/Components/PlayersList";
 import QueuesGrid from "@/Components/Queue/QueuesGrid";
 import ProcessedPlayers from "@/Components/ProcessedPlayers";
 import ButtonGroup from "@/Components/ButtonGroup";
-// NEW:
-import Players from "@/Components/Players";
+
+// FIXME:
+// import Players from "@/Components/Players";
 const App = () => {
   return (
     <AppProvider>
@@ -28,7 +29,6 @@ const App = () => {
         <div className=" p-8 bg-blue-100">
           <SectionHeader>Queues</SectionHeader>
           <ButtonGroup />
-
           <QueuesGrid />
         </div>
 
