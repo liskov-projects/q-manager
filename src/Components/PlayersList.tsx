@@ -15,14 +15,16 @@ export default function PlayersList() {
   return (
     <ul className="flex flex-col bg-red-700">
       {unprocessedPlayers.map(player => (
-        <div
+        <li
           key={player.id}
           className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between my-2"
           draggable
           onDragStart={() => handleDragStart(player)}
           onDragOver={e => handleDragOver(e)}
           onDrop={e => handleDrop(e, player)}>
-          <PlayerItem item={player}>{player.names}</PlayerItem>
+          <PlayerItem className="" item={player}>
+            {player.names}
+          </PlayerItem>
           {!player.assignedToQueue ? (
             <Button
               onClick={() => handleAddToShortestQueue(player.id)}
@@ -30,7 +32,7 @@ export default function PlayersList() {
               Add to Shortest Queue
             </Button>
           ) : null}
-        </div>
+        </li>
       ))}
     </ul>
   );

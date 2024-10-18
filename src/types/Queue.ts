@@ -1,3 +1,5 @@
+import Player from "./Player";
+
 type QueueType = {
   queueName: string;
   queueItems: Player[];

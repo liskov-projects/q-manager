@@ -9,10 +9,7 @@ export default function Queue({
   index
 }: {
   queue: QueueType;
-  // because we use a callback in setQueues
-  setQueues: React.Dispatch<React.SetStateAction<QueueType[]>>;
   className: string;
-  onProgress: (index: number) => QueueType[];
   index: number;
 }) {
   const {handleProgressOneStep} = useAddToQueues();

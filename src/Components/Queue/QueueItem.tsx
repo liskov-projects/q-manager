@@ -2,6 +2,7 @@ import Player from "@/types/Player";
 // import QueueType from "@/types/Queue";
 import React from "react";
 import {useAppContext} from "@/Context/AppContext";
+
 export default function QueueItem({
   item,
   className
@@ -16,7 +17,7 @@ export default function QueueItem({
       // for DRAGNDROP
       draggable
       onDragStart={() => handleDragStart(item)}
-      onDragOver={e => handleDragOver(e, item)}
+      onDragOver={e => handleDragOver(e)}
       onDrop={e => handleDrop(e, item)}>
       {item.names}
     </li>
