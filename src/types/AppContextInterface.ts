@@ -6,8 +6,11 @@ interface AppContextType {
   queues: QueueType[];
   setQueues: React.Dispatch<React.SetStateAction<QueueType[]>>;
   setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
-  // should return QueueTyep[]?
-  markPlayerAsProcessed: (playerId: string) => QueueType[];
+  // the following return void because they update state
+  markPlayerAsProcessed: (playerId: string) => void;
+  handleDragStart: (draggedItem: Player) => void;
+  handleDragOver: (e: React.MouseEvent<HTMLLIElement>) => void;
+  handleDrop: (e: React.MouseEvent<HTMLLIElement>, targetItem: Player) => void;
 }
 
 export default AppContextType;

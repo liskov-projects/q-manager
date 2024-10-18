@@ -40,9 +40,9 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     console.log(players);
   }, []);
 
-  // mark player as processed
+  // mark player as processed | void because we're changin state with setState
   const markPlayerAsProcessed = (playerId: string) => {
-    setPlayers((prev: Player[]) =>
+    setPlayers(prev =>
       prev.map(player =>
         player.id === playerId ? {...player, processedThroughQueue: true} : player
       )
@@ -52,10 +52,10 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   //   NEW: D N D    x p e r i m e n t
   const handleDragStart = (draggedItem: Player) => setDraggedItem(draggedItem);
   // type for the event object
-  const handleDragOver = (e: React.MouseEvent<HTMLButtonElement>) =>
+  const handleDragOver = (e: React.MouseEvent<HTMLLIElement>): void =>
     e.preventDefault();
 
-  const dragNdropInQueues = (draggedItem, targetItem) => {
+  const dragNdropInQueues = (draggedItem: Player, targetItem: Player) => {
     // OLD: works for items ALREADY in the queue
     // Find the queues containing dragged and target items
     const draggedQueueIndex = queues.findIndex(q =>
@@ -119,7 +119,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   //   };
 
   //OLD: does the main dragndrop
-  const handleDrop = (e: React.MouseEvent<HTMLButtonElement>, targetItem: Player) => {
+  const handleDrop = (e: React.MouseEvent<HTMLLIElement>, targetItem: Player) => {
     e.preventDefault();
     console.log(targetItem);
     if (!draggedItem) return;
@@ -131,6 +131,11 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     const draggedObject = players.find(player => player.id === draggedItem.id);
     const droppedOnObject = players.find(player => player.id === targetItem.id);
 
+    if (!droppedOnObject) {
+      console.error("Item not found");
+      return;
+    }
+
     console.log("this is WHAT we drop ", draggedObject);
     console.log("this is WHERE we drop ", droppedOnObject);
     // check where items is going to
@@ -141,7 +146,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
       //   dragNdropPlayers(draggedItem, targetItem);
       setPlayers(prevPlayers =>
         prevPlayers.map(p =>
-          p.id === draggedObject.id ? {...p, processedThroughQueue: true} : p
+          p.id === draggedObject?.id ? {...p, processedThroughQueue: true} : p
         )
       );
     } else if (
