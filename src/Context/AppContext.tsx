@@ -1,10 +1,16 @@
-import React, {createContext, useContext, useState, ReactNode} from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode
+} from "react";
 // types
 import QueueType from "@/types/Queue";
 import Player from "@/types/Player";
 import AppContextType from "@/types/AppContextInterface";
 // mock data
-import players from "../Data/players.js";
+// import players from "../Data/players.js";
 
 // creating Context
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -18,17 +24,37 @@ const initialQueues: QueueType[] = [
 ];
 
 // Initialize players with assignedToQueue property
-const playersUpdated: Player[] = players.map(player => ({
-  ...player,
-  assignedToQueue: false,
-  processedThroughQueue: false
-}));
+// const playersUpdated: Player[] = players.map(player => ({
+//   ...player,
+//   assignedToQueue: false,
+//   processedThroughQueue: false
+// }));
 
 // context provider
 export const AppProvider = ({children}: {children: ReactNode}) => {
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
-  const [players, setPlayers] = useState<Player[]>(playersUpdated);
+  const [players, setPlayers] = useState<Player[]>([]);
   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
+
+  // fetching from db is an effect
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      // the path to players route
+      const response = await fetch("../api/players/");
+      const data = await response.json();
+      // move to db schema
+      const playersUpdated = data.map(player => ({
+        ...player,
+        assignedToQueue: false,
+        processThroughQueue: false
+      }));
+      //
+      setPlayers(playersUpdated);
+    };
+
+    fetchPlayers();
+    console.log(players);
+  }, []);
 
   // mark player as processed
   const markPlayerAsProcessed = (playerId: string) => {

@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
-import Player from "./Player";
+import PlayerModel from "./PlayerModel";
 
 const queueSchema = new mongoose.Schema({
   queueName: {type: String, required: true},
-  QueueItems: [{type: Player}],
+  QueueItems: [{type: PlayerModel}],
   id: {type: String, required: true}
 });
-const Queue = mongoose.models.Queue || mongoose.model("Queue", queueSchema);
-export default Queue;
+const QueueModel =
+  mongoose.models.QueueModel || mongoose.model("QueueModel", queueSchema);
+export default QueueModel;
