@@ -5,7 +5,7 @@ import QueueType from "@/types/Queue.js";
 import {useAppContext} from "@/Context/AppContext";
 
 const useAddToQueues = () => {
-  const {players, queues, setPlayers, setQueues} = useAppContext();
+  const {players, queues, setPlayers, setQueues, initialQueues} = useAppContext();
 
   // helper
   const findShortestQueue = (queues: QueueType[]) => {
@@ -57,9 +57,42 @@ const useAddToQueues = () => {
     for (const item of items) {
       if (!item.assignedToQueue) {
         item.assignedToQueue = true;
+        item.processedThroughQueue = false;
         handleAddToShortestQueue(item.id);
       }
     }
+  };
+
+  // NEW:
+  const handleProcessAll = (items: Player[]) => {
+    const itemsToUpdate = items.map(item => {
+      if (item.processedThroughQueue !== true) {
+        return {
+          ...item,
+          processedThroughQueue: true,
+          assignedToQueue: false
+        };
+      }
+    });
+
+    setPlayers(itemsToUpdate);
+    setQueues(initialQueues);
+  };
+
+  // NEW:
+  const handleUnprocessAll = (items: Player[]) => {
+    const itemsToUpdate = items.map(item => {
+      if (item.processedThroughQueue === true || item.assignedToQueue) {
+        return {
+          ...item,
+          processedThroughQueue: false,
+          assignedToQueue: false
+        };
+      }
+    });
+
+    setPlayers(itemsToUpdate);
+    setQueues(initialQueues);
   };
 
   const handleProgressOneStep = (queueIndex: number) => {
@@ -122,7 +155,9 @@ const useAddToQueues = () => {
     handleAddAllToQueues,
     handleProgressOneStep,
     handleRedistributeQueues,
-    findAssignedToQueue
+    findAssignedToQueue,
+    handleProcessAll,
+    handleUnprocessAll
   };
 };
 

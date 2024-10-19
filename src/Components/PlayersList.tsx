@@ -9,9 +9,11 @@ export default function PlayersList() {
   const {players, handleDragStart, handleDragOver, handleDrop} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
 
+  //NOTE: use to be a source of bugs for unprocessAllButton
   const unprocessedPlayers = players.filter(
     player => !player.assignedToQueue && !player.processedThroughQueue
   );
+
   return (
     <ul className="flex flex-col bg-red-700">
       {unprocessedPlayers.map(player => (

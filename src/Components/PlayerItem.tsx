@@ -18,7 +18,7 @@ export default function PlayerItem({
 
   return (
     <div className="flex, flex-row">
-      <li
+      <div
         className={className}
         draggable
         onDragStart={() => handleDragStart(item)}
@@ -29,7 +29,7 @@ export default function PlayerItem({
           // REVIEW:
           <ButtonUpDown item={item} queueId={queueId} />
         )}
-      </li>
+      </div>
     </div>
   );
 }

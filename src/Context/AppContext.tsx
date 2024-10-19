@@ -13,20 +13,18 @@ import AppContextType from "@/types/AppContextInterface";
 // creating Context
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-// Initial queue setup
-const initialQueues: QueueType[] = [
-  {queueName: "1", queueItems: [], id: "0987"},
-  {queueName: "2", queueItems: [], id: "1234"},
-  {queueName: "3", queueItems: [], id: "5678"},
-  {queueName: "4", queueItems: [], id: "4321"}
-];
-
 // context provider
 export const AppProvider = ({children}: {children: ReactNode}) => {
+  // Initial queue setup
+  const initialQueues: QueueType[] = [
+    {queueName: "1", queueItems: [], id: "0987"},
+    {queueName: "2", queueItems: [], id: "1234"},
+    {queueName: "3", queueItems: [], id: "5678"},
+    {queueName: "4", queueItems: [], id: "4321"}
+  ];
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>([]);
   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
-
   // fetching from db is an effect
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -181,7 +179,9 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
         markPlayerAsProcessed,
         handleDragStart,
         handleDragOver,
-        handleDrop
+        handleDrop,
+        // FIXME: dev purposes
+        initialQueues
       }}>
       {children}
     </AppContext.Provider>
