@@ -1,9 +1,9 @@
 import dbConnect from "@/lib/db";
-import Player from "@/models/PlayerModel";
+import PlayerModel from "@/models/PlayerModel";
 
 export async function GET() {
   await dbConnect();
-  const players = await Player.find({});
+  const players = await PlayerModel.find({});
   console.log("PLAYERS");
   console.log(players);
   return new Response(JSON.stringify(players), {
@@ -11,15 +11,20 @@ export async function GET() {
   });
 }
 
-/*With the current structure of a players object */
-// export async function POST(req) {
-//   await dbConnect();
+export async function POST(req) {
+  await dbConnect();
 
-//   const {names, category, phoneNumbers} = await req.json;
-//   const newPayer = new PlayerModel({names, category, phoneNumbers});
-//   await newPayer.save();
+  // handles incoming JSON
+  const {names, categories, phoneNumbers} = await req.json();
 
-//   return new Response(JSON.stringify(newPayer), {
-//     headers: {"Content-Type": "application/json"}
-//   });
-// }
+  // creates a new entry using the incoming data
+  const newPayer = new PlayerModel({names, categories, phoneNumbers});
+
+  // saves to db
+  await newPayer.save();
+
+  // Response - NextJS constructor that send data to from server to client
+  return new Response(JSON.stringify(newPayer), {
+    headers: {"Content-Type": "application/json"}
+  });
+}

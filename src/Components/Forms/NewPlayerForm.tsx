@@ -6,23 +6,49 @@ export default function NewPlayerForm() {
   const [newPlayers, setNewPlayers] = useState({
     names: "",
     categories: [],
-    phoneNumber: ""
+    phoneNumbers: ""
   });
 
   function handleChange(e) {
     setNewPlayers({...newPlayers, [e.target.name]: e.target.value});
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
+    // data to send to backend
+    const newItem = {
+      names: newPlayers.names,
+      categories: [newPlayers.categories],
+      phoneNumbers: [newPlayers.phoneNumbers]
+    };
+
+    // POST to api | REVIEW: check endpoint
+    const res = await fetch("@/api/players", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newItem)
+    });
+
+    // check response code
+    if (res.ok) {
+      const data = await res.json();
+      console.log("Added: ", data);
+    } else {
+      throw new Error("Error adding item");
+    }
+
+    // ressetting the form
     setNewPlayers({
       names: "",
       categories: [],
-      phoneNumber: ""
+      phoneNumbers: ""
     });
     console.log(newPlayers);
   }
+
   return (
     <form className="bg-blue-300 flex flex-col items-center" onSubmit={handleSubmit}>
       <label htmlFor="name">Name</label>
@@ -41,11 +67,11 @@ export default function NewPlayerForm() {
         onChange={handleChange}
       />
 
-      <label htmlFor="phoneNumber">Phone Number</label>
+      <label htmlFor="phoneNumbers">Phone Number</label>
       <input
         type="text"
-        name="phoneNumber"
-        value={newPlayers.phoneNumber}
+        name="phoneNumbers"
+        value={newPlayers.phoneNumbers}
         onChange={handleChange}
       />
 

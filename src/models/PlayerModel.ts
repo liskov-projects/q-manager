@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const playerSchema = new mongoose.Schema(
   {
-    id: {type: Number, required: true, unique: true},
+    // FIXME: id is assigned by MongoDB _id | check where used
+    id: {type: Number, unique: true},
     names: {type: String, required: true},
-    category: {type: [String], required: true},
+    categories: {type: [String], required: true},
     phoneNumbers: [{type: String, required: true}],
     assignedToQueue: {type: Boolean, required: true},
     processThroughQueue: {type: Boolean, required: true}
