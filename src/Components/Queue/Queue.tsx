@@ -31,24 +31,27 @@ export default function Queue({
       )}
       {queue.queueItems.length > 0 ? (
         <ul className="mb-4">
-          {queue.queueItems.map((item, index) => (
-            <PlayerItem
-              key={item.id}
-              className={` text-bear-50 ${
-                index === 0 ? "bg-purple-200" : "bg-red-100"
-              }  text-purple-800 p-2 rounded-lg mb-2 text-center`}
-              // are passed down to ButtonUpDown
-              item={item}
-              queueId={queue.id}
-              // move these here from PlayerItem to declutter (double drag in (un)processed)
-              // draggable
-              // onDragStart={() => handleDragStart(item)}
-              // onDragOver={e => handleDragOver(e, item)}
-              // onDrop={e => handleDrop(e, item)}
-            >
-              {item.names}
-            </PlayerItem>
-          ))}
+          {queue.queueItems.map(
+            (item, index) =>
+              item.assignedToQueue && (
+                <PlayerItem
+                  key={item.id}
+                  className={` text-bear-50 ${
+                    index === 0 ? "bg-purple-200" : "bg-red-100"
+                  }  text-purple-800 p-2 rounded-lg mb-2 text-center`}
+                  // are passed down to ButtonUpDown
+                  item={item}
+                  queueId={queue.id}
+                  // move these here from PlayerItem to declutter (double drag in (un)processed)
+                  // draggable
+                  // onDragStart={() => handleDragStart(item)}
+                  // onDragOver={e => handleDragOver(e, item)}
+                  // onDrop={e => handleDrop(e, item)}
+                >
+                  {item.names}
+                </PlayerItem>
+              )
+          )}
         </ul>
       ) : (
         <p className="text-gray-600 mb-4">No items in queue</p>

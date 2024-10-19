@@ -12,12 +12,13 @@ export default function PlayerItem({
   item: Player;
   className: string;
   children: ReactNode;
+  queueId: string;
 }) {
   const {handleDragStart, handleDragOver, handleDrop} = useAppContext();
 
   return (
     <div className="flex, flex-row">
-      <li
+      <div
         className={className}
         draggable
         onDragStart={() => handleDragStart(item)}
@@ -27,7 +28,7 @@ export default function PlayerItem({
         {item.assignedToQueue && !item.processedThroughQueue && (
           <ButtonUpDown item={item} queueId={queueId} />
         )}
-      </li>
+      </div>
     </div>
   );
 }
