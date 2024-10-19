@@ -67,6 +67,8 @@ const useAddToQueues = () => {
     const processedPlayer: Player | undefined =
       newQueues[queueIndex].queueItems.shift();
 
+    if (!processedPlayer) console.log("no players to move");
+
     processedPlayer.processedThroughQueue = true;
     processedPlayer.assignedToQueue = false;
 
