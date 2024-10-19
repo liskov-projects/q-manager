@@ -2,6 +2,7 @@
 // context
 import {AppProvider} from "@/Context/AppContext";
 // components
+import Header from "@/Components/Header";
 import SectionHeader from "@/Components/SectionHeader";
 // NEW:
 import NewPlayerForm from "@/Components/Forms/NewPlayerForm";
@@ -15,12 +16,9 @@ import ButtonGroup from "@/Components/Buttons/ButtonGroup";
 const App = () => {
   return (
     <AppProvider>
-      <div className="flex justify-center py-8">
-        <h1 className="text-2xl font-bold text-gray-700 ">Queue Management</h1>
-      </div>
-      <div>{/* <NewPlayerForm /> */}</div>
-      <div className="flex flex-row bg-red-300 justify-around">
-        <div className="p-8 w-1/5 bg-green-200">
+      <Header />
+      <div className="flex flex-row justify-around">
+        <div className="p-8 w-1/5">
           {/* NEW: */}
           <SectionHeader>Add new Players</SectionHeader>
           <NewPlayerForm />
@@ -32,12 +30,12 @@ const App = () => {
           {/* <Players /> */}
         </div>
 
-        <div className=" p-8 bg-blue-100">
+        <div className=" p-8 ">
           <SectionHeader>Queues</SectionHeader>
           <QueuesGrid />
         </div>
 
-        <div className="p-8 w-1/5 bg-yellow-200">
+        <div className="p-8 w-1/5 ">
           <SectionHeader>Button Group</SectionHeader>
           <ButtonGroup />
           {/* NEW: */}

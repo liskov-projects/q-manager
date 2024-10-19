@@ -11,23 +11,30 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        bear: {
-          50: "#873E23"
-        },
+        // NEW:
         bluestone: {
           50: "#ABDBE3",
-          100: "#76B5C5"
+          100: "#76B5C5",
+          200: "#197A98",
+          300: "#266176",
+          400: "#1D4B5B"
         },
-        indigod: {
-          50: "#1E81B0",
-          100: "#164C78",
-          200: "#053970"
-        },
-        tangerine: {
-          50: "#E28743"
+        brick: {
+          50: "#F39678",
+          100: "#E28743",
+          200: "#F45B26",
+          300: "#F1260A"
         },
         shell: {
-          50: "#EEEEE4"
+          50: "#EEEEE4",
+          100: "#D7DADE",
+          200: "#747A82",
+          300: "#505458"
+        },
+        tennis: {
+          50: "#EEFC72",
+          100: "#E5F644",
+          200: "#D0E323"
         },
         licorice: {
           50: "#21130D"

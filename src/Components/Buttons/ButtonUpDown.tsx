@@ -6,7 +6,7 @@ import useAddToQueues from "@/Hooks/useAddToQueues";
 
 //REVIEW: why have to pass queueID? if taken out here doesn't change anything see PlayerItem
 export default function ButtonUpDown(item, queueId) {
-  const {queues, setQueues, setPlayers} = useAppContext();
+  const {queues, setQueues} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
 
   const itemToMove = item.item;
@@ -45,15 +45,14 @@ export default function ButtonUpDown(item, queueId) {
     }
   }
 
+  const currentQueue = queues.find(queue => queue.id === movingIn);
+  const queueToUpdate = [...currentQueue?.queueItems];
+  const itemToMoveIndex = queueToUpdate?.findIndex(item => item.id === itemToMove.id);
+
   function handleDown() {
-    const currentQueue = queues.find(queue => queue.id === movingIn);
     if (!currentQueue) return;
     // console.log("current queue ", currentQueue);
     // NEW:
-    const queueToUpdate = [...currentQueue?.queueItems];
-    const itemToMoveIndex = queueToUpdate?.findIndex(
-      item => item.id === itemToMove.id
-    );
     // console.log(itemToMoveIndex);
 
     if (itemToMoveIndex >= 0) {
@@ -78,12 +77,20 @@ export default function ButtonUpDown(item, queueId) {
     <div className="flex flex-col">
       <FontAwesomeIcon
         icon={faCaretUp}
-        className="bg-black cursor-pointer"
+        className={`cursor-pointer ${
+          itemToMoveIndex === 0
+            ? "bg-tennis-50 hover:bg-tennis-200"
+            : "bg-tennis-200 hover:bg-tennis-50"
+        } transition-colors duration-200`}
         onClick={() => handleUp(itemToMove, movingIn)}
       />
       <FontAwesomeIcon
         icon={faCaretDown}
-        className="bg-black cursor-pointer"
+        className={`cursor-pointer ${
+          itemToMoveIndex === 0
+            ? "bg-tennis-50 hover:bg-tennis-200"
+            : "bg-tennis-200 hover:bg-tennis-50"
+        } transition-colors duration-200`}
         onClick={() => handleDown()}
       />
     </div>

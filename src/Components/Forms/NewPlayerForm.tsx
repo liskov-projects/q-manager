@@ -50,7 +50,7 @@ export default function NewPlayerForm() {
   }
 
   return (
-    <form className="bg-blue-300 flex flex-col items-center" onSubmit={handleSubmit}>
+    <form className="flex flex-col items-center" onSubmit={handleSubmit}>
       <label htmlFor="name">Name</label>
       <input
         type="text"
@@ -75,7 +75,7 @@ export default function NewPlayerForm() {
         onChange={handleChange}
       />
 
-      <Button className={"bg-red-800 my-2"}>Add player</Button>
+      <Button className={"my-2"}>Add player</Button>
     </form>
   );
 }
