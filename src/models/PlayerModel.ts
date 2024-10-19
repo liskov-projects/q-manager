@@ -4,7 +4,7 @@ const playerSchema = new mongoose.Schema(
   {
     id: {type: Number, required: true, unique: true},
     names: {type: String, required: true},
-    category: {type: String, required: true},
+    category: {type: [String], required: true},
     phoneNumbers: [{type: String, required: true}],
     assignedToQueue: {type: Boolean, required: true},
     processThroughQueue: {type: Boolean, required: true}
