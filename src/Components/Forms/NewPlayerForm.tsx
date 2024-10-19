@@ -50,32 +50,44 @@ export default function NewPlayerForm() {
   }
 
   return (
-    <form className="flex flex-col items-center" onSubmit={handleSubmit}>
-      <label htmlFor="name">Name</label>
-      <input
-        type="text"
-        name="names"
-        value={newPlayers.names}
-        onChange={handleChange}
-      />
+    <form
+      className="flex flex-row items-center my-10 justify-between"
+      onSubmit={handleSubmit}>
+      <div className="flex flex-col">
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          name="names"
+          value={newPlayers.names}
+          onChange={handleChange}
+          className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+        />
 
-      <label htmlFor="categories">Category</label>
-      <input
-        type="text"
-        name="categories"
-        value={newPlayers.categories}
-        onChange={handleChange}
-      />
+        <label htmlFor="categories">Category</label>
+        <input
+          type="text"
+          name="categories"
+          value={newPlayers.categories}
+          onChange={handleChange}
+          className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+        />
 
-      <label htmlFor="phoneNumbers">Phone Number</label>
-      <input
-        type="text"
-        name="phoneNumbers"
-        value={newPlayers.phoneNumbers}
-        onChange={handleChange}
-      />
+        <label htmlFor="phoneNumbers">Phone Number</label>
+        <input
+          type="text"
+          name="phoneNumbers"
+          value={newPlayers.phoneNumbers}
+          onChange={handleChange}
+          className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+        />
+      </div>
 
-      <Button className={"my-2"}>Add player</Button>
+      <Button
+        className={
+          "my-8 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
+        }>
+        Add player
+      </Button>
     </form>
   );
 }

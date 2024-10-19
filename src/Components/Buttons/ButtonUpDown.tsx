@@ -80,7 +80,7 @@ export default function ButtonUpDown(item, queueId) {
         className={`cursor-pointer ${
           itemToMoveIndex === 0
             ? "bg-tennis-50 hover:bg-tennis-200"
-            : "bg-tennis-200 hover:bg-tennis-50"
+            : "bg-shell-100 hover:bg-tennis-50"
         } transition-colors duration-200`}
         onClick={() => handleUp(itemToMove, movingIn)}
       />
@@ -89,7 +89,7 @@ export default function ButtonUpDown(item, queueId) {
         className={`cursor-pointer ${
           itemToMoveIndex === 0
             ? "bg-tennis-50 hover:bg-tennis-200"
-            : "bg-tennis-200 hover:bg-tennis-50"
+            : "bg-shell-100 hover:bg-tennis-50"
         } transition-colors duration-200`}
         onClick={() => handleDown()}
       />

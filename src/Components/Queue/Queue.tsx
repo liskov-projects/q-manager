@@ -16,7 +16,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
 
       {queue.queueItems.length > 0 && (
         <Button
-          className="my-2 py-2 px-4 rounded bg-tennis-50 hover:bg-tennis-200 transition-colors duration-200"
+          className="my-2 py-2 px-4 rounded bg-tennis-200 hover:bg-tennis-50 transition-colors duration-200"
           onClick={() => handleProgressOneStep(index)}>
           Progress Queue
         </Button>
@@ -29,8 +29,8 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                 <PlayerItem
                   key={item.id}
                   className={`${
-                    index === 0 ? "bg-tennis-200" : "bg-tennis-50"
-                  }  text-purple-800 p-2 rounded-lg mb-2 text-center`}
+                    index === 0 ? "bg-tennis-200" : "bg-shell-100"
+                  }  text-shell-200 p-2 rounded-lg mb-2 text-center`}
                   // are passed down to ButtonUpDown
                   item={item}
                   queueId={queue.id}
