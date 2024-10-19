@@ -1,7 +1,7 @@
 import {useAppContext} from "@/Context/AppContext";
 import {ReactNode} from "react";
 import Player from "@/types/Player";
-import ButtonUpDown from "./ButtonUpDown";
+import ButtonUpDown from "./Buttons/ButtonUpDown";
 
 export default function PlayerItem({
   item,

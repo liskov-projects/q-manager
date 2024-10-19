@@ -33,18 +33,18 @@ export default function ButtonGroup() {
       </div>
       <div className="flex">
         <Button
-          className="bg-red-500 text-black py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2"
-          onClick={() => {
-            handleProcessAll(players);
-          }}>
-          Process all Players
-        </Button>
-        <Button
           className="bg-green-500 text-black py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2"
           onClick={() => {
             handleUnprocessAll(players);
           }}>
           Unprocess all Players
+        </Button>
+        <Button
+          className="bg-red-500 text-black py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2"
+          onClick={() => {
+            handleProcessAll(players);
+          }}>
+          Process all Players
         </Button>
       </div>
     </div>

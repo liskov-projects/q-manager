@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from "./Buttons/Button";
 // types
 import Player from "@/types/Player";
 // context

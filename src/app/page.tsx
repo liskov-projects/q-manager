@@ -6,7 +6,7 @@ import SectionHeader from "@/Components/SectionHeader";
 import PlayersList from "@/Components/PlayersList";
 import QueuesGrid from "@/Components/Queue/QueuesGrid";
 import ProcessedPlayers from "@/Components/ProcessedPlayers";
-import ButtonGroup from "@/Components/ButtonGroup";
+import ButtonGroup from "@/Components/Buttons/ButtonGroup";
 
 // FIXME:
 // import Players from "@/Components/Players";

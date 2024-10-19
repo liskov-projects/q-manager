@@ -1,4 +1,4 @@
-import Button from "@/Components/Button";
+import Button from "@/Components/Buttons/Button";
 import QueueType from "@/types/Queue";
 import useAddToQueues from "@/Hooks/useAddToQueues";
 import PlayerItem from "../PlayerItem";

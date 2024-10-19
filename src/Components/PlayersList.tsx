@@ -1,5 +1,5 @@
 import useAddToQueues from "@/Hooks/useAddToQueues";
-import Button from "./Button";
+import Button from "./Buttons/Button";
 // context
 import {useAppContext} from "@/Context/AppContext";
 import PlayerItem from "./PlayerItem";
