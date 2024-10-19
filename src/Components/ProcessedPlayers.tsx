@@ -15,7 +15,7 @@ export default function ProcessedPlayers() {
   });
 
   return (
-    <ul className="flex flex-col bg-green-600">
+    <ul className="flex flex-col bg-green-600 h-[70vh] overflow-hidden hover:overflow-y-auto">
       {processedPlayers.map((player: Player) => (
         <li
           key={player.id}

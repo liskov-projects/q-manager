@@ -15,11 +15,12 @@ export default function PlayersList() {
   );
 
   return (
-    <ul className="flex flex-col bg-red-700">
+    // REVIEW: viewport height
+    <ul className="flex flex-col bg-red-700 h-[70vh] overflow-hidden hover:overflow-y-auto">
       {unprocessedPlayers.map(player => (
         <li
           key={player.id}
-          className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-col justify-between my-2"
+          className="bg-purple-400 h-30 p-4 rounded-lg shadow-md flex flex-row justify-between my-2"
           draggable
           onDragStart={() => handleDragStart(player)}
           onDragOver={e => handleDragOver(e)}
