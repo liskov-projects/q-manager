@@ -24,9 +24,11 @@ export default function NewPlayerForm() {
     // console.log("New player data: ", newPlayers.phoneNumbers.split(","));
 
     const incomingCategories = newPlayers.categories.split(",");
-    console.log(incomingCategories);
-    const incomingPhoneNumbers = newPlayers.phoneNumbers.split(",");
-    console.log(incomingPhoneNumbers);
+    // console.log(incomingCategories);
+    const incomingPhoneNumbers = newPlayers.phoneNumbers
+      .split(",")
+      .map(number => number.trim());
+    // console.log(incomingPhoneNumbers);
     // data to send to backend
     const newItem = {
       names: newPlayers.names,
@@ -38,7 +40,6 @@ export default function NewPlayerForm() {
 
     console.log("Data sent to backend: ", newItem);
 
-    // POST to api | REVIEW: check endpoint
     try {
       const res = await fetch("/api/players", {
         method: "POST",
@@ -61,11 +62,11 @@ export default function NewPlayerForm() {
     }
 
     // ressetting the form
-    // setNewPlayers({
-    //   names: "",
-    //   categories: [],
-    //   phoneNumbers: ""
-    // });
+    setNewPlayers({
+      names: "",
+      categories: [],
+      phoneNumbers: []
+    });
     // console.log(newPlayers);
   }
 
