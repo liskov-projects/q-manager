@@ -66,6 +66,8 @@ const useAddToQueues = () => {
   // NEW:
   const handleProcessAll = (items: Player[]) => {
     const itemsToUpdate = items.map(item => {
+      if (item.processedThroughQueue) return item;
+
       if (item.processedThroughQueue !== true) {
         return {
           ...item,
@@ -82,6 +84,7 @@ const useAddToQueues = () => {
   // NEW:
   const handleUnprocessAll = (items: Player[]) => {
     const itemsToUpdate = items.map(item => {
+      if (!item.assignedToQueue) return item;
       if (item.processedThroughQueue === true || item.assignedToQueue) {
         return {
           ...item,
