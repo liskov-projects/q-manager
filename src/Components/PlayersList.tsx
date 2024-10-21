@@ -27,6 +27,9 @@ export default function PlayersList() {
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
       {/* NEW: */}
       <input
+        className={`focus:outline-none focus:ring-2 focus:ring-brick-200 ${
+          unprocessedPlayers.length === 0 && "hidden"
+        }`}
         type="text"
         placeholder="search player..."
         value={search}
