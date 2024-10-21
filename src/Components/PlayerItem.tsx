@@ -22,8 +22,7 @@ export default function PlayerItem({
         className={className}
         draggable
         onDragStart={() => handleDragStart(item)}
-        onDragOver={e => handleDragOver(e)}
-      >
+        onDragOver={e => handleDragOver(e)}>
         {children}
         {item.assignedToQueue && !item.processedThroughQueue && (
           // REVIEW:

@@ -106,7 +106,7 @@ export default function NewPlayerForm() {
       <Button
         type="submit"
         className={
-          "my-8 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
+          "ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
         }>
         Add player
       </Button>

@@ -20,7 +20,7 @@ export default function PlayersList() {
       {unprocessedPlayers.map(player => (
         <li
           key={player._id}
-          className="h-30 p-4 rounded-lg shadow-md flex flex-row justify-between my-2"
+          className="h-30 p-4 rounded-lg shadow-md flex flex-row justify-between my-2 bg-shell-100"
           draggable
           onDragStart={() => handleDragStart(player)}
           onDragOver={e => handleDragOver(e)}>
@@ -30,7 +30,7 @@ export default function PlayersList() {
           {!player.assignedToQueue ? (
             <Button
               onClick={() => handleAddToShortestQueue(player._id)}
-              className="px-4 py-2 rounded hover:bg-purple-500 hover:text-white transition-colors duration-200 ease-in-out">
+              className="px-4 py-2 rounded bg-tennis-50 hover:bg-tennis-200 hover:text-shell-300 transition-colors duration-200 ease-in-out">
               Add to Shortest Queue
             </Button>
           ) : null}
