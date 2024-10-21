@@ -10,7 +10,7 @@ interface AppContextType {
   markPlayerAsProcessed: (playerId: string) => void;
   handleDragStart: (draggedItem: Player) => void;
   handleDragOver: (e: React.MouseEvent<HTMLLIElement>) => void;
-  handleDrop: (e: React.MouseEvent<HTMLLIElement>, targetItem: Player) => void;
+  handleDrop: (e: React.MouseEvent<HTMLLIElement>, targetItem: Player, queue: QueueType) => void;
 }
 
 export default AppContextType;

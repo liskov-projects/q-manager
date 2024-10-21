@@ -7,7 +7,7 @@ import useAddToQueues from "@/Hooks/useAddToQueues";
 import PlayerItem from "./PlayerItem";
 
 export default function ProcessedPlayers() {
-  const {players, handleDragStart, handleDragOver, handleDrop} = useAppContext();
+  const {players, handleDragStart, handleDragOver} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
 
   const processedPlayers = players.filter(player => {
@@ -23,7 +23,7 @@ export default function ProcessedPlayers() {
           draggable
           onDragStart={() => handleDragStart(player)}
           onDragOver={e => handleDragOver(e)}
-          onDrop={e => handleDrop(e, player)}>
+          >
           <PlayerItem className="" item={player}>
             {player.names}
           </PlayerItem>

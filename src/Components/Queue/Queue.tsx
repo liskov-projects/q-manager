@@ -2,9 +2,30 @@ import Button from "@/Components/Buttons/Button";
 import QueueType from "@/types/Queue";
 import useAddToQueues from "@/Hooks/useAddToQueues";
 import PlayerItem from "../PlayerItem";
+import { useAppContext } from "@/Context/AppContext";
 
-export default function Queue({queue, index}: {queue: QueueType; index: number}) {
+export default function Queue({
+  queue,
+  index,
+  // onDrop,
+}: {
+  queue: QueueType;
+  index: number;
+  // onDrop: (e: React.DragEvent<HTMLDivElement>, player: any, queue: QueueType) => void; // Include onDrop prop
+}) {
   const {handleProgressOneStep} = useAddToQueues();
+  const {handleDrop} = useAppContext();
+
+  const handleDropEvent = (event: React.DragEvent<HTMLUListElement>, queue: QueueType) => {
+    event.preventDefault();
+
+    // Retrieve the dragged item from the dataTransfer object
+    // const draggedItem = JSON.parse(event.dataTransfer.getData("player"));
+    const draggedItem = PlayerItem;
+
+    // Call the centralized handleDrop function with the event, dragged item, and the queue
+    handleDrop(event, draggedItem, queue);
+  };
 
   return (
     <div className="rounded-lg shadow-lg p-6 flex flex-col justify-between">
@@ -22,7 +43,11 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
         </Button>
       )}
       {queue.queueItems.length > 0 ? (
-        <ul className="mb-4">
+        <ul 
+          className="mb-4"
+          onDrop={(event) => handleDropEvent(event, queue)}
+          onDragOver={(event) => event.preventDefault()}
+        >
           {queue.queueItems.map(
             (item, index) =>
               item.assignedToQueue && (
@@ -38,7 +63,6 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                   // draggable
                   // onDragStart={() => handleDragStart(item)}
                   // onDragOver={e => handleDragOver(e, item)}
-                  // onDrop={e => handleDrop(e, item)}
                 >
                   {item.names}
                 </PlayerItem>

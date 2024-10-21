@@ -117,13 +117,19 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   //   };
 
   //OLD: does the main dragndrop
-  const handleDrop = (e: React.MouseEvent<HTMLLIElement>, targetItem: Player) => {
+  const handleDrop = (
+    e: React.DragEvent<HTMLUListElement>,
+    targetItem: Player, 
+    queue: QueueType
+  ) => {
+
     e.preventDefault();
     console.log(targetItem);
     if (!draggedItem) return;
 
     // console.log(e);
-    // console.log(players);
+    console.log("THE QUEUE")
+    console.log(queue);
 
     // globally look for what we drag & drop
     const draggedObject = players.find(player => player.id === draggedItem.id);
@@ -137,36 +143,36 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     console.log("this is WHAT we drop ", draggedObject);
     console.log("this is WHERE we drop ", droppedOnObject);
     // check where items is going to
-    if (
-      // into PROCESSED
-      droppedOnObject.processedThroughQueue
-    ) {
-      //   dragNdropPlayers(draggedItem, targetItem);
-      setPlayers(prevPlayers =>
-        prevPlayers.map(p =>
-          p.id === draggedObject?.id ? {...p, processedThroughQueue: true} : p
-        )
-      );
-    } else if (
-      // into UPROCESSED
-      !droppedOnObject.assignedToQueue &&
-      !droppedOnObject.processedThroughQueue
-    ) {
-      setPlayers(prevPlayers =>
-        prevPlayers.map(p =>
-          p.id === draggedItem.id
-            ? {...p, assignedToQueue: false, processedThroughQueue: false}
-            : p
-        )
-      );
-    } else if (
-      // into the QUEUES
-      droppedOnObject.assignedToQueue
-    ) {
-      // works for items already in the queues
-      dragNdropInQueues(draggedItem, targetItem);
-    }
-    setDraggedItem(null);
+    // if (
+    //   // into PROCESSED
+    //   droppedOnObject.processedThroughQueue
+    // ) {
+    //   //   dragNdropPlayers(draggedItem, targetItem);
+    //   setPlayers(prevPlayers =>
+    //     prevPlayers.map(p =>
+    //       p.id === draggedObject?.id ? {...p, processedThroughQueue: true} : p
+    //     )
+    //   );
+    // } else if (
+    //   // into UPROCESSED
+    //   !droppedOnObject.assignedToQueue &&
+    //   !droppedOnObject.processedThroughQueue
+    // ) {
+    //   setPlayers(prevPlayers =>
+    //     prevPlayers.map(p =>
+    //       p.id === draggedItem.id
+    //         ? {...p, assignedToQueue: false, processedThroughQueue: false}
+    //         : p
+    //     )
+    //   );
+    // } else if (
+    //   // into the QUEUES
+    //   droppedOnObject.assignedToQueue
+    // ) {
+    //   // works for items already in the queues
+    //   dragNdropInQueues(draggedItem, targetItem);
+    // }
+    // setDraggedItem(null);
   };
 
   return (

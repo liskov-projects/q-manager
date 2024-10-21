@@ -14,7 +14,7 @@ export default function PlayerItem({
   children: ReactNode;
   queueId: string;
 }) {
-  const {handleDragStart, handleDragOver, handleDrop} = useAppContext();
+  const {handleDragStart, handleDragOver} = useAppContext();
 
   return (
     <div className="flex, flex-row">
@@ -23,7 +23,7 @@ export default function PlayerItem({
         draggable
         onDragStart={() => handleDragStart(item)}
         onDragOver={e => handleDragOver(e)}
-        onDrop={e => handleDrop(e, item)}>
+      >
         {children}
         {item.assignedToQueue && !item.processedThroughQueue && (
           // REVIEW:

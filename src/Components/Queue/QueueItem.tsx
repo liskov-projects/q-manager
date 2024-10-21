@@ -10,7 +10,7 @@
 //   item: Player;
 //   className: string;
 // }) {
-//   const {handleDragStart, handleDragOver, handleDrop} = useAppContext();
+//   const {handleDragStart, handleDragOver} = useAppContext();
 //   return (
 //     <>
 //       <li
@@ -19,7 +19,6 @@
 //         draggable
 //         onDragStart={() => handleDragStart(item)}
 //         onDragOver={e => handleDragOver(e)}
-//         onDrop={e => handleDrop(e, item)}>
 //         {item.names}
 //       </li>
 //     </>

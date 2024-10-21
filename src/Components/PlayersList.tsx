@@ -6,7 +6,7 @@ import PlayerItem from "./PlayerItem";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 export default function PlayersList() {
-  const {players, handleDragStart, handleDragOver, handleDrop} = useAppContext();
+  const {players, handleDragStart, handleDragOver} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
 
   //NOTE: use to be a source of bugs for unprocessAllButton
@@ -24,7 +24,7 @@ export default function PlayersList() {
           draggable
           onDragStart={() => handleDragStart(player)}
           onDragOver={e => handleDragOver(e)}
-          onDrop={e => handleDrop(e, player)}>
+          >
           <PlayerItem className="" item={player}>
             {player.names}
           </PlayerItem>
