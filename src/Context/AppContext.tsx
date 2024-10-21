@@ -42,7 +42,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   const markPlayerAsProcessed = (playerId: string) => {
     setPlayers(prev =>
       prev.map(player =>
-        player.id === playerId ? {...player, processedThroughQueue: true} : player
+        player._id === playerId ? {...player, processedThroughQueue: true} : player
       )
     );
   };
@@ -57,10 +57,10 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     // OLD: works for items ALREADY in the queue
     // Find the queues containing dragged and target items
     const draggedQueueIndex = queues.findIndex(q =>
-      q.queueItems.some(item => item.id === draggedItem.id)
+      q.queueItems.some(item => item._id === draggedItem._id)
     );
     const targetQueueIndex = queues.findIndex(q =>
-      q.queueItems.some(item => item.id === targetItem.id)
+      q.queueItems.some(item => item._id === targetItem._id)
     );
 
     // check if the indexes are found
@@ -68,10 +68,10 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
 
     // Find the indexes of the dragged and target items in queues
     const draggedItemIndex = queues[draggedQueueIndex].queueItems.findIndex(
-      item => item.id === draggedItem.id
+      item => item._id === draggedItem._id
     );
     const targetItemIndex = queues[targetQueueIndex].queueItems.findIndex(
-      item => item.id === targetItem.id
+      item => item._id === targetItem._id
     );
 
     // Copy the queues
@@ -101,8 +101,8 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   //   NEW:
   //   const dragNdropPlayers = (draggedItem, targetItem) => {
   //     // Find the indexes of the dragged and target items in the Players []
-  //     const draggedItemIndex = players.findIndex(item => item.id === draggedItem.id);
-  //     const targetItemIndex = players.findIndex(item => item.id === targetItem.id);
+  //     const draggedItemIndex = players.findIndex(item => item._id === draggedItem._id);
+  //     const targetItemIndex = players.findIndex(item => item._id === targetItem._id);
 
   //     // make a copy
   //     const updatedPlayers = [...players];
@@ -119,21 +119,20 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   //OLD: does the main dragndrop
   const handleDrop = (
     e: React.DragEvent<HTMLUListElement>,
-    targetItem: Player, 
+    targetItem: Player,
     queue: QueueType
   ) => {
-
     e.preventDefault();
     console.log(targetItem);
     if (!draggedItem) return;
 
     // console.log(e);
-    console.log("THE QUEUE")
+    console.log("THE QUEUE");
     console.log(queue);
 
     // globally look for what we drag & drop
-    const draggedObject = players.find(player => player.id === draggedItem.id);
-    const droppedOnObject = players.find(player => player.id === targetItem.id);
+    const draggedObject = players.find(player => player._id === draggedItem._id);
+    const droppedOnObject = players.find(player => player._id === targetItem._id);
 
     if (!droppedOnObject) {
       console.error("Item not found");

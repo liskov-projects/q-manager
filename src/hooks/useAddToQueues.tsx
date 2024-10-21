@@ -25,7 +25,7 @@ const useAddToQueues = () => {
 
   const handleAddToShortestQueue = (itemId: string) => {
     // Find the item based on itemId
-    const itemToUpdate = players.find(player => player.id === itemId);
+    const itemToUpdate = players.find(player => player._id === itemId);
 
     if (!itemToUpdate) {
       throw new Error("Item not found");
@@ -48,7 +48,7 @@ const useAddToQueues = () => {
     });
 
     setPlayers(prevPlayers =>
-      prevPlayers.map(player => (player.id === itemId ? updatedItem : player))
+      prevPlayers.map(player => (player._id === itemId ? updatedItem : player))
     );
     setQueues(newQueues);
   };
@@ -58,7 +58,7 @@ const useAddToQueues = () => {
       if (!item.assignedToQueue) {
         item.assignedToQueue = true;
         item.processedThroughQueue = false;
-        handleAddToShortestQueue(item.id);
+        handleAddToShortestQueue(item._id);
       }
     }
   };
@@ -106,7 +106,7 @@ const useAddToQueues = () => {
     processedPlayer.assignedToQueue = false;
 
     const newPlayers = players.map(player => {
-      if (player.id == processedPlayer.id) {
+      if (player._id == processedPlayer._id) {
         return processedPlayer;
       }
       return player;

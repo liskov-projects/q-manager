@@ -2,13 +2,13 @@ import Button from "@/Components/Buttons/Button";
 import QueueType from "@/types/Queue";
 import useAddToQueues from "@/Hooks/useAddToQueues";
 import PlayerItem from "../PlayerItem";
-import { useAppContext } from "@/Context/AppContext";
+import {useAppContext} from "@/Context/AppContext";
 
 export default function Queue({
   queue,
-  index,
-  // onDrop,
-}: {
+  index
+}: // onDrop,
+{
   queue: QueueType;
   index: number;
   // onDrop: (e: React.DragEvent<HTMLDivElement>, player: any, queue: QueueType) => void; // Include onDrop prop
@@ -16,7 +16,10 @@ export default function Queue({
   const {handleProgressOneStep} = useAddToQueues();
   const {handleDrop} = useAppContext();
 
-  const handleDropEvent = (event: React.DragEvent<HTMLUListElement>, queue: QueueType) => {
+  const handleDropEvent = (
+    event: React.DragEvent<HTMLUListElement>,
+    queue: QueueType
+  ) => {
     event.preventDefault();
 
     // Retrieve the dragged item from the dataTransfer object
@@ -43,16 +46,15 @@ export default function Queue({
         </Button>
       )}
       {queue.queueItems.length > 0 ? (
-        <ul 
+        <ul
           className="mb-4"
-          onDrop={(event) => handleDropEvent(event, queue)}
-          onDragOver={(event) => event.preventDefault()}
-        >
+          onDrop={event => handleDropEvent(event, queue)}
+          onDragOver={event => event.preventDefault()}>
           {queue.queueItems.map(
             (item, index) =>
               item.assignedToQueue && (
                 <PlayerItem
-                  key={item.id}
+                  key={item._id}
                   className={`${
                     index === 0 ? "bg-tennis-200" : "bg-shell-100"
                   }  text-shell-200 p-2 rounded-lg mb-2 text-center`}

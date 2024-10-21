@@ -19,18 +19,17 @@ export default function PlayersList() {
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
       {unprocessedPlayers.map(player => (
         <li
-          key={player.id}
+          key={player._id}
           className="h-30 p-4 rounded-lg shadow-md flex flex-row justify-between my-2"
           draggable
           onDragStart={() => handleDragStart(player)}
-          onDragOver={e => handleDragOver(e)}
-          >
+          onDragOver={e => handleDragOver(e)}>
           <PlayerItem className="" item={player}>
             {player.names}
           </PlayerItem>
           {!player.assignedToQueue ? (
             <Button
-              onClick={() => handleAddToShortestQueue(player.id)}
+              onClick={() => handleAddToShortestQueue(player._id)}
               className="px-4 py-2 rounded hover:bg-purple-500 hover:text-white transition-colors duration-200 ease-in-out">
               Add to Shortest Queue
             </Button>

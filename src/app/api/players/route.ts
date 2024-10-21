@@ -14,8 +14,14 @@ export async function GET() {
 export async function POST(req) {
   await dbConnect();
 
+  const body = await req.json();
+  console.log("Recieved at backend: ", body);
   // handles incoming JSON
-  const {names, categories, phoneNumbers} = await req.json();
+  const {names, categories, phoneNumbers} = body;
+
+  console.log("Names: ", names);
+  console.log("Categories: ", categories);
+  console.log("phoneNumbers: ", phoneNumbers);
 
   // creates a new entry using the incoming data
   const newPayer = new PlayerModel({names, categories, phoneNumbers});

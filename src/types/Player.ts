@@ -1,6 +1,6 @@
 type Player = {
   // as in Mongo later
-  id: string;
+  _id: string;
   names: string;
   category: string;
   mobileNumbers: string;
