@@ -1,3 +1,4 @@
+import {useState} from "react";
 import useAddToQueues from "@/Hooks/useAddToQueues";
 import Button from "./Buttons/Button";
 // context
@@ -6,17 +7,31 @@ import PlayerItem from "./PlayerItem";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 export default function PlayersList() {
+  // NEW:
+  const [search, setSearch] = useState("");
+  //
   const {players, handleDragStart, handleDragOver} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
 
   //NOTE: use to be a source of bugs for unprocessAllButton
   const unprocessedPlayers = players.filter(
-    player => !player.assignedToQueue && !player.processedThroughQueue
+    player =>
+      !player.assignedToQueue &&
+      !player.processedThroughQueue &&
+      // NEW:
+      player.names.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     // REVIEW: viewport height
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
+      {/* NEW: */}
+      <input
+        type="text"
+        placeholder="search player..."
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+      />
       {unprocessedPlayers.map(player => (
         <li
           key={player._id}
