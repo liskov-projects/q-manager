@@ -14,7 +14,7 @@ export default function Queue({
   // onDrop: (e: React.DragEvent<HTMLDivElement>, player: any, queue: QueueType) => void; // Include onDrop prop
 }) {
   const {handleProgressOneStep} = useAddToQueues();
-  const {handleDrop} = useAppContext();
+  const {handleDrop, draggedItem} = useAppContext();
 
   const handleDropEvent = (
     event: React.DragEvent<HTMLUListElement>,
@@ -24,7 +24,7 @@ export default function Queue({
 
     // Retrieve the dragged item from the dataTransfer object
     // const draggedItem = JSON.parse(event.dataTransfer.getData("player"));
-    const draggedItem = PlayerItem;
+    // const draggedItem = PlayerItem;
 
     // Call the centralized handleDrop function with the event, dragged item, and the queue
     handleDrop(event, draggedItem, queue);
@@ -49,7 +49,8 @@ export default function Queue({
         <ul
           className="mb-4"
           onDrop={event => handleDropEvent(event, queue)}
-          onDragOver={event => event.preventDefault()}>
+          onDragOver={event => event.preventDefault()}
+        >
           {queue.queueItems.map(
             (item, index) =>
               item.assignedToQueue && (

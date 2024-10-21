@@ -118,29 +118,40 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
 
   //OLD: does the main dragndrop
   const handleDrop = (
-    e: React.DragEvent<HTMLUListElement>,
+    event: React.DragEvent<HTMLUListElement>,
     targetItem: Player,
     queue: QueueType
   ) => {
-    e.preventDefault();
+
+    event.preventDefault();
+
+    console.log("DRAGGED ITEM")
     console.log(targetItem);
+
     if (!draggedItem) return;
 
     // console.log(e);
     console.log("THE QUEUE");
     console.log(queue);
 
+
+    console.log("EVENT")
+    console.log(event)
+
+    console.log("DROP TARGET")
+    console.log(event.target)
+
     // globally look for what we drag & drop
-    const draggedObject = players.find(player => player._id === draggedItem._id);
-    const droppedOnObject = players.find(player => player._id === targetItem._id);
+    // const draggedObject = players.find(player => player._id === draggedItem._id);
+    // const droppedOnObject = players.find(player => player._id === targetItem._id);
 
-    if (!droppedOnObject) {
-      console.error("Item not found");
-      return;
-    }
+    // if (!droppedOnObject) {
+    //   console.error("Item not found");
+    //   return;
+    // }
 
-    console.log("this is WHAT we drop ", draggedObject);
-    console.log("this is WHERE we drop ", droppedOnObject);
+    // console.log("this is WHAT we drop ", draggedObject);
+    // console.log("this is WHERE we drop ", droppedOnObject);
     // check where items is going to
     // if (
     //   // into PROCESSED
@@ -185,6 +196,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
         handleDragStart,
         handleDragOver,
         handleDrop,
+        draggedItem,
         // FIXME: dev purposes
         initialQueues
       }}>
