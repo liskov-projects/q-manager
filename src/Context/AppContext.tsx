@@ -25,15 +25,15 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>([]);
   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
+  // NEW:
+  const fetchPlayers = async () => {
+    // the path to players route
+    const response = await fetch("../api/players/");
+    const players = await response.json();
+    setPlayers(players);
+  };
   // fetching from db is an effect
   useEffect(() => {
-    const fetchPlayers = async () => {
-      // the path to players route
-      const response = await fetch("../api/players/");
-      const players = await response.json();
-      setPlayers(players);
-    };
-
     fetchPlayers();
     console.log(players);
   }, []);
@@ -122,10 +122,9 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     targetItem: Player,
     queue: QueueType
   ) => {
-
     event.preventDefault();
 
-    console.log("DRAGGED ITEM")
+    console.log("DRAGGED ITEM");
     console.log(targetItem);
 
     if (!draggedItem) return;
@@ -134,12 +133,11 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     console.log("THE QUEUE");
     console.log(queue);
 
+    console.log("EVENT");
+    console.log(event);
 
-    console.log("EVENT")
-    console.log(event)
-
-    console.log("DROP TARGET")
-    console.log(event.target)
+    console.log("DROP TARGET");
+    console.log(event.target);
 
     // globally look for what we drag & drop
     // const draggedObject = players.find(player => player._id === draggedItem._id);
@@ -197,6 +195,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
         handleDragOver,
         handleDrop,
         draggedItem,
+        fetchPlayers,
         // FIXME: dev purposes
         initialQueues
       }}>
