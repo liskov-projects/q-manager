@@ -5,6 +5,7 @@ const playerSchema = new mongoose.Schema(
     names: {type: String, required: true},
     categories: [{type: String, required: true}],
     phoneNumbers: [{type: String, required: true}]
+    // FIXME: assigned to queues & processed through queues
   },
   {collection: "players"}
 );

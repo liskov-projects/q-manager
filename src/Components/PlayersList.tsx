@@ -10,7 +10,7 @@ export default function PlayersList() {
   // NEW:
   const [search, setSearch] = useState("");
   //
-  const {players, handleDragStart, handleDragOver} = useAppContext();
+  const {players, handleDragStart, handleDragOver, fetchPlayers} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
 
   //NOTE: use to be a source of bugs for unprocessAllButton
@@ -25,11 +25,16 @@ export default function PlayersList() {
   return (
     // REVIEW: viewport height
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
-      {/* NEW: */}
+      {/* NEW:  fetches new players after they're submitted through the form*/}
+      <Button
+        onClick={fetchPlayers}
+        className={
+          "ml-6 my-4 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
+        }>
+        update players
+      </Button>
       <input
-        className={`focus:outline-none focus:ring-2 focus:ring-brick-200 ${
-          unprocessedPlayers.length === 0 && "hidden"
-        }`}
+        className="focus:outline-none focus:ring-2 focus:ring-brick-200"
         type="text"
         placeholder="search player..."
         value={search}
