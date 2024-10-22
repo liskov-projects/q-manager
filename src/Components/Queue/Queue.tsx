@@ -54,21 +54,18 @@ export default function Queue({
           {queue.queueItems.map(
             (item, index) =>
               item.assignedToQueue && (
-                <PlayerItem
-                  key={item._id}
-                  className={`${
-                    index === 0 ? "bg-tennis-200" : "bg-shell-100"
-                  }  text-shell-200 p-2 rounded-lg mb-2 text-center`}
-                  // are passed down to ButtonUpDown
-                  item={item}
-                  queueId={queue.id}
-                  // move these here from PlayerItem to declutter (double drag in (un)processed)
-                  // draggable
-                  // onDragStart={() => handleDragStart(item)}
-                  // onDragOver={e => handleDragOver(e, item)}
-                >
-                  {item.names}
-                </PlayerItem>
+                  <PlayerItem
+                    key={item._id}
+                    data-target={item._id}
+                    className={`${
+                      index === 0 ? "bg-tennis-200" : "bg-shell-100"
+                    }  text-shell-200 p-2 rounded-lg mb-2 text-center`}
+                    // are passed down to ButtonUpDown
+                    item={item}
+                    queueId={queue.id}
+                  >
+                    {item.names}
+                  </PlayerItem>
               )
           )}
         </ul>

@@ -135,11 +135,14 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     console.log(queue);
 
 
-    console.log("EVENT")
-    console.log(event)
+    console.log("EVENT .dataTransfer.items")
+    console.log(event.dataTransfer.items)
 
     console.log("DROP TARGET")
-    console.log(event.target)
+    console.dir(event.target)
+
+    console.log("DROP TARGET DATA")
+    console.log(event.currentTarget.className)
 
     // globally look for what we drag & drop
     // const draggedObject = players.find(player => player._id === draggedItem._id);
@@ -209,7 +212,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error("useAppContect must be within AppProvider");
+    throw new Error("useAppContext must be within AppProvider");
   }
   return context;
 };
