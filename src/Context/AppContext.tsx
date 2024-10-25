@@ -26,7 +26,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>([]);
   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
-  // NEW:
+
   const fetchPlayers = async () => {
     // the path to players route
     const response = await fetch("../api/players/");
@@ -36,7 +36,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   // fetching from db is an effect
   useEffect(() => {
     fetchPlayers();
-    console.log(players);
+    // console.log(players);
   }, []);
 
   //NOTE: use for process all btn? mark player as processed | void because we're changin state with setState
@@ -52,7 +52,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     const categories = players.flatMap(player => player.categories || []);
     return Array.from(new Set(categories)); // Remove duplicates using Set
   }, [players]);
-  console.log(uniqueCategories);
+  // console.log(uniqueCategories);
   // D N D    x p e r i m e n t
   const handleDragStart = (draggedItem: Player) => setDraggedItem(draggedItem);
   // type for the event object

@@ -6,7 +6,7 @@ import useAddToQueues from "@/Hooks/useAddToQueues";
 
 //REVIEW: why have to pass queueID? if taken out here doesn't change anything see PlayerItem
 export default function ButtonUpDown(item, queueId) {
-  const {queues, setQueues} = useAppContext();
+  const {queues, setQueues, setPlayers} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
 
   const itemToMove = item.item;
@@ -40,7 +40,7 @@ export default function ButtonUpDown(item, queueId) {
       // removes the draggeed item (draggedItem - what to move, 1 - items to remove)
       queueToUpdate.splice(itemToMoveIndex, 1);
       // inserts without removing elements (target - where to; 0 - items to remove; draggedItem - what is moved)
-      queueToUpdate.splice(itemToMoveIndex - 1, 0, itemToMove);
+      queueToUpdate.splice(itemToMoveIndex - 1, 1, itemToMove);
 
       setQueues(prevQueues => {
         return prevQueues.map(q => {
@@ -58,17 +58,20 @@ export default function ButtonUpDown(item, queueId) {
   const queueToUpdate = [...currentQueue?.queueItems];
   const itemToMoveIndex = queueToUpdate?.findIndex(item => item.id === itemToMove.id);
 
+  // TODO: debug why it's duplicated going down
   function handleDown() {
     if (!currentQueue) return;
     // console.log("current queue ", currentQueue);
     // NEW:
     // console.log(itemToMoveIndex);
 
-    if (itemToMoveIndex >= 0) {
+    if (itemToMoveIndex >= 0 && itemToMoveIndex < queueToUpdate.length - 1) {
+      // sorting out why it all broke going down
+      const itemToMoveCopy = {...itemToMove};
       // removes the draggeed item (draggedItem - what to move, 1 - items to remove)
       queueToUpdate.splice(itemToMoveIndex, 1);
       // inserts without removing elements (target - where to; 0 - items to remove; draggedItem - what is moved)
-      queueToUpdate.splice(itemToMoveIndex + 1, 0, itemToMove);
+      queueToUpdate.splice(itemToMoveIndex + 1, 0, itemToMoveCopy);
     }
 
     setQueues(prevQueues => {

@@ -43,6 +43,7 @@ export default function PlayersList() {
         }>
         update players
       </Button>
+      {/* TODO: extract into a separate comp */}
       <input
         className="focus:outline-none focus:ring-2 focus:ring-brick-200"
         type="text"
@@ -50,7 +51,7 @@ export default function PlayersList() {
         value={search}
         onChange={e => setSearch(e.target.value)}
       />
-      {/* NEW: dropdown categories list*/}
+      {/* NEW: dropdown categories list | extract*/}
       <div className="flex justify-center">
         <select
           className="bg-brick-200 my-2 rounded text-shell-100 p-2"

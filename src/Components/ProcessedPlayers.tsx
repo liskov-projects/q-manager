@@ -23,7 +23,7 @@ export default function ProcessedPlayers() {
 
   return (
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
-      {/* NEW: */}
+      {/* TODO: extract into a separate comp */}
       <input
         className="focus:outline-none focus:ring-2 focus:ring-brick-200"
         type="text"
