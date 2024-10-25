@@ -2,6 +2,7 @@ import {useAppContext} from "@/Context/AppContext";
 import {ReactNode} from "react";
 import Player from "@/types/Player";
 import ButtonUpDown from "./Buttons/ButtonUpDown";
+import TagsList from "./TagsList";
 
 export default function PlayerItem({
   item,
@@ -15,7 +16,6 @@ export default function PlayerItem({
   queueId: string;
 }) {
   const {handleDragStart, handleDragOver} = useAppContext();
-
   return (
     <div className="flex, flex-row">
       <div
@@ -28,6 +28,7 @@ export default function PlayerItem({
           // REVIEW:
           <ButtonUpDown item={item} queueId={queueId} />
         )}
+        <TagsList item={item} />
       </div>
     </div>
   );

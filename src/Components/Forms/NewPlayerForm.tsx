@@ -84,7 +84,7 @@ export default function NewPlayerForm() {
           className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
         />
 
-        <label htmlFor="categories">Category</label>
+        <label htmlFor="categories">Categories</label>
         <input
           type="text"
           name="categories"

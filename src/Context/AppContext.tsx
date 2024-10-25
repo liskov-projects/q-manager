@@ -3,6 +3,7 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useMemo,
   ReactNode
 } from "react";
 // types
@@ -46,8 +47,13 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
       )
     );
   };
-
-  //   NEW: D N D    x p e r i m e n t
+  // NEW:
+  const uniqueCategories = useMemo(() => {
+    const categories = players.flatMap(player => player.categories || []);
+    return Array.from(new Set(categories)); // Remove duplicates using Set
+  }, [players]);
+  console.log(uniqueCategories);
+  // D N D    x p e r i m e n t
   const handleDragStart = (draggedItem: Player) => setDraggedItem(draggedItem);
   // type for the event object
   const handleDragOver = (e: React.MouseEvent<HTMLLIElement>): void =>
@@ -158,7 +164,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     //   //   dragNdropPlayers(draggedItem, targetItem);
     //   setPlayers(prevPlayers =>
     //     prevPlayers.map(p =>
-    //       p.id === draggedObject?.id ? {...p, processedThroughQueue: true} : p
+    //       p._id === draggedObject?._id ? {...p, processedThroughQueue: true} : p
     //     )
     //   );
     // } else if (
@@ -197,7 +203,8 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
         draggedItem,
         fetchPlayers,
         // FIXME: dev purposes
-        initialQueues
+        initialQueues,
+        uniqueCategories
       }}>
       {children}
     </AppContext.Provider>

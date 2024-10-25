@@ -2,7 +2,7 @@ type Player = {
   // as in Mongo later
   _id: string;
   names: string;
-  category: string;
+  categories: string;
   mobileNumbers: string;
   assignedToQueue: boolean;
   processedThroughQueue: boolean;

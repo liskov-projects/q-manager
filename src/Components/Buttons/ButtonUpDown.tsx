@@ -19,7 +19,7 @@ export default function ButtonUpDown(item, queueId) {
 
     const queueToUpdate = [...currentQueue?.queueItems];
     const itemToMoveIndex = queueToUpdate?.findIndex(
-      item => item.id === itemToMove.id
+      item => item._id === itemToMove._id
     );
     // console.log(itemToMoveIndex);
 
@@ -27,6 +27,15 @@ export default function ButtonUpDown(item, queueId) {
       const queueIndex = queues.findIndex(queue => queue.id === currentQueue?.id);
 
       handleProgressOneStep(queueIndex);
+
+      setPlayers(prevPlayers => {
+        return prevPlayers.map(player => {
+          if (player._id === itemToMove._id) {
+            return {...player, assignedToQueue: false};
+          }
+          return player;
+        });
+      });
     } else {
       // removes the draggeed item (draggedItem - what to move, 1 - items to remove)
       queueToUpdate.splice(itemToMoveIndex, 1);
