@@ -31,14 +31,6 @@ export default function PlayersList() {
     }
   });
 
-  // NEW:
-  // const uniqueCategories = useMemo(() => {
-  //   const categories = players.flatMap(player => player.categories || []);
-  //   return Array.from(new Set(categories)); // Remove duplicates using Set
-  // }, [players]);
-  // console.log(uniqueCategories);
-  //
-
   return (
     // REVIEW: viewport height
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
@@ -58,9 +50,11 @@ export default function PlayersList() {
         value={search}
         onChange={e => setSearch(e.target.value)}
       />
-      {/* NEW: */}
-      <div>
-        <select onChange={e => setFilter(e.target.value)}>
+      {/* NEW: dropdown categories list*/}
+      <div className="flex justify-center">
+        <select
+          className="bg-brick-200 my-2 rounded text-shell-100 p-2"
+          onChange={e => setFilter(e.target.value)}>
           <option value="show all">show all...</option>
           {uniqueCategories.map((category, idx) => (
             <option key={idx} value={category}>
@@ -77,9 +71,7 @@ export default function PlayersList() {
           draggable
           onDragStart={() => handleDragStart(player)}
           onDragOver={e => handleDragOver(e)}>
-          <PlayerItem className="flex" item={player}>
-            {player.names}
-          </PlayerItem>
+          <PlayerItem item={player}>{player.names}</PlayerItem>
           {!player.assignedToQueue ? (
             <Button
               onClick={() => handleAddToShortestQueue(player._id)}

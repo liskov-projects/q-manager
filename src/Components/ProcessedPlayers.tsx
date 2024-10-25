@@ -25,9 +25,7 @@ export default function ProcessedPlayers() {
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
       {/* NEW: */}
       <input
-        className={`focus:outline-none focus:ring-2 focus:ring-brick-200 ${
-          processedPlayers.length === 0 && "hidden"
-        }`}
+        className="focus:outline-none focus:ring-2 focus:ring-brick-200"
         type="text"
         placeholder="search player..."
         value={search}
@@ -41,9 +39,7 @@ export default function ProcessedPlayers() {
           draggable
           onDragStart={() => handleDragStart(player)}
           onDragOver={e => handleDragOver(e)}>
-          <PlayerItem className="" item={player}>
-            {player.names}
-          </PlayerItem>
+          <PlayerItem item={player}>{player.names}</PlayerItem>
           {!player.assignedToQueue ? (
             <Button
               onClick={() => handleAddToShortestQueue(player._id)}

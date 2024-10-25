@@ -17,7 +17,7 @@ export default function PlayerItem({
 }) {
   const {handleDragStart, handleDragOver} = useAppContext();
   return (
-    <div className="flex, flex-row">
+    <div className="flex flex-row">
       <div
         className={className}
         draggable
