@@ -1,33 +1,33 @@
-import Button from "@/Components/Buttons/Button";
-import QueueType from "@/types/Queue";
-import useAddToQueues from "@/Hooks/useAddToQueues";
+import DropZone from "../DropZone"; // Import the DropZone component
+import { useAppContext } from "@/Context/AppContext";
+import Button from "../Buttons/Button";
 import PlayerItem from "../PlayerItem";
-import {useAppContext} from "@/Context/AppContext";
+import Player from "@/types/Player";
 
 export default function Queue({
   queue,
-  index
-}: // onDrop,
-{
+  index,
+}: {
   queue: QueueType;
   index: number;
-  // onDrop: (e: React.DragEvent<HTMLDivElement>, player: any, queue: QueueType) => void; // Include onDrop prop
 }) {
-  const {handleProgressOneStep} = useAddToQueues();
-  const {handleDrop, draggedItem} = useAppContext();
+  // const { handleProgressOneStep } = useAddToQueues();
+  const { handleDrop, draggedItem } = useAppContext();
 
   const handleDropEvent = (
     event: React.DragEvent<HTMLUListElement>,
-    queue: QueueType
+    queueId: string,
+    index: number
   ) => {
     event.preventDefault();
 
-    // Retrieve the dragged item from the dataTransfer object
-    // const draggedItem = JSON.parse(event.dataTransfer.getData("player"));
-    // const draggedItem = PlayerItem;
+    console.log("QUEUE ID")
+    console.log(queueId)
+    console.log("INDEX")
+    console.log(index)
 
-    // Call the centralized handleDrop function with the event, dragged item, and the queue
-    handleDrop(event, draggedItem, queue);
+
+    handleDrop(index, queue);
   };
 
   return (
@@ -41,33 +41,38 @@ export default function Queue({
       {queue.queueItems.length > 0 && (
         <Button
           className="my-2 py-2 px-4 rounded bg-tennis-200 hover:bg-tennis-50 transition-colors duration-200"
-          onClick={() => handleProgressOneStep(index)}>
+          onClick={() => handleProgressOneStep(index)}
+        >
           Progress Queue
         </Button>
       )}
       {queue.queueItems.length > 0 ? (
         <ul
           className="mb-4"
-          onDrop={event => handleDropEvent(event, queue)}
-          onDragOver={event => event.preventDefault()}
+          onDragOver={(event) => event.preventDefault()}
         >
-          {queue.queueItems.map(
-            (item, index) =>
-              item.assignedToQueue && (
-                  <PlayerItem
-                    key={item._id}
-                    data-target={item._id}
-                    className={`${
-                      index === 0 ? "bg-tennis-200" : "bg-shell-100"
-                    }  text-shell-200 p-2 rounded-lg mb-2 text-center`}
-                    // are passed down to ButtonUpDown
-                    item={item}
-                    queueId={queue.id}
-                  >
-                    {item.names}
-                  </PlayerItem>
-              )
-          )}
+          {queue.queueItems.map((item, index) => (
+            <div 
+              key={item._id}
+              id={item._id}
+              onDrop={(e) => handleDropEvent(e, queue.id, index)}
+            >
+              <PlayerItem
+                data-target={item._id}
+                className={`${
+                  index === 0 ? "bg-tennis-200" : "bg-shell-100"
+                } text-shell-200 p-2 rounded-lg mb-2 text-center`}
+                item={item}
+                queueId={queue.id}
+              >
+                {item.names}
+              </PlayerItem>
+              <DropZone
+                // onDrop={(event) => handleDropEvent(event, queue)}
+                height={60} // Set height matching PlayerItem when expanded
+              />
+            </div>
+          ))}
         </ul>
       ) : (
         <p className="mb-4 text-center">No items in queue</p>
