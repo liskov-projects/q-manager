@@ -16,10 +16,10 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
   ) => {
     event.preventDefault();
 
-    console.log("QUEUE ID");
-    console.log(queueId);
-    console.log("INDEX");
-    console.log(index);
+    // console.log("QUEUE ID");
+    // console.log(queueId);
+    // console.log("INDEX");
+    // console.log(index);
 
     handleDrop(index, queue);
   };
@@ -35,14 +35,6 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
           Queue {queue.queueName}
         </h3>
       </div>
-      {/* NEW: */}
-      {/* <div onDragOver={event => event.preventDefault()}>
-        <DropZone
-          // onDrop={event => handleDropEvent(event, queue)}
-          onDrop={e => handleDropEvent(e, queue.id, index)}
-          height={60} // Set height matching PlayerItem when expanded
-        />
-      </div> */}
       {queue.queueItems.length > 0 && (
         <Button
           className="my-2 py-2 px-4 rounded bg-tennis-200 hover:bg-tennis-50 transition-colors duration-200"
@@ -50,12 +42,10 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
           Progress Queue
         </Button>
       )}
-      {/* <div onDragOver={event => event.preventDefault()}> */}
       <DropZone
         // onDrop={(event) => handleDropEvent(event, queue)}
         height={60} // Set height matching PlayerItem when expanded
       />
-      {/* </div> */}
       {queue.queueItems.length > 0 ? (
         <ul
           className="mb-4"

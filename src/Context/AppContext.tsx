@@ -136,6 +136,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     console.log("THE QUEUE");
     console.log(queueTarget);
 
+    //this is queue index
     console.log("INDEX");
     console.log(index);
 
@@ -143,6 +144,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
       if (queue.id === queueTarget.id) {
         // Create a new array with the draggedItem inserted at the specified index
         const newQueueItems = [
+          // TODO: can't use index here it's queue index pluck out targetItemIndex
           ...queue.queueItems.slice(0, index + 1),
           draggedItem,
           ...queue.queueItems.slice(index + 1)
