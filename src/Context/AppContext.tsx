@@ -138,6 +138,47 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
       assignedToQueue: true,
       processedThroughQueue: false
     };
+
+    // added to check if an item is already in a queue
+    const isInQueue = queues.some(queue => {
+      queue.queueItems.some(item => item._id === draggedItem._id);
+    });
+
+    if (isInQueue) {
+      const targetItem = queueTarget.queueItems[index];
+      if (targetItem) dragNdropInQueues(draggedItem, targetItem);
+    } else {
+      // OLD:
+      const updatedPlayers = players.map(player => {
+        if (player._id === draggedItem._id) {
+          return updatedItem;
+          // return {...player, assignedToQueue: true};
+        }
+        return player;
+      });
+      const updatedQueues = queues.map(queue => {
+        if (queue.id === queueTarget.id) {
+          // Create a new array with the draggedItem inserted at the specified index
+          const newQueueItems = [
+            // TODO: can't use index here it's queue index pluck out targetItemIndex
+            ...queue.queueItems.slice(0, index + 1),
+            updatedItem,
+            ...queue.queueItems.slice(index + 1)
+          ];
+          // Return a new queue object with the updated queueItems
+          return {
+            ...queue,
+            queueItems: newQueueItems
+          };
+        }
+        return queue;
+      });
+      // Update the players state
+      setPlayers(updatedPlayers);
+      // update the queues state
+      setQueues(updatedQueues);
+    }
+
     // console.log(e);
     // console.log("THE QUEUE");
     // console.log(queueTarget);
@@ -145,39 +186,6 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     //this is queue index
     // console.log("INDEX");
     // console.log(index);
-
-    const updatedPlayers = players.map(player => {
-      if (player._id === draggedItem._id) {
-        return updatedItem;
-        // return {...player, assignedToQueue: true};
-      }
-      return player;
-    });
-
-    const updatedQueues = queues.map(queue => {
-      if (queue.id === queueTarget.id) {
-        // Create a new array with the draggedItem inserted at the specified index
-        const newQueueItems = [
-          // TODO: can't use index here it's queue index pluck out targetItemIndex
-          ...queue.queueItems.slice(0, index + 1),
-          updatedItem,
-          ...queue.queueItems.slice(index + 1)
-        ];
-
-        // Return a new queue object with the updated queueItems
-        return {
-          ...queue,
-          queueItems: newQueueItems
-        };
-      }
-
-      return queue;
-    });
-
-    // Update the players state
-    setPlayers(updatedPlayers);
-    // update the queues state
-    setQueues(updatedQueues);
 
     setDraggedItem(null);
     console.log("DRAGGED ITEM");
