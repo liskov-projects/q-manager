@@ -7,12 +7,12 @@ import React from "react";
 export default function QueuesGrid() {
   const {queues, handleDrop} = useAppContext();
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 h-[80vh] overflow-hidden hover:overflow-y-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
       {queues.map((queue, index) => (
-        <Queue 
-          key = {queue.id} 
-          queue = {queue} 
-          index = {index} 
+        <Queue
+          key={queue.id}
+          queue={queue}
+          index={index}
           // onDrop={(e, player) => handleDrop(e, player, queue)}
         />
       ))}

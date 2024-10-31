@@ -32,7 +32,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
 
   return (
     <div
-      className="rounded-lg shadow-lg p-6 flex flex-col justify-between"
+      className="rounded-lg shadow-lg p-6 flex flex-col"
       onDragOver={event => event.preventDefault()}
       onDrop={e => handleDropEvent(e, queue.id, index)}>
       <div className="flex flex-row justify-around">
@@ -56,7 +56,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
         <>
           <DropZone height={60} />
           {queue.queueItems.length > 0 ? (
-            <ul className="mb-4">
+            <ul className="mb-4 h-[30vh] overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
                 <div key={item._id} id={item._id}>
                   <PlayerItem
