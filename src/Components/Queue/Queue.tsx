@@ -3,7 +3,7 @@ import {useAppContext} from "@/Context/AppContext";
 import useAddToQueues from "@/Hooks/useAddToQueues";
 import Button from "../Buttons/Button";
 import PlayerItem from "../PlayerItem";
-import Player from "@/types/Player";
+// import Player from "@/types/Player";
 
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
   const {handleProgressOneStep} = useAddToQueues();
@@ -16,11 +16,12 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
   ) => {
     event.preventDefault();
 
-    // console.log("QUEUE ID");
-    // console.log(queueId);
-    // console.log("INDEX");
-    // console.log(index);
+    console.log("QUEUE ID");
+    console.log(queueId);
+    console.log("INDEX");
+    console.log(index);
 
+    // the index get read as item index => wrong queue order
     handleDrop(index, queue);
   };
 

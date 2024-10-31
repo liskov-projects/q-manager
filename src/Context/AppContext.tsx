@@ -127,18 +127,32 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   const handleDrop = (index: number, queueTarget: QueueType) => {
     console.log("IN THE CONTEXT DROP");
 
-    console.log("DRAGGED ITEM");
-    console.log(draggedItem);
+    // console.log("DRAGGED ITEM");
+    // console.log(draggedItem);
 
     if (!draggedItem) return;
 
+    // create a copy of the dragged item to correctly change the property
+    const updatedItem = {
+      ...draggedItem,
+      assignedToQueue: true,
+      processedThroughQueue: false
+    };
     // console.log(e);
-    console.log("THE QUEUE");
-    console.log(queueTarget);
+    // console.log("THE QUEUE");
+    // console.log(queueTarget);
 
     //this is queue index
-    console.log("INDEX");
-    console.log(index);
+    // console.log("INDEX");
+    // console.log(index);
+
+    const updatedPlayers = players.map(player => {
+      if (player._id === draggedItem._id) {
+        return updatedItem;
+        // return {...player, assignedToQueue: true};
+      }
+      return player;
+    });
 
     const updatedQueues = queues.map(queue => {
       if (queue.id === queueTarget.id) {
@@ -146,7 +160,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
         const newQueueItems = [
           // TODO: can't use index here it's queue index pluck out targetItemIndex
           ...queue.queueItems.slice(0, index + 1),
-          draggedItem,
+          updatedItem,
           ...queue.queueItems.slice(index + 1)
         ];
 
@@ -160,21 +174,14 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
       return queue;
     });
 
-    setQueues(updatedQueues);
-
-    const updatedPlayers = players.map(player => {
-      if (player._id === draggedItem._id) {
-        return {...player, assignedToQueue: true};
-      }
-      return player;
-    });
-
     // Update the players state
     setPlayers(updatedPlayers);
+    // update the queues state
+    setQueues(updatedQueues);
 
-    // Optionally reset draggedItem to null if needed
     setDraggedItem(null);
-
+    console.log("DRAGGED ITEM");
+    console.log(updatedItem);
     // globally look for what we drag & drop
     // const draggedObject = players.find(player => player._id === draggedItem._id);
     // const droppedOnObject = players.find(player => player._id === targetItem._id);

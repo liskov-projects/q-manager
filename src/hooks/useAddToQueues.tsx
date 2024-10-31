@@ -35,7 +35,8 @@ const useAddToQueues = () => {
 
     const updatedItem = {
       ...itemToUpdate,
-      assignedToQueue: true
+      assignedToQueue: true,
+      processedThroughQueue: false
     };
 
     shortestQueue.queueItems.push(updatedItem);
