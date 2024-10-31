@@ -33,6 +33,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     const players = await response.json();
     setPlayers(players);
   };
+
   // fetching from db is an effect
   useEffect(() => {
     fetchPlayers();
@@ -47,7 +48,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
       )
     );
   };
-  // NEW:
+  // NEW: create a list of unique categories for the filter
   const uniqueCategories = useMemo(() => {
     const categories = players.flatMap(player => player.categories || []);
     return Array.from(new Set(categories)); // Remove duplicates using Set
@@ -123,12 +124,8 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   //   };
 
   //OLD: does the main dragndrop
-  const handleDrop = (
-    index: number,
-    queueTarget: QueueType
-  ) => {
-
-    console.log("IN THE CONTEXT DROP")
+  const handleDrop = (index: number, queueTarget: QueueType) => {
+    console.log("IN THE CONTEXT DROP");
 
     console.log("DRAGGED ITEM");
     console.log(draggedItem);
@@ -139,33 +136,33 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
     console.log("THE QUEUE");
     console.log(queueTarget);
 
-    console.log("INDEX")
-    console.log(index)
+    console.log("INDEX");
+    console.log(index);
 
     const updatedQueues = queues.map(queue => {
       if (queue.id === queueTarget.id) {
         // Create a new array with the draggedItem inserted at the specified index
         const newQueueItems = [
-          ...queue.queueItems.slice(0, index+1),
+          ...queue.queueItems.slice(0, index + 1),
           draggedItem,
-          ...queue.queueItems.slice(index+1)
+          ...queue.queueItems.slice(index + 1)
         ];
-    
+
         // Return a new queue object with the updated queueItems
         return {
           ...queue,
           queueItems: newQueueItems
         };
       }
-    
+
       return queue;
     });
-    
+
     setQueues(updatedQueues);
-    
+
     const updatedPlayers = players.map(player => {
       if (player._id === draggedItem._id) {
-        return { ...player, assignedToQueue: true };
+        return {...player, assignedToQueue: true};
       }
       return player;
     });
@@ -175,8 +172,6 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
 
     // Optionally reset draggedItem to null if needed
     setDraggedItem(null);
-
-    
 
     // globally look for what we drag & drop
     // const draggedObject = players.find(player => player._id === draggedItem._id);

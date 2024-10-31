@@ -3,6 +3,7 @@ import {faCaretUp} from "@fortawesome/free-solid-svg-icons";
 import {faCaretDown} from "@fortawesome/free-solid-svg-icons";
 import {useAppContext} from "@/Context/AppContext";
 import useAddToQueues from "@/Hooks/useAddToQueues";
+import Player from "@/types/Player";
 
 //REVIEW: why have to pass queueID? if taken out here doesn't change anything see PlayerItem
 export default function ButtonUpDown(item, queueId) {
@@ -55,8 +56,10 @@ export default function ButtonUpDown(item, queueId) {
   }
 
   const currentQueue = queues.find(queue => queue.id === movingIn);
-  const queueToUpdate = [...currentQueue?.queueItems];
-  const itemToMoveIndex = queueToUpdate?.findIndex(item => item.id === itemToMove.id);
+  const queueToUpdate: Player[] = [...currentQueue?.queueItems];
+  const itemToMoveIndex = queueToUpdate?.findIndex(
+    item => item._id === itemToMove.id
+  );
 
   // TODO: debug why it's duplicated going down
   function handleDown() {
