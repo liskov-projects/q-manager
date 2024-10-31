@@ -1,14 +1,19 @@
+import {useState} from "react";
 import DropZone from "../DropZone"; // Import the DropZone component
 import {useAppContext} from "@/Context/AppContext";
 import useAddToQueues from "@/Hooks/useAddToQueues";
 import Button from "../Buttons/Button";
 import PlayerItem from "../PlayerItem";
 // import Player from "@/types/Player";
+// NEW:
+import ButtonExpand from "../Buttons/ButtonExpand";
 
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
   const {handleProgressOneStep} = useAddToQueues();
   const {handleDrop, draggedItem} = useAppContext();
+  const [isExpanded, setIsExpanded] = useState(false);
 
+  // REVIEW: do we still need this?
   const handleDropEvent = (
     event: React.DragEvent<HTMLUListElement>,
     queueId: string,
@@ -28,7 +33,6 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
   return (
     <div
       className="rounded-lg shadow-lg p-6 flex flex-col justify-between"
-      // NEW:
       onDragOver={event => event.preventDefault()}
       onDrop={e => handleDropEvent(e, queue.id, index)}>
       <div className="flex flex-row justify-around">
@@ -43,40 +47,35 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
           Progress Queue
         </Button>
       )}
-      <DropZone
-        // onDrop={(event) => handleDropEvent(event, queue)}
-        height={60} // Set height matching PlayerItem when expanded
+      <div>Remaining matches</div>
+      <ButtonExpand
+        isExpanded={isExpanded}
+        onClick={() => setIsExpanded(!isExpanded)}
       />
-      {queue.queueItems.length > 0 ? (
-        <ul
-          className="mb-4"
-          // onDragOver={event => event.preventDefault()}
-        >
-          {queue.queueItems.map((item, index) => (
-            <div
-              key={item._id}
-              id={item._id}
-              // onDrop={e => handleDropEvent(e, queue.id, index)}
-            >
-              <PlayerItem
-                // doesn't get received in PlayerItem
-                data-target={item._id}
-                className={`${
-                  index === 0 ? "bg-tennis-200" : "bg-shell-100"
-                } text-shell-200 p-2 rounded-lg mb-2 text-center`}
-                item={item}
-                queueId={queue.id}>
-                {item.names}
-              </PlayerItem>
-              <DropZone
-                // onDrop={(event) => handleDropEvent(event, queue)}
-                height={60} // Set height matching PlayerItem when expanded
-              />
-            </div>
-          ))}
-        </ul>
-      ) : (
-        <p className="mb-4 text-center">No items in queue</p>
+      {isExpanded && (
+        <>
+          <DropZone height={60} />
+          {queue.queueItems.length > 0 ? (
+            <ul className="mb-4">
+              {queue.queueItems.map((item, index) => (
+                <div key={item._id} id={item._id}>
+                  <PlayerItem
+                    data-target={item._id}
+                    className={`${
+                      index === 0 ? "bg-tennis-200" : "bg-shell-100"
+                    } text-shell-200 p-2 rounded-lg mb-2 text-center`}
+                    item={item}
+                    queueId={queue.id}>
+                    {item.names}
+                  </PlayerItem>
+                  <DropZone height={60} />
+                </div>
+              ))}
+            </ul>
+          ) : (
+            <p className="mb-4 text-center">No items in queue</p>
+          )}
+        </>
       )}
     </div>
   );
