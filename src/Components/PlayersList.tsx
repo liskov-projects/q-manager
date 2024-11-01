@@ -51,7 +51,7 @@ export default function PlayersList() {
         value={search}
         onChange={e => setSearch(e.target.value)}
       />
-      {/* NEW: dropdown categories list | extract*/}
+      {/* TODO: dropdown categories list | extract*/}
       <div className="flex justify-center">
         <select
           className="bg-brick-200 my-2 rounded text-shell-100 p-2"
@@ -64,7 +64,7 @@ export default function PlayersList() {
           ))}
         </select>
       </div>
-      {/*  */}
+
       {unprocessedPlayers.map(player => (
         <li
           key={player._id}

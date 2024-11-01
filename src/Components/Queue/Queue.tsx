@@ -26,7 +26,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
     console.log("INDEX");
     console.log(index);
 
-    // the index get read as item index => wrong queue order
+    //FIXME: this queue index gets read as item index => wrong queue order
     handleDrop(index, queue);
   };
 
@@ -47,7 +47,12 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
           Progress Queue
         </Button>
       )}
-      <div>Remaining matches</div>
+      <div
+        className={`flex self-center ${
+          queue.queueItems.length < 4 ? "text-brick-300" : "text-bluestone-200"
+        } font-bold text-3xl`}>
+        {queue.queueItems.length || "No items"}
+      </div>
       <ButtonExpand
         isExpanded={isExpanded}
         onClick={() => setIsExpanded(!isExpanded)}
@@ -56,6 +61,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
         <>
           <DropZone height={60} />
           {queue.queueItems.length > 0 ? (
+            // REVIEW: how to go about the height?
             <ul className="mb-4 h-[30vh] overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
                 <div key={item._id} id={item._id}>
