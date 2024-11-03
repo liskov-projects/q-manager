@@ -10,6 +10,10 @@ export default function ButtonUpDown(item, queueId) {
   const {queues, setQueues, setPlayers} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
 
+  // console.log("ITEM: ", item);
+  // console.log("QUEUEID: ", queueId);
+  // console.log("ITEM.queueID: ", item.queueID);
+
   const itemToMove = item.item;
   const movingIn = item.queueId;
 

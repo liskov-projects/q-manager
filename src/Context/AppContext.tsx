@@ -131,7 +131,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
 
     // console.log("DRAGGED ITEM");
     // console.log(draggedItem);
-
+    console.log("index: ", index);
     if (!draggedItem) return;
 
     // create a copy of the dragged item to correctly change the property

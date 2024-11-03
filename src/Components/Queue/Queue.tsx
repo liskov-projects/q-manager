@@ -11,7 +11,8 @@ import ButtonExpand from "../Buttons/ButtonExpand";
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
   const {handleProgressOneStep} = useAddToQueues();
   const {handleDrop, draggedItem} = useAppContext();
-  const [isExpanded, setIsExpanded] = useState(false);
+  // FIXME: false
+  const [isExpanded, setIsExpanded] = useState(true);
 
   // REVIEW: do we still need this?
   const handleDropEvent = (
@@ -34,7 +35,8 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
     <div
       className="rounded-lg shadow-lg p-6 flex flex-col"
       onDragOver={event => event.preventDefault()}
-      onDrop={e => handleDropEvent(e, queue.id, index)}>
+      // onDrop={e => handleDropEvent(e, queue.id, index)}
+    >
       <div className="flex flex-row justify-around">
         <h3 className="text-xl font-semibold text-bluestone-200 mb-4">
           Queue {queue.queueName}
@@ -55,14 +57,15 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
       </div>
       <ButtonExpand
         isExpanded={isExpanded}
-        onClick={() => setIsExpanded(!isExpanded)}
+        // FIXME:
+        // onClick={() => setIsExpanded(!isExpanded)}
       />
       {isExpanded && (
         <>
           <DropZone height={60} />
           {queue.queueItems.length > 0 ? (
-            // REVIEW: how to go about the height?
-            <ul className="mb-4 h-[30vh] overflow-hidden hover:overflow-y-auto">
+            //FIXME: get back h-[30vh]
+            <ul className="mb-4  overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
                 <div key={item._id} id={item._id}>
                   <PlayerItem

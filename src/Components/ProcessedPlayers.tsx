@@ -43,7 +43,7 @@ export default function ProcessedPlayers() {
           {!player.assignedToQueue ? (
             <Button
               onClick={() => handleAddToShortestQueue(player._id)}
-              className="px-4 py-2 rounded bg-tennis-50 hover:bg-tennis-200 hover:text-shell-300 transition-colors duration-200 ease-in-out">
+              className="px-4 py-2 rounded bg-tennis-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out">
               Add to Shortest Queue
             </Button>
           ) : null}

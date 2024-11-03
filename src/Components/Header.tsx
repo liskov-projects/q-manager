@@ -23,7 +23,7 @@ export default function Header() {
           />
         </svg>
       </div>
-      <h1 className="flex-grow text-3xl font-bold text-bluestone-200 text-center">
+      <h1 className="flex-grow text-3xl text-heading text-center">
         Queue Management
       </h1>
     </div>

@@ -16,6 +16,9 @@ export default function PlayerItem({
   queueId: string;
 }) {
   const {handleDragStart, handleDragOver} = useAppContext();
+
+  // console.log("queueID in playerItem: ", queueId);
+  // console.log("item in playerItem: ", item);
   return (
     <div className="flex flex-row">
       <div
