@@ -126,7 +126,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   //   };
 
   //OLD: does the main dragndrop
-  const handleDrop = (index: number, queueTarget: QueueType) => {
+  const handleDrop = (index: number = 0, queueTarget: QueueType) => {
     console.log("IN THE CONTEXT DROP");
 
     // console.log("DRAGGED ITEM");

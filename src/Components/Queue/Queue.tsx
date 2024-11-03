@@ -12,7 +12,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
   const {handleProgressOneStep} = useAddToQueues();
   const {handleDrop, draggedItem} = useAppContext();
   // FIXME: false
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // REVIEW: do we still need this?
   const handleDropEvent = (
@@ -22,21 +22,19 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
   ) => {
     event.preventDefault();
 
-    console.log("QUEUE ID");
-    console.log(queueId);
-    console.log("INDEX");
-    console.log(index);
+    // console.log("QUEUE ID");
+    // console.log(queueId);
+    // console.log("INDEX");
+    // console.log(index);
 
-    //FIXME: this queue index gets read as item index => wrong queue order
+    //NEW:
     handleDrop(index, queue);
   };
 
   return (
     <div
       className="rounded-lg shadow-lg p-6 flex flex-col"
-      onDragOver={event => event.preventDefault()}
-      // onDrop={e => handleDropEvent(e, queue.id, index)}
-    >
+      onDragOver={event => event.preventDefault()}>
       <div className="flex flex-row justify-around">
         <h3 className="text-xl font-semibold text-bluestone-200 mb-4">
           Queue {queue.queueName}
@@ -57,17 +55,17 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
       </div>
       <ButtonExpand
         isExpanded={isExpanded}
-        // FIXME:
-        // onClick={() => setIsExpanded(!isExpanded)}
+        onClick={() => setIsExpanded(!isExpanded)}
       />
       {isExpanded && (
         <>
-          <DropZone height={60} />
           {queue.queueItems.length > 0 ? (
-            //FIXME: get back h-[30vh]
-            <ul className="mb-4  overflow-hidden hover:overflow-y-auto">
+            <ul className="mb-4 h-[30vh] overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
-                <div key={item._id} id={item._id}>
+                <div
+                  key={item._id}
+                  id={item._id}
+                  onDrop={e => handleDropEvent(e, queue.id, index)}>
                   <PlayerItem
                     data-target={item._id}
                     className={`${
@@ -82,7 +80,10 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
               ))}
             </ul>
           ) : (
-            <p className="mb-4 text-center">No items in queue</p>
+            <div onDrop={e => handleDropEvent(e, queue.id)}>
+              <span>No items</span>
+              <DropZone height={60} />
+            </div>
           )}
         </>
       )}

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import {useState} from "react";
 
 export default function DropZone({
   // onDrop,
-  height,
+  height
 }: {
   // onDrop: (event: React.DragEvent<HTMLDivElement>) => void;
   height: number;
@@ -16,15 +16,15 @@ export default function DropZone({
     <div
       className="drop-zone transition-all duration-200 bg-gray-200 my-2 rounded"
       style={{
-        height: isDraggedOver ? `${height}px` : "20px",
+        height: isDraggedOver ? `${height}px` : "20px"
       }}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
-      // onDrop={(event) => {
+      // onDrop={event => {
       //   setIsDraggedOver(false);
       //   onDrop(event);
       // }}
-      onDragOver={(event) => event.preventDefault()}
+      onDragOver={event => event.preventDefault()}
     />
   );
 }
