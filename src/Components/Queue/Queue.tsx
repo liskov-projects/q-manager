@@ -10,15 +10,16 @@ import ButtonExpand from "../Buttons/ButtonExpand";
 
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
   const {handleProgressOneStep} = useAddToQueues();
-  const {handleDrop, draggedItem} = useAppContext();
+  const {handleDrop, draggedItem, queues} = useAppContext();
   // FIXME: false
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   // REVIEW: do we still need this?
   const handleDropEvent = (
     event: React.DragEvent<HTMLUListElement>,
     queueId: string,
-    index: number
+    index: number,
+    queues
   ) => {
     event.preventDefault();
 
@@ -28,7 +29,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
     // console.log(index);
 
     //NEW:
-    handleDrop(index, queue);
+    handleDrop(index, queue, queues);
   };
 
   return (
@@ -60,12 +61,12 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
       {isExpanded && (
         <>
           {queue.queueItems.length > 0 ? (
-            <ul className="mb-4 h-[30vh] overflow-hidden hover:overflow-y-auto">
+            <ul className="mb-4 h-[60vh] overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
                 <div
                   key={item._id}
                   id={item._id}
-                  onDrop={e => handleDropEvent(e, queue.id, index)}>
+                  onDrop={e => handleDropEvent(e, queue.id, index, queues)}>
                   <PlayerItem
                     data-target={item._id}
                     className={`${
@@ -80,7 +81,8 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
               ))}
             </ul>
           ) : (
-            <div onDrop={e => handleDropEvent(e, queue.id)}>
+            // REVIEW: undefined works | the underscore doesn't seem to be read as a placeholder
+            <div onDrop={e => handleDropEvent(e, queue.id, undefined, queues)}>
               <span>No items</span>
               <DropZone height={60} />
             </div>
