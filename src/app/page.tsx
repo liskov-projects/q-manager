@@ -19,7 +19,6 @@ const App = () => {
       <Header />
       <div className="flex flex-row justify-around">
         <div className="p-8 w-1/5">
-          {/* NEW: */}
           <SectionHeader>Add new Players</SectionHeader>
           <NewPlayerForm />
 
