@@ -1,4 +1,5 @@
-import {useAppContext} from "@/Context/AppContext";
+import useDragNDrop from "@/hooks/useDragNDrop";
+// import {useAppContext} from "@/Context/AppContext";
 import Player from "@/types/Player";
 import TagsList from "./TagsList";
 import DropZone from "./DropZone";
@@ -14,7 +15,7 @@ export default function QueueListItem({
   queueId: string;
   index: number;
 }) {
-  const {handleDragStart, handleDragOver, handleDrop} = useAppContext();
+  const {handleDragStart, handleDragOver, handleDrop} = useDragNDrop();
 
   return (
     <div

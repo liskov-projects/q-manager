@@ -8,10 +8,12 @@ import PlayerItem from "../PlayerListItem";
 // NEW:
 import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "../QueueListItem";
+import useDragNDrop from "@/hooks/useDragNDrop";
 
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
+  const {queues} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
-  const {handleDrop, draggedItem, queues} = useAppContext();
+  const {handleDrop} = useDragNDrop();
   // FIXME: false
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -62,7 +64,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
       {isExpanded && (
         <>
           {queue.queueItems.length > 0 ? (
-              <ul className="mb-4 h-[60vh] overflow-hidden hover:overflow-y-auto">
+            <ul className="mb-4 h-[60vh] overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
                 <QueueListItem
                   key={item._id}
@@ -75,7 +77,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
             </ul>
           ) : (
             // REVIEW: undefined works | the underscore doesn't seem to be read as a placeholder
-            <div onDrop={e => handleDropEvent(e, queue.id, undefined, queues)}>
+            <div onDrop={e => handleDrop(e, queue.id, undefined, queues)}>
               <span>No items</span>
               <DropZone height={60} />
             </div>

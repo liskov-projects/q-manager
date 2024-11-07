@@ -16,8 +16,7 @@ export default function PlayersList() {
   const [filter, setFilter] = useState("");
 
   //
-  const {players, uniqueCategories, handleDragStart, handleDragOver, fetchPlayers} =
-    useAppContext();
+  const {players, uniqueCategories, fetchPlayers} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
 
   //NOTE: use to be a source of bugs for unprocessAllButton
