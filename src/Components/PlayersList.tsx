@@ -6,7 +6,7 @@ import {useAppContext} from "@/Context/AppContext";
 import PlayerListItem from "./PlayerListItem";
 // import DropDownFilter from "./DropDownFilter";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import faArrowRightFromBracket from "@fortawesome/free-solid-svg-icons";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
@@ -37,7 +37,6 @@ export default function PlayersList() {
   return (
     // REVIEW: viewport height
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
-      {/* NEW:  fetches new players after they're submitted through the form*/}
       <Button
         type="button"
         onClick={fetchPlayers}
@@ -46,7 +45,7 @@ export default function PlayersList() {
         }>
         update players
       </Button>
-      {/* TODO: extract into a separate comp */}
+      {/* TODO: extract into a separate comp? */}
       <input
         className="focus:outline-none focus:ring-2 focus:ring-brick-200"
         type="text"
@@ -70,11 +69,11 @@ export default function PlayersList() {
 
       {unprocessedPlayers.map(player => (
         <PlayerListItem
-        key={player._id}
-        item={player}
-        className="h-30 p-4 rounded-lg shadow-md flex flex-row justify-between items-center my-2"
-        onAddToQueue={() => handleAddToShortestQueue(player._id)}
-      />
+          key={player._id}
+          item={player}
+          className="h-30 p-4 rounded-lg shadow-md flex flex-row justify-between items-center my-2"
+          onAddToQueue={() => handleAddToShortestQueue(player._id)}
+        />
       ))}
     </ul>
   );
