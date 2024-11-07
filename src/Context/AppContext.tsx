@@ -25,7 +25,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   ];
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>([]);
-  const [draggedItem, setDraggedItem] = useState(null);
+  // const [draggedItem, setDraggedItem] = useState(null);
 
   const fetchPlayers = async () => {
     // the path to players route
@@ -56,6 +56,10 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   }, [players]);
   // console.log(uniqueCategories);
 
+  // updater function to consistently modify state
+  const updatePlayers = updatedPlayers => setPlayers(updatedPlayers);
+  const updateQueues = updatedQueues => setQueues(updatedQueues);
+
   return (
     <AppContext.Provider
       value={{
@@ -66,8 +70,10 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
         markPlayerAsProcessed,
         fetchPlayers,
         uniqueCategories,
-        draggedItem,
-        setDraggedItem,
+        updatePlayers,
+        updateQueues,
+        // draggedItem,
+        // setDraggedItem,
         // FIXME: dev purposes
         initialQueues
       }}>

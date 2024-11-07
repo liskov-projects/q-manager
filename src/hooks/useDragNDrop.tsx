@@ -4,8 +4,8 @@ import {useState} from "react";
 import Player from "@/types/Player";
 
 const useDragNDrop = () => {
-  const {players, queues, setPlayers, setQueues, draggedItem, setDraggedItem} =
-    useAppContext();
+  const [draggedItem, setDraggedItem] = useState<Player | null>(null);
+  const {players, updatePlayers, updateQueues} = useAppContext();
 
   // D N D    x p e r i m e n t
   const handleDragStart = (draggedItem: Player) => {
@@ -76,12 +76,14 @@ const useDragNDrop = () => {
       return queue;
     });
     // Update the players state
-    setPlayers(updatedPlayers);
-    // update the queues state
-    setQueues(updatedQueues);
+    // setPlayers(updatedPlayers);
+    // // update the queues state
+    // setQueues(updatedQueues);
+    updatePlayers(updatedPlayers);
+    updateQueues(updatedQueues);
     setDraggedItem(null);
   };
-  return {handleDragStart, handleDragOver, handleDrop};
+  return {handleDragStart, handleDragOver, handleDrop, draggedItem};
 };
 
 export default useDragNDrop;

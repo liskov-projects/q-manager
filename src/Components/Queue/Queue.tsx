@@ -17,23 +17,23 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
   // FIXME: false
   const [isExpanded, setIsExpanded] = useState(true);
 
-  // REVIEW: do we still need this?
-  const handleDropEvent = (
-    event: React.DragEvent<HTMLUListElement>,
-    queueId: string,
-    index: number,
-    queues
-  ) => {
-    event.preventDefault();
+  // // REVIEW: do we still need this?
+  // const handleDropEvent = (
+  //   event: React.DragEvent<HTMLUListElement>,
+  //   queueId: string,
+  //   index: number,
+  //   queues
+  // ) => {
+  //   event.preventDefault();
 
-    // console.log("QUEUE ID");
-    // console.log(queueId);
-    // console.log("INDEX");
-    // console.log(index);
+  //   // console.log("QUEUE ID");
+  //   // console.log(queueId);
+  //   // console.log("INDEX");
+  //   // console.log(index);
 
-    //NEW:
-    handleDrop(index, queue, queues);
-  };
+  //   //NEW:
+  //   handleDrop(index, queue, queues);
+  // };
 
   return (
     <div
@@ -77,7 +77,9 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
             </ul>
           ) : (
             // REVIEW: undefined works | the underscore doesn't seem to be read as a placeholder
-            <div onDrop={e => handleDrop(e, queue.id, undefined, queues)}>
+            <div
+            // onDrop={e => handleDrop(e, undefined, queue.id, queues)}
+            >
               <span>No items</span>
               <DropZone height={60} />
             </div>
