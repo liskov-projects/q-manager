@@ -2,7 +2,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretUp} from "@fortawesome/free-solid-svg-icons";
 import {faCaretDown} from "@fortawesome/free-solid-svg-icons";
 import {useAppContext} from "@/Context/AppContext";
-import useAddToQueues from "@/Hooks/useAddToQueues";
+import useAddToQueues from "@/hooks/useAddToQueues";
 import Player from "@/types/Player";
 
 //REVIEW: why have to pass queueID? if taken out here doesn't change anything see PlayerItem

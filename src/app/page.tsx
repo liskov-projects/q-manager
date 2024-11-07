@@ -18,7 +18,7 @@ const App = () => {
     <AppProvider>
       <Header />
       <div className="flex flex-row justify-around">
-        <div className="p-8 w-1/5">
+        <div className="p-4 w-1/4">
           <SectionHeader>Add new Players</SectionHeader>
           <NewPlayerForm />
 
@@ -29,12 +29,12 @@ const App = () => {
           {/* <Players /> */}
         </div>
 
-        <div className=" p-8 ">
+        <div className="p-4 w-2/4">
           <SectionHeader>Queues</SectionHeader>
           <QueuesGrid />
         </div>
 
-        <div className="p-8 w-1/5 ">
+        <div className="p-4 w-1/4">
           <SectionHeader>Button Group</SectionHeader>
           <ButtonGroup />
           {/* NEW: */}

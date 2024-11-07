@@ -1,10 +1,13 @@
 import {useState} from "react";
-import useAddToQueues from "@/Hooks/useAddToQueues";
+import useAddToQueues from "@/hooks/useAddToQueues";
 import Button from "./Buttons/Button";
 // context
 import {useAppContext} from "@/Context/AppContext";
-import PlayerItem from "./PlayerItem";
+import PlayerListItem from "./PlayerListItem";
 // import DropDownFilter from "./DropDownFilter";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import faArrowRightFromBracket from "@fortawesome/free-solid-svg-icons";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 export default function PlayersList() {
@@ -66,21 +69,12 @@ export default function PlayersList() {
       </div>
 
       {unprocessedPlayers.map(player => (
-        <li
-          key={player._id}
-          className="h-30 p-4 rounded-lg shadow-md flex flex-row justify-between my-2 bg-shell-100"
-          draggable
-          onDragStart={() => handleDragStart(player)}
-          onDragOver={e => handleDragOver(e)}>
-          <PlayerItem item={player}>{player.names}</PlayerItem>
-          {!player.assignedToQueue ? (
-            <Button
-              onClick={() => handleAddToShortestQueue(player._id)}
-              className="px-4 py-2 rounded bg-tennis-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out">
-              Add to Shortest Queue
-            </Button>
-          ) : null}
-        </li>
+        <PlayerListItem
+        key={player._id}
+        item={player}
+        className="h-30 p-4 rounded-lg shadow-md flex flex-row justify-between items-center my-2"
+        onAddToQueue={() => handleAddToShortestQueue(player._id)}
+      />
       ))}
     </ul>
   );

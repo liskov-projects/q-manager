@@ -4,8 +4,8 @@ import Button from "./Buttons/Button";
 import Player from "@/types/Player";
 // context
 import {useAppContext} from "@/Context/AppContext";
-import useAddToQueues from "@/Hooks/useAddToQueues";
-import PlayerItem from "./PlayerItem";
+import useAddToQueues from "@/hooks/useAddToQueues";
+import PlayerItem from "./PlayerListItem";
 
 export default function ProcessedPlayers() {
   // NEW:
