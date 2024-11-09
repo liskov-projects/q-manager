@@ -13,7 +13,7 @@ import useDragNDrop from "@/hooks/useDragNDrop";
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
   const {queues} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
-  const {handleEmptyQueue} = useDragNDrop();
+  const {handleEmptyQueue, handleDropIntoQueue} = useDragNDrop();
   // FIXME: false
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -78,13 +78,13 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                     height={60}
                     key={item._id}
                     index={index}
-                    // onDrop={handleDropIntoQueue}
+                    onDrop={handleDropIntoQueue}
                   />
                 </>
               ))}
             </ul>
           ) : (
-            <div onDrop={e => handleEmptyQueue(e, queue, queue.queueId)}>
+            <div onDrop={e => handleEmptyQueue(e, queue)}>
               <span>No items</span>
               <DropZone height={60} />
             </div>

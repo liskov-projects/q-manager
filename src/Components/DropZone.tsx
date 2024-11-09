@@ -2,6 +2,7 @@ import {useState} from "react";
 
 export default function DropZone({
   // onDrop,
+  index,
   height
 }: {
   // onDrop: (event: React.DragEvent<HTMLDivElement>) => void;
@@ -22,7 +23,7 @@ export default function DropZone({
       onDragLeave={handleDragLeave}
       onDrop={event => {
         setIsDraggedOver(false);
-        // onDrop(event);
+        // onDrop(event, index);
       }}
       onDragOver={event => event.preventDefault()}
     />

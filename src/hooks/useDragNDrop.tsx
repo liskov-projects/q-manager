@@ -1,10 +1,8 @@
 import {useAppContext} from "@/Context/AppContext";
-import {useState} from "react";
 // types
 import Player from "@/types/Player";
 
 const useDragNDrop = () => {
-  //   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
   const {players, queues, updatePlayers, updateQueues, draggedItem, setDraggedItem} =
     useAppContext();
 
@@ -17,6 +15,7 @@ const useDragNDrop = () => {
   const handleDragOver = (e: React.MouseEvent<HTMLLIElement>): void =>
     e.preventDefault();
 
+  //   find where we're dragging FROM
   function identifyQueues(queues, draggedItem) {
     // if dragged item assigned to a queue: true
     if (draggedItem.assignedToQueue) {
@@ -30,7 +29,7 @@ const useDragNDrop = () => {
     }
   }
 
-  const handleEmptyQueue = (e, dropQueue: QueueType, index: number = 0) => {
+  const handleEmptyQueue = (e, dropQueue: QueueType) => {
     e.preventDefault();
 
     console.log("HANDLEDROPINTO Empty QUEUE");
@@ -58,12 +57,8 @@ const useDragNDrop = () => {
     const updatedQueues = queues.map(queue => {
       if (queue.id === dropQueue.id) {
         console.log("entering the updater");
-        // Create a new array with the draggedItem inserted at the specified index
-        const newQueueItems = [
-          ...queue.queueItems.slice(0, index),
-          updatedItem,
-          ...queue.queueItems.slice(index)
-        ];
+        // Create a new array with the updatedItem inserted at the specified index
+        const newQueueItems = [...queue.queueItems, updatedItem];
         // Return a new queue object with the updated queueItems
         return {
           ...queue,
