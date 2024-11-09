@@ -13,7 +13,7 @@ import useDragNDrop from "@/hooks/useDragNDrop";
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
   const {queues} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
-  const {handleDrop} = useDragNDrop();
+  const {handleEmptyQueue} = useDragNDrop();
   // FIXME: false
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -46,7 +46,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
       </div>
       {queue.queueItems.length > 0 && (
         <Button
-          className="my-2 py-2 px-4 rounded bg-brick-200 text-shell-100 hover:bg-tennis-50 transition-colors duration-200"
+          className="my-2 py-2 px-4 rounded bg-brick-200 text-shell-100 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200"
           onClick={() => handleProgressOneStep(index)}>
           Progress Queue
         </Button>
@@ -66,20 +66,25 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
           {queue.queueItems.length > 0 ? (
             <ul className="mb-4 h-[60vh] overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
-                <QueueListItem
-                  key={item._id}
-                  item={item}
-                  className={index === 0 ? "bg-tennis-200" : "bg-shell-100"}
-                  queueId={queue.id}
-                  index={index} // Pass index to handle drop events
-                />
+                <>
+                  <QueueListItem
+                    key={item._id}
+                    item={item}
+                    className={index === 0 ? "bg-tennis-200" : "bg-shell-100"}
+                    queueId={queue.id}
+                    index={index} // Pass index to handle drop events
+                  />
+                  <DropZone
+                    height={60}
+                    key={item._id}
+                    index={index}
+                    // onDrop={handleDropIntoQueue}
+                  />
+                </>
               ))}
             </ul>
           ) : (
-            // REVIEW: undefined works | the underscore doesn't seem to be read as a placeholder
-            <div
-            // onDrop={e => handleDrop(e, undefined, queue.id, queues)}
-            >
+            <div onDrop={e => handleEmptyQueue(e, queue, queue.queueId)}>
               <span>No items</span>
               <DropZone height={60} />
             </div>

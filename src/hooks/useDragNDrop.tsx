@@ -4,8 +4,9 @@ import {useState} from "react";
 import Player from "@/types/Player";
 
 const useDragNDrop = () => {
-  const [draggedItem, setDraggedItem] = useState<Player | null>(null);
-  const {players, updatePlayers, updateQueues} = useAppContext();
+  //   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
+  const {players, queues, updatePlayers, updateQueues, draggedItem, setDraggedItem} =
+    useAppContext();
 
   // D N D    x p e r i m e n t
   const handleDragStart = (draggedItem: Player) => {
@@ -29,15 +30,73 @@ const useDragNDrop = () => {
     }
   }
 
-  const handleDrop = (index: number = 0, queueTarget: QueueType, queues) => {
-    console.log("IN THE CONTEXT DROP");
+  const handleEmptyQueue = (e, dropQueue: QueueType, index: number = 0) => {
+    e.preventDefault();
 
+    console.log("HANDLEDROPINTO Empty QUEUE");
     // console.log("DRAGGED ITEM");
-    console.log(draggedItem);
-    console.log("index: ", index);
+    // console.log(draggedItem);
+    // console.log("index: ", index);
+    // console.log("DropQueue");
+    // console.log(dropQueue);
     if (!draggedItem) return;
 
-    const sourceQueueName = identifyQueues(queues, draggedItem);
+    // create a copy of the dragged item to correctly change the property
+    const updatedItem = {
+      ...draggedItem,
+      assignedToQueue: true,
+      processedThroughQueue: false
+    };
+
+    const updatedPlayers = players.map(player => {
+      if (player._id === draggedItem._id) {
+        return updatedItem;
+      }
+      return player;
+    });
+
+    const updatedQueues = queues.map(queue => {
+      if (queue.id === dropQueue.id) {
+        console.log("entering the updater");
+        // Create a new array with the draggedItem inserted at the specified index
+        const newQueueItems = [
+          ...queue.queueItems.slice(0, index),
+          updatedItem,
+          ...queue.queueItems.slice(index)
+        ];
+        // Return a new queue object with the updated queueItems
+        return {
+          ...queue,
+          queueItems: newQueueItems
+        };
+      }
+      return queue;
+    });
+
+    updatePlayers(updatedPlayers);
+    updateQueues(updatedQueues);
+    setDraggedItem(null);
+  };
+
+  const handleDropIntoQueue = (
+    e,
+    dropQueue: QueueType,
+    index: number = 0
+    // queues
+  ) => {
+    e.preventDefault();
+
+    console.log("HANDLEDROPINQUEUES");
+
+    // console.log("DRAGGED ITEM");
+    // console.log(draggedItem);
+
+    console.log("index: ", index);
+    // console.log("DropQueue");
+    // console.log(dropQueue);
+    if (!draggedItem) return;
+
+    // const sourceQueueName = identifyQueues(queues, draggedItem);
 
     // create a copy of the dragged item to correctly change the property
     const updatedItem = {
@@ -55,35 +114,42 @@ const useDragNDrop = () => {
     });
 
     const updatedQueues = queues.map(queue => {
-      if (queue.id === queueTarget.id) {
+      if (queue.id === dropQueue.id) {
+        console.log("entering the updater");
         // Create a new array with the draggedItem inserted at the specified index
         const newQueueItems = [
-          ...queue.queueItems.slice(0, index + 1),
+          ...queue.queueItems.slice(0, index),
           updatedItem,
-          ...queue.queueItems.slice(index + 1)
+          ...queue.queueItems.slice(index)
         ];
         // Return a new queue object with the updated queueItems
         return {
           ...queue,
           queueItems: newQueueItems
         };
-      } else if (queue.queueName === sourceQueueName) {
-        return {
-          ...queue,
-          queueItems: queue.queueItems.filter(item => item._id !== draggedItem._id)
-        };
       }
+      //   else if (queue.queueName === sourceQueueName) {
+      //     return {
+      //       ...queue,
+      //       queueItems: queue.queueItems.filter(item => item._id !== draggedItem._id)
+      //     };
+      //   }
       return queue;
     });
-    // Update the players state
-    // setPlayers(updatedPlayers);
-    // // update the queues state
-    // setQueues(updatedQueues);
+
     updatePlayers(updatedPlayers);
     updateQueues(updatedQueues);
+    // console.log("DRAGGED ITEM AFTER DROP");
+    // console.log(updatedItem);
     setDraggedItem(null);
   };
-  return {handleDragStart, handleDragOver, handleDrop, draggedItem};
+  return {
+    handleDragStart,
+    handleDragOver,
+    handleDropIntoQueue,
+    handleEmptyQueue,
+    draggedItem
+  };
 };
 
 export default useDragNDrop;
@@ -108,27 +174,27 @@ export default useDragNDrop;
 
 // main dNd function
 
-//   const dragNdropInQueues = (draggedItem: Player, targetItem: Player) => {
-//     console.log("dragNdropInQueues enters ");
-//     // Find the queues containing dragged and target items
-//     const draggedQueueIndex = queues.findIndex(q =>
-//       q.queueItems.some(item => item._id === draggedItem._id)
-//     );
-//     const targetQueueIndex = queues.findIndex(q =>
-//       q.queueItems.some(item => item._id === targetItem._id)
-//     );
+// const dragNdropInQueues = (draggedItem: Player, targetItem: Player) => {
+//   console.log("dragNdropInQueues enters ");
+//   // Find the queues containing dragged and target items
+//   const draggedQueueIndex = queues.findIndex(q =>
+//     q.queueItems.some(item => item._id === draggedItem._id)
+//   );
+//   const targetQueueIndex = queues.findIndex(q =>
+//     q.queueItems.some(item => item._id === targetItem._id)
+//   );
 
-//     // check if the indexes are found
-//     if (draggedQueueIndex === -1 || targetQueueIndex === -1) return;
+//   // check if the indexes are found
+//   if (draggedQueueIndex === -1 || targetQueueIndex === -1) return;
 
-//     // Find the indexes of the dragged and target items in queues
-//     const draggedItemIndex = queues[draggedQueueIndex].queueItems.findIndex(
-//       item => item._id === draggedItem._id
-//     );
-//     const targetItemIndex = queues[targetQueueIndex].queueItems.findIndex(
-//       item => item._id === targetItem._id
-//     );
-
+//   // Find the indexes of the dragged and target items in queues
+//   const draggedItemIndex = queues[draggedQueueIndex].queueItems.findIndex(
+//     item => item._id === draggedItem._id
+//   );
+//   const targetItemIndex = queues[targetQueueIndex].queueItems.findIndex(
+//     item => item._id === targetItem._id
+//   );
+// };
 //     // Copy the queues
 //     const updatedDraggedQueueItems = [...queues[draggedQueueIndex].queueItems];
 //     const updatedTargetQueueItems = [...queues[targetQueueIndex].queueItems];

@@ -33,7 +33,7 @@ export default function QueueListItem({
       <TagsList item={item} />
 
       {/* Drop Zone */}
-      <DropZone height={60} />
+      {/* <DropZone height={60} /> */}
     </div>
   );
 }

@@ -25,7 +25,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   ];
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>([]);
-  // const [draggedItem, setDraggedItem] = useState(null);
+  const [draggedItem, setDraggedItem] = useState(null);
 
   const fetchPlayers = async () => {
     // the path to players route
@@ -72,8 +72,8 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
         uniqueCategories,
         updatePlayers,
         updateQueues,
-        // draggedItem,
-        // setDraggedItem,
+        draggedItem,
+        setDraggedItem,
         // FIXME: dev purposes
         initialQueues
       }}>

@@ -20,10 +20,10 @@ export default function DropZone({
       }}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
-      // onDrop={event => {
-      //   setIsDraggedOver(false);
-      //   onDrop(event);
-      // }}
+      onDrop={event => {
+        setIsDraggedOver(false);
+        // onDrop(event);
+      }}
       onDragOver={event => event.preventDefault()}
     />
   );
