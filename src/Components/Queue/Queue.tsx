@@ -65,9 +65,8 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
           {queue.queueItems.length > 0 ? (
             <ul className="mb-4 h-[60vh] overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
-                <>
+                <li key={item._id}>
                   <QueueListItem
-                    key={item._id}
                     item={item}
                     className={index === 0 ? "bg-tennis-200" : "bg-shell-100"}
                     queueId={queue.id}
@@ -75,12 +74,11 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                   />
                   <DropZone
                     height={60}
-                    key={index}
                     index={index}
                     queue={queue}
                     onDrop={handleDropIntoQueue}
                   />
-                </>
+                </li>
               ))}
             </ul>
           ) : (
