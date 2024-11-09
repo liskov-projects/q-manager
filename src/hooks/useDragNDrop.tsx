@@ -136,7 +136,7 @@ const useDragNDrop = () => {
         console.log(checkQueueItems);
 
         queue.queueItems.forEach((item, index) => {
-          console.log("item index", index);
+          console.log("item", item, "index", index);
         });
         return checkQueueItems;
       }
