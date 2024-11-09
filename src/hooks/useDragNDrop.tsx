@@ -8,7 +8,7 @@ const useDragNDrop = () => {
 
   // D N D    x p e r i m e n t
   const handleDragStart = (draggedItem: Player) => {
-    console.log("drag start & item is", draggedItem);
+    // console.log("drag start & item is", draggedItem);
     setDraggedItem(draggedItem);
   };
   // type for the event object
@@ -76,22 +76,20 @@ const useDragNDrop = () => {
   const handleDropIntoQueue = (
     e,
     dropQueue: QueueType,
-    index: number = 0
+    index: number
     // queues
   ) => {
     e.preventDefault();
 
-    console.log("HANDLEDROPINQUEUES");
+    console.log("HANDLEDROP IN QUEUES");
 
-    // console.log("DRAGGED ITEM");
-    // console.log(draggedItem);
+    // NOTE: all params get into here correctly
+    console.log("DRAGGED ITEM");
+    console.log(draggedItem);
+    console.log("DropQueue", dropQueue);
+    console.log("index:", index);
 
-    console.log("index: ", index);
-    // console.log("DropQueue");
-    // console.log(dropQueue);
     if (!draggedItem) return;
-
-    // const sourceQueueName = identifyQueues(queues, draggedItem);
 
     // create a copy of the dragged item to correctly change the property
     const updatedItem = {
@@ -110,34 +108,51 @@ const useDragNDrop = () => {
 
     const updatedQueues = queues.map(queue => {
       if (queue.id === dropQueue.id) {
-        console.log("entering the updater");
         // Create a new array with the draggedItem inserted at the specified index
-        const newQueueItems = [
-          ...queue.queueItems.slice(0, index),
-          updatedItem,
-          ...queue.queueItems.slice(index)
-        ];
+        // const beginning = queue.queueItems.slice(0, index + 1);
+        // const end = queue.queueItems.slice(index + 1);
+
+        // const newQueueItems = [
+        //   ...queue.queueItems.slice(0, index + 1),
+        //   updatedItem,
+        //   ...queue.queueItems.slice(index + 1)
+        // ];
+        const newQueueItems = [...queue.queueItems];
+        newQueueItems.splice(index + 1, 0, draggedItem);
+        // NOTE: dev
+
+        // console.log("beginning ", beginning);
+        // console.log("ending ", end);
+
+        console.log("newQueueItems: ", newQueueItems);
         // Return a new queue object with the updated queueItems
-        return {
+
+        const checkQueueItems = {
           ...queue,
           queueItems: newQueueItems
         };
+
+        console.log("CHECKING THEQUWUWU ITEMS");
+        console.log(checkQueueItems);
+
+        queue.queueItems.forEach((item, index) => {
+          console.log("item index", index);
+        });
+        return checkQueueItems;
       }
-      //   else if (queue.queueName === sourceQueueName) {
-      //     return {
-      //       ...queue,
-      //       queueItems: queue.queueItems.filter(item => item._id !== draggedItem._id)
-      //     };
-      //   }
+      console.log("QUEUE AT END OF UPDATE QUEUES");
+      console.log(queue);
       return queue;
     });
 
+    console.log("******* QUEUES AT END OF UPDATE QUEUES");
+    console.log(updatedQueues);
+
     updatePlayers(updatedPlayers);
     updateQueues(updatedQueues);
-    // console.log("DRAGGED ITEM AFTER DROP");
-    // console.log(updatedItem);
     setDraggedItem(null);
   };
+
   return {
     handleDragStart,
     handleDragOver,

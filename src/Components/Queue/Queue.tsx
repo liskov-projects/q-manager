@@ -11,7 +11,6 @@ import QueueListItem from "../QueueListItem";
 import useDragNDrop from "@/hooks/useDragNDrop";
 
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
-  const {queues} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
   const {handleEmptyQueue, handleDropIntoQueue} = useDragNDrop();
   // FIXME: false
@@ -78,6 +77,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                     height={60}
                     key={item._id}
                     index={index}
+                    queue={queue}
                     onDrop={handleDropIntoQueue}
                   />
                 </>

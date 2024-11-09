@@ -58,7 +58,11 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
 
   // updater function to consistently modify state
   const updatePlayers = updatedPlayers => setPlayers(updatedPlayers);
-  const updateQueues = updatedQueues => setQueues(updatedQueues);
+  const updateQueues = updatedQueues => {
+    console.log("IN CONTEXT UPDATED QUEUES");
+    console.log(updatedQueues);
+    setQueues(updatedQueues);
+  };
 
   return (
     <AppContext.Provider
