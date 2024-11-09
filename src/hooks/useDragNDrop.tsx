@@ -81,11 +81,11 @@ const useDragNDrop = () => {
   ) => {
     e.preventDefault();
 
-    console.log("HANDLEDROP IN QUEUES");
+    // console.log("HANDLEDROP IN QUEUES");
 
     // NOTE: all params get into here correctly
-    console.log("DRAGGED ITEM");
-    console.log(draggedItem);
+    // console.log("DRAGGED ITEM");
+    // console.log(draggedItem);
     // console.log("DropQueue", dropQueue);
     // console.log("index:", index);
 

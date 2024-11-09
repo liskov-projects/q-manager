@@ -82,9 +82,9 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
               ))}
             </ul>
           ) : (
-            <div onDrop={e => handleEmptyQueue(e, queue)}>
+            <div>
               <span>No items</span>
-              <DropZone height={60} />
+              <DropZone height={60} onDrop={e => handleEmptyQueue(e, queue)} />
             </div>
           )}
         </>
