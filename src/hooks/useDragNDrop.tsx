@@ -86,8 +86,8 @@ const useDragNDrop = () => {
     // NOTE: all params get into here correctly
     console.log("DRAGGED ITEM");
     console.log(draggedItem);
-    console.log("DropQueue", dropQueue);
-    console.log("index:", index);
+    // console.log("DropQueue", dropQueue);
+    // console.log("index:", index);
 
     if (!draggedItem) return;
 
@@ -124,7 +124,7 @@ const useDragNDrop = () => {
         // console.log("beginning ", beginning);
         // console.log("ending ", end);
 
-        console.log("newQueueItems: ", newQueueItems);
+        // console.log("newQueueItems: ", newQueueItems);
         // Return a new queue object with the updated queueItems
 
         const checkQueueItems = {
@@ -132,21 +132,24 @@ const useDragNDrop = () => {
           queueItems: newQueueItems
         };
 
-        console.log("CHECKING THEQUWUWU ITEMS");
-        console.log(checkQueueItems);
+        // console.log("CHECKING THEQUWUWU ITEMS");
+        // console.log(checkQueueItems);
 
-        queue.queueItems.forEach((item, index) => {
-          console.log("item", item, "index", index);
-        });
+        // queue.queueItems.forEach((item, index) => {
+        //   console.log("item", item, "index", index);
+        // });
         return checkQueueItems;
       }
-      console.log("QUEUE AT END OF UPDATE QUEUES");
-      console.log(queue);
+      //   console.log("QUEUE AT END OF UPDATE QUEUES");
+      //   console.log(queue);
+      queue.queueItems.forEach((item, index) => {
+        console.log("After mapping: item", item, "index", index);
+      });
       return queue;
     });
 
-    console.log("******* QUEUES AT END OF UPDATE QUEUES");
-    console.log(updatedQueues);
+    // console.log("******* QUEUES AT END OF UPDATE QUEUES");
+    // console.log(updatedQueues);
 
     updatePlayers(updatedPlayers);
     updateQueues(updatedQueues);

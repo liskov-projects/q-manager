@@ -75,7 +75,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                   />
                   <DropZone
                     height={60}
-                    key={item._id}
+                    key={index}
                     index={index}
                     queue={queue}
                     onDrop={handleDropIntoQueue}
