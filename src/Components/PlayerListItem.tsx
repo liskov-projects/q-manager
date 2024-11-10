@@ -30,13 +30,11 @@ export default function PlayerListItem({
       <TagsList item={item} />
 
       {/* Add to Shortest Queue Button */}
-      {!item.assignedToQueue && (
-        <Button
-          onClick={onAddToQueue}
-          className="px-2 py-3 rounded bg-tennis-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center">
-          🔜 Shortest Queue
-        </Button>
-      )}
+      <Button
+        onClick={onAddToQueue}
+        className="px-2 py-3 rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center">
+        Add to Shortest Queue
+      </Button>
     </li>
   );
 }

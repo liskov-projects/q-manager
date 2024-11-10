@@ -3,6 +3,8 @@ import DropZone from "../DropZone"; // Import the DropZone component
 import {useAppContext} from "@/Context/AppContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import Button from "../Buttons/Button";
+import QueueStatus from "./QueueStatus";
+import QueuePositionLabel from "./QueuePositionLabel";
 
 import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "../QueueListItem";
@@ -23,19 +25,15 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
           Queue {queue.queueName}
         </h3>
       </div>
-      {queue.queueItems.length > 0 && (
-        <Button
-          className="my-2 py-2 px-4 rounded bg-brick-200 text-shell-100 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200"
-          onClick={() => handleProgressOneStep(index)}>
-          Progress Queue
-        </Button>
-      )}
-      <div
-        className={`flex self-center ${
-          queue.queueItems.length < 4 ? "text-brick-300" : "text-bluestone-200"
-        } font-bold text-3xl`}>
-        {queue.queueItems.length || "No items"}
-      </div>
+      <Button
+        className={`my-2 py-2 px-4 rounded transition-colors duration-200 
+          ${queue.queueItems.length > 0 ? "bg-brick-200 text-shell-100 hover:bg-tennis-50 hover:text-shell-300" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+        onClick={() => handleProgressOneStep(index)}
+        disabled={queue.queueItems.length === 0}
+      >
+        Progress Queue
+      </Button>
+      <QueueStatus queue={queue} />
       <ButtonExpand
         isExpanded={isExpanded}
         onClick={() => setIsExpanded(!isExpanded)}
@@ -46,9 +44,10 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
             <ul className="mb-4 h-[60vh] overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
                 <li key={item._id}>
+                  <QueuePositionLabel index={index} />
                   <QueueListItem
                     item={item}
-                    className={index === 0 ? "bg-tennis-200" : "bg-shell-100"}
+                    className={index === 0 ? "bg-green-600 text-shell-50" : "bg-shell-100"}
                     queueId={queue.id}
                     index={index} // Pass index to handle drop events
                   />

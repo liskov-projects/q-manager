@@ -19,7 +19,7 @@ export default function QueueListItem({
     <div
       key={item._id}
       id={item._id}
-      className={`bg-shell-100 text-shell-200 p-2 rounded-lg mb-2 text-center ${className}`}
+      className={`p-2 shadow-md rounded-lg mb-2 text-center ${className}`}
       draggable
       onDragStart={() => handleDragStart(item)}
       onDragOver={e => handleDragOver(e)}>
