@@ -3,36 +3,16 @@ import DropZone from "../DropZone"; // Import the DropZone component
 import {useAppContext} from "@/Context/AppContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import Button from "../Buttons/Button";
-import PlayerItem from "../PlayerListItem";
-// import Player from "@/types/Player";
-// NEW:
+
 import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "../QueueListItem";
 import useDragNDrop from "@/hooks/useDragNDrop";
 
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
   const {handleProgressOneStep} = useAddToQueues();
-  const {handleEmptyQueue, handleDropIntoQueue} = useDragNDrop();
+  const {handleEmptyQueue, handleDrop} = useDragNDrop();
   // FIXME: false
   const [isExpanded, setIsExpanded] = useState(true);
-
-  // // REVIEW: do we still need this?
-  // const handleDropEvent = (
-  //   event: React.DragEvent<HTMLUListElement>,
-  //   queueId: string,
-  //   index: number,
-  //   queues
-  // ) => {
-  //   event.preventDefault();
-
-  //   // console.log("QUEUE ID");
-  //   // console.log(queueId);
-  //   // console.log("INDEX");
-  //   // console.log(index);
-
-  //   //NEW:
-  //   handleDrop(index, queue, queues);
-  // };
 
   return (
     <div
@@ -75,10 +55,10 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                   <DropZone
                     height={60}
                     index={index}
-                    queue={queue}
-                    onDrop={handleDropIntoQueue}
+                    dropTarget={queue} // Pass queue as drop target
+                    onDrop={(event) => handleDrop({ event, dropTarget: queue, index })}
                   />
-                </li>
+                </li>           
               ))}
             </ul>
           ) : (

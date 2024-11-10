@@ -1,6 +1,8 @@
-import {useState} from "react";
+import {useState, Fragment} from "react";
 import useAddToQueues from "@/hooks/useAddToQueues";
+import useDragNDrop from "@/hooks/useDragNDrop"
 import Button from "./Buttons/Button";
+import DropZone from "./DropZone";
 // context
 import {useAppContext} from "@/Context/AppContext";
 import PlayerListItem from "./PlayerListItem";
@@ -18,6 +20,7 @@ export default function PlayersList() {
   //
   const {players, uniqueCategories, fetchPlayers} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
+  const {handleDrop} = useDragNDrop();
 
   //NOTE: use to be a source of bugs for unprocessAllButton
 
@@ -66,13 +69,20 @@ export default function PlayersList() {
         </select>
       </div>
 
-      {unprocessedPlayers.map(player => (
-        <PlayerListItem
-          key={player._id}
-          item={player}
-          className="h-30 p-4 rounded-lg shadow-md flex flex-row justify-between items-center my-2"
-          onAddToQueue={() => handleAddToShortestQueue(player._id)}
-        />
+      {unprocessedPlayers.map((player, index) => (
+        <Fragment key={player._id}>
+          <PlayerListItem
+            item={player}
+            className="h-30 p-4 bg-slate-200 rounded-lg shadow-md flex flex-row justify-between items-center my-2"
+            onAddToQueue={() => handleAddToShortestQueue(player._id)}
+          />
+          <DropZone
+            height={60}
+            index={index}
+            dropTarget="unprocessed" // drop target for unprocessed players
+            onDrop={(event) => handleDrop({ event, dropTarget: "unprocessed", index })}
+          />
+        </Fragment>
       ))}
     </ul>
   );
