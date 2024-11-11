@@ -18,11 +18,15 @@ export default function NewPlayerForm() {
     e.preventDefault();
     // console.log("New player data: ", newPlayers.phoneNumbers.split(","));
 
-    const incomingCategories = newPlayers.categories?.split(",");
-    // console.log(incomingCategories);
-    const incomingPhoneNumbers = newPlayers.phoneNumbers
-      ?.split(",")
-      .map(number => number.trim());
+    const incomingCategories =
+      typeof newPlayers.categories === "string"
+        ? newPlayers.categories.split(",").map(category => category.trim())
+        : newPlayers.categories;
+
+    const incomingPhoneNumbers =
+      typeof newPlayers.phoneNumbers === "string"
+        ? newPlayers.phoneNumbers.split(",").map(number => number.trim())
+        : newPlayers.phoneNumbers;
 
     // data to send to backend
     const newItem = {
