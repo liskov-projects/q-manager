@@ -16,7 +16,7 @@ export default function ProcessedPlayers() {
     .filter(player => {
       return player.processedThroughQueue;
     })
-    .filter(player => player.names.toLowerCase().includes(search.toLowerCase()));
+    .filter(player => player.names?.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
