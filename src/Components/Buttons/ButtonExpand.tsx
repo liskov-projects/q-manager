@@ -2,7 +2,7 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {faMinus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-export default function ButtonExpand({onClick, isExpanded}) {
+export default function ButtonExpand({onClick, isExpanded}: {onClick: () => void}) {
   return (
     <button>
       <FontAwesomeIcon icon={isExpanded ? faMinus : faPlus} onClick={onClick} />
