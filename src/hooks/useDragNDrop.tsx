@@ -1,4 +1,4 @@
-import {useAppContext} from "@/Context/AppContext";
+import {useAppContext} from "@/context/AppContext";
 import Player from "@/types/Player";
 import Queue from "@/types/Queue"; // Import QueueType
 import React from "react";

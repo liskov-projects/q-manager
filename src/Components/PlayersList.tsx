@@ -4,7 +4,7 @@ import useDragNDrop from "@/hooks/useDragNDrop";
 import Button from "./Buttons/Button";
 import DropZone from "./DropZone";
 // context
-import {useAppContext} from "@/Context/AppContext";
+import {useAppContext} from "@/context/AppContext";
 import PlayerListItem from "./PlayerListItem";
 import PlayerType from "@/types/Player";
 // import DropDownFilter from "./DropDownFilter";

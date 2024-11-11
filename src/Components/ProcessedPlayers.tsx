@@ -2,7 +2,7 @@
 import Player from "@/types/Player";
 import {useState} from "react";
 // context
-import {useAppContext} from "@/Context/AppContext";
+import {useAppContext} from "@/context/AppContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import PlayerListItem from "./PlayerListItem";
 

@@ -1,5 +1,5 @@
 import Button from "./Button";
-import {useAppContext} from "@/Context/AppContext";
+import {useAppContext} from "@/context/AppContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
 
 export default function ButtonGroup() {

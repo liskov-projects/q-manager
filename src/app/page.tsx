@@ -1,6 +1,6 @@
 "use client";
 // context
-import {AppProvider} from "@/Context/AppContext";
+import {AppProvider} from "@/context/AppContext";
 // components
 import Header from "@/components/Header";
 import SectionHeader from "@/components/SectionHeader";
