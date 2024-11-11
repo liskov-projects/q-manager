@@ -1,8 +1,8 @@
 // types
-import Player from "@/types/Player.js";
+import PlayerType from "@/types/Player.js";
 import QueueType from "@/types/Queue.js";
 // context
-import {useAppContext} from "@/Context/AppContext";
+import {useAppContext} from "@/context/AppContext";
 
 const useAddToQueues = () => {
   const {players, queues, setPlayers, setQueues, initialQueues} = useAppContext();
@@ -19,11 +19,11 @@ const useAddToQueues = () => {
   };
 
   //helper
-  function findAssignedToQueue(players: Player[]) {
+  function findAssignedToQueue(players: PlayerType[]) {
     return players.filter(player => !player.assignedToQueue);
   }
 
-  const handleAddToShortestQueue = (itemId: string) => {
+  const handleAddToShortestQueue = (itemId: string | undefined) => {
     // Find the item based on itemId
     const itemToUpdate = players.find(player => player._id === itemId);
 
@@ -54,7 +54,7 @@ const useAddToQueues = () => {
     setQueues(newQueues);
   };
 
-  const handleAddAllToQueues = (items: Player[]) => {
+  const handleAddAllToQueues = (items: PlayerType[]) => {
     for (const item of items) {
       if (!item.assignedToQueue) {
         item.assignedToQueue = true;
@@ -64,26 +64,26 @@ const useAddToQueues = () => {
     }
   };
 
-  // NEW:
-  const handleProcessAll = (items: Player[]) => {
+  const handleProcessAll = (items: PlayerType[]) => {
     const itemsToUpdate = items.map(item => {
       if (item.processedThroughQueue) return item;
 
-      if (item.processedThroughQueue !== true) {
+      if (item.processedThroughQueue === false) {
         return {
           ...item,
           processedThroughQueue: true,
           assignedToQueue: false
         };
       }
+      // Return the item in other cases to avoid returning undefined | TS was complaining without it
+      return item;
     });
 
     setPlayers(itemsToUpdate);
     setQueues(initialQueues);
   };
 
-  // NEW:
-  const handleUnprocessAll = (items: Player[]) => {
+  const handleUnprocessAll = (items: PlayerType[]) => {
     const itemsToUpdate = items.map(item => {
       if (!item.assignedToQueue) return item;
       if (item.processedThroughQueue === true || item.assignedToQueue) {
@@ -93,6 +93,8 @@ const useAddToQueues = () => {
           assignedToQueue: false
         };
       }
+      // Return the item in other cases to avoid returning undefined | TS was complaining without it
+      return item;
     });
 
     setPlayers(itemsToUpdate);
@@ -101,16 +103,16 @@ const useAddToQueues = () => {
 
   const handleProgressOneStep = (queueIndex: number) => {
     const newQueues = [...queues];
-    const processedPlayer: Player | undefined =
-      newQueues[queueIndex].queueItems.shift();
+    const processedPlayer = newQueues[queueIndex].queueItems.shift();
 
-    if (!processedPlayer) console.log("no players to move");
+    // Check if processedPlayer is undefined before continuing + early return if it is so
+    if (!processedPlayer) return;
 
     processedPlayer.processedThroughQueue = true;
     processedPlayer.assignedToQueue = false;
 
     const newPlayers = players.map(player => {
-      if (player._id == processedPlayer._id) {
+      if (player._id == processedPlayer?._id) {
         return processedPlayer;
       }
       return player;
@@ -124,20 +126,20 @@ const useAddToQueues = () => {
 
     const shortestQLength = shortestQueue.queueItems.length;
 
-    const slicedQTailCollection = [];
-    const stumps: string[] = [];
+    const slicedQTailCollection: PlayerType[][] = [];
+    const stumps: PlayerType[][] = [];
 
     for (let i = 0; i < queues.length; i++) {
       const slicedTail = queues[i].queueItems.slice(shortestQLength);
       slicedQTailCollection.push(slicedTail);
       stumps.push(queues[i].queueItems.slice(0, shortestQLength));
     }
-    const tempQ: string[] = [];
+    const tempQ: PlayerType[] = [];
     while (slicedQTailCollection.some(q => q.length > 0)) {
       slicedQTailCollection.forEach(tail => {
         if (tail.length > 0) {
           const itemToPush = tail.shift();
-          tempQ.push(itemToPush);
+          if (itemToPush) tempQ.push(itemToPush);
         }
       });
     }

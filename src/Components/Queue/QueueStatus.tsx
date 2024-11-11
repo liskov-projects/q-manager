@@ -1,6 +1,7 @@
+import QueueType from "@/types/Queue";
 import React from "react";
 
-const QueueStatus = ({ queue }) => {
+const QueueStatus = ({queue}: {queue: QueueType}) => {
   const queueLength = queue.queueItems.length - 1; // Exclude "on court" item
 
   // Determine background color based on queue length

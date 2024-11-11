@@ -7,6 +7,5 @@ const QueuePositionLabel = ({ index }) => {
       </div>
     );
 };
-  
+
 export default QueuePositionLabel;
-  

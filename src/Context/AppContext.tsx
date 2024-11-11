@@ -10,6 +10,7 @@ import React, {
 import QueueType from "@/types/Queue";
 import Player from "@/types/Player";
 import AppContextType from "@/types/AppContextInterface";
+import PlayerType from "@/types/Player";
 
 // creating Context
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -25,7 +26,7 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   ];
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>([]);
-  const [draggedItem, setDraggedItem] = useState(null);
+  const [draggedItem, setDraggedItem] = useState<Player | null>(null);
 
   const fetchPlayers = async () => {
     // the path to players route
@@ -57,12 +58,8 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   // console.log(uniqueCategories);
 
   // updater function to consistently modify state
-  const updatePlayers = updatedPlayers => setPlayers(updatedPlayers);
-  const updateQueues = updatedQueues => {
-    console.log("IN CONTEXT UPDATED QUEUES");
-    console.log(updatedQueues);
-    setQueues(updatedQueues);
-  };
+  const updatePlayers = (updatedPlayers: PlayerType[]) => setPlayers(updatedPlayers);
+  const updateQueues = (updatedQueues: QueueType[]) => setQueues(updatedQueues);
 
   return (
     <AppContext.Provider

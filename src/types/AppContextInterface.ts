@@ -1,16 +1,21 @@
-import Player from "./Player";
+import PlayerType from "./Player";
 import QueueType from "./Queue";
 // context type
 interface AppContextType {
-  players: Player[];
+  players: PlayerType[];
   queues: QueueType[];
+  draggedItem: PlayerType | null;
+  uniqueCategories: string[];
+  fetchPlayers: () => Promise<void>;
   setQueues: React.Dispatch<React.SetStateAction<QueueType[]>>;
-  setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
+  setPlayers: React.Dispatch<React.SetStateAction<PlayerType[]>>;
+  updatePlayers: (updatedPlayers: PlayerType[]) => void;
+  updateQueues: (updatedQueues: QueueType[]) => void;
+  setDraggedItem: React.Dispatch<React.SetStateAction<PlayerType | null>>;
   // the following return void because they update state
   markPlayerAsProcessed: (playerId: string) => void;
-  handleDragStart: (draggedItem: Player) => void;
-  handleDragOver: (e: React.MouseEvent<HTMLLIElement>) => void;
-  handleDrop: (e: React.MouseEvent<HTMLLIElement>, targetItem: Player, queue: QueueType) => void;
+  // DEV:
+  initialQueues: QueueType[];
 }
 
 export default AppContextType;

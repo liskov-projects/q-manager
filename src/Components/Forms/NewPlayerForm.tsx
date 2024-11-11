@@ -1,34 +1,32 @@
 import {useState} from "react";
 // components
 import Button from "../Buttons/Button";
+import PlayerType from "@/types/Player";
 
 export default function NewPlayerForm() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [newPlayers, setNewPlayers] = useState({
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [newPlayers, setNewPlayers] = useState<PlayerType>({
     names: "",
-    categories: [],
-    phoneNumbers: []
+    categories: "",
+    phoneNumbers: ""
   });
 
-  function handleChange(e) {
-    // const {name, value} = e.target;
-    //   if (name === "categories" || name === "phoneNumbers") {
-    //     setNewPlayers({...newPlayers, [name]: value.split(",")});
-    //   } else {
-    //     setNewPlayers({...newPlayers, [name]: value});
-    //   }
-    // }
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewPlayers({...newPlayers, [e.target.name]: e.target.value});
   }
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     // console.log("New player data: ", newPlayers.phoneNumbers.split(","));
 
-    const incomingCategories = newPlayers.categories.split(",");
-    // console.log(incomingCategories);
-    const incomingPhoneNumbers = newPlayers.phoneNumbers
-      .split(",")
-      .map(number => number.trim());
+    const incomingCategories =
+      typeof newPlayers.categories === "string"
+        ? newPlayers.categories.split(",").map(category => category.trim())
+        : newPlayers.categories;
+
+    const incomingPhoneNumbers =
+      typeof newPlayers.phoneNumbers === "string"
+        ? newPlayers.phoneNumbers.split(",").map(number => number.trim())
+        : newPlayers.phoneNumbers;
 
     // data to send to backend
     const newItem = {
@@ -58,15 +56,19 @@ export default function NewPlayerForm() {
         console.error("Error response:", res);
         throw new Error("Error adding item, status: " + res.status);
       }
-    } catch (err) {
-      console.error("Error adding item, ", err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Error adding item: ", err.message);
+      } else {
+        console.error("Unknown error: ", err);
+      }
     }
 
     // ressetting the form
     setNewPlayers({
       names: "",
-      categories: [],
-      phoneNumbers: []
+      categories: "",
+      phoneNumbers: ""
     });
     // console.log(newPlayers);
   }
@@ -116,7 +118,6 @@ export default function NewPlayerForm() {
           </div>
 
           <Button
-            type="submit"
             className={
               "ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
             }>

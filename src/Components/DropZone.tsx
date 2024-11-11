@@ -1,3 +1,4 @@
+import QueueType from "@/types/Queue";
 import {useState} from "react";
 
 export default function DropZone({
@@ -6,7 +7,14 @@ export default function DropZone({
   queue,
   height
 }: {
-  // onDrop: (event: React.DragEvent<HTMLDivElement>) => void;
+  onDrop: (
+    event: React.DragEvent<HTMLDivElement>,
+    queue?: QueueType,
+    index?: number
+  ) => void;
+  index?: number;
+  queue?: QueueType;
+  dropTarget?: QueueType | string;
   height: number;
 }) {
   const [isDraggedOver, setIsDraggedOver] = useState(false);
@@ -19,7 +27,7 @@ export default function DropZone({
       className="drop-zone w-[100%] transition-all duration-200 bg-gray-200 my-2 rounded"
       style={{
         height: isDraggedOver ? `${height}px` : "20px",
-        minHeight: "20px",
+        minHeight: "20px"
       }}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}

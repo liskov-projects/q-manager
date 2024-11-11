@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/db";
 import PlayerModel from "@/models/PlayerModel";
+import {NextRequest} from "next/server";
 
 export async function GET() {
   await dbConnect();
@@ -11,7 +12,7 @@ export async function GET() {
   });
 }
 
-export async function POST(req) {
+export async function POST(req: NextRequest) {
   await dbConnect();
 
   const body = await req.json();

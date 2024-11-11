@@ -1,15 +1,13 @@
 import {useState, Fragment} from "react";
 import useAddToQueues from "@/hooks/useAddToQueues";
-import useDragNDrop from "@/hooks/useDragNDrop"
+import useDragNDrop from "@/hooks/useDragNDrop";
 import Button from "./Buttons/Button";
 import DropZone from "./DropZone";
 // context
-import {useAppContext} from "@/Context/AppContext";
+import {useAppContext} from "@/context/AppContext";
 import PlayerListItem from "./PlayerListItem";
+import PlayerType from "@/types/Player";
 // import DropDownFilter from "./DropDownFilter";
-
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import faArrowRightFromBracket from "@fortawesome/free-solid-svg-icons";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 export default function PlayersList() {
@@ -26,13 +24,13 @@ export default function PlayersList() {
 
   const unprocessedPlayers = players.filter(player => {
     // new vars for logic to keep it cleaner
-    const matchesSearch = player.names.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = player.names?.toLowerCase().includes(search.toLowerCase());
     const unassigned = !player.assignedToQueue && !player.processedThroughQueue;
 
     if (filter === "show all" || filter === "") {
       return unassigned && matchesSearch;
     } else {
-      return unassigned && matchesSearch && player.categories.includes(filter);
+      return unassigned && matchesSearch && player.categories?.includes(filter);
     }
   });
 
@@ -40,7 +38,6 @@ export default function PlayersList() {
     // REVIEW: viewport height
     <ul className="flex flex-col items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
       <Button
-        type="button"
         onClick={fetchPlayers}
         className={
           "ml-6 my-4 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
@@ -69,7 +66,7 @@ export default function PlayersList() {
         </select>
       </div>
 
-      {unprocessedPlayers.map((player, index) => (
+      {unprocessedPlayers.map((player: PlayerType, index) => (
         <Fragment key={player._id}>
           <PlayerListItem
             item={player}
@@ -80,7 +77,7 @@ export default function PlayersList() {
             height={60}
             index={index}
             dropTarget="unprocessed" // drop target for unprocessed players
-            onDrop={(event) => handleDrop({ event, dropTarget: "unprocessed", index })}
+            onDrop={e => handleDrop({e, dropTarget: "unprocessed", index})}
           />
         </Fragment>
       ))}

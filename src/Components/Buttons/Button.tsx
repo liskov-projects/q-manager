@@ -3,16 +3,16 @@ import {ReactNode} from "react";
 export default function Button({
   children,
   className,
-  type,
-  onClick
+  onClick,
+  disabled
 }: {
   children: ReactNode;
   className: string;
-  type: string;
-  onClick: () => void;
+  onClick?: () => void;
+  disabled?: boolean;
 }) {
   return (
-    <button type={type} className={className} onClick={onClick}>
+    <button className={className} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

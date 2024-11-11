@@ -1,12 +1,10 @@
 import useDragNDrop from "@/hooks/useDragNDrop";
-import {useAppContext} from "@/Context/AppContext";
 import Player from "@/types/Player";
 import TagsList from "./TagsList";
-import DropZone from "./DropZone";
 
 export default function QueueListItem({
   item,
-  className,
+  className
 }: {
   item: Player;
   className: string;
@@ -23,7 +21,6 @@ export default function QueueListItem({
       draggable
       onDragStart={() => handleDragStart(item)}
       onDragOver={e => handleDragOver(e)}>
-
       <div className="player-name">{item.names}</div>
 
       <TagsList item={item} />
