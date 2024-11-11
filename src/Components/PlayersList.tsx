@@ -38,14 +38,14 @@ export default function PlayersList() {
 
   return (
     // REVIEW: viewport height
-    <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
+    <ul className="flex flex-col items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
       <Button
         type="button"
         onClick={fetchPlayers}
         className={
           "ml-6 my-4 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
         }>
-        update players
+        UPDATE PLAYERS
       </Button>
       {/* TODO: extract into a separate comp? */}
       <input
@@ -73,7 +73,7 @@ export default function PlayersList() {
         <Fragment key={player._id}>
           <PlayerListItem
             item={player}
-            className="h-30 p-4 bg-slate-200 rounded-lg shadow-md flex flex-row justify-between items-center my-2"
+            className="h-30 w-[92%] p-2 bg-slate-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
             onAddToQueue={() => handleAddToShortestQueue(player._id)}
           />
           <DropZone

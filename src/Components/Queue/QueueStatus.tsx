@@ -10,13 +10,27 @@ const QueueStatus = ({ queue }) => {
     queueLength === 2 ? "bg-orange-400" :    // More alarming color for 2 items
     queueLength === 1 ? "bg-red-400" :       // Most urgent color for 1 item
     queueLength === 0 ? "bg-red-500" :
-    "bg-green-200";                           // Neutral color for empty queue
+    "bg-green-200";                          // Neutral color for empty queue
 
   // Determine the display message based on queue status
   const displayMessage = 
-    queueLength > 0 ? `Number in queue: ${queueLength}` :
-    queue.queueItems.length === 0 ? "No one on court" :
-    "Queue is empty";
+    queue.queueItems.length === 0 ? (
+      "No one on court"
+    ) : queueLength > 0 ? (
+      <div className="flex items-center justify-between">
+        <span>Number in queue:</span>
+        <span className="ml-2 flex items-center justify-center w-12 h-12 border-4 border-black bg-slate-200 text-black font-bold">
+          {queueLength}
+        </span>
+      </div>
+    ) : (
+      <div className="flex items-center justify-between">
+        <span>Queue is empty</span>
+        <span className="ml-2 flex items-center justify-center w-12 h-12 border-4 border-black bg-slate-200 text-black font-bold">
+          0
+        </span>
+      </div>
+    );
 
   return (
     <div className={`p-4 rounded text-black font-bold ${backgroundColor}`}>

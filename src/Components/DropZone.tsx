@@ -16,7 +16,7 @@ export default function DropZone({
 
   return (
     <div
-      className="drop-zone transition-all duration-200 bg-gray-400 my-2 rounded"
+      className="drop-zone w-[100%] transition-all duration-200 bg-gray-200 my-2 rounded"
       style={{
         height: isDraggedOver ? `${height}px` : "20px",
         minHeight: "20px",

@@ -18,7 +18,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
 
   return (
     <div
-      className="rounded-lg shadow-lg p-6 flex flex-col"
+      className="rounded-lg shadow-lg p-2 flex flex-col"
       onDragOver={event => event.preventDefault()}>
       <div className="flex flex-row justify-around">
         <h3 className="text-xl font-semibold text-bluestone-200 mb-4">
@@ -26,12 +26,12 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
         </h3>
       </div>
       <Button
-        className={`my-2 py-2 px-4 rounded transition-colors duration-200 
+        className={`my-2 py-2 text-[0.75rem] font-bold px-4 rounded transition-colors duration-200 
           ${queue.queueItems.length > 0 ? "bg-brick-200 text-shell-100 hover:bg-tennis-50 hover:text-shell-300" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
         onClick={() => handleProgressOneStep(index)}
         disabled={queue.queueItems.length === 0}
       >
-        Progress Queue
+        PROGRESS QUEUE ⬆️
       </Button>
       <QueueStatus queue={queue} />
       <ButtonExpand
@@ -41,9 +41,12 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
       {isExpanded && (
         <>
           {queue.queueItems.length > 0 ? (
-            <ul className="mb-4 h-[60vh] overflow-hidden hover:overflow-y-auto">
+            <ul className="mb-4 h-[auto] overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
-                <li key={item._id}>
+                <li 
+                  key={item._id}
+                  className="flex flex-col items-center w-[100%]"
+                >
                   <QueuePositionLabel index={index} />
                   <QueueListItem
                     item={item}

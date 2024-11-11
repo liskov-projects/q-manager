@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'left-bottom-lg': '-4px 4px 10px rgba(0, 0, 0, 0.5)', 
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

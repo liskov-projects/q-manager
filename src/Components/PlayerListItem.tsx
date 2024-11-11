@@ -19,7 +19,7 @@ export default function PlayerListItem({
   return (
     <li
       key={item._id}
-      className={`h-30 p-4 rounded-lg shadow-md flex flex-row justify-between items-center my-2 ${className}`}
+      className={`h-30 p-4 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2 ${className}`}
       draggable
       onDragStart={() => handleDragStart(item)}
       onDragOver={e => handleDragOver(e)}>
@@ -32,8 +32,8 @@ export default function PlayerListItem({
       {/* Add to Shortest Queue Button */}
       <Button
         onClick={onAddToQueue}
-        className="px-2 py-3 rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center">
-        Add to Shortest Queue
+        className="px-10 py-7 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center">
+        ADD TO SHORTEST QUEUE ⬆️
       </Button>
     </li>
   );
