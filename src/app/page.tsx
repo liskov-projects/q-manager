@@ -2,14 +2,14 @@
 // context
 import {AppProvider} from "@/Context/AppContext";
 // components
-import Header from "@/Components/Header";
-import SectionHeader from "@/Components/SectionHeader";
+import Header from "@/components/Header";
+import SectionHeader from "@/components/SectionHeader";
 // NEW:
-import NewPlayerForm from "@/Components/Forms/NewPlayerForm";
-import PlayersList from "@/Components/PlayersList";
-import QueuesGrid from "@/Components/Queue/QueuesGrid";
-import ProcessedPlayers from "@/Components/ProcessedPlayers";
-import ButtonGroup from "@/Components/Buttons/ButtonGroup";
+import NewPlayerForm from "@/components/Forms/NewPlayerForm";
+import PlayersList from "@/components/PlayersList";
+import QueuesGrid from "@/components/Queue/QueuesGrid";
+import ProcessedPlayers from "@/components/ProcessedPlayers";
+import ButtonGroup from "@/components/Buttons/ButtonGroup";
 // dummy
 // import Players from "@/Components/Players";
 
