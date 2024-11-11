@@ -58,7 +58,7 @@ const players = [
     names: "Tom vs Sam",
     category: "male",
     phoneNumbers: ["0476 329 810", "0481 123 594"]
-  }
+  },
   {
     id: "11",
     names: "James vs Liam",
@@ -301,4 +301,3 @@ const players = [
   }
 ];
 export default players;
-

@@ -1,15 +1,12 @@
 import {useState, Fragment} from "react";
 import useAddToQueues from "@/hooks/useAddToQueues";
-import useDragNDrop from "@/hooks/useDragNDrop"
+import useDragNDrop from "@/hooks/useDragNDrop";
 import Button from "./Buttons/Button";
 import DropZone from "./DropZone";
 // context
 import {useAppContext} from "@/Context/AppContext";
 import PlayerListItem from "./PlayerListItem";
 // import DropDownFilter from "./DropDownFilter";
-
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import faArrowRightFromBracket from "@fortawesome/free-solid-svg-icons";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 export default function PlayersList() {
@@ -80,7 +77,7 @@ export default function PlayersList() {
             height={60}
             index={index}
             dropTarget="unprocessed" // drop target for unprocessed players
-            onDrop={(event) => handleDrop({ event, dropTarget: "unprocessed", index })}
+            onDrop={event => handleDrop({event, dropTarget: "unprocessed", index})}
           />
         </Fragment>
       ))}

@@ -6,7 +6,7 @@ import useAddToQueues from "@/hooks/useAddToQueues";
 import Player from "@/types/Player";
 
 //REVIEW: why have to pass queueID? if taken out here doesn't change anything see PlayerItem
-export default function ButtonUpDown(item, queueId) {
+export default function ButtonUpDown({item}) {
   const {queues, setQueues, setPlayers} = useAppContext();
   const {handleProgressOneStep} = useAddToQueues();
 

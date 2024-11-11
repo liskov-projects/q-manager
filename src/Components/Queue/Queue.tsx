@@ -1,6 +1,5 @@
 import {useState} from "react";
 import DropZone from "../DropZone"; // Import the DropZone component
-import {useAppContext} from "@/Context/AppContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import Button from "../Buttons/Button";
 import QueueStatus from "./QueueStatus";
@@ -27,10 +26,13 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
       </div>
       <Button
         className={`my-2 py-2 px-4 rounded transition-colors duration-200 
-          ${queue.queueItems.length > 0 ? "bg-brick-200 text-shell-100 hover:bg-tennis-50 hover:text-shell-300" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+          ${
+            queue.queueItems.length > 0
+              ? "bg-brick-200 text-shell-100 hover:bg-tennis-50 hover:text-shell-300"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
         onClick={() => handleProgressOneStep(index)}
-        disabled={queue.queueItems.length === 0}
-      >
+        disabled={queue.queueItems.length === 0}>
         Progress Queue
       </Button>
       <QueueStatus queue={queue} />
@@ -47,7 +49,9 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                   <QueuePositionLabel index={index} />
                   <QueueListItem
                     item={item}
-                    className={index === 0 ? "bg-green-600 text-shell-50" : "bg-shell-100"}
+                    className={
+                      index === 0 ? "bg-green-600 text-shell-50" : "bg-shell-100"
+                    }
                     queueId={queue.id}
                     index={index} // Pass index to handle drop events
                   />
@@ -55,9 +59,9 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                     height={60}
                     index={index}
                     dropTarget={queue} // Pass queue as drop target
-                    onDrop={(event) => handleDrop({ event, dropTarget: queue, index })}
+                    onDrop={event => handleDrop({event, dropTarget: queue, index})}
                   />
-                </li>           
+                </li>
               ))}
             </ul>
           ) : (

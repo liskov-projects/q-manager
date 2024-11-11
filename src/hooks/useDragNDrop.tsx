@@ -1,9 +1,9 @@
-import { useAppContext } from "@/Context/AppContext";
+import {useAppContext} from "@/Context/AppContext";
 import Player from "@/types/Player";
 import QueueType from "@/types/Queue"; // Import QueueType
 
 const useDragNDrop = () => {
-  const { players, queues, updatePlayers, updateQueues, draggedItem, setDraggedItem } =
+  const {players, queues, updatePlayers, updateQueues, draggedItem, setDraggedItem} =
     useAppContext();
 
   // Handle drag start
@@ -16,16 +16,16 @@ const useDragNDrop = () => {
     e.preventDefault();
 
   // Identify the queue the dragged item is from
-  function identifyQueues(queues: QueueType[], draggedItem: Player) {
-    if (draggedItem.assignedToQueue) {
-      const sourceQueue = queues.find(queue =>
-        queue.queueItems.some(item => item._id === draggedItem._id)
-      );
-      return sourceQueue ? sourceQueue.queueName : null;
-    } else {
-      console.log("Item is not in any queue");
-    }
-  }
+  // function identifyQueues(queues: QueueType[], draggedItem: Player) {
+  //   if (draggedItem.assignedToQueue) {
+  //     const sourceQueue = queues.find(queue =>
+  //       queue.queueItems.some(item => item._id === draggedItem._id)
+  //     );
+  //     return sourceQueue ? sourceQueue.queueName : null;
+  //   } else {
+  //     console.log("Item is not in any queue");
+  //   }
+  // }
 
   // Handle dropping into an empty queue
   const handleEmptyQueue = (e, dropQueue: QueueType) => {
@@ -62,28 +62,42 @@ const useDragNDrop = () => {
   };
 
   // General handle drop function for different drop targets
-  const handleDrop = ({ event, dropTarget, index }) => {
+  const handleDrop = ({event, dropTarget, index}) => {
     event.preventDefault();
 
     if (!draggedItem) return;
 
     // Determine if the dragged item is already in a queue
-    const isInQueue = draggedItem.assignedToQueue && !draggedItem.processedThroughQueue;
+    const isInQueue =
+      draggedItem.assignedToQueue && !draggedItem.processedThroughQueue;
 
     // Update the item's properties based on the target drop zone
-    let updatedItem = { ...draggedItem };
+    let updatedItem = {...draggedItem};
 
-    if (dropTarget === 'processed') {
-      updatedItem = { ...updatedItem, assignedToQueue: false, processedThroughQueue: true };
-    } else if (dropTarget === 'unprocessed') {
-      updatedItem = { ...updatedItem, assignedToQueue: false, processedThroughQueue: false };
-    } else if (typeof dropTarget === 'object' && dropTarget.id) { // dropTarget is a queue
-      updatedItem = { ...updatedItem, assignedToQueue: true, processedThroughQueue: false };
+    if (dropTarget === "processed") {
+      updatedItem = {
+        ...updatedItem,
+        assignedToQueue: false,
+        processedThroughQueue: true
+      };
+    } else if (dropTarget === "unprocessed") {
+      updatedItem = {
+        ...updatedItem,
+        assignedToQueue: false,
+        processedThroughQueue: false
+      };
+    } else if (typeof dropTarget === "object" && dropTarget.id) {
+      // dropTarget is a queue
+      updatedItem = {
+        ...updatedItem,
+        assignedToQueue: true,
+        processedThroughQueue: false
+      };
     }
 
     // Update players list based on the drop target
     let updatedPlayers;
-    if (dropTarget === 'processed' || dropTarget === 'unprocessed') {
+    if (dropTarget === "processed" || dropTarget === "unprocessed") {
       // Remove the item from its current location and add to the specified list
       updatedPlayers = players.filter(player => player._id !== draggedItem._id);
       const insertIndex = index !== undefined ? index : updatedPlayers.length;
@@ -97,19 +111,22 @@ const useDragNDrop = () => {
 
     // Update queues if necessary
     const updatedQueues = queues.map(queue => {
-      const isTargetQueue = typeof dropTarget === 'object' && queue.id === dropTarget.id;
+      const isTargetQueue =
+        typeof dropTarget === "object" && queue.id === dropTarget.id;
 
       // Remove the item from its current queue if necessary
       if (isInQueue && queue.queueItems.some(item => item._id === draggedItem._id)) {
-        const filteredQueueItems = queue.queueItems.filter(item => item._id !== draggedItem._id);
-        return { ...queue, queueItems: filteredQueueItems };
+        const filteredQueueItems = queue.queueItems.filter(
+          item => item._id !== draggedItem._id
+        );
+        return {...queue, queueItems: filteredQueueItems};
       }
 
       // Add the item to the target queue at the specified index if dropping into a queue
       if (isTargetQueue) {
         const newQueueItems = [...queue.queueItems];
         newQueueItems.splice(index, 0, updatedItem);
-        return { ...queue, queueItems: newQueueItems };
+        return {...queue, queueItems: newQueueItems};
       }
 
       return queue;
