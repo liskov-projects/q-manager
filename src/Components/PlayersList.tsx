@@ -6,6 +6,7 @@ import DropZone from "./DropZone";
 // context
 import {useAppContext} from "@/Context/AppContext";
 import PlayerListItem from "./PlayerListItem";
+import PlayerType from "@/types/Player";
 // import DropDownFilter from "./DropDownFilter";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
@@ -23,13 +24,13 @@ export default function PlayersList() {
 
   const unprocessedPlayers = players.filter(player => {
     // new vars for logic to keep it cleaner
-    const matchesSearch = player.names.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = player.names?.toLowerCase().includes(search.toLowerCase());
     const unassigned = !player.assignedToQueue && !player.processedThroughQueue;
 
     if (filter === "show all" || filter === "") {
       return unassigned && matchesSearch;
     } else {
-      return unassigned && matchesSearch && player.categories.includes(filter);
+      return unassigned && matchesSearch && player.categories?.includes(filter);
     }
   });
 
@@ -65,7 +66,7 @@ export default function PlayersList() {
         </select>
       </div>
 
-      {unprocessedPlayers.map((player, index) => (
+      {unprocessedPlayers.map((player: PlayerType, index) => (
         <Fragment key={player._id}>
           <PlayerListItem
             item={player}
