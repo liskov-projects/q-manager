@@ -4,7 +4,7 @@ import useAddToQueues from "@/hooks/useAddToQueues";
 import Button from "../Buttons/Button";
 import QueueStatus from "./QueueStatus";
 import QueuePositionLabel from "./QueuePositionLabel";
-
+import QueueType from "@/types/Queue";
 import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "../QueueListItem";
 import useDragNDrop from "@/hooks/useDragNDrop";
@@ -59,7 +59,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                     height={60}
                     index={index}
                     dropTarget={queue} // Pass queue as drop target
-                    onDrop={event => handleDrop({event, dropTarget: queue, index})}
+                    onDrop={e => handleDrop({e, dropTarget: queue, index})}
                   />
                 </li>
               ))}

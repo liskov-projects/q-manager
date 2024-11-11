@@ -37,7 +37,6 @@ export default function PlayersList() {
     // REVIEW: viewport height
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
       <Button
-        type="button"
         onClick={fetchPlayers}
         className={
           "ml-6 my-4 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
@@ -77,7 +76,7 @@ export default function PlayersList() {
             height={60}
             index={index}
             dropTarget="unprocessed" // drop target for unprocessed players
-            onDrop={event => handleDrop({event, dropTarget: "unprocessed", index})}
+            onDrop={e => handleDrop({e, dropTarget: "unprocessed", index})}
           />
         </Fragment>
       ))}

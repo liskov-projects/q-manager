@@ -1,6 +1,7 @@
 import {useAppContext} from "@/Context/AppContext";
 import Player from "@/types/Player";
-import QueueType from "@/types/Queue"; // Import QueueType
+import Queue from "@/types/Queue"; // Import QueueType
+import React from "react";
 
 const useDragNDrop = () => {
   const {players, queues, updatePlayers, updateQueues, draggedItem, setDraggedItem} =
@@ -12,8 +13,9 @@ const useDragNDrop = () => {
   };
 
   // Prevent default on drag over
-  const handleDragOver = (e: React.MouseEvent<HTMLLIElement>): void =>
-    e.preventDefault();
+  const handleDragOver = (
+    e: React.MouseEvent<HTMLDivElement> | React.MouseEvent<HTMLLIElement>
+  ): void => e.preventDefault();
 
   // Identify the queue the dragged item is from
   // function identifyQueues(queues: QueueType[], draggedItem: Player) {
@@ -28,7 +30,10 @@ const useDragNDrop = () => {
   // }
 
   // Handle dropping into an empty queue
-  const handleEmptyQueue = (e, dropQueue: QueueType) => {
+  const handleEmptyQueue = (
+    e: React.MouseEvent<HTMLDivElement>,
+    dropQueue: Queue
+  ) => {
     e.preventDefault();
 
     if (!draggedItem) return;
@@ -62,8 +67,16 @@ const useDragNDrop = () => {
   };
 
   // General handle drop function for different drop targets
-  const handleDrop = ({event, dropTarget, index}) => {
-    event.preventDefault();
+  const handleDrop = ({
+    e,
+    dropTarget,
+    index
+  }: {
+    e: React.MouseEvent<HTMLDivElement>;
+    dropTarget: string | Queue;
+    index?: number;
+  }) => {
+    e.preventDefault();
 
     if (!draggedItem) return;
 
@@ -125,7 +138,7 @@ const useDragNDrop = () => {
       // Add the item to the target queue at the specified index if dropping into a queue
       if (isTargetQueue) {
         const newQueueItems = [...queue.queueItems];
-        newQueueItems.splice(index, 0, updatedItem);
+        newQueueItems.splice(index ?? newQueueItems.length, 0, updatedItem);
         return {...queue, queueItems: newQueueItems};
       }
 

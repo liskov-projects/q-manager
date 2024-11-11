@@ -12,6 +12,7 @@ export default function PlayerListItem({
   item: Player;
   className: string;
   queueId?: string;
+  onAddToQueue: () => void;
 }) {
   // const {handleDragStart, handleDragOver} = useAppContext();
   const {handleDragStart, handleDragOver} = useDragNDrop();

@@ -1,4 +1,4 @@
-type Player = {
+type PlayerType = {
   // as in Mongo later
   _id: string;
   names: string;
@@ -8,4 +8,4 @@ type Player = {
   processedThroughQueue: boolean;
 };
 
-export default Player;
+export default PlayerType;
