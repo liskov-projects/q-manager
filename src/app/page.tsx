@@ -7,11 +7,9 @@ import SectionHeader from "@/components/SectionHeader";
 // NEW:
 import NewPlayerForm from "@/components/Forms/NewPlayerForm";
 import PlayersList from "@/components/PlayersList";
-import QueuesContainer from "@/Components/Queue/QueuesContainer";
+import QueuesContainer from "@/components/Queue/QueuesContainer";
 import ProcessedPlayers from "@/components/ProcessedPlayers";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
-// dummy
-// import Players from "@/Components/Players";
 
 const App = () => {
   return (
