@@ -36,7 +36,7 @@ export default function PlayersList() {
 
   return (
     // REVIEW: viewport height
-    <ul className="flex flex-col items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
+    <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
       <Button
         onClick={fetchPlayers}
         className={
@@ -65,22 +65,23 @@ export default function PlayersList() {
           ))}
         </select>
       </div>
-
-      {unprocessedPlayers.map((player: PlayerType, index) => (
-        <Fragment key={player._id}>
-          <PlayerListItem
-            item={player}
-            className="h-30 w-[92%] p-2 bg-slate-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
-            onAddToQueue={() => handleAddToShortestQueue(player._id)}
-          />
-          <DropZone
-            height={60}
-            index={index}
-            dropTarget="unprocessed" // drop target for unprocessed players
-            onDrop={e => handleDrop({e, dropTarget: "unprocessed", index})}
-          />
-        </Fragment>
-      ))}
-    </ul>
+      <ul className="flex flex-col items-center">
+        {unprocessedPlayers.map((player: PlayerType, index) => (
+          <Fragment key={player._id}>
+            <PlayerListItem
+              item={player}
+              className="h-30 w-[92%] p-2 bg-slate-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
+              onAddToQueue={() => handleAddToShortestQueue(player._id)}
+            />
+            <DropZone
+              height={60}
+              index={index}
+              dropTarget="unprocessed" // drop target for unprocessed players
+              onDrop={e => handleDrop({e, dropTarget: "unprocessed", index})}
+            />
+          </Fragment>
+        ))}
+      </ul>
+    </div>
   );
 }

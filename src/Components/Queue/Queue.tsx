@@ -6,7 +6,7 @@ import QueueStatus from "./QueueStatus";
 import QueuePositionLabel from "./QueuePositionLabel";
 import QueueType from "@/types/Queue";
 import ButtonExpand from "../Buttons/ButtonExpand";
-import QueueListItem from "../QueueListItem";
+import QueueListItem from "./QueueListItem";
 import useDragNDrop from "@/hooks/useDragNDrop";
 
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
@@ -17,7 +17,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
 
   return (
     <div
-      className="rounded-lg shadow-lg p-2 flex flex-col"
+      className="rounded-lg shadow-left-bottom-lg p-2 flex flex-col border-3 border-grey-300"
       onDragOver={event => event.preventDefault()}>
       <div className="flex flex-row justify-around">
         <h3 className="text-xl font-semibold text-bluestone-200 mb-4">
@@ -50,7 +50,7 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
                   <QueueListItem
                     item={item}
                     className={
-                      index === 0 ? "bg-green-600 text-shell-50" : "bg-shell-100"
+                      index === 0 ? "bg-green-600 text-shell-50 border-4 border-black" : "bg-shell-100"
                     }
                     queueId={queue.id}
                     index={index} // Pass index to handle drop events

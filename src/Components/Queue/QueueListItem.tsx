@@ -1,6 +1,6 @@
 import useDragNDrop from "@/hooks/useDragNDrop";
 import Player from "@/types/Player";
-import TagsList from "./TagsList";
+import TagsList from "../TagsList";
 
 export default function QueueListItem({
   item,

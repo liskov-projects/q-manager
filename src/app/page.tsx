@@ -7,7 +7,7 @@ import SectionHeader from "@/components/SectionHeader";
 // NEW:
 import NewPlayerForm from "@/components/Forms/NewPlayerForm";
 import PlayersList from "@/components/PlayersList";
-import QueuesGrid from "@/components/Queue/QueuesGrid";
+import QueuesContainer from "@/Components/Queue/QueuesContainer";
 import ProcessedPlayers from "@/components/ProcessedPlayers";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
 // dummy
@@ -31,7 +31,7 @@ const App = () => {
 
         <div className="p-2 w-2/4">
           <SectionHeader>Queues</SectionHeader>
-          <QueuesGrid />
+          <QueuesContainer />
         </div>
 
         <div className="p-2 w-1/4">
