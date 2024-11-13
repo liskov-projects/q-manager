@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import SectionHeader from "@/components/SectionHeader";
 import NewPlayerForm from "@/components/Forms/NewPlayerForm";
 import PlayersList from "@/components/PlayersList";
-import QueuesGrid from "@/components/Queue/QueuesGrid";
+import QueuesContainer from "@/components/Queue/QueuesContainer";
 import ProcessedPlayers from "@/components/ProcessedPlayers";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
 
@@ -36,7 +36,7 @@ const App = () => {
         {/* Queues section is the main focus */}
         <div className={`p-2 w-full lg:w-2/4 ${visibleSection === "queues" ? "block" : "hidden lg:block"}`}>
           <SectionHeader>Queues</SectionHeader>
-          <QueuesGrid />
+          <QueuesContainer />
         </div>
 
         {/* Processed players section */}
