@@ -28,6 +28,18 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
 
+  // NEW:
+  const addMoreQueues = (queues: QueueType[]) => {
+    setQueues(prev => [
+      ...prev,
+      {
+        queueName: (queues.length + 1).toString(),
+        queueItems: [],
+        id: queues.length.toString()
+      }
+    ]);
+  };
+
   const fetchPlayers = async () => {
     // the path to players route
     const response = await fetch("../api/players/");
@@ -76,7 +88,8 @@ export const AppProvider = ({children}: {children: ReactNode}) => {
         draggedItem,
         setDraggedItem,
         // FIXME: dev purposes
-        initialQueues
+        initialQueues,
+        addMoreQueues
       }}>
       {children}
     </AppContext.Provider>

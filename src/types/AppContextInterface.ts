@@ -16,6 +16,7 @@ interface AppContextType {
   markPlayerAsProcessed: (playerId: string) => void;
   // DEV:
   initialQueues: QueueType[];
+  addMoreQueues: (queues: QueueType[]) => void;
 }
 
 export default AppContextType;
