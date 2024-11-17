@@ -16,7 +16,7 @@ import PlayerType from "@/types/Player";
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 // context provider
-export const AppProvider = ({children}: {children: ReactNode}) => {
+export const QueuesProvider = ({children}: {children: ReactNode}) => {
   // Initial queue setup
   const initialQueues: QueueType[] = [
     {queueName: "1", queueItems: [], id: "0987"},
