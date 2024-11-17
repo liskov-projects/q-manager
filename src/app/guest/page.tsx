@@ -7,8 +7,7 @@ import QueuesPage from "@/components/Pages/QueuesPage";
 export default function GuestPage() {
   return (
     <>
-      {/* <RouteProvider> */}
-      <QueuesPage />;{/* </RouteProvider> */}
+      <QueuesPage />;
     </>
   );
 }
