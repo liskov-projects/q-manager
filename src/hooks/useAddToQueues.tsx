@@ -2,7 +2,7 @@
 import PlayerType from "@/types/Player.js";
 import QueueType from "@/types/Queue.js";
 // context
-import {useAppContext} from "@/context/AppContext";
+import {useAppContext} from "@/context/QueuesContext";
 
 const useAddToQueues = () => {
   const {players, queues, setPlayers, setQueues, initialQueues} = useAppContext();

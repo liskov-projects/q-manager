@@ -1,5 +1,5 @@
 // context
-import {useAppContext} from "@/context/AppContext";
+import {useAppContext} from "@/context/QueuesContext";
 //components
 import Queue from "./Queue";
 import React from "react";

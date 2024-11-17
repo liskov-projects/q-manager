@@ -1,5 +1,14 @@
 // can see all that is public everyone not authenticated is guest by default
-//REVIEW: might not need this page
+"use client";
+import QueuesPage from "@/components/Pages/QueuesPage";
+// import {RouteProvider} from "@/context/RouteContext";
+
+// might not need this page
 export default function GuestPage() {
-  return <div>Guest Page???</div>;
+  return (
+    <>
+      {/* <RouteProvider> */}
+      <QueuesPage />;{/* </RouteProvider> */}
+    </>
+  );
 }

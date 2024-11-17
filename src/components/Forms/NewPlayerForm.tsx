@@ -1,9 +1,12 @@
 import {useState} from "react";
+import {useRouteContext} from "@/context/RouteContext";
 // components
 import Button from "../Buttons/Button";
 import PlayerType from "@/types/Player";
+import SectionHeader from "../SectionHeader";
 
 export default function NewPlayerForm() {
+  const {isGuest} = useRouteContext();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newPlayers, setNewPlayers] = useState<PlayerType>({
     names: "",
@@ -75,15 +78,18 @@ export default function NewPlayerForm() {
 
   return (
     <>
-      <div className="flex justify-center my-4">
-        <Button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className={
-            "ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center"
-          }>
-          {`${isExpanded ? "hide " : "show"} the form`}
-        </Button>
-      </div>
+      {isGuest ? (
+        <div className="flex flex-col justify-center my-4">
+          <SectionHeader>Add new Players</SectionHeader>
+
+          <Button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center">
+            {`${isExpanded ? "hide " : "show"} the form`}
+          </Button>
+        </div>
+      ) : null}
+
       {isExpanded && (
         <form
           className="flex flex-row items-center my-10 justify-between"
@@ -117,10 +123,7 @@ export default function NewPlayerForm() {
             />
           </div>
 
-          <Button
-            className={
-              "ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
-            }>
+          <Button className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
             Add player
           </Button>
         </form>

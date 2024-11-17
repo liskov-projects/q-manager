@@ -9,7 +9,7 @@ import React, {
 // types
 import QueueType from "@/types/Queue";
 import Player from "@/types/Player";
-import AppContextType from "@/types/AppContextInterface";
+import AppContextType from "@/types/QueuesContextInterface";
 import PlayerType from "@/types/Player";
 
 // creating Context
@@ -28,7 +28,6 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
 
-  // NEW:
   const addMoreQueues = (queues: QueueType[]) => {
     setQueues(prev => [
       ...prev,
@@ -100,7 +99,7 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error("useAppContext must be within AppProvider");
+    throw new Error("useQueuesContext must be within QueuesProvider");
   }
   return context;
 };

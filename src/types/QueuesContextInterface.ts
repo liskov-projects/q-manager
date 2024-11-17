@@ -1,7 +1,7 @@
 import PlayerType from "./Player";
 import QueueType from "./Queue";
 // context type
-interface AppContextType {
+interface QueuesContextType {
   players: PlayerType[];
   queues: QueueType[];
   draggedItem: PlayerType | null;
@@ -19,4 +19,4 @@ interface AppContextType {
   addMoreQueues: (queues: QueueType[]) => void;
 }
 
-export default AppContextType;
+export default QueuesContextType;
