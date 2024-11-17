@@ -6,17 +6,18 @@ import DropZone from "./DropZone";
 import SectionHeader from "./SectionHeader";
 // context
 import {useAppContext} from "@/context/QueuesContext";
+import {useRouteContext} from "@/context/RouteContext";
+
 import PlayerListItem from "./PlayerListItem";
 import PlayerType from "@/types/Player";
 // import DropDownFilter from "./DropDownFilter";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 export default function PlayersList() {
-  // NEW:
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
 
-  //
+  const {isGuest} = useRouteContext();
   const {players, uniqueCategories, fetchPlayers} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
@@ -40,16 +41,18 @@ export default function PlayersList() {
     <>
       <SectionHeader>Unprocessed Players</SectionHeader>
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
-        <Button
-          onClick={fetchPlayers}
-          className={
-            "ml-6 my-4 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
-          }>
-          UPDATE PLAYERS
-        </Button>
+        {isGuest ? null : (
+          <Button
+            onClick={fetchPlayers}
+            className={
+              "ml-6 my-4 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
+            }>
+            UPDATE PLAYERS
+          </Button>
+        )}
         {/* TODO: extract into a separate comp? */}
         <input
-          className="focus:outline-none focus:ring-2 focus:ring-brick-200"
+          className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-4"
           type="text"
           placeholder="search player..."
           value={search}

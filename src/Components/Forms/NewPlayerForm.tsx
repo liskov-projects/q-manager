@@ -76,19 +76,20 @@ export default function NewPlayerForm() {
     // console.log(newPlayers);
   }
 
+  // hides the components from guests
+  if (isGuest) return null;
+
   return (
     <>
-      {isGuest ? (
-        <div className="flex flex-col justify-center my-4">
-          <SectionHeader>Add new Players</SectionHeader>
+      <div className="flex flex-col justify-center my-4">
+        <SectionHeader>Add new Players</SectionHeader>
 
-          <Button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center">
-            {`${isExpanded ? "hide " : "show"} the form`}
-          </Button>
-        </div>
-      ) : null}
+        <Button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center">
+          {`${isExpanded ? "hide " : "show"} the form`}
+        </Button>
+      </div>
 
       {isExpanded && (
         <form

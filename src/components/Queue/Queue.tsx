@@ -8,9 +8,12 @@ import QueueType from "@/types/Queue";
 import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "./QueueListItem";
 import useDragNDrop from "@/hooks/useDragNDrop";
+import {useRouteContext} from "@/context/RouteContext";
 
 export default function Queue({queue, index}: {queue: QueueType; index: number}) {
   const {handleProgressOneStep} = useAddToQueues();
+  const {isGuest} = useRouteContext();
+
   const {handleEmptyQueue, handleDrop} = useDragNDrop();
   // FIXME: false
   const [isExpanded, setIsExpanded] = useState(true);
@@ -24,33 +27,40 @@ export default function Queue({queue, index}: {queue: QueueType; index: number})
           Queue {queue.queueName}
         </h3>
       </div>
-      <Button
-        className={`my-2 py-2 text-[0.75rem] font-bold px-4 rounded transition-colors duration-200 
-          ${queue.queueItems.length > 0 ? "bg-brick-200 text-shell-100 hover:bg-tennis-50 hover:text-shell-300" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-        onClick={() => handleProgressOneStep(index)}
-        disabled={queue.queueItems.length === 0}
-      >
-        PROGRESS QUEUE ⬆️
-      </Button>
-      <QueueStatus queue={queue} />
-      <ButtonExpand
-        isExpanded={isExpanded}
-        onClick={() => setIsExpanded(!isExpanded)}
-      />
+      {isGuest ? null : (
+        <>
+          <Button
+            className={`my-2 py-2 text-[0.75rem] font-bold px-4 rounded transition-colors duration-200 
+          ${
+            queue.queueItems.length > 0
+              ? "bg-brick-200 text-shell-100 hover:bg-tennis-50 hover:text-shell-300"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+            onClick={() => handleProgressOneStep(index)}
+            disabled={queue.queueItems.length === 0}>
+            PROGRESS QUEUE ⬆️
+          </Button>
+          <QueueStatus queue={queue} />
+          <ButtonExpand
+            isExpanded={isExpanded}
+            onClick={() => setIsExpanded(!isExpanded)}
+          />
+        </>
+      )}
+
       {isExpanded && (
         <>
           {queue.queueItems.length > 0 ? (
             <ul className="mb-4 h-[auto] overflow-hidden hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
-                <li 
-                  key={item._id}
-                  className="flex flex-col items-center w-[100%]"
-                >
+                <li key={item._id} className="flex flex-col items-center w-[100%]">
                   <QueuePositionLabel index={index} />
                   <QueueListItem
                     item={item}
                     className={
-                      index === 0 ? "bg-green-600 text-shell-50 border-4 border-black" : "bg-shell-100"
+                      index === 0
+                        ? "bg-green-600 text-shell-50 border-4 border-black"
+                        : "bg-shell-100"
                     }
                     queueId={queue.id}
                     index={index} // Pass index to handle drop events

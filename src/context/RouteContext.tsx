@@ -1,20 +1,21 @@
 import RouteContextType from "@/types/RoutingContext";
 import {createContext, useContext, useState, useEffect, ReactNode} from "react";
+// import {useRouter} from "next/navigation";
 import {usePathname} from "next/navigation";
 
 const RouterContext = createContext<RouteContextType | undefined>(undefined);
 
 export const RouteProvider = ({children}: {children: ReactNode}) => {
   const [isGuest, setIsGuest] = useState(false);
-  const pathname = usePathname();
+  const pathName = usePathname();
 
   useEffect(() => {
-    if (pathname.includes("guest")) {
+    if (pathName.includes("guest")) {
       setIsGuest(true);
-    } else {
+    } else if (pathName === undefined) {
       setIsGuest(false);
     }
-  }, [pathname]); // React to changes in pathname
+  }, [pathName]);
 
   return (
     <RouterContext.Provider value={{isGuest, setIsGuest}}>

@@ -1,10 +1,14 @@
 import Button from "./Button";
 import {useAppContext} from "@/context/QueuesContext";
+import {useRouteContext} from "@/context/RouteContext";
+
 import useAddToQueues from "@/hooks/useAddToQueues";
 import SectionHeader from "../SectionHeader";
 
 export default function ButtonGroup() {
   const {players, queues} = useAppContext();
+  const {isGuest} = useRouteContext();
+
   const {
     handleAddAllToQueues,
     handleRedistributeQueues,
@@ -12,6 +16,9 @@ export default function ButtonGroup() {
     handleProcessAll,
     handleUnprocessAll
   } = useAddToQueues();
+
+  // hides the components from guests
+  if (isGuest) return null;
 
   return (
     <div className="my-4">
