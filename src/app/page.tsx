@@ -1,18 +1,9 @@
 "use client";
 
-// import {QueuesProvider} from "@/context/QueuesContext";
-// import {RouteProvider} from "@/context/RouteContext";
-import QueuesPage from "@/components/Pages/QueuesPage";
+import AllTournaments from "./all-tournaments/page";
 
 const App = () => {
-  return (
-    // doesn't seem to like nested providers => moving elsewhere
-    // <QueuesProvider>
-    // {/* <RouteProvider> */}
-    <QueuesPage />
-    // {/* </RouteProvider> */}
-    // {/* </QueuesProvider> */}
-  );
+  return <AllTournaments />;
 };
 
 export default App;

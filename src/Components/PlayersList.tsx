@@ -6,7 +6,7 @@ import DropZone from "./DropZone";
 import SectionHeader from "./SectionHeader";
 // context
 import {useAppContext} from "@/context/QueuesContext";
-import {useRouteContext} from "@/context/RouteContext";
+import {useUser} from "@clerk/nextjs";
 
 import PlayerListItem from "./PlayerListItem";
 import PlayerType from "@/types/Player";
@@ -17,12 +17,10 @@ export default function PlayersList() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
 
-  const {isGuest} = useRouteContext();
+  const {isSignedIn} = useUser();
   const {players, uniqueCategories, fetchPlayers} = useAppContext();
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
-
-  //NOTE: use to be a source of bugs for unprocessAllButton
 
   const unprocessedPlayers = players.filter(player => {
     // new vars for logic to keep it cleaner
@@ -41,7 +39,7 @@ export default function PlayersList() {
     <>
       <SectionHeader>Unprocessed Players</SectionHeader>
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
-        {isGuest ? null : (
+        {!isSignedIn ? null : (
           <Button
             onClick={fetchPlayers}
             className={

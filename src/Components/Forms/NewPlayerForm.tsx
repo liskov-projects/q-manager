@@ -1,12 +1,14 @@
 import {useState} from "react";
-import {useRouteContext} from "@/context/RouteContext";
+// import {useRouteContext} from "@/context/RouteContext";
+import {useUser} from "@clerk/nextjs";
 // components
 import Button from "../Buttons/Button";
 import PlayerType from "@/types/Player";
 import SectionHeader from "../SectionHeader";
 
 export default function NewPlayerForm() {
-  const {isGuest} = useRouteContext();
+  const {isSignedIn} = useUser();
+
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newPlayers, setNewPlayers] = useState<PlayerType>({
     names: "",
@@ -77,7 +79,8 @@ export default function NewPlayerForm() {
   }
 
   // hides the components from guests
-  if (isGuest) return null;
+  // if (isGuest) return null;
+  if (!isSignedIn) return null;
 
   return (
     <>

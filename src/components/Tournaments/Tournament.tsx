@@ -4,7 +4,7 @@ import Link from "next/link";
 import SectionHeader from "../SectionHeader";
 
 export default function Tournament({tournament}: {tournament: TournamentType}) {
-  const {_id, name, categories, description} = tournament;
+  const {name, categories, description} = tournament;
   // console.log(name, categories, description);
   const formattedCategories = categories.join(", ");
 

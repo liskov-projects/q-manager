@@ -4,9 +4,6 @@ import Tournament from "@/components/Tournaments/Tournament";
 import mockTournaments from "@/Data/tournaments";
 
 export default function AllTournaments() {
-  // FIXME: for dev purposes
-  // const numOfTournaments = [1, 2, 3, 4, 4, 5, 6, 7, 8, 12];
-
   return (
     // FIXME: the grid for both sections
     <div className="flex flex-row items-center justify-around">
