@@ -9,7 +9,7 @@ import React from "react";
 export default function User() {
   const {isSignedIn, user} = useUser();
   //   const user = currentUser();
-  //   console.log(user);
+  // console.log(user.id);
   return (
     <div className="flex items-center">
       {isSignedIn ? (
@@ -23,9 +23,9 @@ export default function User() {
               height={16}
             />
           </div>
-          <SignOutButton className="ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100">
-            Sign out
-          </SignOutButton>
+          <div className="ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100">
+            <SignOutButton>Sign out</SignOutButton>
+          </div>
         </div>
       ) : (
         <Link

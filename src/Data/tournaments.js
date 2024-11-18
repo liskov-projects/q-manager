@@ -1,6 +1,7 @@
 const mockTournaments = [
   {
     _id: "1",
+    adminUser: "verrafalenko@gmail.com",
     name: "Echuca",
     categories: ["female", "male", "teens"],
     image: "",
@@ -10,6 +11,7 @@ const mockTournaments = [
   },
   {
     _id: "2",
+    adminUser: "verrafalenko@gmail.com",
     name: "Bendigo",
     categories: ["male", "mixed"],
     image: "",
@@ -19,6 +21,7 @@ const mockTournaments = [
   },
   {
     _id: "3",
+    adminUser: "verrafalenko@gmail.com",
     name: "Ballarat",
     categories: ["female", "teens"],
     image: "",
@@ -29,6 +32,7 @@ const mockTournaments = [
   },
   {
     _id: "4",
+    adminUser: "",
     name: "Shepparton",
     categories: ["mixed", "teens"],
     image: "",
@@ -39,6 +43,7 @@ const mockTournaments = [
   },
   {
     _id: "5",
+    adminUser: "",
     name: "Warrnambool",
     categories: ["male", "female"],
     image: "",
@@ -49,6 +54,7 @@ const mockTournaments = [
   },
   {
     _id: "6",
+    adminUser: "",
     name: "Geelong",
     categories: ["mixed", "teens", "male"],
     image: "",
@@ -58,6 +64,7 @@ const mockTournaments = [
   },
   {
     _id: "7",
+    adminUser: "",
     name: "Mildura",
     categories: ["female", "mixed"],
     image: "",
@@ -68,6 +75,7 @@ const mockTournaments = [
   },
   {
     _id: "8",
+    adminUser: "",
     name: "Albury",
     categories: ["teens", "male"],
     image: "",
@@ -78,6 +86,7 @@ const mockTournaments = [
   },
   {
     _id: "9",
+    adminUser: "",
     name: "Wodonga",
     categories: ["female", "mixed", "teens"],
     image: "",
@@ -88,6 +97,7 @@ const mockTournaments = [
   },
   {
     _id: "10",
+    adminUser: "",
     name: "Horsham",
     categories: ["male", "mixed", "teens"],
     image: "",

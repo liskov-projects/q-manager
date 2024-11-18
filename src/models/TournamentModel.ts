@@ -4,6 +4,7 @@ const tournamentSchema = new mongoose.Schema(
   {
     tournamenName: {type: String, required: true},
     categories: [{type: String, required: true}],
+    adminUser: String,
     image: {type: Buffer},
     description: {type: String},
     //   can't directly refer other models | use this:
