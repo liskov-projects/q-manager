@@ -1,3 +1,5 @@
+import User from "@/components/User";
+
 export default function Header() {
   return (
     <div className="flex justify-between items-center py-8">
@@ -26,6 +28,7 @@ export default function Header() {
       <h1 className="flex-grow text-3xl text-heading text-center">
         Queue Management
       </h1>
+      <User />
     </div>
   );
 }

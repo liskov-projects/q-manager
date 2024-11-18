@@ -1,6 +1,19 @@
-import {SignInButton, SignedIn, SignedOut, UserButton} from "@clerk/nextjs";
+"use client";
+import {useEffect} from "react";
+import {SignInButton, SignedIn, SignedOut, UserButton, useUser} from "@clerk/nextjs";
+// to redirect the user to a specific route after logginin
+import {useRouter} from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const {isSignedIn} = useUser();
+
+  useEffect(() => {
+    if (isSignedIn) {
+      router.push("/"); // Redirect to home page after sign-in
+    }
+  }, [isSignedIn, router]);
+
   return (
     <div>
       <SignedIn>

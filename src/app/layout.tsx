@@ -32,6 +32,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          {/* looks like this compoennt cannot use Clerk hook for some reason */}
           <Header />
 
           {children}

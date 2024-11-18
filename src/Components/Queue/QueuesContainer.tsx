@@ -5,13 +5,14 @@ import SectionHeader from "../SectionHeader";
 import Button from "../Buttons/Button";
 import {useAppContext} from "@/context/QueuesContext";
 // import {useRouteContext} from "@/context/RouteContext";
-import {useUser} from "@clerk/nextjs";
 
+import {useUser} from "@clerk/nextjs";
 export default function QueuesContainer() {
   const [showAlternateView, setShowAlternateView] = useState(false);
   const {addMoreQueues, queues} = useAppContext();
   // const {isGuest} = useRouteContext();
   const {isSignedIn} = useUser();
+
   return (
     <div className="p-2">
       <SectionHeader>Queues</SectionHeader>
