@@ -1,5 +1,6 @@
 const mockTournaments = [
   {
+    _id: "1",
     name: "Echuca",
     categories: ["female", "male", "teens"],
     image: "",
@@ -8,6 +9,7 @@ const mockTournaments = [
     description: "A regional tournament held in the beautiful town of Echuca."
   },
   {
+    _id: "2",
     name: "Bendigo",
     categories: ["male", "mixed"],
     image: "",
@@ -16,6 +18,7 @@ const mockTournaments = [
     description: "A popular tournament known for its diverse matches in Bendigo."
   },
   {
+    _id: "3",
     name: "Ballarat",
     categories: ["female", "teens"],
     image: "",
@@ -25,6 +28,7 @@ const mockTournaments = [
       "This tournament attracts young talents and rising stars in Ballarat."
   },
   {
+    _id: "4",
     name: "Shepparton",
     categories: ["mixed", "teens"],
     image: "",
@@ -34,6 +38,7 @@ const mockTournaments = [
       "A friendly competition focused on mixed and teen categories in Shepparton."
   },
   {
+    _id: "5",
     name: "Warrnambool",
     categories: ["male", "female"],
     image: "",
@@ -43,6 +48,7 @@ const mockTournaments = [
       "A coastal tournament famous for its vibrant atmosphere in Warrnambool."
   },
   {
+    _id: "6",
     name: "Geelong",
     categories: ["mixed", "teens", "male"],
     image: "",
@@ -51,6 +57,7 @@ const mockTournaments = [
     description: "A highly competitive tournament hosted annually in Geelong."
   },
   {
+    _id: "7",
     name: "Mildura",
     categories: ["female", "mixed"],
     image: "",
@@ -60,6 +67,7 @@ const mockTournaments = [
       "Known for its scenic venue, Mildura offers a fantastic tournament experience."
   },
   {
+    _id: "8",
     name: "Albury",
     categories: ["teens", "male"],
     image: "",
@@ -69,6 +77,7 @@ const mockTournaments = [
       "A small-town tournament with big opportunities for emerging talents in Albury."
   },
   {
+    _id: "9",
     name: "Wodonga",
     categories: ["female", "mixed", "teens"],
     image: "",
@@ -78,6 +87,7 @@ const mockTournaments = [
       "An inclusive tournament featuring a variety of categories in Wodonga."
   },
   {
+    _id: "10",
     name: "Horsham",
     categories: ["male", "mixed", "teens"],
     image: "",
