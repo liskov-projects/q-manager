@@ -1,8 +1,10 @@
 import Tournament from "@/components/Tournaments/Tournament";
+// FIXME: dev purposes
+import mockTournaments from "@/Data/tournaments";
 
 export default function AllTournaments() {
   // FIXME: for dev purposes
-  const numOfTournaments = [1, 2, 3, 4, 4, 5, 6, 7, 8, 12];
+  // const numOfTournaments = [1, 2, 3, 4, 4, 5, 6, 7, 8, 12];
 
   return (
     // FIXME: the grid for both sections
@@ -10,8 +12,8 @@ export default function AllTournaments() {
       <div className="flex flex-col">
         <span>Tournaments Grid goes here</span>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {numOfTournaments.map((tournamnet, ind) => (
-            <Tournament key={ind} num={tournamnet} />
+          {mockTournaments.map((tournamnet, ind) => (
+            <Tournament key={ind} tournament={tournamnet} />
           ))}
         </ul>
       </div>

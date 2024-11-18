@@ -4,7 +4,12 @@ import {createContext, useContext, useState, useEffect, ReactNode} from "react";
 import {usePathname} from "next/navigation";
 
 const RouterContext = createContext<RouteContextType | undefined>(undefined);
-
+// where is the session? should give info about the user
+//   can't get to /user unless logged | redirect to /guest?
+// use the session to make the decision what to show on a page
+// draggable = user === admin ? true : false
+// make the state depend on the url
+// all-tournaments will become the main page
 export const RouteProvider = ({children}: {children: ReactNode}) => {
   const [isGuest, setIsGuest] = useState(false);
   const pathName = usePathname();
