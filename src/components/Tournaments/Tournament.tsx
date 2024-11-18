@@ -6,22 +6,24 @@ import SectionHeader from "../SectionHeader";
 export default function Tournament({tournament}: {tournament: TournamentType}) {
   const {_id, name, categories, description} = tournament;
   // console.log(name, categories, description);
+  const formattedCategories = categories.join(", ");
+
   return (
     <div>
       <SectionHeader>
-        <Link href={`/all-tournaments/${_id}`}>{name}</Link>
+        <Link href={`/all-tournaments/${name}`}>{name}</Link>
       </SectionHeader>
 
       <Image
         //   FIXME:
-        src="/tennis.jpg" // Replace with your image path
-        alt={`Tournament ${name} Image`} // A meaningful alt text for accessibility
-        width={500} // Set the width of the image
-        height={300} // Set the height of the image
+        src="/tennis.jpg"
+        alt={`Tournament ${name} Image`}
+        width={350}
+        height={250}
       />
       <span>{description}</span>
       <br />
-      <span>{categories?.join(", ")}</span>
+      <span>{formattedCategories}</span>
     </div>
   );
 }
