@@ -29,7 +29,7 @@ export default function QueuesContainer() {
           </Button>
           <Button
             onClick={() => removeQueues(queues)}
-            className="mb-4 p-2 bg-red-500 text-white font-bold rounded">
+            className="mb-4 mx-4 p-2 bg-red-500 text-white font-bold rounded">
             Remove a queue
           </Button>
         </>

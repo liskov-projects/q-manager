@@ -1,5 +1,6 @@
 import QueueType from "@/types/Queue";
 import {useState} from "react";
+import {useUser} from "@clerk/nextjs";
 
 export default function DropZone({
   onDrop,
@@ -17,11 +18,13 @@ export default function DropZone({
   dropTarget?: QueueType | string;
   height: number;
 }) {
+  const {isSignedIn} = useUser();
   const [isDraggedOver, setIsDraggedOver] = useState(false);
 
   const handleDragEnter = () => setIsDraggedOver(true);
   const handleDragLeave = () => setIsDraggedOver(false);
 
+  if (!isSignedIn) return null;
   return (
     <div
       className="drop-zone w-[95%] transition-all duration-200 bg-gray-200 my-2 rounded"
