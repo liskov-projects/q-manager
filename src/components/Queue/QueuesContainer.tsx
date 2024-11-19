@@ -4,13 +4,11 @@ import QueuesGridMini from "./QueuesGridMini";
 import SectionHeader from "../SectionHeader";
 import Button from "../Buttons/Button";
 import {useAppContext} from "@/context/QueuesContext";
-// import {useRouteContext} from "@/context/RouteContext";
-
 import {useUser} from "@clerk/nextjs";
+
 export default function QueuesContainer() {
   const [showAlternateView, setShowAlternateView] = useState(false);
-  const {addMoreQueues, queues} = useAppContext();
-  // const {isGuest} = useRouteContext();
+  const {addMoreQueues, removeQueues, queues} = useAppContext();
   const {isSignedIn} = useUser();
 
   return (
@@ -23,11 +21,18 @@ export default function QueuesContainer() {
         {showAlternateView ? "Show Detailed View" : "Show Grid View"}
       </Button>
       {!isSignedIn ? null : (
-        <Button
-          onClick={() => addMoreQueues(queues)}
-          className="mb-4 p-2 bg-red-500 text-white font-bold rounded">
-          Add more queues
-        </Button>
+        <>
+          <Button
+            onClick={() => addMoreQueues(queues)}
+            className="mb-4 p-2 bg-red-500 text-white font-bold rounded">
+            Add more queues
+          </Button>
+          <Button
+            onClick={() => removeQueues(queues)}
+            className="mb-4 p-2 bg-red-500 text-white font-bold rounded">
+            Remove a queue
+          </Button>
+        </>
       )}
       {showAlternateView ? <QueuesGridMini /> : <QueuesGrid />}
     </div>

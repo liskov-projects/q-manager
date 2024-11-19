@@ -17,6 +17,7 @@ interface QueuesContextType {
   // DEV:
   initialQueues: QueueType[];
   addMoreQueues: (queues: QueueType[]) => void;
+  removeQueues: (queues: QueueType[]) => void;
 }
 
 export default QueuesContextType;

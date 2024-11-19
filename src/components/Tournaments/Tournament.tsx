@@ -9,7 +9,7 @@ export default function Tournament({tournament}: {tournament: TournamentType}) {
   const formattedCategories = categories.join(", ");
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <SectionHeader>
         <Link href={`/all-tournaments/${name}`}>{name}</Link>
       </SectionHeader>
@@ -21,9 +21,9 @@ export default function Tournament({tournament}: {tournament: TournamentType}) {
         width={350}
         height={250}
       />
-      <span>{description}</span>
+      <p>{description}</p>
       <br />
-      <span>{formattedCategories}</span>
+      <p>{formattedCategories}</p>
     </div>
   );
 }

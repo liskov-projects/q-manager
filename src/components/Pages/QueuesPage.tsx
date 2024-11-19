@@ -7,7 +7,7 @@ import PlayersList from "@/components/PlayersList";
 import QueuesContainer from "@/components/Queue/QueuesContainer";
 import ProcessedPlayers from "@/components/ProcessedPlayers";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
-import {RouteProvider} from "@/context/RouteContext";
+import {RouteProvider} from "@/components/drafts/RouteContext";
 import {QueuesProvider} from "@/context/QueuesContext";
 
 export default function QueuesPage() {

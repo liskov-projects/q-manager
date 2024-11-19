@@ -39,6 +39,10 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
     ]);
   };
 
+  const removeQueues = (queues: QueueType[]) => {
+    setQueues(prev => prev.slice(0, -1));
+  };
+
   const fetchPlayers = async () => {
     // the path to players route
     const response = await fetch("../api/players/");
@@ -86,9 +90,10 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
         updateQueues,
         draggedItem,
         setDraggedItem,
+        addMoreQueues,
+        removeQueues,
         // FIXME: dev purposes
-        initialQueues,
-        addMoreQueues
+        initialQueues
       }}>
       {children}
     </AppContext.Provider>
