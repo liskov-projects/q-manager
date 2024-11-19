@@ -4,7 +4,12 @@ const playerSchema = new mongoose.Schema(
   {
     names: {type: String, required: true},
     categories: [{type: String, required: true}],
-    phoneNumbers: [{type: String, required: true}]
+    phoneNumbers: [{type: String, required: true}],
+    tournamentID: {
+      // used to refer this field to tournament._id
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TournamentModel"
+    }
     // FIXME: assigned to queues & processed through queues
   },
   {collection: "players"}

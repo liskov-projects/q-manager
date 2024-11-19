@@ -6,6 +6,7 @@ type PlayerType = {
   phoneNumbers?: string;
   assignedToQueue?: boolean;
   processedThroughQueue?: boolean;
+  tournamentId: string;
 };
 
 export default PlayerType;
