@@ -1,12 +1,15 @@
+"use client";
 import SectionHeader from "@/components/SectionHeader";
 import Tournament from "@/components/Tournaments/Tournament";
+import NewTournamentForm from "@/components/Forms/NewTournamentForm";
+
 // FIXME: dev purposes
 import mockTournaments from "@/Data/tournaments";
 
 export default function AllTournaments() {
   return (
     // FIXME: the grid for both sections
-    <div className="flex flex-row items-center justify-around">
+    <div className="flex flex-row items-start justify-around p-8">
       <div className="flex flex-col">
         <SectionHeader>All tournaments</SectionHeader>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -15,9 +18,11 @@ export default function AllTournaments() {
           ))}
         </ul>
       </div>
-      <div className="flex flex-col">
-        <span>Side bar with search filed</span>
-        <input type="text" />
+      <div className="flex flex-col items-start justify-start my-4 p-8 flex-shrink-0">
+        <SectionHeader>I'm looking for...</SectionHeader>
+        {/* this should be a search field */}
+        <input type="text" placeholder="player, tournament..." />
+        <NewTournamentForm />
       </div>
     </div>
   );

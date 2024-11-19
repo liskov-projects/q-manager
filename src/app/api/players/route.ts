@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
   // saves to db
   await newPayer.save();
 
-  // Response - NextJS constructor that send data to from server to client
+  // Response - NextJS constructor that sends data to from server to client
   return new Response(JSON.stringify(newPayer), {
     headers: {"Content-Type": "application/json"}
   });

@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const tournamentSchema = new mongoose.Schema(
   {
-    tournamenName: {type: String, required: true},
+    name: {type: String, required: true},
     categories: [{type: String, required: true}],
     adminUser: String,
-    image: {type: Buffer},
+    image: {type: String},
     description: {type: String},
     //   can't directly refer other models | use this:
-    queues: [{type: mongoose.Schema.Types.ObjectId, ref: "QueueModel"}],
-    players: [{type: mongoose.Schema.Types.ObjectId, ref: "PlayerModel"}]
+    queues: {type: Number}
+    // players: [{type: mongoose.Schema.Types.ObjectId, ref: "PlayerModel"}]
   },
   {collection: "tournaments"}
 );
