@@ -3,7 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import {ClerkProvider} from "@clerk/nextjs";
-
+// import {QueuesProvider} from "@/context/QueuesContext";
+// import {ContextWrapper} from "@/context/ContextWrapper";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
+      {/* <ContextWrapper> */}
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           {/* looks like this compoennt cannot use Clerk hook for some reason */}
@@ -38,6 +40,7 @@ export default function RootLayout({
           {children}
         </body>
       </html>
+      {/* </ContextWrapper> */}
     </ClerkProvider>
   );
 }

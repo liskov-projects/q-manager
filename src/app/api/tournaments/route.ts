@@ -2,6 +2,12 @@ import dbConnect from "@/lib/db";
 import TournamentModel from "@/models/TournamentModel";
 import {NextRequest} from "next/server";
 
+export async function GET() {
+  await dbConnect();
+  const tournaments = await TournamentModel.find({});
+  console.log(tournaments);
+}
+
 export async function POST(req: NextRequest) {
   await dbConnect();
 

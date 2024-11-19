@@ -11,19 +11,22 @@ import QueueType from "@/types/Queue";
 import Player from "@/types/Player";
 import AppContextType from "@/types/QueuesContextInterface";
 import PlayerType from "@/types/Player";
+import TournamentType from "@/types/Tournament";
 
 // creating Context
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 // context provider
 export const QueuesProvider = ({children}: {children: ReactNode}) => {
-  // Initial queue setup
+  //REVIEW: dev Initial queue setup
   const initialQueues: QueueType[] = [
     {queueName: "1", queueItems: [], id: "0987"},
     {queueName: "2", queueItems: [], id: "1234"},
     {queueName: "3", queueItems: [], id: "5678"},
     {queueName: "4", queueItems: [], id: "4321"}
   ];
+
+  const [tournaments, setTournaments] = useState<TournamentType[]>([]);
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>([]);
   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
@@ -42,6 +45,19 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
   const removeQueues = (queues: QueueType[]) => {
     setQueues(prev => prev.slice(0, -1));
   };
+
+  const fetchTournaments = async () => {
+    // the path to tournaments route
+    const response = await fetch("../api/tournaments/");
+    const tournaments = await response.json();
+    setTournaments(tournaments);
+  };
+
+  // fetching from db is an effect
+  useEffect(() => {
+    fetchTournaments();
+    // console.log(tournaments);
+  }, []);
 
   const fetchPlayers = async () => {
     // the path to players route
@@ -81,10 +97,13 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
       value={{
         players,
         queues,
+        tournaments,
         setQueues,
         setPlayers,
+        setTournaments,
         markPlayerAsProcessed,
         fetchPlayers,
+        fetchTournaments,
         uniqueCategories,
         updatePlayers,
         updateQueues,
