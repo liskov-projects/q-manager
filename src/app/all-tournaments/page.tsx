@@ -1,14 +1,15 @@
 "use client";
 import SectionHeader from "@/components/SectionHeader";
+import Button from "@/components/Buttons/Button";
 import Tournament from "@/components/Tournaments/Tournament";
 import NewTournamentForm from "@/components/Forms/NewTournamentForm";
-import {useAppContext} from "@/context/QueuesContext";
+import {useQueuesContext} from "@/context/QueuesContext";
 
 // FIXME: dev purposes
 // import mockTournaments from "@/Data/tournaments";
 
 export default function AllTournaments() {
-  const {tournaments} = useAppContext();
+  const {tournaments} = useQueuesContext();
 
   return (
     // FIXME: the grid for both sections

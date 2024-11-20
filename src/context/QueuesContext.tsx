@@ -14,7 +14,7 @@ import PlayerType from "@/types/Player";
 import TournamentType from "@/types/Tournament";
 
 // creating Context
-const AppContext = createContext<AppContextType | undefined>(undefined);
+const QueuesContext = createContext<AppContextType | undefined>(undefined);
 
 // context provider
 export const QueuesProvider = ({children}: {children: ReactNode}) => {
@@ -93,7 +93,7 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
   const updateQueues = (updatedQueues: QueueType[]) => setQueues(updatedQueues);
 
   return (
-    <AppContext.Provider
+    <QueuesContext.Provider
       value={{
         players,
         queues,
@@ -115,13 +115,13 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
         initialQueues
       }}>
       {children}
-    </AppContext.Provider>
+    </QueuesContext.Provider>
   );
 };
 
-// hook to use AppContext
-export const useAppContext = () => {
-  const context = useContext(AppContext);
+// hook to use QueuesContext
+export const useQueuesContext = () => {
+  const context = useContext(QueuesContext);
   if (!context) {
     throw new Error("useQueuesContext must be within QueuesProvider");
   }

@@ -11,6 +11,7 @@ export default function NewPlayerForm() {
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newPlayers, setNewPlayers] = useState<PlayerType>({
+    // FIXME: add tournament id
     names: "",
     categories: "",
     phoneNumbers: ""
