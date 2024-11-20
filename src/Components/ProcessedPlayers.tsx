@@ -2,14 +2,14 @@
 import Player from "@/types/Player";
 import {useState} from "react";
 // context
-import {useAppContext} from "@/context/QueuesContext";
+import {useQueuesContext} from "@/context/QueuesContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import PlayerListItem from "./PlayerListItem";
 
 export default function ProcessedPlayers() {
   const [search, setSearch] = useState("");
 
-  const {players} = useAppContext();
+  const {players} = useQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();
 
   const processedPlayers = players

@@ -2,10 +2,10 @@
 import PlayerType from "@/types/Player.js";
 import QueueType from "@/types/Queue.js";
 // context
-import {useAppContext} from "@/context/QueuesContext";
+import {useQueuesContext} from "@/context/QueuesContext";
 
 const useAddToQueues = () => {
-  const {players, queues, setPlayers, setQueues, initialQueues} = useAppContext();
+  const {players, queues, setPlayers, setQueues, initialQueues} = useQueuesContext();
 
   // helper
   const findShortestQueue = (queues: QueueType[]) => {

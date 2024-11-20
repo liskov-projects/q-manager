@@ -1,11 +1,11 @@
 // context
-import {useAppContext} from "@/context/QueuesContext";
+import {useQueuesContext} from "@/context/QueuesContext";
 //components
 import Queue from "./Queue";
 import React from "react";
 
 export default function QueuesGrid() {
-  const {queues} = useAppContext();
+  const {queues} = useQueuesContext();
   // console.log("IN QUEUES GRID PLEASE WORK");
   // console.log(queues);
   return (

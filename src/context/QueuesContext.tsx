@@ -42,7 +42,7 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
     ]);
   };
 
-  const removeQueues = (queues: QueueType[]) => {
+  const removeQueues = () => {
     setQueues(prev => prev.slice(0, -1));
   };
 
@@ -50,6 +50,7 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
     // the path to tournaments route
     const response = await fetch("../api/tournaments/");
     const tournaments = await response.json();
+    // console.log("works");
     setTournaments(tournaments);
   };
 

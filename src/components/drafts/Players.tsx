@@ -1,10 +1,10 @@
-// import {useAppContext} from "@/Context/AppContext";
+// import {useQueuesContext} from "@/Context/AppContext";
 // import useAddToQueues from "@/hooks/useAddToQueues";
 // import Button from "./Button";
 // import PlayerItem from "./PlayerItem";
 // // FIXME: trying to extract both player fields into one comp
 // export default function Players({}) {
-//   const {players} = useAppContext();
+//   const {players} = useQueuesContext();
 //   const {handleAddToShortestQueue} = useAddToQueues();
 
 //   const unprocessedPlayers = players.filter(player => !player.assignedToQueue);

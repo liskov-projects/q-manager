@@ -1,5 +1,5 @@
 import Button from "./Button";
-import {useAppContext} from "@/context/QueuesContext";
+import {useQueuesContext} from "@/context/QueuesContext";
 // import {useRouteContext} from "@/context/RouteContext";
 
 import useAddToQueues from "@/hooks/useAddToQueues";
@@ -7,7 +7,7 @@ import SectionHeader from "../SectionHeader";
 import {useUser} from "@clerk/nextjs";
 
 export default function ButtonGroup() {
-  const {players, queues} = useAppContext();
+  const {players, queues} = useQueuesContext();
   // const {isGuest} = useRouteContext();
   const {isSignedIn} = useUser();
 

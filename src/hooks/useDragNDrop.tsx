@@ -1,11 +1,11 @@
-import {useAppContext} from "@/context/QueuesContext";
+import {useQueuesContext} from "@/context/QueuesContext";
 import Player from "@/types/Player";
 import Queue from "@/types/Queue"; // Import QueueType
 import React from "react";
 
 const useDragNDrop = () => {
   const {players, queues, updatePlayers, updateQueues, draggedItem, setDraggedItem} =
-    useAppContext();
+    useQueuesContext();
 
   // Handle drag start
   const handleDragStart = (draggedItem: Player) => {
@@ -138,7 +138,7 @@ const useDragNDrop = () => {
       // Add the item to the target queue at the specified index if dropping into a queue
       if (isTargetQueue) {
         const newQueueItems = [...queue.queueItems];
-        newQueueItems.splice(index + 1, 0, updatedItem);
+        newQueueItems.splice(index! + 1, 0, updatedItem);
         return {...queue, queueItems: newQueueItems};
       }
 

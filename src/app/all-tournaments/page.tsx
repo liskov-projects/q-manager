@@ -9,14 +9,18 @@ import {useQueuesContext} from "@/context/QueuesContext";
 // import mockTournaments from "@/Data/tournaments";
 
 export default function AllTournaments() {
-  const {tournaments} = useQueuesContext();
-  console.log(tournaments);
+  const {tournaments, fetchTournaments} = useQueuesContext();
+
   return (
     // FIXME: the grid for both sections
     <div className="flex flex-row items-start justify-around p-8">
       <div className="flex flex-col">
         <SectionHeader>All tournaments</SectionHeader>
-        <Button>Refresh</Button>
+        <Button
+          onClick={() => fetchTournaments()}
+          className="self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100">
+          Refresh
+        </Button>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {tournaments.map((tournamnet, ind) => (
             <Tournament key={ind} tournament={tournamnet} />
@@ -24,7 +28,7 @@ export default function AllTournaments() {
         </ul>
       </div>
       <div className="flex flex-col items-start justify-start my-4 p-8 flex-shrink-0">
-        <SectionHeader>I'm looking for...</SectionHeader>
+        <SectionHeader>I&apos;m looking for...</SectionHeader>
         {/* this should be a search field */}
         <input type="text" placeholder="player, tournament..." />
         <NewTournamentForm />

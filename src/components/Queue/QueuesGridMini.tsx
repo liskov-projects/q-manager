@@ -1,11 +1,11 @@
-import {useAppContext} from "@/context/QueuesContext";
+import {useQueuesContext} from "@/context/QueuesContext";
 import React from "react";
 
 export default function QueuesGridAlternate() {
-  const {queues} = useAppContext();
+  const {queues} = useQueuesContext();
 
   // Function to get background color based on queue length
-  const getBackgroundColor = queueLength => {
+  const getBackgroundColor = (queueLength: number) => {
     return queueLength >= 4
       ? "bg-sky-400" // Friendly sky-blue for 4+ items
       : queueLength === 3

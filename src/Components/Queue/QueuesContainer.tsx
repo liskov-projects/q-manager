@@ -3,12 +3,12 @@ import QueuesGrid from "./QueuesGrid";
 import QueuesGridMini from "./QueuesGridMini";
 import SectionHeader from "../SectionHeader";
 import Button from "../Buttons/Button";
-import {useAppContext} from "@/context/QueuesContext";
+import {useQueuesContext} from "@/context/QueuesContext";
 import {useUser} from "@clerk/nextjs";
 
 export default function QueuesContainer() {
   const [showAlternateView, setShowAlternateView] = useState(false);
-  const {addMoreQueues, removeQueues, queues} = useAppContext();
+  const {addMoreQueues, removeQueues, queues} = useQueuesContext();
   const {isSignedIn} = useUser();
 
   return (

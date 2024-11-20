@@ -1,21 +1,32 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 // import {useRouteContext} from "@/context/RouteContext";
 import {useUser} from "@clerk/nextjs";
 // components
 import Button from "../Buttons/Button";
 import PlayerType from "@/types/Player";
 import SectionHeader from "../SectionHeader";
+import {useQueuesContext} from "@/context/QueuesContext";
 
 export default function NewPlayerForm() {
-  const {isSignedIn} = useUser();
+  const {isSignedIn, user} = useUser();
+  const {tournaments} = useQueuesContext();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newPlayers, setNewPlayers] = useState<PlayerType>({
-    // FIXME: add tournament id
     names: "",
     categories: "",
-    phoneNumbers: ""
+    phoneNumbers: "",
+    // NEW:
+    tournamentId: ""
   });
+
+  // NEW: filtering tournaments
+  const filteredTournaments = tournaments.filter(
+    tournament => tournament.adminUser === user?.id
+  );
+  //
+  console.log("Ts: ", tournaments);
+  console.log("Filtered: ", filteredTournaments);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewPlayers({...newPlayers, [e.target.name]: e.target.value});
@@ -40,7 +51,10 @@ export default function NewPlayerForm() {
       categories: incomingCategories,
       phoneNumbers: incomingPhoneNumbers,
       assignedToQueue: false,
-      processThroughQueue: false
+      processThroughQueue: false,
+      // NEW:
+      tournamentId: newPlayers.tournamentId
+      //
     };
 
     console.log("Data sent to backend: ", newItem);
@@ -74,7 +88,8 @@ export default function NewPlayerForm() {
     setNewPlayers({
       names: "",
       categories: "",
-      phoneNumbers: ""
+      phoneNumbers: "",
+      tournamentId: ""
     });
     // console.log(newPlayers);
   }
@@ -126,6 +141,20 @@ export default function NewPlayerForm() {
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
+
+            <label htmlFor="tournamentId">Tournament</label>
+            <select
+              name="tournamentId"
+              value={newPlayers.tournamentId}
+              onChange={handleChange}
+              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200">
+              <option value="">Select a tournament</option>
+              {filteredTournaments?.map((tournament, idx) => (
+                <option key={idx} value={tournament._id}>
+                  {tournament.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <Button className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">

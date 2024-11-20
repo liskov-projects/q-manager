@@ -5,7 +5,7 @@ import Button from "./Buttons/Button";
 import DropZone from "./DropZone";
 import SectionHeader from "./SectionHeader";
 // context
-import {useAppContext} from "@/context/QueuesContext";
+import {useQueuesContext} from "@/context/QueuesContext";
 import {useUser} from "@clerk/nextjs";
 
 import PlayerListItem from "./PlayerListItem";
@@ -18,7 +18,7 @@ export default function PlayersList() {
   const [filter, setFilter] = useState("");
 
   const {isSignedIn} = useUser();
-  const {players, uniqueCategories, fetchPlayers} = useAppContext();
+  const {players, uniqueCategories, fetchPlayers} = useQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
