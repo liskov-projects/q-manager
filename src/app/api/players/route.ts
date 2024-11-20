@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
   // console.log("Names: ", names);
   // console.log("Categories: ", categories);
   // console.log("phoneNumbers: ", phoneNumbers);
-  console.log("at the back ", tournamentId);
+  // console.log("at the back ", tournamentId);
   // creates a new entry using the incoming data
   const newPayer = new PlayerModel({
     names,

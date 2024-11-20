@@ -26,7 +26,9 @@ export default function NewPlayerForm() {
   // console.log("within the form ", currentTournament);
   // console.log("tournamentID: ", currentTournament?._id);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
+  ) {
     setNewPlayers({...newPlayers, [e.target.name]: e.target.value});
   }
 
@@ -56,7 +58,7 @@ export default function NewPlayerForm() {
       //
     };
 
-    console.log("Data sent to backend: ", newItem);
+    // console.log("Data sent to backend: ", newItem);
 
     try {
       const res = await fetch("/api/players", {
@@ -91,7 +93,7 @@ export default function NewPlayerForm() {
       phoneNumbers: "",
       tournamentId: ""
     });
-    console.log(newPlayers);
+    // console.log(newPlayers);
   }
 
   // hides the components from guests

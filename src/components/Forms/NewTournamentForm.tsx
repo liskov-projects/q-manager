@@ -48,7 +48,7 @@ export default function NewTournamentForm() {
       //   players: newTournament.players
     };
 
-    console.log("Data sent to backend: ", newItem);
+    // console.log("Data sent to backend: ", newItem);
 
     try {
       const res = await fetch("/api/tournaments", {

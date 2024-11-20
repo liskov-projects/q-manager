@@ -83,13 +83,10 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
       value={{
         players,
         queues,
-        // tournaments,
         setQueues,
         setPlayers,
-        // setTournaments,
         markPlayerAsProcessed,
         fetchPlayers,
-        // fetchTournaments,
         uniqueCategories,
         updatePlayers,
         updateQueues,

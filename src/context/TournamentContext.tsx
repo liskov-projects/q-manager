@@ -12,6 +12,7 @@ interface TournamentContextProps {
   >;
   setTournaments: React.Dispatch<React.SetStateAction<TournamentType[]>>;
   filteredTournaments: TournamentType[];
+  fetchTournaments: () => Promise<void>;
 }
 
 const TournamentContext = createContext<TournamentContextProps | undefined>(
@@ -45,7 +46,7 @@ export const TournamentProvider: React.FC<{children: React.ReactNode}> = ({
         setCurrentTournament(foundTournament);
       }
     }
-  }, [pathname, tournaments]);
+  }, [name, tournaments]);
 
   //   console.log("this is the current ", currentTournament);
 
@@ -70,7 +71,8 @@ export const TournamentProvider: React.FC<{children: React.ReactNode}> = ({
         tournaments,
         setCurrentTournament,
         setTournaments,
-        filteredTournaments
+        filteredTournaments,
+        fetchTournaments
       }}>
       {children}
     </TournamentContext.Provider>
