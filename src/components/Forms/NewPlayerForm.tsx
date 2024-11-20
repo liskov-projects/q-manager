@@ -1,15 +1,17 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 // import {useRouteContext} from "@/context/RouteContext";
 import {useUser} from "@clerk/nextjs";
 // components
 import Button from "../Buttons/Button";
 import PlayerType from "@/types/Player";
 import SectionHeader from "../SectionHeader";
-import {useQueuesContext} from "@/context/QueuesContext";
+// import {useQueuesContext} from "@/context/QueuesContext";
+import {useTournamentContext} from "@/context/TournamentContext";
+// import TournamentType from "@/types/Tournament";
 
 export default function NewPlayerForm() {
-  const {isSignedIn, user} = useUser();
-  const {tournaments} = useQueuesContext();
+  const {isSignedIn} = useUser();
+  const {currentTournament, filteredTournaments} = useTournamentContext();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newPlayers, setNewPlayers] = useState<PlayerType>({
@@ -18,19 +20,16 @@ export default function NewPlayerForm() {
     phoneNumbers: "",
     // NEW:
     tournamentId: ""
+    //
   });
-
-  // NEW: filtering tournaments
-  const filteredTournaments = tournaments.filter(
-    tournament => tournament.adminUser === user?.id
-  );
-  //
-  console.log("Ts: ", tournaments);
-  console.log("Filtered: ", filteredTournaments);
+  // NEW:
+  // console.log("within the form ", currentTournament);
+  // console.log("tournamentID: ", currentTournament?._id);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewPlayers({...newPlayers, [e.target.name]: e.target.value});
   }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     // console.log("New player data: ", newPlayers.phoneNumbers.split(","));
@@ -53,7 +52,7 @@ export default function NewPlayerForm() {
       assignedToQueue: false,
       processThroughQueue: false,
       // NEW:
-      tournamentId: newPlayers.tournamentId
+      tournamentId: currentTournament?._id
       //
     };
 
@@ -84,6 +83,7 @@ export default function NewPlayerForm() {
       }
     }
 
+    // FIXME:
     // ressetting the form
     setNewPlayers({
       names: "",
@@ -91,7 +91,7 @@ export default function NewPlayerForm() {
       phoneNumbers: "",
       tournamentId: ""
     });
-    // console.log(newPlayers);
+    console.log(newPlayers);
   }
 
   // hides the components from guests
@@ -100,7 +100,7 @@ export default function NewPlayerForm() {
 
   return (
     <>
-      <div className="flex flex-col justify-center my-4">
+      <div className="flex flex-col items-center justify-center my-4 ">
         <SectionHeader>Add new Players</SectionHeader>
 
         <Button
@@ -112,7 +112,7 @@ export default function NewPlayerForm() {
 
       {isExpanded && (
         <form
-          className="flex flex-row items-center my-10 justify-between"
+          className="flex flex-row items-center my-10 justify-around px-4 mx-4"
           onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label htmlFor="name">Name</label>
@@ -157,7 +157,7 @@ export default function NewPlayerForm() {
             </select>
           </div>
 
-          <Button className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
+          <Button className=" ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
             Add player
           </Button>
         </form>

@@ -7,8 +7,8 @@ const playerSchema = new mongoose.Schema(
     phoneNumbers: [{type: String, required: true}],
     tournamentID: {
       // used to refer this field to tournament._id
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "TournamentModel"
+      type: String,
+      required: true
     }
     // FIXME: assigned to queues & processed through queues
   },

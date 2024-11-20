@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/db";
 import PlayerModel from "@/models/PlayerModel";
-import TournamentModel from "@/models/TournamentModel";
+// import TournamentModel from "@/models/TournamentModel";
 import {NextRequest} from "next/server";
 
 export async function GET() {
@@ -22,18 +22,18 @@ export async function POST(req: NextRequest) {
   const {names, categories, phoneNumbers, tournamentId} = body;
 
   // NEW:
-  const tournamnet = await TournamentModel.find({_id: new Object(tournamentId)});
+  // const tournament = await TournamentModel.find({_id: new Object(tournamentId)});
   //
   // console.log("Names: ", names);
   // console.log("Categories: ", categories);
   // console.log("phoneNumbers: ", phoneNumbers);
-
+  console.log("at the back ", tournamentId);
   // creates a new entry using the incoming data
   const newPayer = new PlayerModel({
     names,
     categories,
     phoneNumbers,
-    tournamentId: tournamnet
+    tournamentId
   });
 
   // saves to db

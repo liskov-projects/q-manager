@@ -3,13 +3,13 @@ import SectionHeader from "@/components/SectionHeader";
 import Button from "@/components/Buttons/Button";
 import Tournament from "@/components/Tournaments/Tournament";
 import NewTournamentForm from "@/components/Forms/NewTournamentForm";
-import {useQueuesContext} from "@/context/QueuesContext";
+import {useTournamentContext} from "@/context/TournamentContext";
 
 // FIXME: dev purposes
 // import mockTournaments from "@/Data/tournaments";
 
 export default function AllTournaments() {
-  const {tournaments, fetchTournaments} = useQueuesContext();
+  const {tournaments, fetchTournaments} = useTournamentContext();
 
   return (
     // FIXME: the grid for both sections
