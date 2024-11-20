@@ -6,8 +6,8 @@ import {TournamentProvider} from "@/context/TournamentContext";
 
 export default function TournamentPage({params}: {params: {name: string}}) {
   return (
-    <QueuesProvider>
-      <TournamentProvider>
+    <TournamentProvider>
+      <QueuesProvider>
         <div>
           <h1 className="text-center text-2xl font-bold">
             Tournament name: {params.name}
@@ -15,7 +15,7 @@ export default function TournamentPage({params}: {params: {name: string}}) {
 
           <QueuesPage />
         </div>
-      </TournamentProvider>
-    </QueuesProvider>
+      </QueuesProvider>
+    </TournamentProvider>
   );
 }

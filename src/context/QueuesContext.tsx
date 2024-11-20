@@ -6,6 +6,7 @@ import React, {
   useMemo,
   ReactNode
 } from "react";
+import {useTournamentContext} from "./TournamentContext";
 // types
 import QueueType from "@/types/Queue";
 import Player from "@/types/Player";
@@ -29,6 +30,7 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
   const [queues, setQueues] = useState<QueueType[]>(initialQueues);
   const [players, setPlayers] = useState<Player[]>([]);
   const [draggedItem, setDraggedItem] = useState<Player | null>(null);
+  const {currentTournament} = useTournamentContext();
 
   const addMoreQueues = (queues: QueueType[]) => {
     setQueues(prev => [
@@ -49,7 +51,10 @@ export const QueuesProvider = ({children}: {children: ReactNode}) => {
     // the path to players route
     const response = await fetch("../api/players/");
     const players = await response.json();
-    setPlayers(players);
+    const playersForTournament = players.filter(
+      (player: PlayerType) => player.tournamentId === currentTournament?._id
+    );
+    setPlayers(playersForTournament);
   };
 
   // fetching from db is an effect

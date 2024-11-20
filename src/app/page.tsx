@@ -6,11 +6,11 @@ import {QueuesProvider} from "@/context/QueuesContext";
 
 const App = () => {
   return (
-    <QueuesProvider>
-      <TournamentProvider>
+    <TournamentProvider>
+      <QueuesProvider>
         <AllTournaments />
-      </TournamentProvider>
-    </QueuesProvider>
+      </QueuesProvider>
+    </TournamentProvider>
   );
 };
 
