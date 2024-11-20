@@ -10,7 +10,7 @@ import {useQueuesContext} from "@/context/QueuesContext";
 
 export default function AllTournaments() {
   const {tournaments} = useQueuesContext();
-
+  console.log(tournaments);
   return (
     // FIXME: the grid for both sections
     <div className="flex flex-row items-start justify-around p-8">
