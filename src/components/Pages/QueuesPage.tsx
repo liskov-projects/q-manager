@@ -7,8 +7,6 @@ import PlayersList from "@/components/PlayersList";
 import QueuesContainer from "@/components/Queue/QueuesContainer";
 import ProcessedPlayers from "@/components/ProcessedPlayers";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
-import {QueuesProvider} from "@/context/QueuesContext";
-import {TournamentProvider} from "@/context/TournamentContext";
 
 export default function QueuesPage() {
   const [visibleSection, setVisibleSection] = useState("queues");

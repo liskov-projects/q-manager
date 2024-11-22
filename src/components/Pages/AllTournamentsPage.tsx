@@ -1,4 +1,5 @@
 "use client";
+
 import SectionHeader from "@/components/SectionHeader";
 import Button from "@/components/Buttons/Button";
 import Tournament from "@/components/Tournaments/Tournament";

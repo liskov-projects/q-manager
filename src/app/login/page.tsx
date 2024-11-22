@@ -1,4 +1,5 @@
 "use client";
+
 import {useEffect} from "react";
 import {SignInButton, SignedIn, SignedOut, UserButton, useUser} from "@clerk/nextjs";
 // to redirect the user to a specific route after logginin

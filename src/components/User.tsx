@@ -1,14 +1,12 @@
 "use client";
+
 import {SignOutButton, useUser} from "@clerk/nextjs";
-// import {currentUser} from "@clerk/nextjs/server";
 import Link from "next/link";
 import Image from "next/image";
 
-import React from "react";
-
 export default function User() {
   const {isSignedIn, user} = useUser();
-  //   const user = currentUser();
+  // const user = currentUser();
   // console.log(user.id);
   return (
     <div className="flex items-center">

@@ -1,3 +1,5 @@
+"use client";
+
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {usePathname} from "next/navigation";
 import {useUser} from "@clerk/nextjs";
