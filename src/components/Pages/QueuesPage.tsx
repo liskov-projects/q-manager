@@ -15,7 +15,6 @@ export default function QueuesPage() {
 
   return (
     <>
-      <QueuesProvider>
         <TournamentProvider>
           {/* Mobile toggle button group */}
           <div className="lg:hidden flex justify-around my-4">
@@ -55,18 +54,17 @@ export default function QueuesPage() {
               <QueuesContainer />
             </div>
 
-            {/* Processed players section */}
-            <div
-              className={`p-2 w-full lg:w-1/4 ${
-                visibleSection === "processed" ? "block" : "hidden lg:block"
-              }`}>
-              {/* <SectionHeader>Button Group</SectionHeader> */}
-              <ButtonGroup />
-              <SectionHeader>Processed Players</SectionHeader>
-              <ProcessedPlayers />
-            </div>
+          {/* Processed players section */}
+          <div
+            className={`p-2 w-full lg:w-1/4 ${
+              visibleSection === "processed" ? "block" : "hidden lg:block"
+            }`}>
+            {/* <SectionHeader>Button Group</SectionHeader> */}
+            <ButtonGroup />
+            <SectionHeader>Processed Players</SectionHeader>
+            <ProcessedPlayers />
           </div>
-        </TournamentProvider>
+        </div>
       </QueuesProvider>
     </>
   );
