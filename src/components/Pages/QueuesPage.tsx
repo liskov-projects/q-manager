@@ -15,7 +15,6 @@ export default function QueuesPage() {
 
   return (
     <>
-        <TournamentProvider>
           {/* Mobile toggle button group */}
           <div className="lg:hidden flex justify-around my-4">
             <button
@@ -65,7 +64,6 @@ export default function QueuesPage() {
             <ProcessedPlayers />
           </div>
         </div>
-      </QueuesProvider>
     </>
   );
 }

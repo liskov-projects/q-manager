@@ -6,15 +6,7 @@ import {QueuesProvider} from "@/context/QueuesContext";
 
 const App = () => {
   return (
-<<<<<<< HEAD
-    <TournamentProvider>
-      <QueuesProvider>
-        <AllTournaments />
-      </QueuesProvider>
-    </TournamentProvider>
-=======
       <AllTournaments />
->>>>>>> 65b7535 (Pushing provider to top level)
   );
 };
 
