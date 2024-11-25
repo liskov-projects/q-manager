@@ -1,3 +1,5 @@
+"use client";
+
 import {useQueuesContext} from "@/context/QueuesContext";
 import Player from "@/types/Player";
 import Queue from "@/types/Queue"; // Import QueueType

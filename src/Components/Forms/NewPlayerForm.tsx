@@ -1,3 +1,5 @@
+"use client";
+
 import {useState} from "react";
 // import {useRouteContext} from "@/context/RouteContext";
 import {useUser} from "@clerk/nextjs";

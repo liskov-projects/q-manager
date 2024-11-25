@@ -1,3 +1,5 @@
+"use client";
+
 // context
 import {useQueuesContext} from "@/context/QueuesContext";
 //components

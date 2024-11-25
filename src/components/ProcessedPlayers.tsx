@@ -1,3 +1,5 @@
+"use client";
+
 // types
 import Player from "@/types/Player";
 import {useState} from "react";

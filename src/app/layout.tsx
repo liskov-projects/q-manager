@@ -32,19 +32,18 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <TournamentProvider>
         <QueuesProvider>
+      <TournamentProvider>
           <html lang="en">
           <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
             {/* looks like this component cannot use Clerk hook for some reason */}
             <Header />
-
             {children}
           </body>
         </html>
         {/* </ContextWrapper> */}
-        </QueuesProvider>
       </TournamentProvider>
+        </QueuesProvider>
     </ClerkProvider>
   );
 }

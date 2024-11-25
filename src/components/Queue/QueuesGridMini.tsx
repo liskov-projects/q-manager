@@ -1,3 +1,5 @@
+"use client";
+
 import {useQueuesContext} from "@/context/QueuesContext";
 import React from "react";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "./Button";
 import {useQueuesContext} from "@/context/QueuesContext";
 // import {useRouteContext} from "@/context/RouteContext";

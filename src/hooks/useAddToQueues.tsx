@@ -1,3 +1,5 @@
+"use client";
+
 // types
 import PlayerType from "@/types/Player.js";
 import QueueType from "@/types/Queue.js";

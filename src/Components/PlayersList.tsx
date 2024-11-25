@@ -1,3 +1,5 @@
+"use client";
+
 import {useState, Fragment} from "react";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
