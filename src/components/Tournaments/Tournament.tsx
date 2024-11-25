@@ -1,17 +1,17 @@
 import Image from "next/image";
-import TournamentType from "@/types/Tournament";
+import {TTournament} from "@/types/Types";
 import Link from "next/link";
 import SectionHeader from "../SectionHeader";
 
-export default function Tournament({tournament}: {tournament: TournamentType}) {
-  const {name, categories, description} = tournament;
+export default function Tournament({tournament}: {tournament: TTournament}) {
+  const { name, _id } = tournament;
   // console.log(name, categories, description);
-  const formattedCategories = categories.join(", ");
+  // const formattedCategories = categories.join(", ");
 
   return (
     <div className="flex flex-col items-center">
       <SectionHeader>
-        <Link href={`/all-tournaments/${name}`}>{name}</Link>
+        <Link href={`/all-tournaments/${_id}`}>{name}</Link>
       </SectionHeader>
 
       <Image
@@ -21,9 +21,9 @@ export default function Tournament({tournament}: {tournament: TournamentType}) {
         width={350}
         height={250}
       />
-      <p>{description}</p>
+      <p>{_id}</p>
       <br />
-      <p>{formattedCategories}</p>
+      {/* <p>{formattedCategories}</p> */}
     </div>
   );
 }

@@ -5,21 +5,21 @@ import {useState} from "react";
 import {useUser} from "@clerk/nextjs";
 // components
 import Button from "../Buttons/Button";
-import PlayerType from "@/types/Player";
+import {TPlayer} from "@/types/Types";
 import SectionHeader from "../SectionHeader";
-// import {useQueuesContext} from "@/context/QueuesContext";
-import {useTournamentContext} from "@/context/TournamentContext";
-// import TournamentType from "@/types/Tournament";
+// import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+// import TTournament from "@/types/Tournament";
 
 export default function NewPlayerForm() {
   const {isSignedIn} = useUser();
-  const {currentTournament, filteredTournaments} = useTournamentContext();
+  const {currentTournament, filteredTournaments} = useTournamentsAndQueuesContext();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [newPlayers, setNewPlayers] = useState<PlayerType>({
-    names: "",
+  const [newPlayers, setNewPlayers] = useState<TPlayer>({
+    name: "",
     categories: "",
-    phoneNumbers: "",
+    phoneNumber: "",
     // NEW:
     tournamentId: ""
     //
@@ -44,13 +44,13 @@ export default function NewPlayerForm() {
         : newPlayers.categories;
 
     const incomingPhoneNumbers =
-      typeof newPlayers.phoneNumbers === "string"
-        ? newPlayers.phoneNumbers.split(",").map(number => number.trim())
-        : newPlayers.phoneNumbers;
+      typeof newPlayers.phoneNumber === "string"
+        ? newPlayers.phoneNumber.split(",").map(number => number.trim())
+        : newPlayers.phoneNumber;
 
     // data to send to backend
     const newItem = {
-      names: newPlayers.names,
+      names: newPlayers.name,
       categories: incomingCategories,
       phoneNumbers: incomingPhoneNumbers,
       assignedToQueue: false,
@@ -90,9 +90,9 @@ export default function NewPlayerForm() {
     // FIXME:
     // ressetting the form
     setNewPlayers({
-      names: "",
+      name: "",
       categories: "",
-      phoneNumbers: "",
+      phoneNumber: "",
       tournamentId: ""
     });
     // console.log(newPlayers);
@@ -123,7 +123,7 @@ export default function NewPlayerForm() {
             <input
               type="text"
               name="names"
-              value={newPlayers.names}
+              value={newPlayers.name}
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
@@ -141,7 +141,7 @@ export default function NewPlayerForm() {
             <input
               type="text"
               name="phoneNumbers"
-              value={newPlayers.phoneNumbers}
+              value={newPlayers.phoneNumber}
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />

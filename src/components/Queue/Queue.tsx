@@ -4,14 +4,14 @@ import useAddToQueues from "@/hooks/useAddToQueues";
 import Button from "../Buttons/Button";
 import QueueStatus from "./QueueStatus";
 import QueuePositionLabel from "./QueuePositionLabel";
-import QueueType from "@/types/Queue";
+import {TQueue} from "@/types/Types";
 import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "./QueueListItem";
 import useDragNDrop from "@/hooks/useDragNDrop";
 // import {useRouteContext} from "@/context/RouteContext";
 import {useUser} from "@clerk/nextjs";
 
-export default function Queue({queue, index}: {queue: QueueType; index: number}) {
+export default function Queue({queue, index}: {queue: TQueue; index: number}) {
   const {handleProgressOneStep} = useAddToQueues();
   // const {isGuest} = useRouteContext();
   const {isSignedIn} = useUser();

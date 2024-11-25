@@ -1,16 +1,16 @@
 "use client";
 
-import {useQueuesContext} from "@/context/QueuesContext";
-import Player from "@/types/Player";
-import Queue from "@/types/Queue"; // Import QueueType
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import {TPlayer} from "@/types/Types";
+import {TQueue} from "@/types/Types"; // Import TQueue
 import React from "react";
 
 const useDragNDrop = () => {
   const {players, queues, updatePlayers, updateQueues, draggedItem, setDraggedItem} =
-    useQueuesContext();
+    useTournamentsAndQueuesContext();
 
   // Handle drag start
-  const handleDragStart = (draggedItem: Player) => {
+  const handleDragStart = (draggedItem: TPlayer) => {
     setDraggedItem(draggedItem);
   };
 
@@ -19,22 +19,10 @@ const useDragNDrop = () => {
     e: React.MouseEvent<HTMLDivElement> | React.MouseEvent<HTMLLIElement>
   ): void => e.preventDefault();
 
-  // Identify the queue the dragged item is from
-  // function identifyQueues(queues: QueueType[], draggedItem: Player) {
-  //   if (draggedItem.assignedToQueue) {
-  //     const sourceQueue = queues.find(queue =>
-  //       queue.queueItems.some(item => item._id === draggedItem._id)
-  //     );
-  //     return sourceQueue ? sourceQueue.queueName : null;
-  //   } else {
-  //     console.log("Item is not in any queue");
-  //   }
-  // }
-
   // Handle dropping into an empty queue
   const handleEmptyQueue = (
     e: React.MouseEvent<HTMLDivElement>,
-    dropQueue: Queue
+    dropQueue: TQueue
   ) => {
     e.preventDefault();
 
@@ -47,11 +35,11 @@ const useDragNDrop = () => {
       processedThroughQueue: false
     };
 
-    const updatedPlayers = players.map(player =>
+    const updatedPlayers = players.map((player: TPlayer) =>
       player._id === draggedItem._id ? updatedItem : player
     );
 
-    const updatedQueues = queues.map(queue => {
+    const updatedQueues = queues.map((queue: TQueue) => {
       if (queue.id === dropQueue.id) {
         // Add the updated item to the queue
         const newQueueItems = [...queue.queueItems, updatedItem];
@@ -75,7 +63,7 @@ const useDragNDrop = () => {
     index
   }: {
     e: React.MouseEvent<HTMLDivElement>;
-    dropTarget: string | Queue;
+    dropTarget: string | TQueue;
     index?: number;
   }) => {
     e.preventDefault();
@@ -114,23 +102,23 @@ const useDragNDrop = () => {
     let updatedPlayers;
     if (dropTarget === "processed" || dropTarget === "unprocessed") {
       // Remove the item from its current location and add to the specified list
-      updatedPlayers = players.filter(player => player._id !== draggedItem._id);
+      updatedPlayers = players.filter((player: TPlayer) => player._id !== draggedItem._id);
       const insertIndex = index !== undefined ? index : updatedPlayers.length;
       updatedPlayers.splice(insertIndex, 0, updatedItem);
     } else {
       // If drop target is a queue, simply update the players list to reflect status
-      updatedPlayers = players.map(player =>
+      updatedPlayers = players.map((player: TPlayer) =>
         player._id === draggedItem._id ? updatedItem : player
       );
     }
 
     // Update queues if necessary
-    const updatedQueues = queues.map(queue => {
+    const updatedQueues = queues.map((queue: TQueue) => {
       const isTargetQueue =
         typeof dropTarget === "object" && queue.id === dropTarget.id;
 
       // Remove the item from its current queue if necessary
-      if (isInQueue && queue.queueItems.some(item => item._id === draggedItem._id)) {
+      if (isInQueue && queue.queueItems.some((item: TPlayer) => item._id === draggedItem._id)) {
         const filteredQueueItems = queue.queueItems.filter(
           item => item._id !== draggedItem._id
         );
@@ -216,7 +204,7 @@ export default useDragNDrop;
 //     updatedTargetQueueItems.splice(targetItemIndex, 0, draggedItem);
 
 //     // Update the state with modified items
-//     setQueues((prevQueues: QueueType[]) => {
+//     setQueues((prevQueues: TQueue[]) => {
 //       return prevQueues.map((q, index) => {
 //         if (index === draggedQueueIndex) {
 //           return {...q, queueItems: updatedDraggedQueueItems};

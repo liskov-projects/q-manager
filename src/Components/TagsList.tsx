@@ -1,6 +1,6 @@
-import PlayerType from "@/types/Player";
+import TPlayer from "@/types/Player";
 
-export default function TagsList({item}: {item: PlayerType}) {
+export default function TagsList({item}: {item: TPlayer}) {
   const categories = Array.isArray(item.categories)
     ? item.categories
     : [item.categories];

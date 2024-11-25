@@ -1,7 +1,7 @@
 import useDragNDrop from "@/hooks/useDragNDrop";
 // import {useRouteContext} from "@/context/RouteContext";
 import {useUser} from "@clerk/nextjs";
-import Player from "@/types/Player";
+import {TPlayer} from "@/types/Types";
 import Button from "./Buttons/Button"; // Adjust the import if the button is in a different path
 import TagsList from "./TagsList";
 
@@ -10,7 +10,7 @@ export default function PlayerListItem({
   className,
   onAddToQueue
 }: {
-  item: Player;
+  item: TPlayer;
   className: string;
   queueId?: string;
   onAddToQueue: () => void;
@@ -27,7 +27,7 @@ export default function PlayerListItem({
       onDragStart={() => handleDragStart(item)}
       onDragOver={e => handleDragOver(e)}>
       {/* Player Name */}
-      <div className="player-name font-semibold text-lg">{item.names}</div>
+      <div className="player-name font-semibold text-lg">{item.name}</div>
 
       {/* Tags List */}
       <TagsList item={item} />

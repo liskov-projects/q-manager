@@ -5,12 +5,12 @@ import QueuesGrid from "./QueuesGrid";
 import QueuesGridMini from "./QueuesGridMini";
 import SectionHeader from "../SectionHeader";
 import Button from "../Buttons/Button";
-import {useQueuesContext} from "@/context/QueuesContext";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {useUser} from "@clerk/nextjs";
 
 export default function QueuesContainer() {
   const [showAlternateView, setShowAlternateView] = useState(false);
-  const {addMoreQueues, removeQueues, queues} = useQueuesContext();
+  const {addMoreQueues, removeQueues, queues} = useTournamentsAndQueuesContext();
   const {isSignedIn} = useUser();
 
   return (
@@ -25,12 +25,12 @@ export default function QueuesContainer() {
       {!isSignedIn ? null : (
         <>
           <Button
-            onClick={() => addMoreQueues(queues)}
+            onClick={() => addMoreQueues()}
             className="mb-4 p-2 bg-red-500 text-white font-bold rounded">
             Add more queues
           </Button>
           <Button
-            onClick={() => removeQueues(queues)}
+            onClick={() => removeQueues()}
             className="mb-4 mx-4 p-2 bg-red-500 text-white font-bold rounded">
             Remove a queue
           </Button>

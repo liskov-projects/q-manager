@@ -1,7 +1,7 @@
 // import Player from "@/types/Player";
-// // import QueueType from "@/types/Queue";
+// // import TQueue from "@/types/Queue";
 // import React from "react";
-// import {useQueuesContext} from "@/Context/AppContext";
+// import {useTournamentsAndQueuesContext} from "@/Context/AppContext";
 
 // export default function QueueItem({
 //   item,
@@ -10,7 +10,7 @@
 //   item: Player;
 //   className: string;
 // }) {
-//   const {handleDragStart, handleDragOver} = useQueuesContext();
+//   const {handleDragStart, handleDragOver} = useTournamentsAndQueuesContext();
 //   return (
 //     <>
 //       <li

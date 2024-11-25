@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "./Button";
-import {useQueuesContext} from "@/context/QueuesContext";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 // import {useRouteContext} from "@/context/RouteContext";
 
 import useAddToQueues from "@/hooks/useAddToQueues";
@@ -9,7 +9,7 @@ import SectionHeader from "../SectionHeader";
 import {useUser} from "@clerk/nextjs";
 
 export default function ButtonGroup() {
-  const {players, queues} = useQueuesContext();
+  const {players, queues} = useTournamentsAndQueuesContext();
   // const {isGuest} = useRouteContext();
   const {isSignedIn} = useUser();
 
@@ -40,7 +40,7 @@ export default function ButtonGroup() {
           <Button
             className="bg-brick-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
             onClick={() => {
-              handleRedistributeQueues(queues);
+              handleRedistributeQueues();
             }}>
             Redestribute
           </Button>

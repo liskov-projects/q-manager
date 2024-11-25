@@ -1,8 +1,8 @@
-import {QueuesProvider} from "./QueuesContext";
-import {TournamentProvider} from "./TournamentContext";
+import {TournamentsAndQueuesProvider} from "./TournamentsAndQueuesContext";
+import {TournamentsAndQueuesProvider} from "./TournamentsAndQueuesContext";
 import {combineComponents} from "./combineProviders";
 // List of context providers
-const providers = [QueuesProvider, TournamentProvider];
+const providers = [TournamentsAndQueuesProvider, TournamentsAndQueuesProvider];
 
 // Combine them into one provider
 export const AppContextProvider = combineComponents(...providers);

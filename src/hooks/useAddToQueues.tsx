@@ -1,32 +1,34 @@
 "use client";
 
-// types
-import PlayerType from "@/types/Player.js";
-import QueueType from "@/types/Queue.js";
-// context
-import {useQueuesContext} from "@/context/QueuesContext";
+// Types
+import { TPlayer } from "@/types/Types";
+import { TQueue } from "@/types/Types";
+// Context
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 
 const useAddToQueues = () => {
-  const {players, queues, setPlayers, setQueues, initialQueues} = useQueuesContext();
+  const { players, queues, setPlayers, setQueues } = useTournamentsAndQueuesContext();
 
-  // helper
-  const findShortestQueue = (queues: QueueType[]) => {
-    let shortestQueue = queues[0];
-    queues.forEach(queue => {
-      if (queue.queueItems.length < shortestQueue.queueItems.length) {
-        shortestQueue = queue;
-      }
-    });
-    return shortestQueue;
+  /**
+   * Find the shortest queue based on the number of items.
+   */
+  const findShortestQueue = (queues: TQueue[]): TQueue => {
+    return queues.reduce((shortest, queue) =>
+      queue.queueItems.length < shortest.queueItems.length ? queue : shortest
+    );
   };
 
-  //helper
-  function findAssignedToQueue(players: PlayerType[]) {
+  /**
+   * Find players not yet assigned to a queue.
+   */
+  const findAssignedToQueue = (players: TPlayer[]): TPlayer[] => {
     return players.filter(player => !player.assignedToQueue);
-  }
+  };
 
+  /**
+   * Add a specific item to the shortest queue.
+   */
   const handleAddToShortestQueue = (itemId: string | undefined) => {
-    // Find the item based on itemId
     const itemToUpdate = players.find(player => player._id === itemId);
 
     if (!itemToUpdate) {
@@ -38,134 +40,125 @@ const useAddToQueues = () => {
     const updatedItem = {
       ...itemToUpdate,
       assignedToQueue: true,
-      processedThroughQueue: false
+      processedThroughQueue: false,
     };
 
-    shortestQueue.queueItems.push(updatedItem);
-
-    const newQueues = queues.map(queue => {
-      if (queue.id == shortestQueue.id) {
-        return shortestQueue;
-      }
-      return queue;
-    });
+    const updatedQueues = queues.map(queue =>
+      queue.id === shortestQueue.id
+        ? { ...queue, queueItems: [...queue.queueItems, updatedItem] }
+        : queue
+    );
 
     setPlayers(prevPlayers =>
       prevPlayers.map(player => (player._id === itemId ? updatedItem : player))
     );
-    setQueues(newQueues);
+    setQueues(updatedQueues);
   };
 
-  const handleAddAllToQueues = (items: PlayerType[]) => {
-    for (const item of items) {
-      if (!item.assignedToQueue) {
-        item.assignedToQueue = true;
-        item.processedThroughQueue = false;
+  /**
+   * Add all unassigned items to queues, starting with the shortest queue.
+   */
+  const handleAddAllToQueues = (items: TPlayer[]) => {
+    items
+      .filter(item => !item.assignedToQueue)
+      .forEach(item => {
         handleAddToShortestQueue(item._id);
-      }
-    }
+      });
   };
 
-  const handleProcessAll = (items: PlayerType[]) => {
-    const itemsToUpdate = items.map(item => {
-      if (item.processedThroughQueue) return item;
+  /**
+   * Process all players, marking them as processed and clearing queues.
+   */
+  const handleProcessAll = (items: TPlayer[]) => {
+    const updatedPlayers = items.map(item => ({
+      ...item,
+      processedThroughQueue: true,
+      assignedToQueue: false,
+    }));
 
-      if (item.processedThroughQueue === false) {
-        return {
-          ...item,
-          processedThroughQueue: true,
-          assignedToQueue: false
-        };
-      }
-      // Return the item in other cases to avoid returning undefined | TS was complaining without it
-      return item;
-    });
+    const clearedQueues = queues.map(queue => ({
+      ...queue,
+      queueItems: [],
+    }));
 
-    setPlayers(itemsToUpdate);
-    setQueues(initialQueues);
+    setPlayers(updatedPlayers);
+    setQueues(clearedQueues);
   };
 
-  const handleUnprocessAll = (items: PlayerType[]) => {
-    const itemsToUpdate = items.map(item => {
-      if (!item.assignedToQueue) return item;
-      if (item.processedThroughQueue === true || item.assignedToQueue) {
-        return {
-          ...item,
-          processedThroughQueue: false,
-          assignedToQueue: false
-        };
-      }
-      // Return the item in other cases to avoid returning undefined | TS was complaining without it
-      return item;
-    });
+  /**
+   * Unprocess all players, resetting their queue state.
+   */
+  const handleUnprocessAll = (items: TPlayer[]) => {
+    const updatedPlayers = items.map(item => ({
+      ...item,
+      processedThroughQueue: false,
+      assignedToQueue: false,
+    }));
 
-    setPlayers(itemsToUpdate);
-    setQueues(initialQueues);
+    const clearedQueues = queues.map(queue => ({
+      ...queue,
+      queueItems: [],
+    }));
+
+    setPlayers(updatedPlayers);
+    setQueues(clearedQueues);
   };
 
+  /**
+   * Process the next item in a specific queue.
+   */
   const handleProgressOneStep = (queueIndex: number) => {
-    const newQueues = [...queues];
-    const processedPlayer = newQueues[queueIndex].queueItems.shift();
+    const updatedQueues = [...queues];
+    const processedPlayer = updatedQueues[queueIndex].queueItems.shift();
 
-    // Check if processedPlayer is undefined before continuing + early return if it is so
     if (!processedPlayer) return;
 
-    processedPlayer.processedThroughQueue = true;
-    processedPlayer.assignedToQueue = false;
+    const updatedPlayer = {
+      ...processedPlayer,
+      processedThroughQueue: true,
+      assignedToQueue: false,
+    };
 
-    const newPlayers = players.map(player => {
-      if (player._id == processedPlayer?._id) {
-        return processedPlayer;
-      }
-      return player;
-    });
-    setPlayers(newPlayers);
-    setQueues(newQueues);
+    const updatedPlayers = players.map(player =>
+      player._id === updatedPlayer._id ? updatedPlayer : player
+    );
+
+    setPlayers(updatedPlayers);
+    setQueues(updatedQueues);
   };
 
-  const handleRedistributeQueues = (queues: QueueType[]) => {
-    const shortestQueue = findShortestQueue(queues);
+  /**
+   * Redistribute all items evenly across all queues.
+   */
+  const handleRedistributeQueues = () => {
+    const shortestQueueLength = findShortestQueue(queues).queueItems.length;
 
-    const shortestQLength = shortestQueue.queueItems.length;
-
-    const slicedQTailCollection: PlayerType[][] = [];
-    const stumps: PlayerType[][] = [];
-
-    for (let i = 0; i < queues.length; i++) {
-      const slicedTail = queues[i].queueItems.slice(shortestQLength);
-      slicedQTailCollection.push(slicedTail);
-      stumps.push(queues[i].queueItems.slice(0, shortestQLength));
-    }
-    const tempQ: PlayerType[] = [];
-    while (slicedQTailCollection.some(q => q.length > 0)) {
-      slicedQTailCollection.forEach(tail => {
-        if (tail.length > 0) {
-          const itemToPush = tail.shift();
-          if (itemToPush) tempQ.push(itemToPush);
-        }
-      });
-    }
-
-    tempQ.forEach((qItem, index) => {
-      const stumpIndex = index % stumps.length;
-      stumps[stumpIndex].push(qItem);
+    const itemsToRedistribute: TPlayer[] = [];
+    const balancedQueues = queues.map(queue => {
+      const excessItems = queue.queueItems.slice(shortestQueueLength);
+      itemsToRedistribute.push(...excessItems);
+      return {
+        ...queue,
+        queueItems: queue.queueItems.slice(0, shortestQueueLength),
+      };
     });
 
-    const newQueues: QueueType[] = queues.map((queue, index) => {
-      return {...queue, queueItems: stumps[index]};
+    itemsToRedistribute.forEach((item, index) => {
+      const targetQueueIndex = index % balancedQueues.length;
+      balancedQueues[targetQueueIndex].queueItems.push(item);
     });
 
-    setQueues(newQueues);
+    setQueues(balancedQueues);
   };
 
   return {
     handleAddToShortestQueue,
     handleAddAllToQueues,
+    handleProcessAll,
+    handleUnprocessAll,
     handleProgressOneStep,
     handleRedistributeQueues,
     findAssignedToQueue,
-    handleProcessAll,
-    handleUnprocessAll
   };
 };
 

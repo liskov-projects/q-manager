@@ -7,11 +7,11 @@ import Button from "./Buttons/Button";
 import DropZone from "./DropZone";
 import SectionHeader from "./SectionHeader";
 // context
-import {useQueuesContext} from "@/context/QueuesContext";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {useUser} from "@clerk/nextjs";
 
 import PlayerListItem from "./PlayerListItem";
-import PlayerType from "@/types/Player";
+import {TPlayer} from "@/types/Types";
 // import DropDownFilter from "./DropDownFilter";
 
 // FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
@@ -20,13 +20,13 @@ export default function PlayersList() {
   const [filter, setFilter] = useState("");
 
   const {isSignedIn} = useUser();
-  const {players, uniqueCategories, fetchPlayers} = useQueuesContext();
+  const {players, uniqueCategories, fetchPlayers} = useTournamentsAndQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
-  const unprocessedPlayers = players.filter(player => {
+  const unprocessedPlayers = players.filter((player: TPlayer) => {
     // new vars for logic to keep it cleaner
-    const matchesSearch = player.names?.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = player.name?.toLowerCase().includes(search.toLowerCase());
     const unassigned = !player.assignedToQueue && !player.processedThroughQueue;
 
     if (filter === "show all" || filter === "") {
@@ -43,7 +43,10 @@ export default function PlayersList() {
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
         {!isSignedIn ? null : (
           <Button
-            onClick={fetchPlayers}
+            onClick={() => {
+              console.log("ONCLICK IS THIS TRIGGERING");
+              fetchPlayers(); // Call the function
+            }}
             className={
               "ml-6 my-4 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
             }>
@@ -64,15 +67,15 @@ export default function PlayersList() {
             className="bg-brick-200 my-2 rounded text-shell-100 p-2"
             onChange={e => setFilter(e.target.value)}>
             <option value="show all">show all...</option>
-            {uniqueCategories.map((category, idx) => (
-              <option key={idx} value={category}>
+            {uniqueCategories.map((category: string, index: number) => (
+              <option key={index} value={category}>
                 {category}
               </option>
             ))}
           </select>
         </div>
         <ul className="flex flex-col items-center">
-          {unprocessedPlayers.map((player: PlayerType, index) => (
+          {unprocessedPlayers.map((player: TPlayer, index: number) => (
             <Fragment key={player._id}>
               <PlayerListItem
                 item={player}

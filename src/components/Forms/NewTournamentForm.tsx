@@ -1,13 +1,13 @@
 import {useState} from "react";
 // components
-import TournamentType from "@/types/Tournament";
+import TTournament from "@/types/Tournament";
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
 import {useUser} from "@clerk/nextjs";
 
 export default function NewTournamentForm() {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
-  const [newTournament, setNewTournament] = useState<TournamentType>({
+  const [newTournament, setNewTournament] = useState<TTournament>({
     name: "",
     categories: [],
     adminUser: "",

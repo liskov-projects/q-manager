@@ -1,0 +1,71 @@
+[
+  {
+    "_id": "1",
+    "name": "Echuca",
+    "adminUser": "",
+    "categories": [
+      "mixed",
+      "female",
+      "male"
+    ],
+    "image": "",
+    "queues": [],
+    "players": [],
+    "description": "A regional tournament held in the beautiful town of Echuca."
+  },
+  {
+    "_id": "2",
+    "name": "Bendigo",
+    "adminUser": "",
+    "categories": [
+      "mixed",
+      "female",
+      "male"
+    ],
+    "image": "",
+    "queues": [],
+    "players": [],
+    "description": "A popular tournament known for its diverse matches in Bendigo."
+  },
+  {
+    "_id": "3",
+    "name": "Ballarat",
+    "adminUser": "",
+    "categories": [
+      "teens",
+      "female"
+    ],
+    "image": "",
+    "queues": [],
+    "players": [],
+    "description": "This tournament attracts young talents and rising stars in Ballarat."
+  },
+  {
+    "_id": "4",
+    "name": "Shepparton",
+    "adminUser": "",
+    "categories": [
+      "mixed",
+      "male",
+      "teens"
+    ],
+    "image": "",
+    "queues": [],
+    "players": [],
+    "description": "A friendly competition focused on mixed and teen categories in Shepparton."
+  },
+  {
+    "_id": "5",
+    "name": "Warrnambool",
+    "adminUser": "",
+    "categories": [
+      "mixed",
+      "female",
+      "male"
+    ],
+    "image": "",
+    "queues": [],
+    "players": [],
+    "description": "A coastal tournament famous for its vibrant atmosphere in Warrnambool."
+  }
+]

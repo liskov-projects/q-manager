@@ -1,9 +1,9 @@
-import RouteContextType from "@/types/RoutingContext";
+import {TRouteContextProps} from "@/types/Types";
 import {createContext, useContext, useState, useEffect, ReactNode} from "react";
 // import {useRouter} from "next/navigation";
 import {usePathname} from "next/navigation";
 
-const RouterContext = createContext<RouteContextType | undefined>(undefined);
+const RouterContext = createContext<TRouteContextProps | undefined>(undefined);
 // where is the session? should give info about the user
 //   can't get to /user unless logged | redirect to /guest?
 // use the session to make the decision what to show on a page

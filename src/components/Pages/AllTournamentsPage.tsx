@@ -4,13 +4,13 @@ import SectionHeader from "@/components/SectionHeader";
 import Button from "@/components/Buttons/Button";
 import Tournament from "@/components/Tournaments/Tournament";
 import NewTournamentForm from "@/components/Forms/NewTournamentForm";
-import {useTournamentContext} from "@/context/TournamentContext";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 // FIXME: dev purposes
 // import mockTournaments from "@/Data/tournaments";
 
 export default function AllTournamentsPage() {
-  const {tournaments, fetchTournaments} = useTournamentContext();
+  const {tournaments, fetchTournaments} = useTournamentsAndQueuesContext();
 
   return (
     // FIXME: the grid for both sections
@@ -23,8 +23,8 @@ export default function AllTournamentsPage() {
           Refresh
         </Button>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {tournaments.map((tournamnet, ind) => (
-            <Tournament key={ind} tournament={tournamnet} />
+          {tournaments.map((tournament, index) => (
+            <Tournament key={index} tournament={tournament} />
           ))}
         </ul>
       </div>

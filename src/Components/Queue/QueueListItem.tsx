@@ -1,5 +1,5 @@
 import useDragNDrop from "@/hooks/useDragNDrop";
-import Player from "@/types/Player";
+import {TPlayer} from "@/types/Types";
 import TagsList from "../TagsList";
 import {useUser} from "@clerk/nextjs";
 
@@ -7,7 +7,7 @@ export default function QueueListItem({
   item,
   className
 }: {
-  item: Player;
+  item: TPlayer;
   className: string;
   queueId: string;
   index: number;
@@ -23,7 +23,7 @@ export default function QueueListItem({
       draggable={`${!isSignedIn ? false : true}`}
       onDragStart={() => handleDragStart(item)}
       onDragOver={e => handleDragOver(e)}>
-      <div className="player-name">{item.names}</div>
+      <div className="player-name">{item.name}</div>
 
       <TagsList item={item} />
     </div>

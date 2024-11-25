@@ -1,4 +1,4 @@
-import QueueType from "@/types/Queue";
+import {TQueue} from "@/types/Types";
 import {useState} from "react";
 import {useUser} from "@clerk/nextjs";
 
@@ -10,12 +10,12 @@ export default function DropZone({
 }: {
   onDrop: (
     event: React.DragEvent<HTMLDivElement>,
-    queue?: QueueType,
+    queue?: TQueue,
     index?: number
   ) => void;
   index?: number;
-  queue?: QueueType;
-  dropTarget?: QueueType | string;
+  queue?: TQueue;
+  dropTarget?: TQueue | string;
   height: number;
 }) {
   const {isSignedIn} = useUser();

@@ -1,13 +1,13 @@
 // import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 // import {faCaretUp} from "@fortawesome/free-solid-svg-icons";
 // import {faCaretDown} from "@fortawesome/free-solid-svg-icons";
-// import {useQueuesContext} from "@/Context/AppContext";
+// import {useTournamentsAndQueuesContext} from "@/Context/AppContext";
 // import useAddToQueues from "@/hooks/useAddToQueues";
-// import PlayerType from "@/types/Player";
+// import TPlayer from "@/types/Player";
 
 // //REVIEW: why have to pass queueID? if taken out here doesn't change anything see PlayerItem
-// export default function ButtonUpDown({item}: {item: PlayerType}) {
-//   const {queues, setQueues, setPlayers} = useQueuesContext();
+// export default function ButtonUpDown({item}: {item: TPlayer}) {
+//   const {queues, setQueues, setPlayers} = useTournamentsAndQueuesContext();
 //   const {handleProgressOneStep} = useAddToQueues();
 
 //   // console.log("ITEM: ", item);

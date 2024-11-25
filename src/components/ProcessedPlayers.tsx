@@ -1,24 +1,24 @@
 "use client";
 
 // types
-import Player from "@/types/Player";
+import {TPlayer} from "@/types/Types";
 import {useState} from "react";
 // context
-import {useQueuesContext} from "@/context/QueuesContext";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import PlayerListItem from "./PlayerListItem";
 
 export default function ProcessedPlayers() {
   const [search, setSearch] = useState("");
 
-  const {players} = useQueuesContext();
+  const {players} = useTournamentsAndQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();
 
   const processedPlayers = players
-    .filter(player => {
+    .filter((player: TPlayer) => {
       return player.processedThroughQueue;
     })
-    .filter(player => player.names?.toLowerCase().includes(search.toLowerCase()));
+    .filter((player: TPlayer) => player.name?.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
@@ -31,7 +31,7 @@ export default function ProcessedPlayers() {
         onChange={e => setSearch(e.target.value)}
       />
 
-      {processedPlayers.map((player: Player) => (
+      {processedPlayers.map((player: TPlayer) => (
         <PlayerListItem
           key={player._id}
           item={player}
