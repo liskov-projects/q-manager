@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-// import QueueModel from "./QueueModel";
+
 import {queueSchema} from "./QueueModel";
 const tournamentSchema = new mongoose.Schema(
   {
