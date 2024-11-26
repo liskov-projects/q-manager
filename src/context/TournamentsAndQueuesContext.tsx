@@ -95,14 +95,14 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // Sync Current Tournament with URL Pathname
   useEffect(() => {
     console.log("Current Pathname:", pathname);
-    console.log("Current Tournaments:", tournaments);
+    console.log("Tournaments:", tournaments);
     console.log("Current Tournament:", currentTournament);
     const segments = pathname.split("/");
     const id = segments.pop();
 
     if (id && tournaments.length > 0) {
       const foundTournament = tournaments.find(tournament => tournament._id === id);
-      console.log("CURRENT TOURNAMENT");
+      console.log("Found TOURNAMENT");
       console.log(foundTournament);
       if (foundTournament) {
         setCurrentTournament(foundTournament);
@@ -115,7 +115,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     console.log("RUNNING HERE IN USEEFFECT");
     fetchPlayers();
     fetchTournaments();
-  }, [currentTournament]);
+  }, []);
 
   const queues = currentTournament?.queues;
   console.log(queues);

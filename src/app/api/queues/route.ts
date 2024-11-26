@@ -1,3 +1,4 @@
+import TournamentModel from "@/models/TournamentModel";
 import dbConnect from "@/lib/db";
 import QueueModel from "@/models/QueueModel";
 // import TournamentModel from "@/models/TournamentModel";
@@ -5,9 +6,23 @@ import {NextRequest} from "next/server";
 
 export async function GET() {
   await dbConnect();
-  const queues = await QueueModel.find({});
-  // console.log("QUEUES");
-  // console.log(queues);
+  const queues = await TournamentModel.aggregate([
+    {
+      $group: {
+        _id: "$tournamentId",
+        queues: {$push: "$$ROOT"}
+      }
+    },
+    {
+      $lookup: {
+        from: "tournaments",
+        localField: "_id",
+        as: "tournamentDetails"
+      }
+    }
+  ]);
+  console.log("QUEUES");
+  console.log(queues);
   return new Response(JSON.stringify(queues), {
     headers: {"Content-Type": "application/json"}
   });
