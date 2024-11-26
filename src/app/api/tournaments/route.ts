@@ -5,7 +5,7 @@ import {NextRequest} from "next/server";
 export async function GET() {
   await dbConnect();
   const tournaments = await TournamentModel.find({});
-  // console.log(tournaments);
+  console.log(tournaments);
   return new Response(JSON.stringify(tournaments), {
     headers: {"Content-Type": "application/json"}
   });

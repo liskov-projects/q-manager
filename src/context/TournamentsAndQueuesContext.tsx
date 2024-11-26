@@ -72,7 +72,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // Fetch Players
   const fetchPlayers = async () => {
-    console.log("THIS (FETCH PLAYERS?!!");
+    // console.log("THIS (FETCH PLAYERS?!!");
     const response = await fetch("../api/players/");
     const playersData = await response.json();
     const playersForTournament = playersData.filter(
@@ -95,8 +95,8 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // Sync Current Tournament with URL Pathname
   useEffect(() => {
     console.log("Current Pathname:", pathname);
-    // console.log("Current Tournaments:", tournaments);
-    // console.log("Current Tournament:", currentTournament);
+    console.log("Current Tournaments:", tournaments);
+    console.log("Current Tournament:", currentTournament);
     const segments = pathname.split("/");
     const id = segments.pop();
 

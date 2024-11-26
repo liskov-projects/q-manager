@@ -1,13 +1,13 @@
 import dbConnect from "@/lib/db";
-import QueueModel from "@/models/PlayerModel";
+import QueueModel from "@/models/QueueModel";
 // import TournamentModel from "@/models/TournamentModel";
 import {NextRequest} from "next/server";
 
 export async function GET() {
   await dbConnect();
   const queues = await QueueModel.find({});
-  // console.log("PLAYERS");
-  // console.log(players);
+  // console.log("QUEUES");
+  // console.log(queues);
   return new Response(JSON.stringify(queues), {
     headers: {"Content-Type": "application/json"}
   });
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 
 //     try {
 //       // Find the tournament and update the specified queue
-//       const updatedTournament = await Tournament.findOneAndUpdate(
+// const updatedTournament = await Tournament.findOneAndUpdate(
 //         { _id: tournamentId, "queues.queueName": queueName },
 //         { $push: { "queues.$.queueItems": newItem } }, // $ is a positional operator
 //         { new: true } // Returns the updated document
