@@ -8,65 +8,71 @@ import React, {
   useMemo,
   ReactNode
 } from "react";
-import { usePathname } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
+import {usePathname} from "next/navigation";
+import {useUser} from "@clerk/nextjs";
 
 // Types
-import {TQueue, TPlayer, TTournament, TTournamentsAndQueuesContextProps} from "@/types/Types";
+import {
+  TQueue,
+  TPlayer,
+  TTournament,
+  TTournamentsAndQueuesContextProps
+} from "@/types/Types";
 
-const TournamentsAndQueuesContext = createContext<TTournamentsAndQueuesContextProps | undefined>(undefined);
+const TournamentsAndQueuesContext = createContext<
+  TTournamentsAndQueuesContextProps | undefined
+>(undefined);
 
-export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode }) => {
+export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) => {
+  //NOTE: Queues are derived from the tournament state
 
-//   const [queues, setQueues] = useState<TQueue[]>(initialQueues);
   const [players, setPlayers] = useState<TPlayer[]>([]);
   const [draggedItem, setDraggedItem] = useState<TPlayer | null>(null);
 
   // Tournaments State
   const [tournaments, setTournaments] = useState<TTournament[]>([]);
-  const [currentTournament, setCurrentTournament] = useState<TTournament | null>(null);
+  const [currentTournament, setCurrentTournament] = useState<TTournament | null>(
+    null
+  );
   const pathname = usePathname();
-  const { user } = useUser();
+  const {user} = useUser();
 
   // Filtered Tournaments
   const filteredTournaments = tournaments.filter(
-    (tournament) => tournament.adminUser === user?.id
+    tournament => tournament.adminUser === user?.id
   );
 
   // Derived Categories from Players
   const uniqueCategories = useMemo(() => {
-    const categories = players.flatMap((player) => player.categories || []);
+    const categories = players.flatMap(player => player.categories || []);
     return Array.from(new Set(categories));
   }, [players]);
 
+  // FIXME: what if they want to add another queue on the go?
   // Add or Remove Queues
-//   const addMoreQueues = () => {
-//     setQueues((prev) => [
-//       ...prev,
-//       {
-//         queueName: (queues.length + 1).toString(),
-//         queueItems: [],
-//         id: queues.length.toString()
-//       }
-//     ]);
-//   };
+  // const addMoreQueues = () => {
+  //   const newQueue =   {
+  //     queueName: (queues.length + 1).toString(),
+  //     queueItems: [],
+  //     id: queues.length.toString()
+  //   }
+  //     setQueues(prev => [...prev]);
+  //   }
+  // const removeQueues = () => {
+  //   setQueues(prev => prev.slice(0, -1));
+  // };
 
-//   const removeQueues = () => {
-//     setQueues((prev) => prev.slice(0, -1));
-//   };
-
-  // Mark Player as Processed
   const markPlayerAsProcessed = (playerId: string) => {
-    setPlayers((prev) =>
-      prev.map((player) =>
-        player._id === playerId ? { ...player, processedThroughQueue: true } : player
+    setPlayers(prev =>
+      prev.map(player =>
+        player._id === playerId ? {...player, processedThroughQueue: true} : player
       )
     );
   };
 
   // Fetch Players
   const fetchPlayers = async () => {
-    console.log("THIS (FETCH PLAYERS?!!")
+    console.log("THIS (FETCH PLAYERS?!!");
     const response = await fetch("../api/players/");
     const playersData = await response.json();
     const playersForTournament = playersData.filter(
@@ -84,20 +90,20 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
 
   // Update Players and Queues
   const updatePlayers = (updatedPlayers: TPlayer[]) => setPlayers(updatedPlayers);
-//   const updateQueues = (updatedQueues: TQueue[]) => setQueues(updatedQueues);
+  // const updateQueues = (updatedQueues: TQueue[]) => setQueues(updatedQueues);
 
   // Sync Current Tournament with URL Pathname
   useEffect(() => {
     console.log("Current Pathname:", pathname);
-    console.log("Current Tournaments:", tournaments);
-    console.log("Current Tournament:", currentTournament);
+    // console.log("Current Tournaments:", tournaments);
+    // console.log("Current Tournament:", currentTournament);
     const segments = pathname.split("/");
     const id = segments.pop();
 
     if (id && tournaments.length > 0) {
-      const foundTournament = tournaments.find((tournament) => tournament._id === id);
+      const foundTournament = tournaments.find(tournament => tournament._id === id);
       console.log("CURRENT TOURNAMENT");
-      console.log(foundTournament)
+      console.log(foundTournament);
       if (foundTournament) {
         setCurrentTournament(foundTournament);
       }
@@ -106,10 +112,13 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
 
   // Fetch Players and Tournaments on Mount
   useEffect(() => {
-    console.log("RUNNING HERE IN USEEFFECT")
+    console.log("RUNNING HERE IN USEEFFECT");
     fetchPlayers();
     fetchTournaments();
   }, [currentTournament]);
+
+  const queues = currentTournament?.queues;
+  console.log(queues);
 
   return (
     <TournamentsAndQueuesContext.Provider
@@ -118,14 +127,14 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
         setPlayers,
         markPlayerAsProcessed,
         queues,
-        setQueues,
-        addMoreQueues,
-        removeQueues,
+        // setQueues,
+        // addMoreQueues,
+        // removeQueues,
         draggedItem,
         setDraggedItem,
         uniqueCategories,
         updatePlayers,
-        updateQueues,
+        // updateQueues,
         currentTournament,
         tournaments,
         setCurrentTournament,
@@ -133,17 +142,19 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
         filteredTournaments,
         fetchTournaments,
         fetchPlayers
-      }}
-    >
+      }}>
       {children}
     </TournamentsAndQueuesContext.Provider>
   );
 };
 
-export const useTournamentsAndQueuesContext = (): TTournamentsAndQueuesContextProps => {
-  const context = useContext(TournamentsAndQueuesContext);
-  if (!context) {
-    throw new Error("useTournamentsAndQueuesContext must be used within a TournamentsAndQueuesProvider");
-  }
-  return context;
-};
+export const useTournamentsAndQueuesContext =
+  (): TTournamentsAndQueuesContextProps => {
+    const context = useContext(TournamentsAndQueuesContext);
+    if (!context) {
+      throw new Error(
+        "useTournamentsAndQueuesContext must be used within a TournamentsAndQueuesProvider"
+      );
+    }
+    return context;
+  };

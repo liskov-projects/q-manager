@@ -1,13 +1,8 @@
 [
   {
-    "_id": "1",
     "name": "Echuca",
     "adminUser": "",
-    "categories": [
-      "teens",
-      "male",
-      "female"
-    ],
+    "categories": ["teens", "male", "female"],
     "image": "",
     "queues": [
       {
@@ -44,13 +39,9 @@
     "description": "A regional tournament held in the beautiful town of Echuca."
   },
   {
-    "_id": "2",
     "name": "Bendigo",
     "adminUser": "",
-    "categories": [
-      "teens",
-      "male"
-    ],
+    "categories": ["teens", "male"],
     "image": "",
     "queues": [
       {
@@ -107,15 +98,9 @@
     "description": "A popular tournament known for its diverse matches in Bendigo."
   },
   {
-    "_id": "3",
     "name": "Ballarat",
     "adminUser": "",
-    "categories": [
-      "teens",
-      "male",
-      "female",
-      "mixed"
-    ],
+    "categories": ["teens", "male", "female", "mixed"],
     "image": "",
     "queues": [
       {
@@ -202,12 +187,9 @@
     "description": "This tournament attracts young talents and rising stars in Ballarat."
   },
   {
-    "_id": "4",
     "name": "Shepparton",
     "adminUser": "",
-    "categories": [
-      "male"
-    ],
+    "categories": ["male"],
     "image": "",
     "queues": [
       {
@@ -269,12 +251,9 @@
     "description": "A friendly competition focused on mixed and teen categories in Shepparton."
   },
   {
-    "_id": "5",
     "name": "Warrnambool",
     "adminUser": "",
-    "categories": [
-      "teens"
-    ],
+    "categories": ["teens"],
     "image": "",
     "queues": [
       {

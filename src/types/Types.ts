@@ -13,15 +13,15 @@ export type TPlayer = {
 
 // Queue Type
 export type TQueue = {
+  id?: string; // Queue identifier
   queueName: string; // Name of the queue
   queueItems: TPlayer[]; // Players in the queue
   tournamentId: string; // The associated tournament (TODO)
-  id: string; // Queue identifier
 };
 
 // Tournament Type
 export type TTournament = {
-  _id: string; // Tournament ID from MongoDB
+  _id?: string; // Tournament ID from MongoDB
   name: string; // Tournament name
   adminUser: string; // User ID of the admin
   queues: TQueue[];

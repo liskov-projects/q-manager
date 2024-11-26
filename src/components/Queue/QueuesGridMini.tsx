@@ -2,7 +2,7 @@
 
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import React from "react";
-import { TQueue } from "@/types/Types";
+import {TQueue} from "@/types/Types";
 
 export default function QueuesGridAlternate() {
   const {queues} = useTournamentsAndQueuesContext();
