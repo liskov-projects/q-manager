@@ -70,7 +70,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     );
   };
 
-  // Fetch Players
+  // Fetch Players FIXME:
   const fetchPlayers = async () => {
     // console.log("THIS (FETCH PLAYERS?!!");
     const response = await fetch("../api/players/");

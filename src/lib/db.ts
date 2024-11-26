@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-const MONGO_URI =
-  // net/qManager - to access qManager collection without it connects to default
-  "mongodb+srv://verrafalenko:7Gy3D4trVyy@qmanager.vmegg.mongodb.net/qManager?retryWrites=true&w=majority&appName=QManager/";
+dotenv.config();
 
+const MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) throw new Error("Define MONGO_URI");
 
 // will allow to reuse the established connection

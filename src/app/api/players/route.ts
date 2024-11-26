@@ -1,16 +1,23 @@
 import dbConnect from "@/lib/db";
 import PlayerModel from "@/models/PlayerModel";
+import {error} from "console";
 // import TournamentModel from "@/models/TournamentModel";
 import {NextRequest} from "next/server";
 
 export async function GET() {
   await dbConnect();
-  const players = await PlayerModel.find({});
-  // console.log("PLAYERS");
-  // console.log(players);
-  return new Response(JSON.stringify(players), {
-    headers: {"Content-Type": "application/json"}
-  });
+  try {
+    const players = await PlayerModel.find({});
+    // console.log("PLAYERS");
+    // console.log(players);
+    return new Response(JSON.stringify(players), {
+      headers: {"Content-Type": "application/json"}
+    });
+  } catch (err) {
+    if (err) {
+      console.error(err);
+    }
+  }
 }
 
 export async function POST(req: NextRequest) {
