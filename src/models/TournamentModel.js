@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import {queueSchema} from "./QueueModel";
+import {queueSchema} from "./QueueModel.js";
 const tournamentSchema = new mongoose.Schema(
   {
     // _id: String,
