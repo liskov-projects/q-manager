@@ -24,6 +24,7 @@ export type TTournament = {
   _id: string; // Tournament ID from MongoDB
   name: string; // Tournament name
   adminUser: string; // User ID of the admin
+  queues: TQueue[];
 };
 
 // Tournament and Queues Context Props
