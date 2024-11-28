@@ -41,22 +41,22 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   const pathname = usePathname();
   const {isSignedIn, user} = useUser();
-  console.log(user, "user");
+  // console.log(user, "user");
   // NEW:
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
   // Sync Current Tournament with URL Pathname
   useEffect(() => {
-    console.log("Current Pathname:", pathname);
-    console.log("Tournaments:", tournaments);
-    console.log("Current Tournament:", currentTournament);
+    // console.log("Current Pathname:", pathname);
+    // console.log("Tournaments:", tournaments);
+    // console.log("Current Tournament:", currentTournament);
     const segments = pathname.split("/");
     const id = segments.pop();
 
     if (id && tournaments.length > 0) {
       const foundTournament = tournaments.find(tournament => tournament._id === id);
-      console.log("Found TOURNAMENT");
-      console.log(foundTournament);
+      // console.log("Found TOURNAMENT");
+      // console.log(foundTournament);
       if (foundTournament) {
         setCurrentTournament(foundTournament);
       }
@@ -65,7 +65,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // Fetch Players and Tournaments on Mount
   useEffect(() => {
-    console.log("RUNNING HERE IN USEEFFECT");
+    // console.log("RUNNING HERE IN USEEFFECT");
     fetchPlayers();
     fetchTournaments();
   }, []);
@@ -122,12 +122,12 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   };
 
   const fetchPlayersByTournamentId = async (tournamentId: string) => {
-    console.log("TRYING TO FETCH PLAYERS");
-    console.log("TOURNAMENT ID");
-    console.log(tournamentId);
+    // console.log("TRYING TO FETCH PLAYERS");
+    // console.log("TOURNAMENT ID");
+    // console.log(tournamentId);
 
     if (!tournamentId) {
-      console.error("Tournament ID is required to fetch data");
+      // console.error("Tournament ID is required to fetch data");
       return;
     }
 

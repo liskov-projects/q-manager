@@ -6,13 +6,13 @@ import dbConnect from "@/lib/db";
 import {NextRequest} from "next/server";
 
 export async function GET(req: NextRequest) {
-  console.log("MADE IT INTO THE GET FOR TOURNAMENT PLAYERS");
-  console.log("this is REQ: ", req);
+  // console.log("MADE IT INTO THE GET FOR TOURNAMENT PLAYERS");
+  // console.log("this is REQ: ", req);
   const {url} = req;
   console.log(typeof url);
 
   const tournamentId = url?.split("/").pop();
-  console.log(tournamentId);
+  // console.log(tournamentId);
   // Ensure the database is connected
   await dbConnect();
 
