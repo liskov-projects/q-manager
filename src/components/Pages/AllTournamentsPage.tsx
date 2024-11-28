@@ -16,12 +16,14 @@ export default function AllTournamentsPage() {
     // FIXME: the grid for both sections
     <div className="flex flex-row items-start justify-around p-8">
       <div className="flex flex-col">
-        <SectionHeader>All tournaments</SectionHeader>
-        <Button
-          onClick={() => fetchTournaments()}
-          className="self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100">
-          Refresh
-        </Button>
+        <div className="flex items-center justify-between">
+          <SectionHeader>Tournaments</SectionHeader>
+          <Button
+            onClick={() => fetchTournaments()}
+            className="self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100">
+            Refresh
+          </Button>
+        </div>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {tournaments.map((tournament, index) => (
             <Tournament key={index} tournament={tournament} />
