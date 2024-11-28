@@ -40,7 +40,10 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   );
 
   const pathname = usePathname();
-  const {user} = useUser();
+  const {isSignedIn, user} = useUser();
+  console.log(user, "user");
+  // NEW:
+  const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
   // Sync Current Tournament with URL Pathname
   useEffect(() => {
@@ -80,17 +83,17 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // FIXME: what if they want to add another queue on the go?
   // Add or Remove Queues
-  // const addMoreQueues = () => {
-  //   const newQueue =   {
-  //     queueName: (queues.length + 1).toString(),
-  //     queueItems: [],
-  //     id: queues.length.toString()
-  //   }
-  //     setQueues(prev => [...prev]);
-  //   }
-  // const removeQueues = () => {
-  //   setQueues(prev => prev.slice(0, -1));
-  // };
+  const addMoreQueues = () => {
+    const newQueue = {
+      queueName: (queues.length + 1).toString(),
+      queueItems: [],
+      id: queues.length.toString()
+    };
+    setQueues(prev => [...prev]);
+  };
+  const removeQueues = () => {
+    setQueues(prev => prev.slice(0, -1));
+  };
 
   const markPlayerAsProcessed = (playerId: string) => {
     setPlayers(prev =>
@@ -174,7 +177,8 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         fetchTournaments,
         fetchPlayers,
         fetchPlayersByTournamentId,
-        currentTournamentPlayers
+        currentTournamentPlayers,
+        tournamentOwner
       }}>
       {children}
     </TournamentsAndQueuesContext.Provider>

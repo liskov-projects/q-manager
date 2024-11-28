@@ -1,17 +1,16 @@
 "use client";
 
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {useState} from "react";
-// import {useRouteContext} from "@/context/RouteContext";
 import {useUser} from "@clerk/nextjs";
 // components
 import Button from "../Buttons/Button";
 import {TPlayer} from "@/types/Types";
 import SectionHeader from "../SectionHeader";
-// import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 // import TTournament from "@/types/Tournament";
 
 export default function NewPlayerForm() {
+  // just check if logged in as the dropdown list is restricted to only the tournaments created by the logged in user
   const {isSignedIn} = useUser();
   const {currentTournament, filteredTournaments} = useTournamentsAndQueuesContext();
 
@@ -20,11 +19,10 @@ export default function NewPlayerForm() {
     name: "",
     categories: "",
     phoneNumber: "",
-    // NEW:
     tournamentId: ""
     //
   });
-  // NEW:
+
   // console.log("within the form ", currentTournament);
   // console.log("tournamentID: ", currentTournament?._id);
 
@@ -55,9 +53,7 @@ export default function NewPlayerForm() {
       phoneNumbers: incomingPhoneNumbers,
       assignedToQueue: false,
       processThroughQueue: false,
-      // NEW:
       tournamentId: currentTournament?._id
-      //
     };
 
     // console.log("Data sent to backend: ", newItem);
@@ -99,7 +95,6 @@ export default function NewPlayerForm() {
   }
 
   // hides the components from guests
-  // if (isGuest) return null;
   if (!isSignedIn) return null;
 
   return (

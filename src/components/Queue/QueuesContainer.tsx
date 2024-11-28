@@ -6,12 +6,12 @@ import QueuesGridMini from "./QueuesGridMini";
 import SectionHeader from "../SectionHeader";
 import Button from "../Buttons/Button";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import {useUser} from "@clerk/nextjs";
 
 export default function QueuesContainer() {
   const [showAlternateView, setShowAlternateView] = useState(false);
   const {addMoreQueues, removeQueues, queues} = useTournamentsAndQueuesContext();
-  const {isSignedIn} = useUser();
+  // const {isSignedIn} = useUser();
+  const {tournamentOwner} = useTournamentsAndQueuesContext();
 
   return (
     <div className="p-2">
@@ -22,7 +22,7 @@ export default function QueuesContainer() {
         className="mb-4 mx-4 p-2 bg-blue-500 text-white font-bold rounded">
         {showAlternateView ? "Show Detailed View" : "Show Grid View"}
       </Button>
-      {!isSignedIn ? null : (
+      {!tournamentOwner ? null : (
         <>
           <Button
             onClick={() => addMoreQueues()}

@@ -50,6 +50,7 @@ export type TTournamentsAndQueuesContextProps = {
   fetchPlayers: () => Promise<void>; // Fetch players from the server,
   fetchPlayersByTournamentId: (id: string) => Promise<void>;
   currentTournamentPlayers: TPlayer[];
+  tournamentOwner: boolean;
 };
 
 // Route Context Props

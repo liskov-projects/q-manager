@@ -19,14 +19,13 @@ export default function PlayersList() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
 
-  const {isSignedIn} = useUser();
-  const {uniqueCategories, fetchPlayers, currentTournamentPlayers} =
+  const {uniqueCategories, fetchPlayers, currentTournamentPlayers, tournamentOwner} =
     useTournamentsAndQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
-  // NEW: coming throught
-  console.log("In the PlayerList: ", currentTournamentPlayers);
+  //coming throught
+  // console.log("In the PlayerList: ", currentTournamentPlayers);
 
   const unprocessedPlayers = currentTournamentPlayers.filter((player: TPlayer) => {
     // new vars for logic to keep it cleaner
@@ -41,13 +40,13 @@ export default function PlayersList() {
   });
 
   // NEW:
-  console.log(unprocessedPlayers);
+  // console.log(unprocessedPlayers);
   return (
     // REVIEW: viewport height
     <>
       <SectionHeader>Unprocessed Players</SectionHeader>
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
-        {!isSignedIn ? null : (
+        {!tournamentOwner ? null : (
           <Button
             onClick={() => {
               console.log("ONCLICK IS THIS TRIGGERING");

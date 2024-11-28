@@ -2,16 +2,11 @@
 
 import Button from "./Button";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-// import {useRouteContext} from "@/context/RouteContext";
-
 import useAddToQueues from "@/hooks/useAddToQueues";
 import SectionHeader from "../SectionHeader";
-import {useUser} from "@clerk/nextjs";
 
 export default function ButtonGroup() {
-  const {players, queues} = useTournamentsAndQueuesContext();
-  // const {isGuest} = useRouteContext();
-  const {isSignedIn} = useUser();
+  const {players, tournamentOwner, queues} = useTournamentsAndQueuesContext();
 
   const {
     handleAddAllToQueues,
@@ -22,7 +17,7 @@ export default function ButtonGroup() {
   } = useAddToQueues();
 
   // hides the components from guests
-  if (!isSignedIn) return null;
+  if (!tournamentOwner) return null;
 
   return (
     <div className="my-4">

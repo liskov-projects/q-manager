@@ -6,6 +6,8 @@ import {TQueue} from "@/types/Types";
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
 
+// fixme
+// controlled input
 export default function NewQueueForm() {
   const {isSignedIn} = useUser();
   const {currentTournament, filteredTournaments} = useTournamentsAndQueuesContext();

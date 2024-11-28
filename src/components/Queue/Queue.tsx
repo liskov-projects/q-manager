@@ -1,5 +1,6 @@
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {useState} from "react";
-import DropZone from "../DropZone"; // Import the DropZone component
+import DropZone from "../DropZone";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import Button from "../Buttons/Button";
 import QueueStatus from "./QueueStatus";
@@ -8,13 +9,11 @@ import {TQueue} from "@/types/Types";
 import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "./QueueListItem";
 import useDragNDrop from "@/hooks/useDragNDrop";
-// import {useRouteContext} from "@/context/RouteContext";
-import {useUser} from "@clerk/nextjs";
 
 export default function Queue({queue, index}: {queue: TQueue; index: number}) {
   const {handleProgressOneStep} = useAddToQueues();
-  // const {isGuest} = useRouteContext();
-  const {isSignedIn} = useUser();
+  const {tournamentOwner} = useTournamentsAndQueuesContext();
+
   const {handleEmptyQueue, handleDrop} = useDragNDrop();
   // FIXME: false
   const [isExpanded, setIsExpanded] = useState(true);
@@ -28,7 +27,7 @@ export default function Queue({queue, index}: {queue: TQueue; index: number}) {
           Queue {queue.queueName}
         </h3>
       </div>
-      {!isSignedIn ? null : (
+      {!tournamentOwner ? null : (
         <>
           <Button
             className={`my-2 py-2 text-[0.75rem] font-bold px-4 rounded transition-colors duration-200 

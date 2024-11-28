@@ -16,8 +16,9 @@ export default function NewTournamentForm() {
     queues: 0
     // players: []
   });
+
+  // any signed in user can create a new tournamnet
   const {isSignedIn, user} = useUser();
-  //   console.log(user);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     //allows the function to differetiate between types
@@ -88,6 +89,7 @@ export default function NewTournamentForm() {
     // console.log(newTournament);
   }
   if (!isSignedIn) return null;
+
   return (
     <>
       <div className="flex flex-col justify-center items-center my-4">
