@@ -5,7 +5,7 @@ const playerSchema = new mongoose.Schema(
     names: {type: String, required: true},
     categories: [{type: String, required: true}],
     phoneNumbers: [{type: String, required: true}],
-    tournamentID: {
+    tournamentId: {
       // used to refer this field to tournament._id
       type: String,
       required: true

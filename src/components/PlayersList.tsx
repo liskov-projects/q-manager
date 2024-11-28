@@ -20,22 +20,28 @@ export default function PlayersList() {
   const [filter, setFilter] = useState("");
 
   const {isSignedIn} = useUser();
-  const {uniqueCategories, fetchPlayers, currentTournamentPlayers} = useTournamentsAndQueuesContext();
+  const {uniqueCategories, fetchPlayers, currentTournamentPlayers} =
+    useTournamentsAndQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
+  // NEW: coming throught
+  console.log("In the PlayerList: ", currentTournamentPlayers);
+
   const unprocessedPlayers = currentTournamentPlayers.filter((player: TPlayer) => {
     // new vars for logic to keep it cleaner
-    const matchesSearch = player.name?.toLowerCase().includes(search.toLowerCase());
+    // const matchesSearch = player.name?.toLowerCase().includes(search.toLowerCase());
     const unassigned = !player.assignedToQueue && !player.processedThroughQueue;
 
     if (filter === "show all" || filter === "") {
-      return unassigned && matchesSearch;
+      return unassigned; //&& matchesSearch;
     } else {
-      return unassigned && matchesSearch && player.categories?.includes(filter);
+      return unassigned; //&& matchesSearch && player.categories?.includes(filter);
     }
   });
 
+  // NEW:
+  console.log(unprocessedPlayers);
   return (
     // REVIEW: viewport height
     <>

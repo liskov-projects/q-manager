@@ -27,7 +27,7 @@ export default function PlayerListItem({
       onDragStart={() => handleDragStart(item)}
       onDragOver={e => handleDragOver(e)}>
       {/* Player Name */}
-      <div className="player-name font-semibold text-lg">{item.name}</div>
+      <div className="player-name font-semibold text-lg">{item.names}</div>
 
       {/* Tags List */}
       <TagsList item={item} />

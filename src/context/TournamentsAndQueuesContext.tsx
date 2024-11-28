@@ -35,7 +35,9 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     null
   );
 
-  const [currentTournamentPlayers, setCurrentTournamentPlayers] = useState<TPlayer[]>([]);
+  const [currentTournamentPlayers, setCurrentTournamentPlayers] = useState<TPlayer[]>(
+    []
+  );
 
   const pathname = usePathname();
   const {user} = useUser();
@@ -117,28 +119,30 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   };
 
   const fetchPlayersByTournamentId = async (tournamentId: string) => {
-
-    console.log("TRYING TO FETCH PLAYERS")
-    console.log("TOURNAMENT ID")
-    console.log(tournamentId)
+    console.log("TRYING TO FETCH PLAYERS");
+    console.log("TOURNAMENT ID");
+    console.log(tournamentId);
 
     if (!tournamentId) {
       console.error("Tournament ID is required to fetch data");
       return;
     }
-  
+
     try {
       const response = await fetch(`/api/players/${tournamentId}/`);
       if (!response.ok) {
         throw new Error(`Error fetching tournament: ${response.statusText}`);
       }
-  
+
+      // NEW: coming through OK
       const tournamentPlayersData = await response.json();
+      // console.log("In the Context: ", tournamentPlayersData);
+
       setCurrentTournamentPlayers(tournamentPlayersData); // Assuming `setTournament` updates a single tournament in state
     } catch (error) {
       console.error("Error fetching tournament:", error);
     }
-  };  
+  };
 
   // Update Players and Queues
   const updatePlayers = (updatedPlayers: TPlayer[]) => setPlayers(updatedPlayers);
@@ -170,7 +174,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         fetchTournaments,
         fetchPlayers,
         fetchPlayersByTournamentId,
-        currentTournamentPlayers,
+        currentTournamentPlayers
       }}>
       {children}
     </TournamentsAndQueuesContext.Provider>

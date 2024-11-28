@@ -24,7 +24,7 @@ const seedPlayers = async () => {
     }
 
     console.log(`Found ${tournaments.length} tournaments`);
-
+console.log(tournaments);
     // Iterate through tournaments and assign players
     for (const tournament of tournaments) {
       const numPlayers = Math.floor(Math.random() * (30 - 8 + 1)) + 8; // Random between 8 and 30
@@ -35,7 +35,7 @@ const seedPlayers = async () => {
         names: player.name,
         categories: Array.isArray(player.category) ? player.category : [player.category],
         phoneNumbers: Array.isArray(player.phoneNumber) ? player.phoneNumber : [player.phoneNumber],
-        tournamentID: tournament._id.toString(), // Link to tournament _id
+        tournamentId: tournament._id.toString(), // Link to tournament _id
       }));
 
       // Insert players into the database
