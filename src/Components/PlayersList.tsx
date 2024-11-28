@@ -20,11 +20,11 @@ export default function PlayersList() {
   const [filter, setFilter] = useState("");
 
   const {isSignedIn} = useUser();
-  const {players, uniqueCategories, fetchPlayers} = useTournamentsAndQueuesContext();
+  const {uniqueCategories, fetchPlayers, currentTournamentPlayers} = useTournamentsAndQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
-  const unprocessedPlayers = players.filter((player: TPlayer) => {
+  const unprocessedPlayers = currentTournamentPlayers.filter((player: TPlayer) => {
     // new vars for logic to keep it cleaner
     const matchesSearch = player.name?.toLowerCase().includes(search.toLowerCase());
     const unassigned = !player.assignedToQueue && !player.processedThroughQueue;

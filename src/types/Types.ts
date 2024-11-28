@@ -47,7 +47,9 @@ export type TTournamentsAndQueuesContextProps = {
   setTournaments: React.Dispatch<React.SetStateAction<TTournament[]>>;
   filteredTournaments: TTournament[]; // Tournaments filtered by criteria
   fetchTournaments: () => Promise<void>; // Fetch tournaments from the server
-  fetchPlayers: () => Promise<void>; // Fetch players from the server
+  fetchPlayers: () => Promise<void>; // Fetch players from the server,
+  fetchPlayersByTournamentId: (id: string) => Promise<void>;
+  currentTournamentPlayers: TPlayer[];
 };
 
 // Route Context Props

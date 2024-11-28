@@ -34,8 +34,36 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const [currentTournament, setCurrentTournament] = useState<TTournament | null>(
     null
   );
+
+  const [currentTournamentPlayers, setCurrentTournamentPlayers] = useState<TPlayer[]>([]);
+
   const pathname = usePathname();
   const {user} = useUser();
+
+  // Sync Current Tournament with URL Pathname
+  useEffect(() => {
+    console.log("Current Pathname:", pathname);
+    console.log("Tournaments:", tournaments);
+    console.log("Current Tournament:", currentTournament);
+    const segments = pathname.split("/");
+    const id = segments.pop();
+
+    if (id && tournaments.length > 0) {
+      const foundTournament = tournaments.find(tournament => tournament._id === id);
+      console.log("Found TOURNAMENT");
+      console.log(foundTournament);
+      if (foundTournament) {
+        setCurrentTournament(foundTournament);
+      }
+    }
+  }, [pathname, tournaments]);
+
+  // Fetch Players and Tournaments on Mount
+  useEffect(() => {
+    console.log("RUNNING HERE IN USEEFFECT");
+    fetchPlayers();
+    fetchTournaments();
+  }, []);
 
   // Filtered Tournaments
   const filteredTournaments = tournaments.filter(
@@ -83,42 +111,41 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // Fetch Tournaments
   const fetchTournaments = async () => {
-    const response = await fetch("../api/tournaments/");
+    const response = await fetch("/api/tournaments/");
     const tournamentsData = await response.json();
     setTournaments(tournamentsData);
   };
+
+  const fetchPlayersByTournamentId = async (tournamentId: string) => {
+
+    console.log("TRYING TO FETCH PLAYERS")
+    console.log("TOURNAMENT ID")
+    console.log(tournamentId)
+
+    if (!tournamentId) {
+      console.error("Tournament ID is required to fetch data");
+      return;
+    }
+  
+    try {
+      const response = await fetch(`/api/players/${tournamentId}/`);
+      if (!response.ok) {
+        throw new Error(`Error fetching tournament: ${response.statusText}`);
+      }
+  
+      const tournamentPlayersData = await response.json();
+      setCurrentTournamentPlayers(tournamentPlayersData); // Assuming `setTournament` updates a single tournament in state
+    } catch (error) {
+      console.error("Error fetching tournament:", error);
+    }
+  };  
 
   // Update Players and Queues
   const updatePlayers = (updatedPlayers: TPlayer[]) => setPlayers(updatedPlayers);
   // const updateQueues = (updatedQueues: TQueue[]) => setQueues(updatedQueues);
 
-  // Sync Current Tournament with URL Pathname
-  useEffect(() => {
-    console.log("Current Pathname:", pathname);
-    console.log("Tournaments:", tournaments);
-    console.log("Current Tournament:", currentTournament);
-    const segments = pathname.split("/");
-    const id = segments.pop();
-
-    if (id && tournaments.length > 0) {
-      const foundTournament = tournaments.find(tournament => tournament._id === id);
-      console.log("Found TOURNAMENT");
-      console.log(foundTournament);
-      if (foundTournament) {
-        setCurrentTournament(foundTournament);
-      }
-    }
-  }, [pathname, tournaments]);
-
-  // Fetch Players and Tournaments on Mount
-  useEffect(() => {
-    console.log("RUNNING HERE IN USEEFFECT");
-    fetchPlayers();
-    fetchTournaments();
-  }, []);
-
-  const queues = currentTournament?.queues;
-  console.log(queues);
+  // const queues = currentTournament?.queues;
+  // console.log(queues);
 
   return (
     <TournamentsAndQueuesContext.Provider
@@ -126,7 +153,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         players,
         setPlayers,
         markPlayerAsProcessed,
-        queues,
+        // queues,
         // setQueues,
         // addMoreQueues,
         // removeQueues,
@@ -141,7 +168,9 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         setTournaments,
         filteredTournaments,
         fetchTournaments,
-        fetchPlayers
+        fetchPlayers,
+        fetchPlayersByTournamentId,
+        currentTournamentPlayers,
       }}>
       {children}
     </TournamentsAndQueuesContext.Provider>
