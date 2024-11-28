@@ -43,13 +43,13 @@ export default function PlayersList() {
   // console.log(unprocessedPlayers);
   return (
     // REVIEW: viewport height
-    <>
+    <div id="modal-root">
       <SectionHeader>Unprocessed Players</SectionHeader>
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
         {!tournamentOwner ? null : (
           <Button
             onClick={() => {
-              console.log("ONCLICK IS THIS TRIGGERING");
+              // console.log("ONCLICK IS THIS TRIGGERING");
               fetchPlayers(); // Call the function
             }}
             className={
@@ -97,6 +97,6 @@ export default function PlayersList() {
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 }

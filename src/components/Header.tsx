@@ -6,7 +6,6 @@ import {usePathname} from "next/navigation";
 
 export default function Header() {
   const path = usePathname();
-  console.log(path);
 
   const notHome = path !== "/all-tournaments";
 

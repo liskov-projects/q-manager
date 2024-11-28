@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const playerSchema = new mongoose.Schema(
+  //   FIXME: singular/plural
   {
     names: {type: String, required: true},
     categories: [{type: String, required: true}],

@@ -3,9 +3,9 @@
 // Player Type
 export type TPlayer = {
   _id?: string; // Optional ID from MongoDB
-  name?: string; // Changed `names` to `name` for clarity
+  names?: string; // Changed `names` to `name` for clarity
   categories?: string | string[]; // A single category or multiple
-  phoneNumber?: string; // Singular for consistency
+  phoneNumbers?: string; // Singular for consistency
   assignedToQueue?: boolean;
   processedThroughQueue?: boolean;
   tournamentId: string; // The ID of the associated tournament

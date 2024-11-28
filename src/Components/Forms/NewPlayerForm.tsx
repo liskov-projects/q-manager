@@ -16,9 +16,9 @@ export default function NewPlayerForm() {
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newPlayers, setNewPlayers] = useState<TPlayer>({
-    name: "",
+    names: "",
     categories: "",
-    phoneNumber: "",
+    phoneNumbers: "",
     tournamentId: ""
     //
   });
@@ -42,13 +42,13 @@ export default function NewPlayerForm() {
         : newPlayers.categories;
 
     const incomingPhoneNumbers =
-      typeof newPlayers.phoneNumber === "string"
-        ? newPlayers.phoneNumber.split(",").map(number => number.trim())
-        : newPlayers.phoneNumber;
+      typeof newPlayers.phoneNumbers === "string"
+        ? newPlayers.phoneNumbers.split(",").map(number => number.trim())
+        : newPlayers.phoneNumbers;
 
     // data to send to backend
     const newItem = {
-      names: newPlayers.name,
+      names: newPlayers.names,
       categories: incomingCategories,
       phoneNumbers: incomingPhoneNumbers,
       assignedToQueue: false,
