@@ -29,11 +29,6 @@ export async function PUT(request: NextRequest, {params}) {
       });
     }
 
-    // FIXME: how to instantly get the fresh data?
-    // const allPlayers = await PlayerModel.find();
-
-    // Return the full updated list of players
-    // return new Response(JSON.stringify(allPlayers), {
     return new Response(JSON.stringify(updatedPlayer), {
       status: 200,
       headers: {"Content-Type": "application/json"}
@@ -41,6 +36,38 @@ export async function PUT(request: NextRequest, {params}) {
   } catch (error) {
     console.error("Error updating player: ", error);
     return new Response(JSON.stringify({error: "Failed to update player"}), {
+      status: 500,
+      headers: {"Content-Type": "application/json"}
+    });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  console.log("ENTERS DELETE");
+  console.log("request: ", request);
+
+  const idToDelete = request.body._id;
+  try {
+    await dbConnect();
+
+    const deletedItem = await PlayerModel.findOneAndDelete({idToDelete});
+
+    if (!deletedItem) {
+      return new Response(JSON.stringify({error: "Player not found"}), {
+        status: 404,
+        headers: {"Content-Type": "application/json"}
+      });
+    }
+
+    return new Response(JSON.stringify({message: "Deleted successfully"}), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  } catch (error) {
+    console.error("Error deleting player:", error);
+    return new Response(JSON.stringify({error: "Failed to delete player"}), {
       status: 500,
       headers: {"Content-Type": "application/json"}
     });

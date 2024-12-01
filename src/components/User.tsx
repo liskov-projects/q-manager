@@ -7,8 +7,8 @@ import Image from "next/image";
 export default function User() {
   const {isSignedIn, user} = useUser();
   // const user = currentUser();
-  console.log("USER")
-  console.log(user);
+  // console.log("USER")
+  // console.log(user);
   return (
     <div className="flex items-center">
       {isSignedIn ? (

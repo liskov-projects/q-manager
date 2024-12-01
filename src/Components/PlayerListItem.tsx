@@ -17,10 +17,26 @@ export default function PlayerListItem({
   queueId?: string;
   onAddToQueue: () => void;
 }) {
-  const {tournamentOwner} = useTournamentsAndQueuesContext();
+  const {tournamentOwner, setCurrentTournamentPlayers} =
+    useTournamentsAndQueuesContext();
   const {handleDragStart, handleDragOver} = useDragNDrop();
-  // NEW:
   const [editMode, setEditMode] = useState(false);
+
+  // NEW:
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`/api/players/${item._id}`, {
+        method: "DELETE"
+      });
+      if (res.ok) {
+        setCurrentTournamentPlayers(current =>
+          current.filter(el => el._id !== item._id)
+        );
+      }
+    } catch (err) {
+      return new Error("Error deleting a player", err);
+    }
+  };
 
   return (
     <>
@@ -35,13 +51,19 @@ export default function PlayerListItem({
           {/* Player Name */}
           <div className="player-name font-semibold text-lg">
             {item.names}
-            {/* NEW: */}
             {!tournamentOwner ? null : (
-              <Button
-                className="px-5 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
-                onClick={() => setEditMode(true)}>
-                ✏️
-              </Button>
+              <div className="flex flex-row">
+                <Button
+                  className="mx-2 px-5 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
+                  onClick={() => setEditMode(true)}>
+                  ✏️
+                </Button>
+                <Button
+                  className="mx-2 px-5 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
+                  onClick={handleDelete}>
+                  🗑️
+                </Button>
+              </div>
             )}
           </div>
 

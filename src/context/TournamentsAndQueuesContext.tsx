@@ -139,9 +139,9 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
       // NEW: coming through OK
       const tournamentPlayersData = await response.json();
-      
+
       console.log("IN THE CONTEXT: ", tournamentPlayersData);
-      console.log(currentTournamentPlayers)
+      console.log(currentTournamentPlayers);
 
       setCurrentTournamentPlayers(tournamentPlayersData); // Assuming `setTournament` updates a single tournament in state
     } catch (error) {

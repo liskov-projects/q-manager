@@ -56,9 +56,8 @@ export default function EditListItem({
             player => (player._id === updatedPlayer._id ? updatedPlayer : player) // Update the player in the list
           );
         });
-        console.log(currentTournamentPlayers);
+        // console.log(currentTournamentPlayers);
 
-        // TODO: uncomment
         setEditMode(false);
       }
     } catch (error) {
