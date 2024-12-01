@@ -116,7 +116,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // Fetch Tournaments
   const fetchTournaments = async () => {
-    const response = await fetch("/api/tournaments/");
+    const response = await fetch(`/api/tournaments/`);
     const tournamentsData = await response.json();
     setTournaments(tournamentsData);
   };
@@ -132,7 +132,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     }
 
     try {
-      const response = await fetch(`/api/players/${tournamentId}/`);
+      const response = await fetch(`/api/tournaments/${tournamentId}/`);
       if (!response.ok) {
         throw new Error(`Error fetching tournament: ${response.statusText}`);
       }

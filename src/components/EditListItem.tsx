@@ -1,7 +1,7 @@
 import {TPlayer} from "@/types/Types";
 import Button from "./Buttons/Button";
 import {useState} from "react";
-
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 export default function EditListItem({
   item,
   setEditMode
@@ -11,7 +11,7 @@ export default function EditListItem({
   setEditMode: () => void;
 }) {
   console.log("inside the edit card ", item);
-
+  const {setPlayers, fetchPlayers} = useTournamentsAndQueuesContext();
   //   FIXME: singular/plural
   const [updatedData, setUpdatedData] = useState({
     names: item.names,
@@ -35,26 +35,26 @@ export default function EditListItem({
 
     // FIXME:
     try {
-      const res = await fetch(`api/players/${item.tournamentId}`, {
+      const res = await fetch(`/api/players/${item._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(updatedCard)
       });
-      //   comes through ok
-      console.log("response: ", res);
 
-      if (!res.ok) {
-        throw new Error("failed to update the card");
+      console.log("response :", res);
+
+      if (res.ok) {
+        const data = await res.json(); // Get raw response as text
+        console.log("Parsed data:", data);
+
+        setPlayers(data);
+        // TODO: uncomment
+        setEditMode(false);
       }
-
-      const data = await res.json();
-
-      console.log("new data: ", data);
-      setEditMode(false);
     } catch (error) {
-      console.log("error updating the card", error);
+      console.error("Error updating the card:", error);
     }
   };
 

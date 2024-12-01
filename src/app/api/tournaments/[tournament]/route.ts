@@ -41,34 +41,3 @@ export async function GET(req: NextRequest) {
   //   res.status(405).end(`Method ${req.method} Not Allowed`);
   // }
 }
-
-export async function PUT(req: NextRequest, res: NextRequest) {
-  await dbConnect();
-  console.log(req);
-
-  try {
-    // ! OLD WAY
-    // const { id, newData } = req.body; // ! OLD WAY
-    // const dataOldWay = JSON.parse(request.body); // ! OLD WAY
-    const {id, newData} = await req.json();
-    console.log("id & newData: ", id, newData);
-    const updatedPlayer = await PlayerModel.findByIdAndUpdate(id, newData, {
-      new: true
-    });
-
-    if (!updatedPlayer) {
-      console.log("error catch");
-
-      return NextResponse.json({error: "Internal Server Error"}, {status: 500});
-      // ! THE FOLLOWING DOES NOT WORK - will assume and return a status 200 response
-      // return NextResponse.json({ error: 'Internal Server Error', status: 500 });
-    }
-
-    return NextResponse.json({updatedPlayer});
-  } catch {
-    return NextResponse.json(
-      {error: "Catch Error - Internal Server Error"},
-      {status: 500}
-    );
-  }
-}
