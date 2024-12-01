@@ -108,13 +108,16 @@ const useAddToQueues = () => {
       assignedToQueue: false
     }));
 
-    const clearedQueues = queues.map(queue => ({
+    const clearedQueues = currentTournament.queues.map(queue => ({
       ...queue,
       queueItems: []
     }));
 
-    setPlayers(updatedPlayers);
-    setQueues(clearedQueues);
+    setCurrentTournament(prev => ({
+      ...prev,
+      queues: clearedQueues
+    }));
+    setCurrentTournamentPlayers(updatedPlayers);
   };
 
   /**
@@ -127,13 +130,16 @@ const useAddToQueues = () => {
       assignedToQueue: false
     }));
 
-    const clearedQueues = queues.map(queue => ({
+    const clearedQueues = currentTournament.queues.map(queue => ({
       ...queue,
       queueItems: []
     }));
 
-    setPlayers(updatedPlayers);
-    setQueues(clearedQueues);
+    setCurrentTournament(prev => ({
+      ...prev,
+      queues: clearedQueues
+    }));
+    setCurrentTournamentPlayers(updatedPlayers);
   };
 
   /**
