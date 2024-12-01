@@ -40,7 +40,7 @@ const useAddToQueues = () => {
       player => player._id == itemId
     );
 
-    console.log(itemToUpdate);
+    // console.log(itemToUpdate);
     if (!itemToUpdate) {
       throw new Error("Item not found");
     }
@@ -122,7 +122,7 @@ const useAddToQueues = () => {
    * Process the next item in a specific queue.
    */
   const handleProgressOneStep = (queueIndex: number) => {
-    const updatedQueues = [...queues];
+    const updatedQueues = [...currentTournament.queues];
     const processedPlayer = updatedQueues[queueIndex].queueItems.shift();
 
     if (!processedPlayer) return;
@@ -133,12 +133,15 @@ const useAddToQueues = () => {
       assignedToQueue: false
     };
 
-    const updatedPlayers = players.map(player =>
+    const updatedPlayers = currentTournamentPlayers.map(player =>
       player._id === updatedPlayer._id ? updatedPlayer : player
     );
 
-    setPlayers(updatedPlayers);
-    setQueues(updatedQueues);
+    setCurrentTournamentPlayers(updatedPlayers);
+    setCurrentTournament(prevTournament => ({
+      ...prevTournament,
+      queues: updatedQueues
+    }));
   };
 
   /**

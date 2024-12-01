@@ -23,7 +23,7 @@ export default function QueueListItem({
       draggable={`${!tournamentOwner ? false : true}`}
       onDragStart={() => handleDragStart(item)}
       onDragOver={e => handleDragOver(e)}>
-      <div className="player-name">{item.name}</div>
+      <div className="player-name">{item.names}</div>
 
       <TagsList item={item} />
     </div>

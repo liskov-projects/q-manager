@@ -11,11 +11,11 @@ import PlayerListItem from "./PlayerListItem";
 export default function ProcessedPlayers() {
   const [search, setSearch] = useState("");
 
-  const {players} = useTournamentsAndQueuesContext();
+  const {currentTournamentPlayers} = useTournamentsAndQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();
 
-  const processedPlayers = players
-    ?.filter((player: TPlayer) => {
+  const processedPlayers = currentTournamentPlayers
+    .filter((player: TPlayer) => {
       return player.processedThroughQueue;
     })
     .filter((player: TPlayer) =>
