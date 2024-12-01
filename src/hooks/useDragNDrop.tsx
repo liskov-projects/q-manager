@@ -15,8 +15,6 @@ const useDragNDrop = () => {
     setDraggedItem
   } = useTournamentsAndQueuesContext();
 
-  const queues = currentTournament.queues;
-
   // Handle drag start
   const handleDragStart = (draggedItem: TPlayer) => {
     setDraggedItem(draggedItem);
@@ -47,7 +45,7 @@ const useDragNDrop = () => {
       player._id === draggedItem._id ? updatedItem : player
     );
 
-    const updatedQueues = queues.map((queue: TQueue) => {
+    const updatedQueues = currentTournament.queues.map((queue: TQueue) => {
       if (queue.id === dropQueue.id) {
         // Add the updated item to the queue
         const newQueueItems = [...queue.queueItems, updatedItem];
@@ -126,7 +124,7 @@ const useDragNDrop = () => {
     }
 
     // Update queues if necessary
-    const updatedQueues = queues.map((queue: TQueue) => {
+    const updatedQueues = currentTournament.queues.map((queue: TQueue) => {
       const isTargetQueue =
         typeof dropTarget === "object" && queue.id === dropTarget.id;
 
