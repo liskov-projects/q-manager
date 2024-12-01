@@ -66,7 +66,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // Fetch Players and Tournaments on Mount
   useEffect(() => {
     // console.log("RUNNING HERE IN USEEFFECT");
-    fetchPlayers();
+    // fetchPlayers();
     fetchTournaments();
   }, []);
 
@@ -79,7 +79,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const uniqueCategories = useMemo(() => {
     const categories = players.flatMap(player => player.categories || []);
     return Array.from(new Set(categories));
-  }, [players]);
+  }, []);
 
   // FIXME: what if they want to add another queue on the go?
   // Add or Remove Queues
@@ -139,7 +139,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
       // NEW: coming through OK
       const tournamentPlayersData = await response.json();
-      // console.log("In the Context: ", tournamentPlayersData);
+      console.log("In the Context: ", tournamentPlayersData);
 
       setCurrentTournamentPlayers(tournamentPlayersData); // Assuming `setTournament` updates a single tournament in state
     } catch (error) {
@@ -178,7 +178,8 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         fetchPlayers,
         fetchPlayersByTournamentId,
         currentTournamentPlayers,
-        tournamentOwner
+        tournamentOwner,
+        setCurrentTournamentPlayers
       }}>
       {children}
     </TournamentsAndQueuesContext.Provider>

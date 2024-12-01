@@ -12,15 +12,13 @@ import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesCont
 export default function QueuesPage() {
   const [visibleSection, setVisibleSection] = useState("queues");
 
-  const {fetchPlayersByTournamentId, currentTournamentPlayers, currentTournament} =
+  const {fetchPlayersByTournamentId, currentTournament} =
     useTournamentsAndQueuesContext();
 
   // Fetch players on component mount
   useEffect(() => {
-    if (currentTournament?._id) {
-      fetchPlayersByTournamentId(currentTournament?._id);
-    }
-  }, [currentTournament?._id]);
+    fetchPlayersByTournamentId(currentTournament._id);
+  }, []);
 
   return (
     <>

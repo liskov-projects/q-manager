@@ -15,10 +15,12 @@ export default function ProcessedPlayers() {
   const {handleAddToShortestQueue} = useAddToQueues();
 
   const processedPlayers = players
-    .filter((player: TPlayer) => {
+    ?.filter((player: TPlayer) => {
       return player.processedThroughQueue;
     })
-    .filter((player: TPlayer) => player.name?.toLowerCase().includes(search.toLowerCase()));
+    .filter((player: TPlayer) =>
+      player.names?.toLowerCase().includes(search.toLowerCase())
+    );
 
   return (
     <ul className="flex flex-col h-[70vh] overflow-hidden hover:overflow-y-auto">
@@ -31,7 +33,7 @@ export default function ProcessedPlayers() {
         onChange={e => setSearch(e.target.value)}
       />
 
-      {processedPlayers.map((player: TPlayer) => (
+      {processedPlayers?.map((player: TPlayer) => (
         <PlayerListItem
           key={player._id}
           item={player}

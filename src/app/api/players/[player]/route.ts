@@ -1,16 +1,17 @@
 import dbConnect from "@/lib/db";
 import PlayerModel from "@/models/PlayerModel";
+import {NextRequest} from "next/server";
 
-export async function PUT(request, {params}) {
+export async function PUT(request: NextRequest, {params}) {
   console.log("PUT request hit");
-  console.log("params: ", params);
-  console.log("params content: ", params.player);
+  // console.log("params: ", params);
+  // console.log("params content: ", params.player);
 
   const id = params.player;
   const body = await request.json();
 
-  console.log("Player ID:", id);
-  console.log("Request body:", body);
+  // console.log("Player ID:", id);
+  // console.log("Request body:", body);
 
   try {
     await dbConnect();
@@ -29,10 +30,11 @@ export async function PUT(request, {params}) {
     }
 
     // FIXME: how to instantly get the fresh data?
-    const allPlayers = await PlayerModel.find(); // Retrieve all players (or adjust query if needed)
+    // const allPlayers = await PlayerModel.find();
 
     // Return the full updated list of players
-    return new Response(JSON.stringify(allPlayers), {
+    // return new Response(JSON.stringify(allPlayers), {
+    return new Response(JSON.stringify(updatedPlayer), {
       status: 200,
       headers: {"Content-Type": "application/json"}
     });

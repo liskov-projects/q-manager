@@ -11,7 +11,8 @@ export default function EditListItem({
   setEditMode: () => void;
 }) {
   console.log("inside the edit card ", item);
-  const {setPlayers, fetchPlayers} = useTournamentsAndQueuesContext();
+  const {setCurrentTournamentPlayers, currentTournamentPlayers} =
+    useTournamentsAndQueuesContext();
   //   FIXME: singular/plural
   const [updatedData, setUpdatedData] = useState({
     names: item.names,
@@ -26,6 +27,7 @@ export default function EditListItem({
 
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const updatedCard = {
       ...item,
       names: updatedData.names,
@@ -33,7 +35,8 @@ export default function EditListItem({
       phoneNumbers: updatedData.phoneNumbers.split(",").map(num => num.trim())
     };
 
-    // FIXME:
+    // FIXME: how to get the lates info reflected in the UI?
+
     try {
       const res = await fetch(`/api/players/${item._id}`, {
         method: "PUT",
@@ -43,24 +46,31 @@ export default function EditListItem({
         body: JSON.stringify(updatedCard)
       });
 
-      console.log("response :", res);
-
       if (res.ok) {
-        const data = await res.json(); // Get raw response as text
-        console.log("Parsed data:", data);
+        const updatedPlayer = await res.json();
+        console.log("getting the updatedPlayer correctly:", updatedPlayer);
 
-        setPlayers(data);
+        // setPlayers(prev => [...prev, data]);
+        setCurrentTournamentPlayers(prevPlayers => {
+          prevPlayers.map(
+            player => (player._id === updatedPlayer._id ? updatedPlayer : player) // Update the player in the list
+          );
+        });
+        console.log(currentTournamentPlayers);
+
         // TODO: uncomment
         setEditMode(false);
       }
     } catch (error) {
-      console.error("Error updating the card:", error);
+      console.error("Failed to update player:", error);
     }
   };
 
   return (
     <div className="flex flex-col ">
-      <form className="flex flex-col h-30 p-6 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2 bg-slate-200">
+      <form
+        onSubmit={handleSave}
+        className="flex flex-col h-30 p-6 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2 bg-slate-200">
         <Button
           className="flex ml-auto text-2xl font-bold hover:text-brick-200"
           onClick={() => setEditMode(false)}>
@@ -96,7 +106,7 @@ export default function EditListItem({
           onChange={handleChange}
         />
         <Button
-          onClick={handleSave}
+          type="submit"
           className="my-4 px-5 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center">
           Save
         </Button>

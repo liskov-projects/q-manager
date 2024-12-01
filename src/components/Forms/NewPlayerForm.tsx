@@ -86,9 +86,9 @@ export default function NewPlayerForm() {
     // FIXME:
     // ressetting the form
     setNewPlayers({
-      name: "",
+      names: "",
       categories: "",
-      phoneNumber: "",
+      phoneNumbers: "",
       tournamentId: ""
     });
     // console.log(newPlayers);

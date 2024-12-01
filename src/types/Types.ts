@@ -50,6 +50,8 @@ export type TTournamentsAndQueuesContextProps = {
   fetchPlayers: () => Promise<void>; // Fetch players from the server,
   fetchPlayersByTournamentId: (id: string) => Promise<void>;
   currentTournamentPlayers: TPlayer[];
+  setCurrentTournamentPlayers: React.Dispatch<React.SetStateAction<TPlayer[]>>;
+
   tournamentOwner: boolean;
 };
 
