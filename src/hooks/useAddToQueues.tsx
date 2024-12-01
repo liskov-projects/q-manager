@@ -1,19 +1,26 @@
 "use client";
 
 // Types
-import { TPlayer } from "@/types/Types";
-import { TQueue } from "@/types/Types";
+import {TPlayer} from "@/types/Types";
+import {TQueue} from "@/types/Types";
 // Context
-import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 const useAddToQueues = () => {
-  const { players, queues, setPlayers, setQueues } = useTournamentsAndQueuesContext();
+  const {
+    currentTournamentPlayers,
+    setCurrentTournamentPlayers,
+    currentTournament,
+    setCurrentTournament,
+    setPlayers,
+    setQueues
+  } = useTournamentsAndQueuesContext();
 
   /**
    * Find the shortest queue based on the number of items.
    */
   const findShortestQueue = (queues: TQueue[]): TQueue => {
-    return queues.reduce((shortest, queue) =>
+    return currentTournament.queues.reduce((shortest, queue) =>
       queue.queueItems.length < shortest.queueItems.length ? queue : shortest
     );
   };
@@ -29,30 +36,37 @@ const useAddToQueues = () => {
    * Add a specific item to the shortest queue.
    */
   const handleAddToShortestQueue = (itemId: string | undefined) => {
-    const itemToUpdate = players.find(player => player._id === itemId);
+    const itemToUpdate = currentTournamentPlayers.find(
+      player => player._id == itemId
+    );
 
+    console.log(itemToUpdate);
     if (!itemToUpdate) {
       throw new Error("Item not found");
     }
 
-    const shortestQueue = findShortestQueue(queues);
-
+    const shortestQueue = findShortestQueue(currentTournament.queues);
+    console.log(shortestQueue);
     const updatedItem = {
       ...itemToUpdate,
       assignedToQueue: true,
-      processedThroughQueue: false,
+      processedThroughQueue: false
     };
 
-    const updatedQueues = queues.map(queue =>
+    const updatedQueues = currentTournament.queues.map(queue =>
       queue.id === shortestQueue.id
-        ? { ...queue, queueItems: [...queue.queueItems, updatedItem] }
+        ? {...queue, queueItems: [...queue.queueItems, updatedItem]}
         : queue
     );
 
-    setPlayers(prevPlayers =>
+    setCurrentTournamentPlayers(prevPlayers =>
       prevPlayers.map(player => (player._id === itemId ? updatedItem : player))
     );
-    setQueues(updatedQueues);
+
+    setCurrentTournament(prevTournament => ({
+      ...prevTournament,
+      queues: updatedQueues
+    }));
   };
 
   /**
@@ -73,12 +87,12 @@ const useAddToQueues = () => {
     const updatedPlayers = items.map(item => ({
       ...item,
       processedThroughQueue: true,
-      assignedToQueue: false,
+      assignedToQueue: false
     }));
 
     const clearedQueues = queues.map(queue => ({
       ...queue,
-      queueItems: [],
+      queueItems: []
     }));
 
     setPlayers(updatedPlayers);
@@ -92,12 +106,12 @@ const useAddToQueues = () => {
     const updatedPlayers = items.map(item => ({
       ...item,
       processedThroughQueue: false,
-      assignedToQueue: false,
+      assignedToQueue: false
     }));
 
     const clearedQueues = queues.map(queue => ({
       ...queue,
-      queueItems: [],
+      queueItems: []
     }));
 
     setPlayers(updatedPlayers);
@@ -116,7 +130,7 @@ const useAddToQueues = () => {
     const updatedPlayer = {
       ...processedPlayer,
       processedThroughQueue: true,
-      assignedToQueue: false,
+      assignedToQueue: false
     };
 
     const updatedPlayers = players.map(player =>
@@ -139,7 +153,7 @@ const useAddToQueues = () => {
       itemsToRedistribute.push(...excessItems);
       return {
         ...queue,
-        queueItems: queue.queueItems.slice(0, shortestQueueLength),
+        queueItems: queue.queueItems.slice(0, shortestQueueLength)
       };
     });
 
@@ -158,7 +172,7 @@ const useAddToQueues = () => {
     handleUnprocessAll,
     handleProgressOneStep,
     handleRedistributeQueues,
-    findAssignedToQueue,
+    findAssignedToQueue
   };
 };
 

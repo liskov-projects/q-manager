@@ -8,13 +8,11 @@ import DropZone from "./DropZone";
 import SectionHeader from "./SectionHeader";
 // context
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import {useUser} from "@clerk/nextjs";
 
 import PlayerListItem from "./PlayerListItem";
 import {TPlayer} from "@/types/Types";
 // import DropDownFilter from "./DropDownFilter";
 
-// FIXME: {/* Grid of Player Cards potentially the same comp as Processed Pl*/}
 export default function PlayersList() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
@@ -39,7 +37,6 @@ export default function PlayersList() {
     }
   });
 
-  // NEW:
   // console.log(unprocessedPlayers);
   return (
     // REVIEW: viewport height
