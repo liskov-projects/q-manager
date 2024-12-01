@@ -1,6 +1,6 @@
 import {useState} from "react";
 // components
-import TTournament from "@/types/Tournament";
+import {TTournament} from "@/types/Types";
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
 import {useUser} from "@clerk/nextjs";
@@ -11,7 +11,7 @@ export default function NewTournamentForm() {
     name: "",
     categories: [],
     adminUser: "",
-    image: "",
+    image: null,
     description: "",
     queues: 0
     // players: []
@@ -21,11 +21,15 @@ export default function NewTournamentForm() {
   const {isSignedIn, user} = useUser();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    //allows the function to differetiate between types
-    const {name, value, type} = e.target;
+    const { name, value, type, files } = e.target;
+  
     setNewTournament({
       ...newTournament,
-      [name]: type === "number" ? Number(value) : value
+      [name]: type === "file" && files
+        ? files[0]
+        : type === "number"
+        ? Number(value)
+        : value,
     });
   }
 
@@ -36,6 +40,7 @@ export default function NewTournamentForm() {
       typeof newTournament.categories === "string"
         ? newTournament.categories.split(",").map(category => category.trim())
         : newTournament.categories;
+
     const queuesNumber = Number(newTournament.queues);
 
     // data to send to backend
@@ -135,10 +140,10 @@ export default function NewTournamentForm() {
             /> */}
 
             <label htmlFor="image">Image</label>
+            <label htmlFor="image">Image</label>
             <input
-              type="text"
+              type="file"
               name="image"
-              value={newTournament.image}
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
