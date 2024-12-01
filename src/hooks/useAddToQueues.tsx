@@ -73,13 +73,29 @@ const useAddToQueues = () => {
    * Add all unassigned items to queues, starting with the shortest queue.
    */
   const handleAddAllToQueues = (items: TPlayer[]) => {
-    console.log("add all");
-    console.log(items);
-    items
-      .filter(item => !item.assignedToQueue)
-      .forEach(item => {
-        handleAddToShortestQueue(item._id);
+    const unassignedPlayers = findAssignedToQueue(items);
+    const updatedQueues = [...currentTournament?.queues];
+    unassignedPlayers.forEach((player, index) => {
+      const targetQeueue = findShortestQueue(updatedQueues);
+      targetQeueue.queueItems.push({
+        ...player,
+        assignedToQueue: true,
+        processedThroughQueue: false
       });
+    });
+
+    const updatedPlayers = currentTournamentPlayers.map(player =>
+      unassignedPlayers.some(el => el._id === player._id)
+        ? {...player, assignedToQueue: true}
+        : player
+    );
+
+    setCurrentTournament(prev => ({
+      ...prev,
+      queues: updatedQueues
+    }));
+
+    setCurrentTournamentPlayers(updatedPlayers);
   };
 
   /**

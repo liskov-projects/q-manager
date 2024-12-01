@@ -108,10 +108,15 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     // console.log("THIS (FETCH PLAYERS?!!");
     const response = await fetch("../api/players/");
     const playersData = await response.json();
-    const playersForTournament = playersData.filter(
+    const playersRaw = playersData.filter(
       (player: TPlayer) => player.tournamentId === currentTournament?._id
     );
-    setPlayers(playersForTournament);
+    const playersForTournament = playersRaw.map(player => ({
+      ...player,
+      assignedToQueue: false,
+      processedThroughQueue: false
+    }));
+    setCurrentTournamentPlayers(playersForTournament);
   };
 
   // Fetch Tournaments
