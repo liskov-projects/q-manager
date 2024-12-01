@@ -10,19 +10,21 @@ export default function Tournament({tournament}: {tournament: TTournament}) {
 
   return (
     <div className="flex flex-col items-center">
-      <SectionHeader>
-        <Link href={`/all-tournaments/${_id}`}>{name}</Link>
-      </SectionHeader>
+      <Link  href={`/all-tournaments/${_id}`}>
+        <SectionHeader>
+          {name}
+        </SectionHeader>
 
-      <Image
-        //   FIXME:
-        src="/tennis.jpg"
-        alt={`Tournament ${name} Image`}
-        width={350}
-        height={250}
-      />
-      <p>{_id}</p>
-      {/* <p>{formattedCategories}</p> */}
+        <Image
+          //   FIXME:
+          src="/tennis.jpg"
+          alt={`Tournament ${name} Image`}
+          width={350}
+          height={250}
+        />
+        <p>{_id}</p>
+        {/* <p>{formattedCategories}</p> */}
+      </Link>
     </div>
   );
 }

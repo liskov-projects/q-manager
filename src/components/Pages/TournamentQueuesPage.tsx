@@ -8,17 +8,36 @@ import QueuesContainer from "@/components/Queue/QueuesContainer";
 import ProcessedPlayers from "@/components/ProcessedPlayers";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import {usePathname} from "next/navigation";
+import Tournament from "../Tournaments/TournamentCard";
 
-export default function QueuesPage() {
+export default function TournamentQueuesPage() {
   const [visibleSection, setVisibleSection] = useState("queues");
+  const [thisTournamentId, setThisTournamentId] = useState(null);
 
-  const {fetchPlayersByTournamentId, currentTournament} =
+  const pathname = usePathname();
+
+  const {fetchPlayersByTournamentId, setCurrentTournament, tournaments} =
     useTournamentsAndQueuesContext();
 
   // Fetch players on component mount
   useEffect(() => {
-    fetchPlayersByTournamentId(currentTournament._id);
-  }, []);
+
+    console.log("IN THE USEEFECT FOR TOURNAMENTQUEUESPAGE")
+    console.log(thisTournamentId)
+
+    const segments = pathname.split("/");
+    const id = segments.pop();
+    setThisTournamentId(id);
+
+    if(thisTournamentId) {
+      const thisTournament = tournaments.find(tournament => tournament._id === thisTournamentId)
+      console.log("THIS TOURNAMENT IS SET")
+      console.log(thisTournament)
+      setCurrentTournament(thisTournament)
+      fetchPlayersByTournamentId(thisTournamentId);
+    }
+  }, [thisTournamentId]);
 
   return (
     <>

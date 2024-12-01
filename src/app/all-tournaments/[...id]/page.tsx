@@ -1,6 +1,6 @@
 // enables the tournamentOwner check
 "use client";
-import QueuesPage from "@/components/Pages/QueuesPage";
+import QueuesPage from "@/components/Pages/TournamentQueuesPage";
 import NewQueueForm from "@/components/Forms/NewQueueForm";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 

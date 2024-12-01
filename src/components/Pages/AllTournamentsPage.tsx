@@ -2,7 +2,7 @@
 
 import SectionHeader from "@/components/SectionHeader";
 import Button from "@/components/Buttons/Button";
-import Tournament from "@/components/Tournaments/Tournament";
+import Tournament from "@/components/Tournaments/TournamentCard";
 import NewTournamentForm from "@/components/Forms/NewTournamentForm";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 

@@ -52,7 +52,7 @@ export default function EditListItem({
 
         // setPlayers(prev => [...prev, data]);
         setCurrentTournamentPlayers(prevPlayers => {
-          prevPlayers.map(
+          return prevPlayers.map(
             player => (player._id === updatedPlayer._id ? updatedPlayer : player) // Update the player in the list
           );
         });

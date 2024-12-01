@@ -53,7 +53,7 @@ export default function NewPlayerForm() {
       phoneNumbers: incomingPhoneNumbers,
       assignedToQueue: false,
       processThroughQueue: false,
-      tournamentId: currentTournament?._id
+      tournamentId: currentTournament._id
     };
 
     // console.log("Data sent to backend: ", newItem);
