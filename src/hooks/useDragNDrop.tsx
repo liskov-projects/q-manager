@@ -6,8 +6,16 @@ import {TQueue} from "@/types/Types"; // Import TQueue
 import React from "react";
 
 const useDragNDrop = () => {
-  const {players, queues, updatePlayers, updateQueues, draggedItem, setDraggedItem} =
-    useTournamentsAndQueuesContext();
+  const {
+    currentTournamentPlayers,
+    setCurrentTournamentPlayers,
+    currentTournament,
+    setCurrentTournament,
+    draggedItem,
+    setDraggedItem
+  } = useTournamentsAndQueuesContext();
+
+  const queues = currentTournament.queues;
 
   // Handle drag start
   const handleDragStart = (draggedItem: TPlayer) => {
@@ -35,7 +43,7 @@ const useDragNDrop = () => {
       processedThroughQueue: false
     };
 
-    const updatedPlayers = players.map((player: TPlayer) =>
+    const updatedPlayers = currentTournamentPlayers.map((player: TPlayer) =>
       player._id === draggedItem._id ? updatedItem : player
     );
 
@@ -51,8 +59,11 @@ const useDragNDrop = () => {
       return queue;
     });
 
-    updatePlayers(updatedPlayers);
-    updateQueues(updatedQueues);
+    setCurrentTournamentPlayers(updatedPlayers);
+    setCurrentTournament(prev => ({
+      ...prev,
+      queues: updatedQueues
+    }));
     setDraggedItem(null);
   };
 
@@ -102,12 +113,14 @@ const useDragNDrop = () => {
     let updatedPlayers;
     if (dropTarget === "processed" || dropTarget === "unprocessed") {
       // Remove the item from its current location and add to the specified list
-      updatedPlayers = players.filter((player: TPlayer) => player._id !== draggedItem._id);
+      updatedPlayers = currentTournamentPlayers.filter(
+        (player: TPlayer) => player._id !== draggedItem._id
+      );
       const insertIndex = index !== undefined ? index : updatedPlayers.length;
       updatedPlayers.splice(insertIndex, 0, updatedItem);
     } else {
       // If drop target is a queue, simply update the players list to reflect status
-      updatedPlayers = players.map((player: TPlayer) =>
+      updatedPlayers = currentTournamentPlayers.map((player: TPlayer) =>
         player._id === draggedItem._id ? updatedItem : player
       );
     }
@@ -118,7 +131,10 @@ const useDragNDrop = () => {
         typeof dropTarget === "object" && queue.id === dropTarget.id;
 
       // Remove the item from its current queue if necessary
-      if (isInQueue && queue.queueItems.some((item: TPlayer) => item._id === draggedItem._id)) {
+      if (
+        isInQueue &&
+        queue.queueItems.some((item: TPlayer) => item._id === draggedItem._id)
+      ) {
         const filteredQueueItems = queue.queueItems.filter(
           item => item._id !== draggedItem._id
         );
@@ -136,8 +152,11 @@ const useDragNDrop = () => {
     });
 
     // Update state
-    updatePlayers(updatedPlayers);
-    updateQueues(updatedQueues);
+    setCurrentTournamentPlayers(updatedPlayers);
+    setCurrentTournament(prev => ({
+      ...prev,
+      queues: updatedQueues
+    }));
     setDraggedItem(null);
   };
 
