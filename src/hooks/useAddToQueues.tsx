@@ -11,9 +11,7 @@ const useAddToQueues = () => {
     currentTournamentPlayers,
     setCurrentTournamentPlayers,
     currentTournament,
-    setCurrentTournament,
-    setPlayers,
-    setQueues
+    setCurrentTournament
   } = useTournamentsAndQueuesContext();
 
   /**
@@ -172,10 +170,11 @@ const useAddToQueues = () => {
    * Redistribute all items evenly across all queues.
    */
   const handleRedistributeQueues = () => {
-    const shortestQueueLength = findShortestQueue(queues).queueItems.length;
+    const shortestQueueLength = findShortestQueue(currentTournament.queues).queueItems
+      .length;
 
     const itemsToRedistribute: TPlayer[] = [];
-    const balancedQueues = queues.map(queue => {
+    const balancedQueues = currentTournament.queues.map(queue => {
       const excessItems = queue.queueItems.slice(shortestQueueLength);
       itemsToRedistribute.push(...excessItems);
       return {
@@ -189,7 +188,10 @@ const useAddToQueues = () => {
       balancedQueues[targetQueueIndex].queueItems.push(item);
     });
 
-    setQueues(balancedQueues);
+    setCurrentTournament(prev => ({
+      ...prev,
+      queues: balancedQueues
+    }));
   };
 
   return {
