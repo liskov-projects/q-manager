@@ -46,7 +46,7 @@ const useAddToQueues = () => {
     }
 
     const shortestQueue = findShortestQueue(currentTournament.queues);
-    console.log(shortestQueue);
+    // console.log(shortestQueue);
     const updatedItem = {
       ...itemToUpdate,
       assignedToQueue: true,
@@ -73,6 +73,8 @@ const useAddToQueues = () => {
    * Add all unassigned items to queues, starting with the shortest queue.
    */
   const handleAddAllToQueues = (items: TPlayer[]) => {
+    console.log("add all");
+    console.log(items);
     items
       .filter(item => !item.assignedToQueue)
       .forEach(item => {

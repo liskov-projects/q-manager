@@ -1,36 +1,149 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### Overview
 
-## Getting Started
+The Queue Management App is a React-based application designed to facilitate the efficient management of players across multiple queues. Players can be distributed, processed, and reassigned between queues dynamically, making it an excellent tool for managing tournaments or similar events. The app also integrates with MongoDB for persistent storage, enabling easy updates and retrieval of player and queue data.
 
-First, run the development server:
+### Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Player Management
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+        Add players with details like names, categories, and phone numbers.
+        Assign players to queues or mark them as unprocessed.
+        Update player statuses dynamically (e.g., assignedToQueue, processedThroughQueue).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Queue Management
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+        Create, update, and delete queues.
+        Dynamically find and add players to the shortest queue.
+        Redistribute items between queues while ensuring no duplicates.
 
-## Learn More
+## Drag and Drop
 
-To learn more about Next.js, take a look at the following resources:
+        Drag items from the unprocessed list to a queue.
+        Rearrange items within queues.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Persistent Storage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+        Store players and queue data in MongoDB using Mongoose schemas.
+        Handle CRUD operations for both players and queues.
 
-## Deploy on Vercel
+## State Management
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+        Use React's useState and useReducer hooks to manage complex interactions.
+        Context API for sharing state across components.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Dynamic Updates
+
+        Ensure queues are updated in real-time when players are added or reassigned.
+        Prevent duplicates across queues and unprocessed lists.
+
+### Core Data Structures
+
+## Player Object
+
+{
+"\_id": "6747f3044eafd5b409c0ac96",
+"id": 1,
+"names": "Player 29 vs Player 117",
+"categories": ["teens"],
+"phoneNumbers": ["04840 329 948"],
+"tournamentId": "674535149d28197b79a96bd1",
+"assignedToQueue": false,
+"processedThroughQueue": false
+}
+
+## Queue Object
+
+{
+"\_id": "674c31ae6481d1026a4f69b9",
+"id": "q11",
+"queueName": "Field 1",
+"queueItems": []
+}
+
+### Key Components
+
+## Player List
+
+    Displays all players in the tournament.
+    Differentiates between processed and unprocessed players.
+
+## Queue
+
+    Represents a single queue.
+    Shows the items assigned to the queue.
+
+## Drag-and-Drop Zone
+
+    Provides an interactive UI for reordering and assigning players.
+
+## Buttons
+
+    Add All to Queues: Distributes players across queues.
+    Remove All: Clears a queue or unprocessed list.
+
+### Functions
+
+## handleAddToShortestQueue
+
+Assigns a player to the shortest queue by comparing the length of queueItems.
+Parameters
+
+    itemId (string | undefined): ID of the player to be added.
+
+Process
+
+    Finds the player by itemId.
+    Identifies the shortest queue.
+    Updates the queue's queueItems and marks the player as assigned.
+
+Usage
+
+Called when a player is manually added to a queue or distributed using a button.
+
+## onDelete
+
+Removes a player from the database and updates the state.
+Parameters
+
+    id (string): The MongoDB _id of the player to delete.
+
+Usage
+
+Used for clearing players no longer needed in the tournament.
+
+## queueSlicer
+
+Slices a collection of items from queues and redistributes them.
+Returns
+
+    stumps: Items to be redistributed.
+    slicedCollection: Remaining items after extraction.
+
+Usage
+
+Called during batch redistribution or when queues need rebalancing.
+
+### MongoDB Integration
+
+## Database
+
+Player Collection
+Tournament Collection
+
+### API Endpoints
+
+## GET /api/players
+
+    Retrieves all players.
+
+## POST /api/players
+
+    Adds a new player.
+
+## DELETE /api/players/:id
+
+    Deletes a player by ID.
+
+## GET /api/queues
+
+    Retrieves all queues.
