@@ -11,8 +11,7 @@ export default function EditListItem({
   setEditMode: () => void;
 }) {
   console.log("inside the edit card ", item);
-  const {setCurrentTournamentPlayers, currentTournamentPlayers} =
-    useTournamentsAndQueuesContext();
+  const {setCurrentTournamentPlayers} = useTournamentsAndQueuesContext();
   //   FIXME: singular/plural
   const [updatedData, setUpdatedData] = useState({
     names: item.names,
@@ -34,8 +33,6 @@ export default function EditListItem({
       categories: updatedData.categories,
       phoneNumbers: updatedData.phoneNumbers.split(",").map(num => num.trim())
     };
-
-    // FIXME: how to get the lates info reflected in the UI?
 
     try {
       const res = await fetch(`/api/players/${item._id}`, {

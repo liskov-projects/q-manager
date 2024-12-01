@@ -71,12 +71,10 @@ export default function TournamentQueuesPage() {
           <PlayersList />
         </div>
 
-        {/* Queues section is the main focus */}
         <div
           className={`p-2 w-full lg:w-2/4 ${
             visibleSection === "queues" ? "block" : "hidden lg:block"
           }`}>
-          {/* <SectionHeader>Queues</SectionHeader> */}
           <QueuesContainer />
         </div>
 

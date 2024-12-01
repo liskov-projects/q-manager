@@ -42,7 +42,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const pathname = usePathname();
   const {isSignedIn, user} = useUser();
   // console.log(user, "user");
-  // NEW:
+
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
   // Sync Current Tournament with URL Pathname

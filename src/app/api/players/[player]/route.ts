@@ -3,15 +3,8 @@ import PlayerModel from "@/models/PlayerModel";
 import {NextRequest} from "next/server";
 
 export async function PUT(request: NextRequest, {params}) {
-  console.log("PUT request hit");
-  // console.log("params: ", params);
-  // console.log("params content: ", params.player);
-
   const id = params.player;
   const body = await request.json();
-
-  // console.log("Player ID:", id);
-  // console.log("Request body:", body);
 
   try {
     await dbConnect();
@@ -43,10 +36,8 @@ export async function PUT(request: NextRequest, {params}) {
 }
 
 export async function DELETE(request: NextRequest) {
-  console.log("ENTERS DELETE");
-  console.log("request: ", request);
-
   const idToDelete = request.body._id;
+
   try {
     await dbConnect();
 
