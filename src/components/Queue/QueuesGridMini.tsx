@@ -5,7 +5,7 @@ import React from "react";
 import {TQueue} from "@/types/Types";
 
 export default function QueuesGridAlternate() {
-  const {queues} = useTournamentsAndQueuesContext();
+  const {currentTournament} = useTournamentsAndQueuesContext();
 
   // Function to get background color based on queue length
   const getBackgroundColor = (queueLength: number) => {
@@ -24,7 +24,7 @@ export default function QueuesGridAlternate() {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {queues.map((queue: TQueue) => (
+      {currentTournament.queues.map((queue: TQueue) => (
         <div
           key={queue.id}
           className={`flex flex-col items-center justify-center h-24 w-24 border-8 border-black ${getBackgroundColor(
