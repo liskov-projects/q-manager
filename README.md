@@ -1,8 +1,8 @@
-### Overview
+# Overview
 
 The Queue Management App is a React-based application designed to facilitate the efficient management of players across multiple queues. Players can be distributed, processed, and reassigned between queues dynamically, making it an excellent tool for managing tournaments or similar events. The app also integrates with MongoDB for persistent storage, enabling easy updates and retrieval of player and queue data.
 
-### Features
+# Features
 
 ## Player Management
 
@@ -36,7 +36,7 @@ The Queue Management App is a React-based application designed to facilitate the
         Ensure queues are updated in real-time when players are added or reassigned.
         Prevent duplicates across queues and unprocessed lists.
 
-### Core Data Structures
+# Core Data Structures
 
 ## Player Object
 
@@ -60,7 +60,7 @@ The Queue Management App is a React-based application designed to facilitate the
 "queueItems": []
 }
 
-### Key Components
+# Key Components
 
 ## Player List
 
@@ -81,7 +81,7 @@ The Queue Management App is a React-based application designed to facilitate the
     Add All to Queues: Distributes players across queues.
     Remove All: Clears a queue or unprocessed list.
 
-### Functions
+# Functions
 
 ## handleAddToShortestQueue
 
@@ -123,14 +123,14 @@ Usage
 
 Called during batch redistribution or when queues need rebalancing.
 
-### MongoDB Integration
+# MongoDB Integration
 
 ## Database
 
 Player Collection
 Tournament Collection
 
-### API Endpoints
+# API Endpoints
 
 ## GET /api/players
 
