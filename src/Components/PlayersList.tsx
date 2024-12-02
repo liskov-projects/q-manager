@@ -23,17 +23,17 @@ export default function PlayersList() {
   const {handleDrop} = useDragNDrop();
 
   //coming throught
-  console.log("In the PlayerList: ", currentTournamentPlayers);
-  // console.log("unique cats: ", uniqueCategories);
+  // console.log("In the PlayerList: ", currentTournamentPlayers);
+
   const unprocessedPlayers = currentTournamentPlayers.filter((player: TPlayer) => {
     // new vars for logic to keep it cleaner
-    // const matchesSearch = player.name?.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = player.names?.toLowerCase().includes(search.toLowerCase());
     const unassigned = !player.assignedToQueue && !player.processedThroughQueue;
 
     if (filter === "show all" || filter === "") {
-      return unassigned; //&& matchesSearch;
+      return unassigned && matchesSearch;
     } else {
-      return unassigned; //&& matchesSearch && player.categories?.includes(filter);
+      return unassigned && matchesSearch && player.categories?.includes(filter);
     }
   });
 

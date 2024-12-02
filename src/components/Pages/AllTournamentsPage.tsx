@@ -1,5 +1,5 @@
 "use client";
-
+import {useState} from "react";
 import SectionHeader from "@/components/SectionHeader";
 import Button from "@/components/Buttons/Button";
 import Tournament from "@/components/Tournaments/TournamentCard";
@@ -11,6 +11,16 @@ import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesCont
 
 export default function AllTournamentsPage() {
   const {tournaments, fetchTournaments} = useTournamentsAndQueuesContext();
+  const [search, setSearch] = useState("");
+
+  const tournamentsToShow = tournaments.filter(tournament => {
+    return (
+      search.length === 0 ||
+      tournament.name.toLowerCase().includes(search) ||
+      tournament.categories.toLoweCase().includes(search) ||
+      tournament.description.toLowerCase().includes(search)
+    );
+  });
 
   return (
     // FIXME: the grid for both sections
@@ -25,7 +35,7 @@ export default function AllTournamentsPage() {
           </Button>
         </div>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {tournaments.map((tournament, index) => (
+          {tournamentsToShow.map((tournament, index) => (
             <Tournament key={index} tournament={tournament} />
           ))}
         </ul>
@@ -33,7 +43,13 @@ export default function AllTournamentsPage() {
       <div className="flex flex-col items-start justify-start my-4 p-8 flex-shrink-0">
         <SectionHeader>I&apos;m looking for...</SectionHeader>
         {/* this should be a search field */}
-        <input type="text" placeholder="player, tournament..." />
+        <input
+          className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-4"
+          type="text"
+          placeholder="player, tournament..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
         <NewTournamentForm />
       </div>
     </div>
