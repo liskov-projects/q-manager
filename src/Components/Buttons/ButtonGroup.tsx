@@ -5,14 +5,13 @@ import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesCont
 import useAddToQueues from "@/hooks/useAddToQueues";
 import SectionHeader from "../SectionHeader";
 
-export default function ButtonGroup() {
-  const {currentTournamentPlayers, tournamentOwner} =
+export default function ButtonGroup({tournamentId}) {
+  const {currentTournamentPlayers, tournamentOwner, saveTournament} =
     useTournamentsAndQueuesContext();
 
   const {
     handleAddAllToQueues,
     handleRedistributeQueues,
-    findAssignedToQueue,
     handleProcessAll,
     handleUnprocessAll
   } = useAddToQueues();
@@ -57,6 +56,11 @@ export default function ButtonGroup() {
             Process all
           </Button>
         </div>
+        <Button
+          onClick={() => saveTournament(tournamentId)}
+          className="flex-grow bg-tennis-200 hover:bg-tennis-100 text-shell-300 hover:text-shell-200 py-2 h-[45px] px-4 rounded my-2 mx-2">
+          SAVE tournament
+        </Button>
       </div>
     </div>
   );

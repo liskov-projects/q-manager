@@ -142,11 +142,10 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         throw new Error(`Error fetching tournament: ${response.statusText}`);
       }
 
-      // NEW: coming through OK
       const tournamentPlayersData = await response.json();
 
-      console.log("IN THE CONTEXT: ", tournamentPlayersData);
-      console.log(currentTournamentPlayers);
+      // console.log("IN THE CONTEXT: ", tournamentPlayersData);
+      // console.log(currentTournamentPlayers);
 
       setCurrentTournamentPlayers(tournamentPlayersData); // Assuming `setTournament` updates a single tournament in state
     } catch (error) {
@@ -154,6 +153,32 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     }
   };
 
+  const saveTournament = async tournamentId => {
+    // comes through OK
+    // console.log(tournamentId);
+    // console.log(currentTournament);
+
+    try {
+      const res = await fetch(`/api/tournaments/${tournamentId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(currentTournament)
+      });
+
+      if (!res.ok) {
+        throw new Error(`Error saving tournaments: ${res.statusText}`);
+      }
+
+      const dataToPost = await res.json();
+      // console.log("Tournament saved!", dataToPost);
+    } catch (err) {
+      console.error("Failed to save tournament: ", err);
+    }
+  };
+
+  // REVIEW: are these used anywhere???
   // Update Players and Queues
   const updatePlayers = (updatedPlayers: TPlayer[]) => setPlayers(updatedPlayers);
   // const updateQueues = (updatedQueues: TQueue[]) => setQueues(updatedQueues);
@@ -186,7 +211,8 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         fetchPlayersByTournamentId,
         currentTournamentPlayers,
         tournamentOwner,
-        setCurrentTournamentPlayers
+        setCurrentTournamentPlayers,
+        saveTournament
       }}>
       {children}
     </TournamentsAndQueuesContext.Provider>

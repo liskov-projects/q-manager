@@ -1,4 +1,5 @@
 import PlayerModel from "@/models/PlayerModel";
+import TournamentModel from "@/models/TournamentModel";
 import dbConnect from "@/lib/db";
 // for older version
 // import type {NextApiRequest, NextApiResponse} from "next";
@@ -40,4 +41,32 @@ export async function GET(req: NextRequest) {
   //   res.setHeader("Allow", ["GET"]);
   //   res.status(405).end(`Method ${req.method} Not Allowed`);
   // }
+}
+
+export async function PUT(req: NextRequest, {params}) {
+  const tournamentId = params.tournament;
+  // console.log(params);
+  // console.log("hitting the endpoint");
+  await dbConnect();
+
+  try {
+    const body = await req.json();
+    // coming through ok
+    // console.log(body);
+    const savedTournament = await TournamentModel.findByIdAndUpdate(
+      tournamentId,
+      body,
+      {
+        new: true
+      }
+    );
+
+    if (!savedTournament) {
+      return NextResponse.json({error: "Tournament not found"}, {status: 404});
+    }
+    return NextResponse.json(savedTournament, {status: 200});
+  } catch (err) {
+    console.error("Error saving the tournament: ", err);
+    return NextResponse.json({error: "Failed to save the tournament"}, {status: 500});
+  }
 }

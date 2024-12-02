@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, useMemo, Fragment} from "react";
+import {useState, Fragment} from "react";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import Button from "./Buttons/Button";
@@ -37,7 +37,7 @@ export default function PlayersList() {
     }
   });
 
-  console.log(uniqueCategories);
+  // console.log(uniqueCategories);
   return (
     // REVIEW: viewport height
     <div id="modal-root">

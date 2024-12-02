@@ -18,7 +18,7 @@ export default function QueuesGrid() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
       {currentTournament?.queues.map((queue: TQueue, index: number) => (
-        <Queue key={queue.id} queue={queue} index={index} />
+        <Queue key={queue._id} queue={queue} index={index} />
       ))}
     </div>
   );

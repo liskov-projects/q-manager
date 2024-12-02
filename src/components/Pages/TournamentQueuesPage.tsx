@@ -84,7 +84,7 @@ export default function TournamentQueuesPage() {
             visibleSection === "processed" ? "block" : "hidden lg:block"
           }`}>
           {/* <SectionHeader>Button Group</SectionHeader> */}
-          <ButtonGroup />
+          <ButtonGroup tournamentId={thisTournamentId} />
           <SectionHeader>Processed Players</SectionHeader>
           <ProcessedPlayers />
         </div>
