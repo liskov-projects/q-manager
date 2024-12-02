@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, Fragment} from "react";
+import {useState, useMemo, Fragment} from "react";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import Button from "./Buttons/Button";
@@ -24,7 +24,7 @@ export default function PlayersList() {
 
   //coming throught
   console.log("In the PlayerList: ", currentTournamentPlayers);
-
+  // console.log("unique cats: ", uniqueCategories);
   const unprocessedPlayers = currentTournamentPlayers.filter((player: TPlayer) => {
     // new vars for logic to keep it cleaner
     // const matchesSearch = player.name?.toLowerCase().includes(search.toLowerCase());
@@ -37,7 +37,7 @@ export default function PlayersList() {
     }
   });
 
-  // console.log(unprocessedPlayers);
+  console.log(uniqueCategories);
   return (
     // REVIEW: viewport height
     <div id="modal-root">

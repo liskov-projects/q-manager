@@ -75,9 +75,11 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // Derived Categories from Players
   const uniqueCategories = useMemo(() => {
-    const categories = players.flatMap(player => player.categories || []);
+    const categories = currentTournamentPlayers.flatMap(
+      player => player.categories || []
+    );
     return Array.from(new Set(categories));
-  }, []);
+  }, [currentTournamentPlayers]);
 
   // FIXME: what if they want to add another queue on the go?
   // Add or Remove Queues
