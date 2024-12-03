@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const playerSchema = new mongoose.Schema(
+export const playerSchema = new mongoose.Schema(
   //   FIXME: singular/plural
   {
     names: {type: String, required: true},
@@ -10,8 +10,9 @@ const playerSchema = new mongoose.Schema(
       // used to refer this field to tournament._id
       type: String,
       required: true
-    }
-    // FIXME: assigned to queues & processed through queues
+    },
+    assignedToQueue: Boolean,
+    processedThroughQueue: Boolean
   },
   {collection: "players"}
 );

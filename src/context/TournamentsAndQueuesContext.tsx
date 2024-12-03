@@ -108,14 +108,12 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     // console.log("THIS (FETCH PLAYERS?!!");
     const response = await fetch("../api/players/");
     const playersData = await response.json();
-    const playersRaw = playersData.filter(
+    const playersForTournament = playersData.filter(
       (player: TPlayer) => player.tournamentId === currentTournament?._id
     );
-    const playersForTournament = playersRaw.map(player => ({
-      ...player,
-      assignedToQueue: false,
-      processedThroughQueue: false
-    }));
+
+    // comes through
+    console.log("fetchPlayers playerForTourn: ", playersForTournament);
     setCurrentTournamentPlayers(playersForTournament);
   };
 
@@ -156,7 +154,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const saveTournament = async tournamentId => {
     // comes through OK
     // console.log(tournamentId);
-    console.log(currentTournament);
+    console.log("BEFORE TRY: ", currentTournament);
 
     try {
       const res = await fetch(`/api/tournaments/${tournamentId}`, {

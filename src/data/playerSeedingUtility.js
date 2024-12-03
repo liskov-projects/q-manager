@@ -1,15 +1,14 @@
 import mongoose from "mongoose";
 import PlayerModel from "../models/PlayerModel.js";
 import TournamentModel from "../models/TournamentModel.js";
-import playerSeeds from "./player-seeds.json" with { type: "json" };
+import playerSeeds from "./player-seeds.json" with {type: "json"};
 
 import dotenv from "dotenv";
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI;
 
-console.log("This happened")
-
+console.log("This happened");
 
 const seedPlayers = async () => {
   try {
@@ -24,7 +23,7 @@ const seedPlayers = async () => {
     }
 
     console.log(`Found ${tournaments.length} tournaments`);
-console.log(tournaments);
+    console.log(tournaments);
     // Iterate through tournaments and assign players
     for (const tournament of tournaments) {
       const numPlayers = Math.floor(Math.random() * (30 - 8 + 1)) + 8; // Random between 8 and 30
@@ -33,14 +32,20 @@ console.log(tournaments);
       // Transform players to include the tournament ID
       const playersToInsert = selectedPlayers.map(player => ({
         names: player.name,
-        categories: Array.isArray(player.category) ? player.category : [player.category],
-        phoneNumbers: Array.isArray(player.phoneNumber) ? player.phoneNumber : [player.phoneNumber],
-        tournamentId: tournament._id.toString(), // Link to tournament _id
+        categories: Array.isArray(player.category)
+          ? player.category
+          : [player.category],
+        phoneNumbers: Array.isArray(player.phoneNumber)
+          ? player.phoneNumber
+          : [player.phoneNumber],
+        tournamentId: tournament._id.toString() // Link to tournament _id
       }));
 
       // Insert players into the database
       const insertedPlayers = await PlayerModel.insertMany(playersToInsert);
-      console.log(`Inserted ${insertedPlayers.length} players for tournament: ${tournament.name}`);
+      console.log(
+        `Inserted ${insertedPlayers.length} players for tournament: ${tournament.name}`
+      );
     }
 
     console.log("Player seeding completed successfully");

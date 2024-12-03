@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "TAILWIND_CONFIG=tailwind.config.ts next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node src/data/playerSeedingUtility.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.3.4",

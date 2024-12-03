@@ -25,18 +25,24 @@ export default function PlayersList() {
   //coming throught
   // console.log("In the PlayerList: ", currentTournamentPlayers);
 
+  // FIXME: playerFilterFunction | use it in the filter
   const unprocessedPlayers = currentTournamentPlayers.filter((player: TPlayer) => {
+    //coming throught
+    console.log("Player: ", player);
+    return !player.assignedToQueue && !player.processedThroughQueue;
     // new vars for logic to keep it cleaner
-    const matchesSearch = player.names?.toLowerCase().includes(search.toLowerCase());
-    const unassigned = !player.assignedToQueue && !player.processedThroughQueue;
+    // const matchesSearch = player.names?.toLowerCase().includes(search.toLowerCase());
+    // const unassigned = !player.assignedToQueue && !player.processedThroughQueue;
 
-    if (filter === "show all" || filter === "") {
-      return unassigned && matchesSearch;
-    } else {
-      return unassigned && matchesSearch && player.categories?.includes(filter);
-    }
+    // console.log("unassigned: ", unassigned);
+    // if (filter === "show all" || filter === "") {
+    // return unassigned && matchesSearch;
+    // } else {
+    // return unassigned && matchesSearch && player.category?.includes(filter);
   });
 
+  //NOT coming throught
+  console.log("unprocessed: ", unprocessedPlayers);
   // console.log(uniqueCategories);
   return (
     // REVIEW: viewport height

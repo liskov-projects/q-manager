@@ -53,7 +53,7 @@ export async function PUT(req: NextRequest, {params}) {
   try {
     const body = await req.json();
     // coming through ok
-    // console.log(body);
+    console.log(body);
     const updatedTournament = await TournamentModel.findByIdAndUpdate(
       tournamentId,
       body,
@@ -72,10 +72,11 @@ export async function PUT(req: NextRequest, {params}) {
     });
 
     // NEW: queues are logged correctly, the db still has IDs
-    console.log("BACKEND: ");
+    console.log("BACKEND PUT: ");
     savedTournament.queues.forEach(queue => {
       console.log(queue.queueItems);
     });
+
     return NextResponse.json(savedTournament, {status: 200});
   } catch (err) {
     console.error("Error saving the tournament: ", err);

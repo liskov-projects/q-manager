@@ -1,602 +1,802 @@
 [
   {
-    "name": "Player 42 vs Player 166",
-    "category": "teens",
-    "phoneNumber": "04156 319 326",
-    "tournamentId": "5"
+    "names": "Player 42 vs Player 166",
+    "categories": "teens",
+    "phoneNumbers": "04156 319 326",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 99 vs Player 195",
+    "categories": "teens",
+    "phoneNumbers": "04108 676 554",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 9 vs Player 171",
+    "categories": "teens",
+    "phoneNumbers": "04203 629 530",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 97 vs Player 132",
+    "categories": "female",
+    "phoneNumbers": "04125 998 583",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 29 vs Player 117",
+    "categories": "teens",
+    "phoneNumbers": "04840 329 948",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 4 vs Player 137",
+    "categories": "teens",
+    "phoneNumbers": "04233 688 534",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 47 vs Player 122",
+    "categories": "male",
+    "phoneNumbers": "04313 379 788",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 24 vs Player 161",
+    "categories": "mixed",
+    "phoneNumbers": "04130 651 350",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 8 vs Player 167",
+    "categories": "teens",
+    "phoneNumbers": "04834 595 643",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 85 vs Player 158",
+    "categories": "mixed",
+    "phoneNumbers": "04451 389 670",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 10 vs Player 164",
+    "categories": "mixed",
+    "phoneNumbers": "04977 632 304",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 94 vs Player 199",
+    "categories": "mixed",
+    "phoneNumbers": "04668 469 667",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 92 vs Player 114",
+    "categories": "male",
+    "phoneNumbers": "04101 285 315",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 99 vs Player 195",
-    "category": "teens",
-    "phoneNumber": "04108 676 554",
-    "tournamentId": "3"
+    "names": "Player 19 vs Player 186",
+    "categories": "teens",
+    "phoneNumbers": "04444 460 515",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 9 vs Player 171",
-    "category": "teens",
-    "phoneNumber": "04203 629 530",
-    "tournamentId": "4"
+    "names": "Player 83 vs Player 110",
+    "categories": "female",
+    "phoneNumbers": "04523 640 346",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 97 vs Player 132",
-    "category": "female",
-    "phoneNumber": "04125 998 583",
-    "tournamentId": "2"
+    "names": "Player 85 vs Player 177",
+    "categories": "male",
+    "phoneNumbers": "04711 234 293",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 29 vs Player 117",
-    "category": "teens",
-    "phoneNumber": "04840 329 948",
-    "tournamentId": "2"
+    "names": "Player 92 vs Player 120",
+    "categories": "male",
+    "phoneNumbers": "04772 169 969",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 4 vs Player 137",
-    "category": "teens",
-    "phoneNumber": "04233 688 534",
-    "tournamentId": "4"
+    "names": "Player 29 vs Player 122",
+    "categories": "teens",
+    "phoneNumbers": "04508 236 359",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 47 vs Player 122",
-    "category": "male",
-    "phoneNumber": "04313 379 788",
-    "tournamentId": "1"
+    "names": "Player 63 vs Player 178",
+    "categories": "mixed",
+    "phoneNumbers": "04400 132 549",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 24 vs Player 161",
-    "category": "mixed",
-    "phoneNumber": "04130 651 350",
-    "tournamentId": "5"
+    "names": "Player 89 vs Player 178",
+    "categories": "male",
+    "phoneNumbers": "04636 901 152",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 8 vs Player 167",
-    "category": "teens",
-    "phoneNumber": "04834 595 643",
-    "tournamentId": "1"
+    "names": "Player 27 vs Player 193",
+    "categories": "mixed",
+    "phoneNumbers": "04339 641 963",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 85 vs Player 158",
-    "category": "mixed",
-    "phoneNumber": "04451 389 670",
-    "tournamentId": "1"
+    "names": "Player 32 vs Player 132",
+    "categories": "teens",
+    "phoneNumbers": "04621 178 445",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 10 vs Player 164",
-    "category": "mixed",
-    "phoneNumber": "04977 632 304",
-    "tournamentId": "4"
+    "names": "Player 95 vs Player 154",
+    "categories": "mixed",
+    "phoneNumbers": "04184 244 193",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 94 vs Player 199",
-    "category": "mixed",
-    "phoneNumber": "04668 469 667",
-    "tournamentId": "5"
+    "names": "Player 85 vs Player 115",
+    "categories": "mixed",
+    "phoneNumbers": "04273 667 841",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 92 vs Player 114",
-    "category": "male",
-    "phoneNumber": "04101 285 315",
-    "tournamentId": "3"
+    "names": "Player 20 vs Player 140",
+    "categories": "teens",
+    "phoneNumbers": "04812 478 520",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 19 vs Player 186",
-    "category": "teens",
-    "phoneNumber": "04444 460 515",
-    "tournamentId": "5"
+    "names": "Player 34 vs Player 105",
+    "categories": "female",
+    "phoneNumbers": "04765 362 952",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 83 vs Player 110",
-    "category": "female",
-    "phoneNumber": "04523 640 346",
-    "tournamentId": "2"
+    "names": "Player 29 vs Player 117",
+    "categories": "male",
+    "phoneNumbers": "04820 668 639",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 85 vs Player 177",
-    "category": "male",
-    "phoneNumber": "04711 234 293",
-    "tournamentId": "2"
+    "names": "Player 29 vs Player 110",
+    "categories": "male",
+    "phoneNumbers": "04310 929 994",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 92 vs Player 120",
-    "category": "male",
-    "phoneNumber": "04772 169 969",
-    "tournamentId": "4"
+    "names": "Player 21 vs Player 132",
+    "categories": "teens",
+    "phoneNumbers": "04801 956 195",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 29 vs Player 122",
-    "category": "teens",
-    "phoneNumber": "04508 236 359",
-    "tournamentId": "4"
+    "names": "Player 42 vs Player 110",
+    "categories": "mixed",
+    "phoneNumbers": "04558 795 588",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 63 vs Player 178",
-    "category": "mixed",
-    "phoneNumber": "04400 132 549",
-    "tournamentId": "5"
+    "names": "Player 74 vs Player 188",
+    "categories": "male",
+    "phoneNumbers": "04730 337 609",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 89 vs Player 178",
-    "category": "male",
-    "phoneNumber": "04636 901 152",
-    "tournamentId": "4"
+    "names": "Player 49 vs Player 113",
+    "categories": "teens",
+    "phoneNumbers": "04468 738 819",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 27 vs Player 193",
-    "category": "mixed",
-    "phoneNumber": "04339 641 963",
-    "tournamentId": "2"
+    "names": "Player 56 vs Player 163",
+    "categories": "mixed",
+    "phoneNumbers": "04978 582 690",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 32 vs Player 132",
-    "category": "teens",
-    "phoneNumber": "04621 178 445",
-    "tournamentId": "3"
+    "names": "Player 10 vs Player 154",
+    "categories": "mixed",
+    "phoneNumbers": "04423 738 339",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 95 vs Player 154",
-    "category": "mixed",
-    "phoneNumber": "04184 244 193",
-    "tournamentId": "1"
+    "names": "Player 29 vs Player 121",
+    "categories": "mixed",
+    "phoneNumbers": "04769 817 748",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 85 vs Player 115",
-    "category": "mixed",
-    "phoneNumber": "04273 667 841",
-    "tournamentId": "5"
+    "names": "Player 40 vs Player 125",
+    "categories": "male",
+    "phoneNumbers": "04941 815 718",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 20 vs Player 140",
-    "category": "teens",
-    "phoneNumber": "04812 478 520",
-    "tournamentId": "2"
+    "names": "Player 67 vs Player 176",
+    "categories": "female",
+    "phoneNumbers": "04325 372 458",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 34 vs Player 105",
-    "category": "female",
-    "phoneNumber": "04765 362 952",
-    "tournamentId": "2"
+    "names": "Player 53 vs Player 200",
+    "categories": "teens",
+    "phoneNumbers": "04726 329 273",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 29 vs Player 117",
-    "category": "male",
-    "phoneNumber": "04820 668 639",
-    "tournamentId": "3"
+    "names": "Player 66 vs Player 195",
+    "categories": "female",
+    "phoneNumbers": "04886 529 486",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 29 vs Player 110",
-    "category": "male",
-    "phoneNumber": "04310 929 994",
-    "tournamentId": "1"
+    "names": "Player 73 vs Player 153",
+    "categories": "teens",
+    "phoneNumbers": "04693 103 935",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 21 vs Player 132",
-    "category": "teens",
-    "phoneNumber": "04801 956 195",
-    "tournamentId": "1"
+    "names": "Player 70 vs Player 182",
+    "categories": "male",
+    "phoneNumbers": "04658 803 577",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 42 vs Player 110",
-    "category": "mixed",
-    "phoneNumber": "04558 795 588",
-    "tournamentId": "2"
+    "names": "Player 15 vs Player 147",
+    "categories": "male",
+    "phoneNumbers": "04204 382 907",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 74 vs Player 188",
-    "category": "male",
-    "phoneNumber": "04730 337 609",
-    "tournamentId": "4"
+    "names": "Player 40 vs Player 164",
+    "categories": "mixed",
+    "phoneNumbers": "04649 539 959",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 49 vs Player 113",
-    "category": "teens",
-    "phoneNumber": "04468 738 819",
-    "tournamentId": "3"
+    "names": "Player 91 vs Player 173",
+    "categories": "male",
+    "phoneNumbers": "04112 838 215",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 56 vs Player 163",
-    "category": "mixed",
-    "phoneNumber": "04978 582 690",
-    "tournamentId": "2"
+    "names": "Player 69 vs Player 115",
+    "categories": "male",
+    "phoneNumbers": "04556 419 518",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 10 vs Player 154",
-    "category": "mixed",
-    "phoneNumber": "04423 738 339",
-    "tournamentId": "2"
+    "names": "Player 15 vs Player 160",
+    "categories": "mixed",
+    "phoneNumbers": "04922 119 796",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 29 vs Player 121",
-    "category": "mixed",
-    "phoneNumber": "04769 817 748",
-    "tournamentId": "5"
+    "names": "Player 50 vs Player 174",
+    "categories": "teens",
+    "phoneNumbers": "04729 566 394",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 40 vs Player 125",
-    "category": "male",
-    "phoneNumber": "04941 815 718",
-    "tournamentId": "4"
+    "names": "Player 22 vs Player 173",
+    "categories": "teens",
+    "phoneNumbers": "04665 869 146",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 67 vs Player 176",
-    "category": "female",
-    "phoneNumber": "04325 372 458",
-    "tournamentId": "2"
+    "names": "Player 33 vs Player 146",
+    "categories": "teens",
+    "phoneNumbers": "04593 810 456",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 53 vs Player 200",
-    "category": "teens",
-    "phoneNumber": "04726 329 273",
-    "tournamentId": "2"
+    "names": "Player 2 vs Player 187",
+    "categories": "male",
+    "phoneNumbers": "04482 336 505",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 66 vs Player 195",
-    "category": "female",
-    "phoneNumber": "04886 529 486",
-    "tournamentId": "5"
+    "names": "Player 55 vs Player 133",
+    "categories": "female",
+    "phoneNumbers": "04908 142 415",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 73 vs Player 153",
-    "category": "teens",
-    "phoneNumber": "04693 103 935",
-    "tournamentId": "4"
+    "names": "Player 42 vs Player 180",
+    "categories": "male",
+    "phoneNumbers": "04803 758 125",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 70 vs Player 182",
-    "category": "male",
-    "phoneNumber": "04658 803 577",
-    "tournamentId": "5"
+    "names": "Player 63 vs Player 133",
+    "categories": "female",
+    "phoneNumbers": "04605 291 688",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 15 vs Player 147",
-    "category": "male",
-    "phoneNumber": "04204 382 907",
-    "tournamentId": "3"
+    "names": "Player 90 vs Player 120",
+    "categories": "teens",
+    "phoneNumbers": "04176 752 455",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 40 vs Player 164",
-    "category": "mixed",
-    "phoneNumber": "04649 539 959",
-    "tournamentId": "1"
+    "names": "Player 20 vs Player 162",
+    "categories": "male",
+    "phoneNumbers": "04117 900 420",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 91 vs Player 173",
-    "category": "male",
-    "phoneNumber": "04112 838 215",
-    "tournamentId": "5"
+    "names": "Player 52 vs Player 197",
+    "categories": "mixed",
+    "phoneNumbers": "04665 780 955",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 69 vs Player 115",
-    "category": "male",
-    "phoneNumber": "04556 419 518",
-    "tournamentId": "1"
+    "names": "Player 45 vs Player 101",
+    "categories": "female",
+    "phoneNumbers": "04216 581 558",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 15 vs Player 160",
-    "category": "mixed",
-    "phoneNumber": "04922 119 796",
-    "tournamentId": "5"
+    "names": "Player 82 vs Player 154",
+    "categories": "mixed",
+    "phoneNumbers": "04657 695 905",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 50 vs Player 174",
-    "category": "teens",
-    "phoneNumber": "04729 566 394",
-    "tournamentId": "5"
+    "names": "Player 10 vs Player 148",
+    "categories": "female",
+    "phoneNumbers": "04873 422 686",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 22 vs Player 173",
-    "category": "teens",
-    "phoneNumber": "04665 869 146",
-    "tournamentId": "3"
+    "names": "Player 52 vs Player 129",
+    "categories": "male",
+    "phoneNumbers": "04565 454 835",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 33 vs Player 146",
-    "category": "teens",
-    "phoneNumber": "04593 810 456",
-    "tournamentId": "3"
+    "names": "Player 47 vs Player 118",
+    "categories": "teens",
+    "phoneNumbers": "04265 193 136",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 2 vs Player 187",
-    "category": "male",
-    "phoneNumber": "04482 336 505",
-    "tournamentId": "5"
+    "names": "Player 27 vs Player 133",
+    "categories": "teens",
+    "phoneNumbers": "04288 671 478",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 55 vs Player 133",
-    "category": "female",
-    "phoneNumber": "04908 142 415",
-    "tournamentId": "3"
+    "names": "Player 1 vs Player 180",
+    "categories": "female",
+    "phoneNumbers": "04580 865 386",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 42 vs Player 180",
-    "category": "male",
-    "phoneNumber": "04803 758 125",
-    "tournamentId": "1"
+    "names": "Player 88 vs Player 184",
+    "categories": "male",
+    "phoneNumbers": "04496 406 618",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 63 vs Player 133",
-    "category": "female",
-    "phoneNumber": "04605 291 688",
-    "tournamentId": "3"
+    "names": "Player 30 vs Player 124",
+    "categories": "female",
+    "phoneNumbers": "04873 745 326",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 90 vs Player 120",
-    "category": "teens",
-    "phoneNumber": "04176 752 455",
-    "tournamentId": "2"
+    "names": "Player 79 vs Player 139",
+    "categories": "teens",
+    "phoneNumbers": "04101 127 638",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 20 vs Player 162",
-    "category": "male",
-    "phoneNumber": "04117 900 420",
-    "tournamentId": "2"
+    "names": "Player 22 vs Player 178",
+    "categories": "mixed",
+    "phoneNumbers": "04616 708 830",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 52 vs Player 197",
-    "category": "mixed",
-    "phoneNumber": "04665 780 955",
-    "tournamentId": "1"
+    "names": "Player 24 vs Player 124",
+    "categories": "teens",
+    "phoneNumbers": "04695 347 579",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 45 vs Player 101",
-    "category": "female",
-    "phoneNumber": "04216 581 558",
-    "tournamentId": "2"
+    "names": "Player 37 vs Player 142",
+    "categories": "female",
+    "phoneNumbers": "04401 535 935",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 82 vs Player 154",
-    "category": "mixed",
-    "phoneNumber": "04657 695 905",
-    "tournamentId": "2"
+    "names": "Player 27 vs Player 138",
+    "categories": "mixed",
+    "phoneNumbers": "04560 798 860",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 10 vs Player 148",
-    "category": "female",
-    "phoneNumber": "04873 422 686",
-    "tournamentId": "5"
+    "names": "Player 59 vs Player 161",
+    "categories": "mixed",
+    "phoneNumbers": "04759 346 226",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 52 vs Player 129",
-    "category": "male",
-    "phoneNumber": "04565 454 835",
-    "tournamentId": "4"
+    "names": "Player 79 vs Player 145",
+    "categories": "teens",
+    "phoneNumbers": "04332 775 763",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 47 vs Player 118",
-    "category": "teens",
-    "phoneNumber": "04265 193 136",
-    "tournamentId": "2"
+    "names": "Player 62 vs Player 194",
+    "categories": "female",
+    "phoneNumbers": "04366 950 824",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 27 vs Player 133",
-    "category": "teens",
-    "phoneNumber": "04288 671 478",
-    "tournamentId": "3"
+    "names": "Player 36 vs Player 194",
+    "categories": "teens",
+    "phoneNumbers": "04889 580 723",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 1 vs Player 180",
-    "category": "female",
-    "phoneNumber": "04580 865 386",
-    "tournamentId": "1"
+    "names": "Player 32 vs Player 112",
+    "categories": "mixed",
+    "phoneNumbers": "04680 881 372",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 88 vs Player 184",
-    "category": "male",
-    "phoneNumber": "04496 406 618",
-    "tournamentId": "1"
+    "names": "Player 11 vs Player 190",
+    "categories": "teens",
+    "phoneNumbers": "04414 539 204",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 30 vs Player 124",
-    "category": "female",
-    "phoneNumber": "04873 745 326",
-    "tournamentId": "1"
+    "names": "Player 93 vs Player 115",
+    "categories": "female",
+    "phoneNumbers": "04307 416 110",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 79 vs Player 139",
-    "category": "teens",
-    "phoneNumber": "04101 127 638",
-    "tournamentId": "3"
+    "names": "Player 13 vs Player 165",
+    "categories": "teens",
+    "phoneNumbers": "04303 140 269",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 22 vs Player 178",
-    "category": "mixed",
-    "phoneNumber": "04616 708 830",
-    "tournamentId": "2"
+    "names": "Player 49 vs Player 164",
+    "categories": "female",
+    "phoneNumbers": "04176 783 444",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 24 vs Player 124",
-    "category": "teens",
-    "phoneNumber": "04695 347 579",
-    "tournamentId": "3"
+    "names": "Player 71 vs Player 104",
+    "categories": "female",
+    "phoneNumbers": "04215 892 286",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 37 vs Player 142",
-    "category": "female",
-    "phoneNumber": "04401 535 935",
-    "tournamentId": "4"
+    "names": "Player 22 vs Player 181",
+    "categories": "female",
+    "phoneNumbers": "04548 123 385",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 27 vs Player 138",
-    "category": "mixed",
-    "phoneNumber": "04560 798 860",
-    "tournamentId": "1"
+    "names": "Player 2 vs Player 179",
+    "categories": "female",
+    "phoneNumbers": "04959 770 213",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 59 vs Player 161",
-    "category": "mixed",
-    "phoneNumber": "04759 346 226",
-    "tournamentId": "1"
+    "names": "Player 22 vs Player 107",
+    "categories": "teens",
+    "phoneNumbers": "04388 790 356",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 79 vs Player 145",
-    "category": "teens",
-    "phoneNumber": "04332 775 763",
-    "tournamentId": "4"
+    "names": "Player 67 vs Player 159",
+    "categories": "teens",
+    "phoneNumbers": "04898 702 686",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 62 vs Player 194",
-    "category": "female",
-    "phoneNumber": "04366 950 824",
-    "tournamentId": "5"
+    "names": "Player 73 vs Player 135",
+    "categories": "male",
+    "phoneNumbers": "04258 289 919",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 36 vs Player 194",
-    "category": "teens",
-    "phoneNumber": "04889 580 723",
-    "tournamentId": "1"
+    "names": "Player 4 vs Player 180",
+    "categories": "mixed",
+    "phoneNumbers": "04209 782 698",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 32 vs Player 112",
-    "category": "mixed",
-    "phoneNumber": "04680 881 372",
-    "tournamentId": "4"
+    "names": "Player 49 vs Player 189",
+    "categories": "male",
+    "phoneNumbers": "04118 456 444",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   },
   {
-    "name": "Player 11 vs Player 190",
-    "category": "teens",
-    "phoneNumber": "04414 539 204",
-    "tournamentId": "5"
-  },
-  {
-    "name": "Player 93 vs Player 115",
-    "category": "female",
-    "phoneNumber": "04307 416 110",
-    "tournamentId": "1"
-  },
-  {
-    "name": "Player 13 vs Player 165",
-    "category": "teens",
-    "phoneNumber": "04303 140 269",
-    "tournamentId": "2"
-  },
-  {
-    "name": "Player 49 vs Player 164",
-    "category": "female",
-    "phoneNumber": "04176 783 444",
-    "tournamentId": "2"
-  },
-  {
-    "name": "Player 71 vs Player 104",
-    "category": "female",
-    "phoneNumber": "04215 892 286",
-    "tournamentId": "5"
-  },
-  {
-    "name": "Player 22 vs Player 181",
-    "category": "female",
-    "phoneNumber": "04548 123 385",
-    "tournamentId": "3"
-  },
-  {
-    "name": "Player 2 vs Player 179",
-    "category": "female",
-    "phoneNumber": "04959 770 213",
-    "tournamentId": "2"
-  },
-  {
-    "name": "Player 22 vs Player 107",
-    "category": "teens",
-    "phoneNumber": "04388 790 356",
-    "tournamentId": "3"
-  },
-  {
-    "name": "Player 67 vs Player 159",
-    "category": "teens",
-    "phoneNumber": "04898 702 686",
-    "tournamentId": "2"
-  },
-  {
-    "name": "Player 73 vs Player 135",
-    "category": "male",
-    "phoneNumber": "04258 289 919",
-    "tournamentId": "3"
-  },
-  {
-    "name": "Player 4 vs Player 180",
-    "category": "mixed",
-    "phoneNumber": "04209 782 698",
-    "tournamentId": "3"
-  },
-  {
-    "name": "Player 49 vs Player 189",
-    "category": "male",
-    "phoneNumber": "04118 456 444",
-    "tournamentId": "2"
-  },
-  {
-    "name": "Player 12 vs Player 141",
-    "category": "mixed",
-    "phoneNumber": "04266 369 618",
-    "tournamentId": "4"
-  },
-  {
-    "name": "Player 20 vs Player 131",
-    "category": "male",
-    "phoneNumber": "04291 855 816",
-    "tournamentId": "3"
-  },
-  {
-    "name": "Player 87 vs Player 104",
-    "category": "teens",
-    "phoneNumber": "04433 493 136",
-    "tournamentId": "4"
-  },
-  {
-    "name": "Player 28 vs Player 151",
-    "category": "male",
-    "phoneNumber": "04860 386 575",
-    "tournamentId": "1"
-  },
-  {
-    "name": "Player 48 vs Player 138",
-    "category": "teens",
-    "phoneNumber": "04379 342 890",
-    "tournamentId": "5"
-  },
-  {
-    "name": "Player 50 vs Player 115",
-    "category": "teens",
-    "phoneNumber": "04721 386 368",
-    "tournamentId": "5"
-  },
-  {
-    "name": "Player 37 vs Player 104",
-    "category": "mixed",
-    "phoneNumber": "04618 406 501",
-    "tournamentId": "5"
-  },
-  {
-    "name": "Player 75 vs Player 113",
-    "category": "mixed",
-    "phoneNumber": "04488 186 423",
-    "tournamentId": "4"
-  },
-  {
-    "name": "Player 11 vs Player 174",
-    "category": "teens",
-    "phoneNumber": "04120 797 307",
-    "tournamentId": "4"
-  },
-  {
-    "name": "Player 80 vs Player 197",
-    "category": "female",
-    "phoneNumber": "04497 554 908",
-    "tournamentId": "2"
-  },
-  {
-    "name": "Player 42 vs Player 164",
-    "category": "male",
-    "phoneNumber": "04473 467 627",
-    "tournamentId": "1"
-  },
-  {
-    "name": "Player 51 vs Player 120",
-    "category": "male",
-    "phoneNumber": "04908 119 868",
-    "tournamentId": "1"
-  },
-  {
-    "name": "Player 10 vs Player 134",
-    "category": "female",
-    "phoneNumber": "04624 337 202",
-    "tournamentId": "1"
+    "names": "Player 12 vs Player 141",
+    "categories": "mixed",
+    "phoneNumbers": "04266 369 618",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 20 vs Player 131",
+    "categories": "male",
+    "phoneNumbers": "04291 855 816",
+    "tournamentId": "3",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 87 vs Player 104",
+    "categories": "teens",
+    "phoneNumbers": "04433 493 136",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 28 vs Player 151",
+    "categories": "male",
+    "phoneNumbers": "04860 386 575",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 48 vs Player 138",
+    "categories": "teens",
+    "phoneNumbers": "04379 342 890",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 50 vs Player 115",
+    "categories": "teens",
+    "phoneNumbers": "04721 386 368",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 37 vs Player 104",
+    "categories": "mixed",
+    "phoneNumbers": "04618 406 501",
+    "tournamentId": "5",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 75 vs Player 113",
+    "categories": "mixed",
+    "phoneNumbers": "04488 186 423",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 11 vs Player 174",
+    "categories": "teens",
+    "phoneNumbers": "04120 797 307",
+    "tournamentId": "4",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 80 vs Player 197",
+    "categories": "female",
+    "phoneNumbers": "04497 554 908",
+    "tournamentId": "2",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 42 vs Player 164",
+    "categories": "male",
+    "phoneNumbers": "04473 467 627",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 51 vs Player 120",
+    "categories": "male",
+    "phoneNumbers": "04908 119 868",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
+  },
+  {
+    "names": "Player 10 vs Player 134",
+    "categories": "female",
+    "phoneNumbers": "04624 337 202",
+    "tournamentId": "1",
+    "assignedToQueue": "false",
+    "processedThroughQueue": "false"
   }
 ]
