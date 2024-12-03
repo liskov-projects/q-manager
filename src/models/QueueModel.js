@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 export const queueSchema = new mongoose.Schema({
   queueName: {type: String, required: true},
-  queueItems: [{type: mongoose.Schema.Types.ObjectId, ref: "PlayerModel"}]
+  // used to have ref: "PlayerModel"
+  queueItems: [{type: mongoose.Schema.Types.ObjectId}]
 });
 
 const QueueModel =

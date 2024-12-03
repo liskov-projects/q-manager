@@ -156,7 +156,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const saveTournament = async tournamentId => {
     // comes through OK
     // console.log(tournamentId);
-    // console.log(currentTournament);
+    console.log(currentTournament);
 
     try {
       const res = await fetch(`/api/tournaments/${tournamentId}`, {
@@ -172,7 +172,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
       }
 
       const dataToPost = await res.json();
-      // console.log("Tournament saved!", dataToPost);
+      console.log("Tournament saved!", dataToPost);
     } catch (err) {
       console.error("Failed to save tournament: ", err);
     }

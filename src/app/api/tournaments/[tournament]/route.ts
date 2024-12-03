@@ -5,6 +5,7 @@ import dbConnect from "@/lib/db";
 // import type {NextApiRequest, NextApiResponse} from "next";
 // new version
 import {NextRequest, NextResponse} from "next/server";
+import Tournament from "@/components/Tournaments/TournamentCard";
 
 // NOTE: move the POST here as well?
 export async function GET(req: NextRequest) {
@@ -53,7 +54,7 @@ export async function PUT(req: NextRequest, {params}) {
     const body = await req.json();
     // coming through ok
     // console.log(body);
-    const savedTournament = await TournamentModel.findByIdAndUpdate(
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
       tournamentId,
       body,
       {
@@ -61,9 +62,20 @@ export async function PUT(req: NextRequest, {params}) {
       }
     );
 
-    if (!savedTournament) {
+    if (!updatedTournament) {
       return NextResponse.json({error: "Tournament not found"}, {status: 404});
     }
+
+    const savedTournament = await TournamentModel.findById(tournamentId).populate({
+      path: "queues.queueItems",
+      model: "PlayerModel"
+    });
+
+    // NEW: queues are logged correctly, the db still has IDs
+    console.log("BACKEND: ");
+    savedTournament.queues.forEach(queue => {
+      console.log(queue.queueItems);
+    });
     return NextResponse.json(savedTournament, {status: 200});
   } catch (err) {
     console.error("Error saving the tournament: ", err);
