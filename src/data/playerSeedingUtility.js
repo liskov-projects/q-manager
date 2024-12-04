@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import PlayerModel from "../models/PlayerModel.js";
-import TournamentModel from "../models/TournamentModel.js";
+import {MongoClient} from "mongodb";
+// import PlayerModel from "../models/PlayerModel.js";
+// import TournamentModel from "../models/TournamentModel.js";
 import playerSeeds from "./playerSeeds.js";
 
 import dotenv from "dotenv";
@@ -11,45 +11,57 @@ const MONGO_URI = process.env.MONGO_URI;
 console.log("This happened");
 
 const seedPlayers = async () => {
-
   console.log("PLAYERS RAN");
 
-  return
+  const client = new MongoClient(MONGO_URI);
 
   try {
     // Connect to MongoDB
-    await mongoose.connect(MONGO_URI);
+    await client.connect();
+    const db = client.db("qManager");
+
     console.log("Connected to MongoDB");
 
     // Fetch tournaments from the database
-    const tournaments = await TournamentModel.find();
-    if (!tournaments || tournaments.length === 0) {
+    const tournamentCollection = await db.collection("tournaments").find().toArray();
+    console.log(tournamentCollection);
+    if (!tournamentCollection || tournamentCollection.length === 0) {
       throw new Error("No tournaments found in the database");
     }
 
-    console.log(`Found ${tournaments.length} tournaments`);
-    console.log(tournaments);
+    console.log(`Found ${tournamentCollection.length} tournaments`);
+    console.log(tournamentCollection);
+
     // Iterate through tournaments and assign players
-    for (const tournament of tournaments) {
+    for (const tournament of tournamentCollection) {
       const numPlayers = Math.floor(Math.random() * (30 - 8 + 1)) + 8; // Random between 8 and 30
       const selectedPlayers = playerSeeds.splice(0, numPlayers); // Take players from the seed file
 
       // Transform players to include the tournament ID
       const playersToInsert = selectedPlayers.map(player => ({
         names: player.name,
-        categories: Array.isArray(player.category)
-          ? player.category
-          : [player.category],
-        phoneNumbers: Array.isArray(player.phoneNumber)
-          ? player.phoneNumber
-          : [player.phoneNumber],
+        categories: Array.isArray(player.categories)
+          ? player.categories
+          : [player.categories],
+        phoneNumbers: Array.isArray(player.phoneNumbers)
+          ? player.phoneNumbers
+          : [player.phoneNumbers],
         tournamentId: tournament._id.toString() // Link to tournament _id
       }));
 
+      const updatedQueues = tournament.queues.map(queue => ({
+        ...queue,
+        queueItems: playersToInsert.slice(
+          0,
+          Math.floor(numPlayers / tournament.queues.length)
+        )
+      }));
       // Insert players into the database
-      const insertedPlayers = await PlayerModel.insertMany(playersToInsert);
+      await db
+        .collection("tournaments")
+        .updateOne({_id: tournament._id}, {$set: {queues: updatedQueues}});
       console.log(
-        `Inserted ${insertedPlayers.length} players for tournament: ${tournament.name}`
+        `Inserted ${updatedQueues.length} players for tournament: ${tournament.name}`
       );
     }
 
@@ -58,7 +70,7 @@ const seedPlayers = async () => {
     console.error("Error seeding players:", error);
   } finally {
     // Close the MongoDB connection
-    await mongoose.connection.close();
+    await client.close();
     console.log("MongoDB connection closed");
   }
 };
