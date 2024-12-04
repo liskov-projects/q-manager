@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import PlayerModel from "../models/PlayerModel.js";
 import TournamentModel from "../models/TournamentModel.js";
-import playerSeeds from "./player-seeds.json" with {type: "json"};
+import playerSeeds from "./playerSeeds.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -11,6 +11,11 @@ const MONGO_URI = process.env.MONGO_URI;
 console.log("This happened");
 
 const seedPlayers = async () => {
+
+  console.log("PLAYERS RAN");
+
+  return
+
   try {
     // Connect to MongoDB
     await mongoose.connect(MONGO_URI);

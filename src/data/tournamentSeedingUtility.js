@@ -1,8 +1,12 @@
-const { MongoClient } = require("mongodb");
-
-const tournaments = require("./tournaments-seeds.json"); // Load tournaments JSON
+import { MongoClient } from "mongodb";
+import tournaments from "./tournamentSeeds.js";
 
 async function seedTournaments() {
+
+  console.log("TOURNAMENTS RAN");
+
+  return
+
   const client = new MongoClient("mongodb://localhost:27017"); // HERE
   try {
     await client.connect();

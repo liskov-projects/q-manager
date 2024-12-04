@@ -10,7 +10,7 @@ export default function Header() {
   const notHome = path !== "/all-tournaments";
 
   return (
-    <div className="flex justify-between items-center py-8">
+    <div className="flex justify-between items-center py-2">
       <div>
         <div className="flex-shrink-0 w-16 h-16 ml-8">
           <svg
