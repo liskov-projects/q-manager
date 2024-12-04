@@ -44,14 +44,16 @@ const seedPlayers = async () => {
 
       // Transform players to include the tournament ID
       const playersToInsert = selectedPlayers.map(player => ({
-        names: player.name,
+        names: player.names,
         categories: Array.isArray(player.categories)
           ? player.categories
           : [player.categories],
         phoneNumbers: Array.isArray(player.phoneNumbers)
           ? player.phoneNumbers
           : [player.phoneNumbers],
-        tournamentId: tournament._id.toString() // Link to tournament _id
+        tournamentId: tournament._id.toString(),
+        assignedToQueue: true, // New property
+        processedThroughQueue: false
       }));
 
       const updatedQueues = tournament.queues.map(queue => ({
