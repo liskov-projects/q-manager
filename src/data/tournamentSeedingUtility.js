@@ -1,16 +1,20 @@
-import { MongoClient } from "mongodb";
+import {MongoClient} from "mongodb";
 import tournaments from "./tournamentSeeds.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const MONGO_URI = process.env.MONGO_URI;
 
 async function seedTournaments() {
-
   console.log("TOURNAMENTS RAN");
 
-  return
+  // return
 
-  const client = new MongoClient("mongodb://localhost:27017"); // HERE
+  const client = new MongoClient(MONGO_URI); // HERE
   try {
     await client.connect();
-    const db = client.db("your_database_name"); // HERE
+    const db = client.db("qManager"); // HERE
     const tournamentCollection = db.collection("tournaments");
 
     // Insert tournaments and capture inserted documents

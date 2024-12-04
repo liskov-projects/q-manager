@@ -8,12 +8,8 @@
     "build": "TAILWIND_CONFIG=tailwind.config.ts next build",
     "start": "next start",
     "lint": "next lint",
-<<<<<<< HEAD
-    "seed": "node src/data/playerSeedingUtility.js"
-=======
     "seed:players": "node src/data/playerSeedingUtility.js",
     "seed:tournaments": "node src/data/tournamentSeedingUtility.js"
->>>>>>> 9a507fe (Some styling and some seeding changes)
   },
   "dependencies": {
     "@clerk/nextjs": "^6.3.4",
