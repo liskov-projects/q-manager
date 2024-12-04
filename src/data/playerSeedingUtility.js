@@ -25,8 +25,10 @@ const seedPlayers = async () => {
     // Fetch tournaments from the database
     const playerCollection = db.collection("players");
     // Insert players into the database (tournaments)
+    // TODO: add the properties assignedToQueue & processed-bla here
     await playerCollection.insertMany(playerSeeds);
-
+    console.log(playerCollection);
+    const newPlayers = await db.collection("players").find().toArray();
     // need await here to do the methods
     const tournamentCollection = await db.collection("tournaments").find().toArray();
     console.log(tournamentCollection);
@@ -40,7 +42,7 @@ const seedPlayers = async () => {
     // Iterate through tournaments and assign players
     for (const tournament of tournamentCollection) {
       const numPlayers = Math.floor(Math.random() * (30 - 8 + 1)) + 8; // Random between 8 and 30
-      const selectedPlayers = playerSeeds.splice(0, numPlayers); // Take players from the seed file
+      const selectedPlayers = newPlayers.splice(0, numPlayers); // Take players from the seed file
 
       // Transform players to include the tournament ID
       const playersToInsert = selectedPlayers.map(player => ({

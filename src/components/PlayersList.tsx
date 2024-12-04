@@ -23,7 +23,7 @@ export default function PlayersList() {
   const {handleDrop} = useDragNDrop();
 
   //coming throught
-  // console.log("In the PlayerList: ", currentTournamentPlayers);
+  console.log("In the PlayerList: ", currentTournamentPlayers);
 
   // FIXME: playerFilterFunction | use it in the filter
   const unprocessedPlayers = currentTournamentPlayers.filter((player: TPlayer) => {
