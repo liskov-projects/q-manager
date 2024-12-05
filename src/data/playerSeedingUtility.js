@@ -22,29 +22,31 @@ const seedPlayers = async () => {
 
     console.log("Connected to MongoDB");
 
-    // Fetch tournaments from the database
+    // Fetch players collection from the database
     const playerCollection = db.collection("players");
     // Insert players into the database (tournaments)
-    // TODO: add the properties assignedToQueue & processed-bla here
+
+    //inserting the players into the empty players collection
     await playerCollection.insertMany(playerSeeds);
-    console.log(playerCollection);
+
+    // getting the players from the player collection to populate the tournaments
     const newPlayers = await db.collection("players").find().toArray();
-    // need await here to do the methods
-    const tournamentCollection = await db.collection("tournaments").find().toArray();
+    // geting the tournament collection
+    const tournamentCollection = await db.collection("tournaments").find().toArray(); // need await here to do the methods
+
     console.log(tournamentCollection);
     if (!tournamentCollection || tournamentCollection.length === 0) {
       throw new Error("No tournaments found in the database");
     }
 
     console.log(`Found ${tournamentCollection.length} tournaments`);
-    console.log(tournamentCollection);
 
     // Iterate through tournaments and assign players
     for (const tournament of tournamentCollection) {
       const numPlayers = Math.floor(Math.random() * (30 - 8 + 1)) + 8; // Random between 8 and 30
       const selectedPlayers = newPlayers.splice(0, numPlayers); // Take players from the seed file
 
-      // Transform players to include the tournament ID
+      // Transform players to include the tournament ID & override assignedToQueue
       const playersToInsert = selectedPlayers.map(player => ({
         names: player.names,
         categories: Array.isArray(player.categories)
