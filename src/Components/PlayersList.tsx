@@ -41,8 +41,8 @@ export default function PlayersList() {
     // return unassigned && matchesSearch && player.category?.includes(filter);
   });
 
-  //NOT coming throught
-  console.log("unprocessed: ", unprocessedPlayers);
+  //coming throught
+  // console.log("unprocessed: ", unprocessedPlayers);
   // console.log(uniqueCategories);
   return (
     // REVIEW: viewport height

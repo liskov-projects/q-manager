@@ -22,15 +22,22 @@ export async function GET(req: NextRequest) {
   // already have GET
   // if (req.method === "GET") {
   try {
-    // Fetch players associated with the tournament ID
-    const players = await PlayerModel.find({tournamentId});
-    if (!players || players.length === 0) {
-      console.error("No players");
-      //  res.status(404).json({message: "No players found for this tournament."});
-    }
+    // // Fetch players associated with the tournament ID
+    // const players = await PlayerModel.find({tournamentId});
+    // if (!players || players.length === 0) {
+    //   console.error("No players");
+    //   //  res.status(404).json({message: "No players found for this tournament."});
+    // }
 
-    return new Response(JSON.stringify(players), {
-      status: 200,
+    // return new Response(JSON.stringify(players), {
+    //   status: 200,
+    //   headers: {"Content-Type": "application/json"}
+    // });
+    const tournaments = await TournamentModel.find({})
+      .populate("players") // Populate player references
+      .populate("queues.queueItems"); // Populate queue player references
+
+    return new Response(JSON.stringify(tournaments), {
       headers: {"Content-Type": "application/json"}
     });
     // res.status(200).json(players);
