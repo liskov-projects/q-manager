@@ -22,13 +22,13 @@ export default function PlayersList() {
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
-  //NOT coming throught
-  console.log("In the PlayerList: ", currentTournamentPlayers);
+  //coming throught
+  // console.log("In the PlayerList: ", currentTournamentPlayers);
 
   // FIXME: playerFilterFunction | use it in the filter
   const unprocessedPlayers = currentTournamentPlayers.filter((player: TPlayer) => {
     //coming throught
-    console.log("Player: ", player);
+    // console.log("Player: ", player);
     return !player.assignedToQueue && !player.processedThroughQueue;
     // new vars for logic to keep it cleaner
     // const matchesSearch = player.names?.toLowerCase().includes(search.toLowerCase());

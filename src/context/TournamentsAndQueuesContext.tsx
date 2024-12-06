@@ -73,14 +73,6 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     tournament => tournament.adminUser === user?.id
   );
 
-  // Derived Categories from Players
-  const uniqueCategories = useMemo(() => {
-    const categories = currentTournamentPlayers.flatMap(
-      player => player.categories || []
-    );
-    return Array.from(new Set(categories));
-  }, [currentTournamentPlayers]);
-
   // FIXME: what if they want to add another queue on the go?
   // Add or Remove Queues
   const addMoreQueues = () => {
@@ -124,10 +116,11 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     setTournaments(tournamentsData);
   };
 
+  // WORKS
   const fetchPlayersByTournamentId = async (tournamentId: string) => {
-    console.log("TRYING TO FETCH PLAYERS");
-    console.log("TOURNAMENT ID");
-    console.log(tournamentId);
+    // console.log("TRYING TO FETCH PLAYERS");
+    // console.log("TOURNAMENT ID");
+    // console.log(tournamentId);
 
     if (!tournamentId) {
       console.error("Tournament ID is required to fetch data");
@@ -140,16 +133,28 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         throw new Error(`Error fetching tournament: ${response.statusText}`);
       }
 
-      const tournamentPlayersData = await response.json();
-
-      console.log("IN THE CONTEXT: ", tournamentPlayersData);
+      const tournamentData = await response.json();
+      const tournamentPlayersData = tournamentData.queues.flatMap(
+        queue => queue.queueItems || []
+      );
+      // coming through
+      // console.log("IN THE CONTEXT: ", tournamentPlayersData);
       // console.log(currentTournamentPlayers);
-
-      setCurrentTournamentPlayers(tournamentPlayersData); // Assuming `setTournament` updates a single tournament in state
+      //this works
+      setCurrentTournamentPlayers(tournamentPlayersData);
     } catch (error) {
       console.error("Error fetching tournament:", error);
     }
   };
+  // coming through
+  // console.log(currentTournamentPlayers);
+  // Derived Categories from Players
+  const uniqueCategories = useMemo(() => {
+    const categories = currentTournamentPlayers.flatMap(
+      player => player.categories || []
+    );
+    return Array.from(new Set(categories));
+  }, [currentTournamentPlayers]);
 
   const saveTournament = async tournamentId => {
     // comes through OK
