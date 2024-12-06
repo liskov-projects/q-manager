@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, Fragment} from "react";
+import {useState, Fragment, useEffect} from "react";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import Button from "./Buttons/Button";
@@ -26,6 +26,9 @@ export default function PlayersList() {
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
+  useEffect(() => {
+    fetchNewPlayers();
+  }, []);
   //coming throught
   // console.log("In the PlayerList: ", currentTournamentPlayers);
 
