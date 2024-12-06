@@ -17,8 +17,12 @@ export default function PlayersList() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
 
-  const {uniqueCategories, fetchPlayers, currentTournamentPlayers, tournamentOwner} =
-    useTournamentsAndQueuesContext();
+  const {
+    uniqueCategories,
+    fetchNewPlayers,
+    currentTournamentPlayers,
+    tournamentOwner
+  } = useTournamentsAndQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
@@ -53,7 +57,7 @@ export default function PlayersList() {
           <Button
             onClick={() => {
               // console.log("ONCLICK IS THIS TRIGGERING");
-              fetchPlayers(); // Call the function
+              fetchNewPlayers(); // Call the function
             }}
             className={
               "ml-6 my-4 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"

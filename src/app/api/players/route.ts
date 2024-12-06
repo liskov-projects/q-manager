@@ -9,7 +9,7 @@ import {NextRequest} from "next/server";
 export async function GET() {
   await dbConnect();
   try {
-    const players = await TournamentModel.find({});
+    const players = await PlayerModel.find({});
     // console.log("PLAYERS");
     // console.log(players);
     return new Response(JSON.stringify(players), {

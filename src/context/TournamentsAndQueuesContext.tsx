@@ -96,7 +96,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   };
 
   // Fetch Players FIXME:
-  const fetchPlayers = async () => {
+  const fetchNewPlayers = async () => {
     // console.log("THIS (FETCH PLAYERS?!!");
     const response = await fetch("../api/players/");
     const playersData = await response.json();
@@ -210,7 +210,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         setTournaments,
         filteredTournaments,
         fetchTournaments,
-        fetchPlayers,
+        fetchNewPlayers,
         fetchPlayersByTournamentId,
         currentTournamentPlayers,
         tournamentOwner,
