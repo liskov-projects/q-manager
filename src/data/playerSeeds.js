@@ -1,3 +1,5 @@
+// TOURNAMENT ID!!!!!!!
+
 const players = [
   {
     names: "Player 42 vs Player 166",

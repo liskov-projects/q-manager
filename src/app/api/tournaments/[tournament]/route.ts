@@ -33,8 +33,8 @@ export async function GET(req: NextRequest) {
     //   status: 200,
     //   headers: {"Content-Type": "application/json"}
     // });
-    const tournaments = await TournamentModel.find({})
-      .populate("players") // Populate player references
+    const tournaments = await TournamentModel.findById(tournamentId)
+      .select("players") // Populate player references
       .populate("queues.queueItems"); // Populate queue player references
 
     return new Response(JSON.stringify(tournaments), {

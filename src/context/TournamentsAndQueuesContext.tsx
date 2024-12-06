@@ -47,7 +47,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   useEffect(() => {
     // console.log("Current Pathname:", pathname);
     // console.log("Tournaments:", tournaments);
-    // console.log("Current Tournament:", currentTournament);
+    console.log("Current Tournament:", currentTournament);
     const segments = pathname.split("/");
     const id = segments.pop();
 
@@ -125,12 +125,12 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   };
 
   const fetchPlayersByTournamentId = async (tournamentId: string) => {
-    // console.log("TRYING TO FETCH PLAYERS");
-    // console.log("TOURNAMENT ID");
-    // console.log(tournamentId);
+    console.log("TRYING TO FETCH PLAYERS");
+    console.log("TOURNAMENT ID");
+    console.log(tournamentId);
 
     if (!tournamentId) {
-      // console.error("Tournament ID is required to fetch data");
+      console.error("Tournament ID is required to fetch data");
       return;
     }
 
@@ -142,7 +142,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
       const tournamentPlayersData = await response.json();
 
-      // console.log("IN THE CONTEXT: ", tournamentPlayersData);
+      console.log("IN THE CONTEXT: ", tournamentPlayersData);
       // console.log(currentTournamentPlayers);
 
       setCurrentTournamentPlayers(tournamentPlayersData); // Assuming `setTournament` updates a single tournament in state

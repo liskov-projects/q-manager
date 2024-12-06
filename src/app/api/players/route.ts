@@ -1,5 +1,7 @@
 import dbConnect from "@/lib/db";
 import PlayerModel from "@/models/PlayerModel";
+import QueueModel from "@/models/QueueModel";
+import TournamentModel from "@/models/TournamentModel";
 import {error} from "console";
 // import TournamentModel from "@/models/TournamentModel";
 import {NextRequest} from "next/server";
@@ -7,7 +9,7 @@ import {NextRequest} from "next/server";
 export async function GET() {
   await dbConnect();
   try {
-    const players = await PlayerModel.find({});
+    const players = await TournamentModel.find({});
     // console.log("PLAYERS");
     // console.log(players);
     return new Response(JSON.stringify(players), {

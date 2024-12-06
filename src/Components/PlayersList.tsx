@@ -22,7 +22,7 @@ export default function PlayersList() {
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
-  //coming throught
+  //NOT coming throught
   console.log("In the PlayerList: ", currentTournamentPlayers);
 
   // FIXME: playerFilterFunction | use it in the filter
