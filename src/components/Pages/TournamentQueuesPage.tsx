@@ -5,7 +5,7 @@ import SectionHeader from "@/components/SectionHeader";
 import NewPlayerForm from "@/components/Forms/NewPlayerForm";
 import PlayersList from "@/components/PlayersList";
 import QueuesContainer from "@/components/Queue/QueuesContainer";
-import ProcessedPlayers from "@/components/ProcessedPlayers";
+import ProcessedPlayers from "@/components/drafts/ProcessedPlayers";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {usePathname} from "next/navigation";
@@ -17,8 +17,12 @@ export default function TournamentQueuesPage() {
 
   const pathname = usePathname();
 
-  const {fetchPlayersByTournamentId, setCurrentTournament, tournaments} =
-    useTournamentsAndQueuesContext();
+  const {
+    // fetchPlayersByTournamentId,
+    setCurrentTournament,
+    tournaments,
+    currentTournamentPlayers
+  } = useTournamentsAndQueuesContext();
 
   // Fetch players on component mount
   useEffect(() => {
@@ -36,7 +40,7 @@ export default function TournamentQueuesPage() {
       // console.log("THIS TOURNAMENT IS SET")
       // console.log(thisTournament)
       setCurrentTournament(thisTournament);
-      fetchPlayersByTournamentId(thisTournamentId);
+      // fetchPlayersByTournamentId(thisTournamentId);
     }
   }, [thisTournamentId]);
 
@@ -68,7 +72,10 @@ export default function TournamentQueuesPage() {
             visibleSection === "unprocessed" ? "block" : "hidden lg:block"
           }`}>
           <NewPlayerForm />
-          <PlayersList />
+          <PlayersList
+            title={"Unprocessed Players"}
+            players={currentTournamentPlayers.unProcessedQItems}
+          />
         </div>
 
         <div
@@ -86,7 +93,11 @@ export default function TournamentQueuesPage() {
           {/* <SectionHeader>Button Group</SectionHeader> */}
           <ButtonGroup tournamentId={thisTournamentId} />
           <SectionHeader>Processed Players</SectionHeader>
-          <ProcessedPlayers />
+          <PlayersList
+            title={"Processed Players"}
+            players={currentTournamentPlayers.processedQItems}
+          />
+          {/* <ProcessedPlayers /> */}
         </div>
       </div>
     </>

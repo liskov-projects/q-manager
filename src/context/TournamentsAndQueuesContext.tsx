@@ -15,6 +15,7 @@ import {useUser} from "@clerk/nextjs";
 import {
   TQueue,
   TPlayer,
+  TTournamentPlayersState,
   TTournament,
   TTournamentsAndQueuesContextProps
 } from "@/types/Types";
@@ -32,10 +33,11 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // Tournaments State
   const [tournaments, setTournaments] = useState<TTournament[]>([]);
   const [currentTournament, setCurrentTournament] = useState<TTournament | null>();
-
-  const [currentTournamentPlayers, setCurrentTournamentPlayers] = useState<TPlayer[]>(
-    []
-  );
+  const [currentTournamentPlayers, setCurrentTournamentPlayers] =
+    useState<TTournamentPlayersState>({
+      unProcessedQItems: [],
+      processedQItems: []
+    });
 
   const pathname = usePathname();
   const {isSignedIn, user} = useUser();
@@ -43,7 +45,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
-  // Sync Current Tournament with URL Pathname
+  // WORKS: sets both the tournamnet and its players | Sync Current Tournament with URL Pathname
   useEffect(() => {
     // console.log("Current Pathname:", pathname);
     // console.log("Tournaments:", tournaments);
@@ -57,10 +59,16 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
       // console.log(foundTournament);
       if (foundTournament) {
         setCurrentTournament(foundTournament);
+        setCurrentTournamentPlayers(prev => ({
+          ...prev,
+          unProcessedQItems: foundTournament.unProcessedQItems,
+          processedQItems: foundTournament.processedQItems
+        }));
       }
     }
   }, [pathname, tournaments]);
 
+  
   // Fetch Players and Tournaments on Mount
   useEffect(() => {
     // console.log("RUNNING HERE IN USEEFFECT");
@@ -95,69 +103,73 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     );
   };
 
-  // Fetch Players FIXME:
-  const fetchNewPlayers = async () => {
-    // console.log("THIS (FETCH PLAYERS?!!");
-    const response = await fetch("../api/players/");
-    const playersData = await response.json();
-    const playersForTournament = playersData.filter(
-      (player: TPlayer) => player.tournamentId === currentTournament?._id
-    );
+  // FIXME: will update the players INSIDE the tournament
+  // const fetchNewPlayers = async () => {
+  //   // console.log("THIS (FETCH PLAYERS?!!");
+  //   const response = await fetch("../api/players/");
+  //   const playersData = await response.json();
+  //   const playersForTournament = playersData.filter(
+  //     (player: TPlayer) => player.tournamentId === currentTournament?._id
+  //   );
 
-    // comes through
-    console.log("fetchPlayers playerForTourn: ", playersForTournament);
-    setCurrentTournamentPlayers(playersForTournament);
-  };
+  //   // comes through
+  //   console.log("fetchPlayers playerForTourn: ", playersForTournament);
+  //   setCurrentTournamentPlayers(playersForTournament);
+  // };
 
-  // Fetch Tournaments
+  //WORKS: as expected gets ALL tournaments
   const fetchTournaments = async () => {
     const response = await fetch(`/api/tournaments/`);
     const tournamentsData = await response.json();
     setTournaments(tournamentsData);
-    console.log("Tournaments");
-    console.log(tournamentsData);
+    // comes through as expected
+    // console.log("Tournaments");
+    // console.log(tournamentsData);
   };
 
-  // WORKS
-  const fetchPlayersByTournamentId = async (tournamentId: string) => {
-    // console.log("TRYING TO FETCH PLAYERS");
-    // console.log("TOURNAMENT ID");
-    // console.log(tournamentId);
+  // NEW:
+  // "NOTE" is this even needed?
+  // const fetchPlayersByTournamentId = async (tournamentId: string) => {
+  //   // console.log("TRYING TO FETCH PLAYERS");
+  //   // console.log("TOURNAMENT ID");
+  //   // console.log(tournamentId);
 
-    if (!tournamentId) {
-      console.error("Tournament ID is required to fetch data");
-      return;
-    }
+  //   if (!tournamentId) {
+  //     console.error("Tournament ID is required to fetch data");
+  //     return;
+  //   }
 
-    try {
-      const response = await fetch(`/api/tournaments/${tournamentId}/`);
-      if (!response.ok) {
-        throw new Error(`Error fetching tournament: ${response.statusText}`);
-      }
+  //   try {
+  //     const response = await fetch(`/api/tournaments/${tournamentId}/`);
+  //     if (!response.ok) {
+  //       throw new Error(`Error fetching tournament: ${response.statusText}`);
+  //     }
 
-      const tournamentData = await response.json();
-      const tournamentPlayersData = tournamentData.queues.flatMap(
-        queue => queue.queueItems || []
-      );
-      // coming through
-      // console.log("IN THE CONTEXT: ", tournamentPlayersData);
-      // console.log(currentTournamentPlayers);
-      //this works
-      setCurrentTournamentPlayers(tournamentPlayersData);
-    } catch (error) {
-      console.error("Error fetching tournament:", error);
-    }
-  };
+  //     const tournamentData = await response.json();
+  //     const tournamentPlayersData = tournamentData.queues.flatMap(
+  //       queue => queue.queueItems || []
+  //     );
+  //     // coming through
+  //     // console.log("IN THE CONTEXT: ", tournamentPlayersData);
+  //     // console.log(currentTournamentPlayers);
+  //     //this works
+  //     setCurrentTournamentPlayers(tournamentPlayersData);
+  //   } catch (error) {
+  //     console.error("Error fetching tournament:", error);
+  //   }
+  // };
+
   // coming through
   // console.log(currentTournamentPlayers);
-  // Derived Categories from Players
-  const uniqueCategories = useMemo(() => {
-    const categories = currentTournamentPlayers.flatMap(
-      player => player.categories || []
-    );
-    return Array.from(new Set(categories));
-  }, [currentTournamentPlayers]);
 
+  // Derived Categories from Players WORKS:
+  const uniqueCategories = useMemo(() => {
+    const categories = tournaments.flatMap(tournament => tournament.categories || []);
+    return Array.from(new Set(categories));
+  }, [currentTournament]);
+  // console.log(uniqueCategories);
+
+  // "FIXME:"
   const saveTournament = async tournamentId => {
     // comes through OK
     // console.log(tournamentId);
@@ -212,11 +224,11 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         setTournaments,
         filteredTournaments,
         fetchTournaments,
-        fetchNewPlayers,
-        fetchPlayersByTournamentId,
+        // fetchNewPlayers,
+        // fetchPlayersByTournamentId,
         currentTournamentPlayers,
         tournamentOwner,
-        setCurrentTournamentPlayers,
+        // setCurrentTournamentPlayers,
         saveTournament
       }}>
       {children}

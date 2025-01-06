@@ -5,7 +5,7 @@ import SectionHeader from "@/components/SectionHeader";
 import NewPlayerForm from "@/components/Forms/NewPlayerForm";
 import PlayersList from "@/components/PlayersList";
 import QueuesContainer from "@/components/Queue/QueuesContainer";
-import ProcessedPlayers from "@/components/ProcessedPlayers";
+import ProcessedPlayers from "@/components/drafts/ProcessedPlayers";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 

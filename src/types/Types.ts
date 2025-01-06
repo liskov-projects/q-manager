@@ -25,8 +25,16 @@ export type TTournament = {
   name: string; // Tournament name
   adminUser: string; // User ID of the admin
   queues: TQueue[];
+  processedQItems: TPlayer[];
+  unProcessedQItems: TPlayer[];
   description: string;
+  categories: string[];
 };
+
+export interface TTournamentPlayersState {
+  unProcessedQItems: TPlayer[];
+  processedQItems: TPlayer[];
+}
 
 // Tournament and Queues Context Props
 export type TTournamentsAndQueuesContextProps = {

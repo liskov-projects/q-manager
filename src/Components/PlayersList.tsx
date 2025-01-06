@@ -13,44 +13,30 @@ import PlayerListItem from "./PlayerListItem";
 import {TPlayer} from "@/types/Types";
 // import DropDownFilter from "./DropDownFilter";
 
-export default function PlayersList() {
+export default function PlayersList({title, players}) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
 
   const {
     uniqueCategories,
-    fetchNewPlayers,
+    // fetchNewPlayers,
     currentTournamentPlayers,
     tournamentOwner
   } = useTournamentsAndQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
-  useEffect(() => {
-    fetchNewPlayers();
-  }, []);
+  // FIXME: will refresh the players if new are added
+  // useEffect(() => {
+  //   fetchNewPlayers();
+  // }, []);
   //coming throught
   // console.log("In the PlayerList: ", currentTournamentPlayers);
 
-  // FIXME: playerFilterFunction | use it in the filter
-  const unprocessedPlayers = currentTournamentPlayers.filter((player: TPlayer) => {
-    //coming throught
-    // console.log("Player: ", player);
-    return !player.assignedToQueue && !player.processedThroughQueue;
-    // new vars for logic to keep it cleaner
-    // const matchesSearch = player.names?.toLowerCase().includes(search.toLowerCase());
-    // const unassigned = !player.assignedToQueue && !player.processedThroughQueue;
+  //WORKS:
+  // const unprocessedPlayers = currentTournamentPlayers.unProcessedQItems; //why?
+  // console.log("unprocessed", unprocessedPlayers);
 
-    // console.log("unassigned: ", unassigned);
-    // if (filter === "show all" || filter === "") {
-    // return unassigned && matchesSearch;
-    // } else {
-    // return unassigned && matchesSearch && player.category?.includes(filter);
-  });
-
-  //coming throught
-  // console.log("unprocessed: ", unprocessedPlayers);
-  // console.log(uniqueCategories);
   return (
     // REVIEW: viewport height
     <div id="modal-root">
@@ -58,6 +44,7 @@ export default function PlayersList() {
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
         {!tournamentOwner ? null : (
           <Button
+            // FIXME: refresh the players
             onClick={() => {
               // console.log("ONCLICK IS THIS TRIGGERING");
               fetchNewPlayers(); // Call the function
@@ -90,7 +77,7 @@ export default function PlayersList() {
           </select>
         </div>
         <ul className="flex flex-col items-center">
-          {unprocessedPlayers.map((player: TPlayer, index: number) => (
+          {players.map((player: TPlayer, index: number) => (
             <Fragment key={player._id}>
               <PlayerListItem
                 item={player}
