@@ -20,7 +20,6 @@ export default function PlayersList({title, players}) {
   const {
     uniqueCategories,
     // fetchNewPlayers,
-    currentTournamentPlayers,
     tournamentOwner
   } = useTournamentsAndQueuesContext();
   const {handleAddToShortestQueue} = useAddToQueues();

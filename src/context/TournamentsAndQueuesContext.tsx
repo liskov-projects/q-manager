@@ -49,7 +49,8 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   useEffect(() => {
     // console.log("Current Pathname:", pathname);
     // console.log("Tournaments:", tournaments);
-    console.log("Current Tournament:", currentTournament);
+    // console.log("Current Tournament:", currentTournament);
+
     const segments = pathname.split("/");
     const id = segments.pop();
 
@@ -68,7 +69,6 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     }
   }, [pathname, tournaments]);
 
-  
   // Fetch Players and Tournaments on Mount
   useEffect(() => {
     // console.log("RUNNING HERE IN USEEFFECT");

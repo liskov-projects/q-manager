@@ -26,7 +26,7 @@ export default function QueuesGridAlternate() {
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {currentTournament.queues.map((queue: TQueue) => (
         <div
-          key={queue.id}
+          key={queue._id}
           className={`flex flex-col items-center justify-center h-24 w-24 border-8 border-black ${getBackgroundColor(
             queue.queueItems.length
           )}`}>
