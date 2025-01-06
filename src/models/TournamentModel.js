@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import {playerSchema} from "./PlayerModel";
 // import {queueSchema} from "./QueueModel.js";
 const tournamentSchema = new mongoose.Schema(
   {
@@ -9,12 +9,13 @@ const tournamentSchema = new mongoose.Schema(
     adminUser: String,
     image: {type: String},
     description: {type: String},
+    // NEW:
+    unProcessedQItems: [playerSchema],
+    processedQItems: [playerSchema],
     queues: {
       queueName: String,
-      queueItems: [{type: mongoose.Schema.Types.ObjectId, ref: "PlayerModel"}]
-    },
-    players: [{type: mongoose.Schema.Types.ObjectId, ref: "PlayerModel"}]
-    // queues: [{type: mongoose.Schema.Types.ObjectId, ref: "QueueModel"}]
+      queueItems: [playerSchema]
+    }
   },
   {collection: "tournaments"}
 );

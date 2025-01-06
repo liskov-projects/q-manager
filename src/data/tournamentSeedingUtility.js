@@ -1,5 +1,5 @@
 import {MongoClient} from "mongodb";
-import tournaments from "./tournamentSeeds.js";
+import tournamentData from "./tournamentData.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -18,7 +18,7 @@ async function seedTournaments() {
     const tournamentCollection = db.collection("tournaments");
 
     // Insert tournaments and capture inserted documents
-    const result = await tournamentCollection.insertMany(tournaments);
+    const result = await tournamentCollection.insertMany(tournamentData);
     console.log("Tournaments inserted:", result.insertedIds);
     return result.insertedIds; // Returns an object mapping array index to _id
   } finally {
