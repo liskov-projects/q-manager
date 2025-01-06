@@ -92,7 +92,6 @@ export default function TournamentQueuesPage() {
           }`}>
           {/* <SectionHeader>Button Group</SectionHeader> */}
           <ButtonGroup tournamentId={thisTournamentId} />
-          <SectionHeader>Processed Players</SectionHeader>
           <PlayersList
             title={"Processed Players"}
             players={currentTournamentPlayers.processedQItems}

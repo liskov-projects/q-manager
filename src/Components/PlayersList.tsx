@@ -32,14 +32,10 @@ export default function PlayersList({title, players}) {
   //coming throught
   // console.log("In the PlayerList: ", currentTournamentPlayers);
 
-  //WORKS:
-  // const unprocessedPlayers = currentTournamentPlayers.unProcessedQItems; //why?
-  // console.log("unprocessed", unprocessedPlayers);
-
   return (
     // REVIEW: viewport height
     <div id="modal-root">
-      <SectionHeader>Unprocessed Players</SectionHeader>
+      <SectionHeader>{title}</SectionHeader>
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
         {!tournamentOwner ? null : (
           <Button
