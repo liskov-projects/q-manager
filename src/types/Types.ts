@@ -13,7 +13,7 @@ export type TPlayer = {
 
 // Queue Type
 export type TQueue = {
-  _id?: string; // Queue identifier
+  id?: string; // Queue identifier
   queueName: string; // Name of the queue
   queueItems: TPlayer[]; // Players in the queue
   tournamentId: string; // The associated tournament (TODO)

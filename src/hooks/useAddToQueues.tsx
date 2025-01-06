@@ -34,10 +34,10 @@ const useAddToQueues = () => {
    * Add a specific item to the shortest queue.
    */
   const handleAddToShortestQueue = (itemId: string | undefined) => {
-    const itemToUpdate = currentTournamentPlayers.find(
+    const itemToUpdate = currentTournamentPlayers.unProcessedQItems.find(
       player => player._id == itemId
     );
-
+    // WORKS: up to here
     // console.log(itemToUpdate);
     if (!itemToUpdate) {
       throw new Error("Item not found");
@@ -45,20 +45,16 @@ const useAddToQueues = () => {
 
     const shortestQueue = findShortestQueue(currentTournament.queues);
     // console.log(shortestQueue);
-    const updatedItem = {
-      ...itemToUpdate,
-      assignedToQueue: true,
-      processedThroughQueue: false
-    };
 
     const updatedQueues = currentTournament.queues.map(queue =>
       queue.id === shortestQueue.id
-        ? {...queue, queueItems: [...queue.queueItems, updatedItem]}
+        ? {...queue, queueItems: [...queue.queueItems, itemToUpdate]}
         : queue
     );
+    console.log(currentTournamentPlayers, "curPl");
 
     setCurrentTournamentPlayers(prevPlayers =>
-      prevPlayers.map(player => (player._id === itemId ? updatedItem : player))
+      prevPlayers.map(player => (player._id === itemId ? itemToUpdate : player))
     );
 
     setCurrentTournament(prevTournament => ({
