@@ -4,16 +4,14 @@ import Link from "next/link";
 import SectionHeader from "../SectionHeader";
 
 export default function Tournament({tournament}: {tournament: TTournament}) {
-  const {name, _id} = tournament;
+  const {name, _id, description} = tournament;
   // console.log(name, categories, description);
   // const formattedCategories = categories.join(", ");
 
   return (
     <div className="flex flex-col items-center">
-      <Link  href={`/all-tournaments/${_id}`}>
-        <SectionHeader>
-          {name}
-        </SectionHeader>
+      <Link href={`/all-tournaments/${_id}`}>
+        <SectionHeader>{name}</SectionHeader>
 
         <Image
           //   FIXME:
@@ -22,7 +20,7 @@ export default function Tournament({tournament}: {tournament: TTournament}) {
           width={350}
           height={250}
         />
-        <p>{_id}</p>
+        <p>{description}</p>
         {/* <p>{formattedCategories}</p> */}
       </Link>
     </div>

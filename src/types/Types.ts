@@ -25,6 +25,7 @@ export type TTournament = {
   name: string; // Tournament name
   adminUser: string; // User ID of the admin
   queues: TQueue[];
+  description: string;
 };
 
 // Tournament and Queues Context Props
