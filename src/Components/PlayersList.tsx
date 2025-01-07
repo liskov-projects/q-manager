@@ -1,7 +1,6 @@
 "use client";
 
 import {useState, Fragment, useEffect} from "react";
-import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import Button from "./Buttons/Button";
 import DropZone from "./DropZone";
@@ -22,7 +21,6 @@ export default function PlayersList({title, players}) {
     // fetchNewPlayers,
     tournamentOwner
   } = useTournamentsAndQueuesContext();
-  const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDrop} = useDragNDrop();
 
   // FIXME: will refresh the players if new are added
@@ -77,8 +75,6 @@ export default function PlayersList({title, players}) {
               <PlayerListItem
                 item={player}
                 className="h-30 w-[92%] p-2 bg-slate-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
-                  // FIXME: do we need to pass it??
-                onAddToQueue={() => handleAddToShortestQueue(player._id)}
               />
               <DropZone
                 height={60}

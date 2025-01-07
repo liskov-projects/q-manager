@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import {TPlayer} from "@/types/Types";
 import Button from "./Buttons/Button"; // Adjust the import if the button is in a different path
@@ -9,9 +10,7 @@ import EditListItem from "./EditListItem";
 
 export default function PlayerListItem({
   item,
-  className,
-  // FIXME: do we need to pass it??
-  onAddToQueue
+  className
 }: {
   item: TPlayer;
   className: string;
@@ -20,6 +19,7 @@ export default function PlayerListItem({
 }) {
   const {tournamentOwner, setCurrentTournamentPlayers} =
     useTournamentsAndQueuesContext();
+    const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDragStart, handleDragOver} = useDragNDrop();
   const [editMode, setEditMode] = useState(false);
 
@@ -74,8 +74,7 @@ export default function PlayerListItem({
           {/* Add to Shortest Queue Button */}
           {!tournamentOwner ? null : (
             <Button
-              // FIXME: do we need to pass it??
-              onClick={onAddToQueue}
+              onClick={() => handleAddToShortestQueue(item._id)}
               className="px-10 py-5 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center">
               ADD TO SHORTEST QUEUE ⬆️
             </Button>
