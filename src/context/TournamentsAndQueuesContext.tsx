@@ -13,7 +13,6 @@ import {useUser} from "@clerk/nextjs";
 
 // Types
 import {
-  TQueue,
   TPlayer,
   TTournamentPlayersState,
   TTournament,
@@ -33,11 +32,11 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // Tournaments State
   const [tournaments, setTournaments] = useState<TTournament[]>([]);
   const [currentTournament, setCurrentTournament] = useState<TTournament | null>();
-  const [currentTournamentPlayers, setCurrentTournamentPlayers] =
-    useState<TTournamentPlayersState>({
-      unProcessedQItems: [],
-      processedQItems: []
-    });
+  // const [currentTournamentPlayers, setCurrentTournamentPlayers] =
+  //   useState<TTournamentPlayersState>({
+  //     unProcessedQItems: [],
+  //     processedQItems: []
+  //   });
 
   const pathname = usePathname();
   const {isSignedIn, user} = useUser();
@@ -67,11 +66,6 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
       // console.log(foundTournament);
       if (foundTournament) {
         setCurrentTournament(foundTournament);
-        setCurrentTournamentPlayers(prev => ({
-          ...prev,
-          unProcessedQItems: foundTournament.unProcessedQItems,
-          processedQItems: foundTournament.processedQItems
-        }));
       }
     }
   }, [pathname, tournaments]);
@@ -229,7 +223,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         // fetchPlayersByTournamentId,
         // currentTournamentPlayers,
         tournamentOwner,
-        setCurrentTournamentPlayers,
+        // setCurrentTournamentPlayers,
         saveTournament
       }}>
       {children}
