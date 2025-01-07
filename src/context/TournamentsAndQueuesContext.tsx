@@ -14,7 +14,6 @@ import {useUser} from "@clerk/nextjs";
 // Types
 import {
   TPlayer,
-  TTournamentPlayersState,
   TTournament,
   TTournamentsAndQueuesContextProps
 } from "@/types/Types";
@@ -157,7 +156,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // coming through
   // console.log(currentTournamentPlayers);
 
-  // Derived Categories from Players WORKS:
+  //WORKS: Derived Categories from Players
   const uniqueCategories = useMemo(() => {
     const categories = tournaments.flatMap(tournament => tournament.categories || []);
     return Array.from(new Set(categories));
