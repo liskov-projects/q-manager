@@ -228,7 +228,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         // fetchPlayersByTournamentId,
         currentTournamentPlayers,
         tournamentOwner,
-        // setCurrentTournamentPlayers,
+        setCurrentTournamentPlayers,
         saveTournament
       }}>
       {children}

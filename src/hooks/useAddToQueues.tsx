@@ -1,5 +1,7 @@
 "use client";
 
+// TODO: Cleanup all the console.logs
+
 // Types
 import {TPlayer} from "@/types/Types";
 import {TQueue} from "@/types/Types";
@@ -7,6 +9,7 @@ import {TQueue} from "@/types/Types";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 const useAddToQueues = () => {
+  // NOTE: find out if it's needed here or we can use the parameters passed in the ButtonGroup.tsx
   const {
     currentTournamentPlayers,
     setCurrentTournamentPlayers,
@@ -15,92 +18,88 @@ const useAddToQueues = () => {
   } = useTournamentsAndQueuesContext();
 
   /**
-   * Find the shortest queue based on the number of items.
+   *WORKS: Find the shortest queue based on the number of items.
    */
   const findShortestQueue = (queues: TQueue[]): TQueue => {
-    return currentTournament.queues.reduce((shortest, queue) =>
+    return queues.reduce((shortest, queue) =>
       queue.queueItems.length < shortest.queueItems.length ? queue : shortest
     );
   };
 
   /**
-   * Find players not yet assigned to a queue.
-   */
-  const findAssignedToQueue = (players: TPlayer[]): TPlayer[] => {
-    return players.filter(player => !player.assignedToQueue);
-  };
-
-  /**
-   * Add a specific item to the shortest queue.
+   *WORKS: Adds a specific item to the shortest queue.
    */
   const handleAddToShortestQueue = (itemId: string | undefined) => {
-    const itemToUpdate = currentTournamentPlayers.unProcessedQItems.find(
-      player => player._id == itemId
+    const shortestQueue = findShortestQueue(currentTournament.queues);
+    // copy the items
+    const currentPlayers = [
+      ...currentTournamentPlayers.unProcessedQItems,
+      ...currentTournamentPlayers.processedQItems
+    ];
+    const itemToAdd = currentPlayers.find(player => player._id === itemId);
+    //copy the queues
+    const updatedQueues = currentTournament.queues.map(queue =>
+      queue.id === shortestQueue.id
+        ? {...queue, queueItems: [...queue.queueItems, itemToAdd]}
+        : queue
     );
-    // WORKS: up to here
-    // console.log(itemToUpdate);
-    if (!itemToUpdate) {
+
+    if (!itemToAdd) {
       throw new Error("Item not found");
     }
 
-    const shortestQueue = findShortestQueue(currentTournament.queues);
-    // console.log(shortestQueue);
-
-    const updatedQueues = currentTournament.queues.map(queue =>
-      queue.id === shortestQueue.id
-        ? {...queue, queueItems: [...queue.queueItems, itemToUpdate]}
-        : queue
-    );
-    console.log(currentTournamentPlayers, "curPl");
-
-    setCurrentTournamentPlayers(prevPlayers =>
-      prevPlayers.map(player => (player._id === itemId ? itemToUpdate : player))
-    );
-
-    setCurrentTournament(prevTournament => ({
-      ...prevTournament,
-      queues: updatedQueues
-    }));
-  };
-
-  /**
-   * Add all unassigned items to queues, starting with the shortest queue.
-   */
-  const handleAddAllToQueues = (items: TPlayer[]) => {
-    const unassignedPlayers = findAssignedToQueue(items);
-    const updatedQueues = [...currentTournament?.queues];
-    unassignedPlayers.forEach((player, index) => {
-      const targetQeueue = findShortestQueue(updatedQueues);
-      targetQeueue.queueItems.push({
-        ...player,
-        assignedToQueue: true,
-        processedThroughQueue: false
-      });
+    setCurrentTournament(prevTournament => {
+      shortestQueue.queueItems.push(itemToAdd);
+      return {...prevTournament, queues: updatedQueues};
     });
 
-    const updatedPlayers = currentTournamentPlayers.map(player =>
-      unassignedPlayers.some(el => el._id === player._id)
-        ? {...player, assignedToQueue: true}
-        : player
-    );
+    setCurrentTournamentPlayers(prevPlayers => ({
+      unProcessedQItems: prevPlayers.unProcessedQItems.filter(
+        player => player._id !== itemId
+      ),
+      processedQItems: prevPlayers.processedQItems.filter(
+        player => player._id !== itemId
+      )
+    }));
+  };
+
+  /**
+   *WORKS: Add all unassigned items to queues, starting with the shortest queue.
+   */
+  const handleAddAllToQueues = (players: TPlayer[]) => {
+    // create on pool of players to add
+    const unassignedPlayers = [
+      //NOTE: do we want to use them all?
+      ...players.unProcessedQItems,
+      ...players.processedQItems
+    ];
+    // console.log("UnassignedPL", unassignedPlayers);
+
+    const updatedQueues = [...currentTournament?.queues];
+    unassignedPlayers.forEach(player => {
+      const targetQeueue = findShortestQueue(updatedQueues);
+      targetQeueue.queueItems.push(player);
+    });
 
     setCurrentTournament(prev => ({
       ...prev,
       queues: updatedQueues
     }));
 
-    setCurrentTournamentPlayers(updatedPlayers);
+    setCurrentTournamentPlayers({
+      unProcessedQItems: [],
+      processedQItems: []
+    });
   };
 
   /**
-   * Process all players, marking them as processed and clearing queues.
+   *WORKS: Process all players, marking them as processed and clearing queues.
    */
-  const handleProcessAll = (items: TPlayer[]) => {
-    const updatedPlayers = items.map(item => ({
-      ...item,
-      processedThroughQueue: true,
-      assignedToQueue: false
-    }));
+  const handleProcessAll = () => {
+    const poolOfPlayers = currentTournament?.queues
+      .map(queue => queue.queueItems)
+      .flat();
+    // console.log(poolOfPlayers, "POOL");
 
     const clearedQueues = currentTournament.queues.map(queue => ({
       ...queue,
@@ -111,18 +110,22 @@ const useAddToQueues = () => {
       ...prev,
       queues: clearedQueues
     }));
-    setCurrentTournamentPlayers(updatedPlayers);
+
+    setCurrentTournamentPlayers(prevPlayers => ({
+      ...prevPlayers,
+      processedQItems: poolOfPlayers
+    }));
   };
 
   /**
-   * Unprocess all players, resetting their queue state.
+   *WORKS: Unprocess all players, resetting their queue state.
    */
-  const handleUnprocessAll = (items: TPlayer[]) => {
-    const updatedPlayers = items.map(item => ({
-      ...item,
-      processedThroughQueue: false,
-      assignedToQueue: false
-    }));
+  const handleUnprocessAll = () => {
+    const poolOfPlayers = currentTournament?.queues
+      .map(queue => queue.queueItems)
+      .flat()
+      .concat(currentTournamentPlayers.processedQItems);
+    // console.log(poolOfPlayers, "POOL");
 
     const clearedQueues = currentTournament.queues.map(queue => ({
       ...queue,
@@ -133,11 +136,15 @@ const useAddToQueues = () => {
       ...prev,
       queues: clearedQueues
     }));
-    setCurrentTournamentPlayers(updatedPlayers);
+
+    setCurrentTournamentPlayers({
+      unProcessedQItems: poolOfPlayers,
+      processedQItems: []
+    });
   };
 
   /**
-   * Process the next item in a specific queue.
+   *WORKS: Process the next item in a specific queue.
    */
   const handleProgressOneStep = (queueIndex: number) => {
     const updatedQueues = [...currentTournament.queues];
@@ -145,17 +152,10 @@ const useAddToQueues = () => {
 
     if (!processedPlayer) return;
 
-    const updatedPlayer = {
-      ...processedPlayer,
-      processedThroughQueue: true,
-      assignedToQueue: false
-    };
-
-    const updatedPlayers = currentTournamentPlayers.map(player =>
-      player._id === updatedPlayer._id ? updatedPlayer : player
-    );
-
-    setCurrentTournamentPlayers(updatedPlayers);
+    setCurrentTournamentPlayers(prevPlayers => ({
+      ...prevPlayers,
+      processedQItems: [...prevPlayers.processedQItems, processedPlayer]
+    }));
     setCurrentTournament(prevTournament => ({
       ...prevTournament,
       queues: updatedQueues
@@ -163,7 +163,7 @@ const useAddToQueues = () => {
   };
 
   /**
-   * Redistribute all items evenly across all queues.
+   *WORKS: Redistribute all items evenly across all queues.
    */
   const handleRedistributeQueues = () => {
     const shortestQueueLength = findShortestQueue(currentTournament.queues).queueItems
@@ -196,8 +196,7 @@ const useAddToQueues = () => {
     handleProcessAll,
     handleUnprocessAll,
     handleProgressOneStep,
-    handleRedistributeQueues,
-    findAssignedToQueue
+    handleRedistributeQueues
   };
 };
 

@@ -6,8 +6,8 @@ export type TPlayer = {
   names?: string; // Changed `names` to `name` for clarity
   categories?: string | string[]; // A single category or multiple
   phoneNumbers?: string; // Singular for consistency
-  assignedToQueue?: boolean;
-  processedThroughQueue?: boolean;
+  // assignedToQueue?: boolean;
+  // processedThroughQueue?: boolean;
   tournamentId: string; // The ID of the associated tournament
 };
 
@@ -31,10 +31,10 @@ export type TTournament = {
   categories: string[];
 };
 
-export interface TTournamentPlayersState {
+export type TTournamentPlayersState = {
   unProcessedQItems: TPlayer[];
   processedQItems: TPlayer[];
-}
+};
 
 // Tournament and Queues Context Props
 export type TTournamentsAndQueuesContextProps = {

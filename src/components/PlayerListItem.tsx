@@ -10,6 +10,7 @@ import EditListItem from "./EditListItem";
 export default function PlayerListItem({
   item,
   className,
+  // FIXME: do we need to pass it??
   onAddToQueue
 }: {
   item: TPlayer;
@@ -73,6 +74,7 @@ export default function PlayerListItem({
           {/* Add to Shortest Queue Button */}
           {!tournamentOwner ? null : (
             <Button
+              // FIXME: do we need to pass it??
               onClick={onAddToQueue}
               className="px-10 py-5 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center">
               ADD TO SHORTEST QUEUE ⬆️
