@@ -31,11 +31,6 @@ export type TTournament = {
   categories: string[];
 };
 
-export type TTournamentPlayersState = {
-  unProcessedQItems: TPlayer[];
-  processedQItems: TPlayer[];
-};
-
 // Tournament and Queues Context Props
 export type TTournamentsAndQueuesContextProps = {
   players: TPlayer[];

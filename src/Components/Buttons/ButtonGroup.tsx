@@ -6,7 +6,7 @@ import useAddToQueues from "@/hooks/useAddToQueues";
 import SectionHeader from "../SectionHeader";
 
 export default function ButtonGroup({tournamentId}) {
-  const {currentTournamentPlayers, tournamentOwner, saveTournament} =
+  const {currentTournament, tournamentOwner, saveTournament} =
     useTournamentsAndQueuesContext();
 
   const {
@@ -28,7 +28,7 @@ export default function ButtonGroup({tournamentId}) {
           <Button
             className="bg-bluestone-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[800px] px-4 rounded my-2 mx-2 min-w-30 text-nowrap"
             onClick={() => {
-              handleAddAllToQueues(currentTournamentPlayers);
+              handleAddAllToQueues(currentTournament);
             }}>
             Add all
           </Button>
@@ -44,14 +44,14 @@ export default function ButtonGroup({tournamentId}) {
           <Button
             className="bg-brick-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
             onClick={() => {
-              handleUnprocessAll(currentTournamentPlayers);
+              handleUnprocessAll(currentTournament);
             }}>
             Unprocess all
           </Button>
           <Button
             className="bg-bluestone-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
             onClick={() => {
-              handleProcessAll(currentTournamentPlayers);
+              handleProcessAll(currentTournament);
             }}>
             Process all
           </Button>

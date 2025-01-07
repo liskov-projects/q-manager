@@ -10,12 +10,7 @@ import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesCont
 
 const useAddToQueues = () => {
   // NOTE: find out if it's needed here or we can use the parameters passed in the ButtonGroup.tsx
-  const {
-    currentTournamentPlayers,
-    setCurrentTournamentPlayers,
-    currentTournament,
-    setCurrentTournament
-  } = useTournamentsAndQueuesContext();
+  const {currentTournament, setCurrentTournament} = useTournamentsAndQueuesContext();
 
   /**
    *WORKS: Find the shortest queue based on the number of items.
@@ -33,10 +28,13 @@ const useAddToQueues = () => {
     const shortestQueue = findShortestQueue(currentTournament.queues);
     // copy the items
     const currentPlayers = [
-      ...currentTournamentPlayers.unProcessedQItems,
-      ...currentTournamentPlayers.processedQItems
+      ...currentTournament.unProcessedQItems,
+      ...currentTournament.processedQItems
     ];
     const itemToAdd = currentPlayers.find(player => player._id === itemId);
+    if (!itemToAdd) {
+      throw new Error("Item not found");
+    }
     //copy the queues
     const updatedQueues = currentTournament.queues.map(queue =>
       queue.id === shortestQueue.id
@@ -44,23 +42,19 @@ const useAddToQueues = () => {
         : queue
     );
 
-    if (!itemToAdd) {
-      throw new Error("Item not found");
-    }
-
     setCurrentTournament(prevTournament => {
       shortestQueue.queueItems.push(itemToAdd);
-      return {...prevTournament, queues: updatedQueues};
+      return {
+        ...prevTournament,
+        queues: updatedQueues,
+        unProcessedQItems: prevTournament?.unProcessedQItems.filter(
+          player => player._id !== itemId
+        ),
+        processedQItems: prevTournament?.processedQItems.filter(
+          player => player._id !== itemId
+        )
+      };
     });
-
-    setCurrentTournamentPlayers(prevPlayers => ({
-      unProcessedQItems: prevPlayers.unProcessedQItems.filter(
-        player => player._id !== itemId
-      ),
-      processedQItems: prevPlayers.processedQItems.filter(
-        player => player._id !== itemId
-      )
-    }));
   };
 
   /**
@@ -83,13 +77,10 @@ const useAddToQueues = () => {
 
     setCurrentTournament(prev => ({
       ...prev,
-      queues: updatedQueues
-    }));
-
-    setCurrentTournamentPlayers({
+      queues: updatedQueues,
       unProcessedQItems: [],
       processedQItems: []
-    });
+    }));
   };
 
   /**
@@ -108,11 +99,7 @@ const useAddToQueues = () => {
 
     setCurrentTournament(prev => ({
       ...prev,
-      queues: clearedQueues
-    }));
-
-    setCurrentTournamentPlayers(prevPlayers => ({
-      ...prevPlayers,
+      queues: clearedQueues,
       processedQItems: poolOfPlayers
     }));
   };
@@ -124,7 +111,7 @@ const useAddToQueues = () => {
     const poolOfPlayers = currentTournament?.queues
       .map(queue => queue.queueItems)
       .flat()
-      .concat(currentTournamentPlayers.processedQItems);
+      .concat(currentTournament.processedQItems);
     // console.log(poolOfPlayers, "POOL");
 
     const clearedQueues = currentTournament.queues.map(queue => ({
@@ -134,13 +121,10 @@ const useAddToQueues = () => {
 
     setCurrentTournament(prev => ({
       ...prev,
-      queues: clearedQueues
-    }));
-
-    setCurrentTournamentPlayers({
+      queues: clearedQueues,
       unProcessedQItems: poolOfPlayers,
       processedQItems: []
-    });
+    }));
   };
 
   /**
@@ -152,13 +136,10 @@ const useAddToQueues = () => {
 
     if (!processedPlayer) return;
 
-    setCurrentTournamentPlayers(prevPlayers => ({
-      ...prevPlayers,
-      processedQItems: [...prevPlayers.processedQItems, processedPlayer]
-    }));
     setCurrentTournament(prevTournament => ({
       ...prevTournament,
-      queues: updatedQueues
+      queues: updatedQueues,
+      processedQItems: [...prevTournament.processedQItems, processedPlayer]
     }));
   };
 

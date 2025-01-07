@@ -45,6 +45,13 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
+  // Fetch Players and Tournaments on Mount
+  useEffect(() => {
+    // console.log("RUNNING HERE IN USEEFFECT");
+    // fetchPlayers();
+    fetchTournaments();
+  }, []);
+
   // WORKS: sets both the tournamnet and its players | Sync Current Tournament with URL Pathname
   useEffect(() => {
     // console.log("Current Pathname:", pathname);
@@ -68,13 +75,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
       }
     }
   }, [pathname, tournaments]);
-
-  // Fetch Players and Tournaments on Mount
-  useEffect(() => {
-    // console.log("RUNNING HERE IN USEEFFECT");
-    // fetchPlayers();
-    fetchTournaments();
-  }, []);
+  // console.log("in the context", currentTournament);
 
   // Filtered Tournaments
   const filteredTournaments = tournaments.filter(
@@ -226,7 +227,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         fetchTournaments,
         // fetchNewPlayers,
         // fetchPlayersByTournamentId,
-        currentTournamentPlayers,
+        // currentTournamentPlayers,
         tournamentOwner,
         setCurrentTournamentPlayers,
         saveTournament

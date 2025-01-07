@@ -1,19 +1,16 @@
 "use client";
 
 import {useState, useEffect} from "react";
-import SectionHeader from "@/components/SectionHeader";
 import NewPlayerForm from "@/components/Forms/NewPlayerForm";
 import PlayersList from "@/components/PlayersList";
 import QueuesContainer from "@/components/Queue/QueuesContainer";
-import ProcessedPlayers from "@/components/drafts/ProcessedPlayers";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {usePathname} from "next/navigation";
-import Tournament from "../Tournaments/TournamentCard";
 
-export default function TournamentQueuesPage() {
+export default function TournamentQueuesPage({thisTournamentId}) {
   const [visibleSection, setVisibleSection] = useState("queues");
-  const [thisTournamentId, setThisTournamentId] = useState(null);
+  // const [thisTournamentId, setThisTournamentId] = useState(null);
 
   const pathname = usePathname();
 
@@ -21,28 +18,21 @@ export default function TournamentQueuesPage() {
     // fetchPlayersByTournamentId,
     setCurrentTournament,
     tournaments,
-    currentTournamentPlayers
+    currentTournamentPlayers,
+    currentTournament
   } = useTournamentsAndQueuesContext();
 
-  // Fetch players on component mount
+  // console.log("in the component", currentTournament);
   useEffect(() => {
-    // console.log("IN THE USEEFECT FOR TOURNAMENTQUEUESPAGE")
-    // console.log(thisTournamentId)
-
-    const segments = pathname.split("/");
-    const id = segments.pop();
-    setThisTournamentId(id);
-
     if (thisTournamentId) {
-      const thisTournament = tournaments.find(
-        tournament => tournament._id === thisTournamentId
-      );
-      // console.log("THIS TOURNAMENT IS SET")
-      // console.log(thisTournament)
+      const thisTournament = fetchPlayersByTournamentId(thisTournamentId);
       setCurrentTournament(thisTournament);
-      // fetchPlayersByTournamentId(thisTournamentId);
     }
   }, [thisTournamentId]);
+
+  if (!currentTournament) {
+    return <div>Loading...</div>; // Add a loading state
+  }
 
   return (
     <>
@@ -74,7 +64,7 @@ export default function TournamentQueuesPage() {
           <NewPlayerForm />
           <PlayersList
             title={"Unprocessed Players"}
-            players={currentTournamentPlayers.unProcessedQItems}
+            players={currentTournament.unProcessedQItems}
           />
         </div>
 
@@ -94,7 +84,7 @@ export default function TournamentQueuesPage() {
           <ButtonGroup tournamentId={thisTournamentId} />
           <PlayersList
             title={"Processed Players"}
-            players={currentTournamentPlayers.processedQItems}
+            players={currentTournament.processedQItems}
           />
           {/* <ProcessedPlayers /> */}
         </div>
