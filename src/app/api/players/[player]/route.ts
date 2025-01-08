@@ -17,14 +17,18 @@ export async function PUT(request: NextRequest, {params}) {
   try {
     await dbConnect();
 
-    const tournamentToUpdate = await TournamentModel.findOne({_id: tournamentID});
-    console.log("tournamentToUpdate: ", tournamentToUpdate);
+    const tournamentToUpdate = await TournamentModel.findOne({
+      _id: tournamentID
+    });
+    const jsTournament = tournamentToUpdate.toObject();
+    console.log("jsTournament: ", Array.isArray(jsTournament.queues));
+    // console.log("tournamentToUpdate: ", tournamentToUpdate);
 
-    const foundPlayer = findPlayerInTournament(tournamentToUpdate, playerId);
+    const foundPlayer = findPlayerInTournament(jsTournament, playerId);
     console.log("foundPlayer: ", foundPlayer);
 
     const updatedPlayer = await TournamentModel.findOneAndUpdate(
-      {_id: id}, // Match by MongoDB ObjectId
+      {_id: playerId}, // Match by MongoDB ObjectId
       {...body}, // Update
       {new: true} // Return the updated document
     );
