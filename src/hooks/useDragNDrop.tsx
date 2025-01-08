@@ -31,8 +31,7 @@ const useDragNDrop = () => {
     const updatedItem = {...draggedItem};
 
     setCurrentTournament(prev => {
-      // has to have it as TS yell without
-      if (!prev) return null;
+      // FIXME:
       return {
         ...prev,
         unProcessedQItems: prev.unProcessedQItems.filter(
@@ -45,18 +44,12 @@ const useDragNDrop = () => {
           queue.id === dropQueue.id
             ? {...queue, queueItems: [...queue.queueItems, updatedItem]}
             : queue
-        ),
-        // has to have it as TS yell without
-        name: prev.name,
-        adminUser: prev.adminUser,
-        description: prev.description,
-        categories: prev.categories || []
+        )
       };
     });
 
     setDraggedItem(null);
   };
-
   // General handle drop function for different drop targets
   const handleDrop = ({
     e,

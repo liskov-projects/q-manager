@@ -5,43 +5,50 @@ import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
 import {useUser} from "@clerk/nextjs";
 
+// allows for partial form from existing Type
+type TTournamentForm = Partial<TTournament> & {
+  numberOfQueues: number;
+};
+
 export default function NewTournamentForm() {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
-  const [newTournament, setNewTournament] = useState<TTournament>({
+  const [newTournament, setNewTournament] = useState<TTournamentForm>({
     name: "",
     categories: [],
     adminUser: "",
-    image: null,
+    image: "",
     description: "",
-    queues: 0
-    // players: []
+    numberOfQueues: 0
   });
 
   // any signed in user can create a new tournamnet
   const {isSignedIn, user} = useUser();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value, type, files } = e.target;
-  
+    const {name, value, type, files} = e.target;
+
     setNewTournament({
       ...newTournament,
-      [name]: type === "file" && files
-        ? files[0]
-        : type === "number"
-        ? Number(value)
-        : value,
+      [name]:
+        type === "file" && files
+          ? files[0]
+          : type === "number"
+          ? Number(value)
+          : value
     });
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    // FIXME:
     const incomingCategories =
       typeof newTournament.categories === "string"
         ? newTournament.categories.split(",").map(category => category.trim())
         : newTournament.categories;
 
-    const queuesNumber = Number(newTournament.queues);
+    // TODO: make empty queues objects
+    const numberOfQueues = Number(newTournament.queues);
 
     // data to send to backend
     const newItem = {
@@ -50,8 +57,7 @@ export default function NewTournamentForm() {
       adminUser: user?.id,
       image: newTournament.image,
       description: newTournament.description,
-      queues: queuesNumber
-      //   players: newTournament.players
+      numberOfQueues: numberOfQueues
     };
 
     // console.log("Data sent to backend: ", newItem);
@@ -88,8 +94,7 @@ export default function NewTournamentForm() {
       adminUser: "",
       image: "",
       description: "",
-      queues: 0
-      //   players: []
+      numberOfQueues: 0
     });
     // console.log(newTournament);
   }

@@ -2,6 +2,8 @@ import {TPlayer} from "@/types/Types";
 import Button from "./Buttons/Button";
 import {useState} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import {usePathname} from "next/navigation";
+
 export default function EditListItem({
   item,
   setEditMode
@@ -19,6 +21,10 @@ export default function EditListItem({
     phoneNumbers: item?.phoneNumbers?.join(", ")
   });
 
+  // getting the tournament id
+  const pathname = usePathname();
+  const tournamentID = pathname.split("/").pop();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
     setUpdatedData(prev => ({...prev, [name]: value}));
@@ -29,6 +35,7 @@ export default function EditListItem({
 
     const updatedCard = {
       ...item,
+      tournamentID: tournamentID,
       names: updatedData.names,
       categories: updatedData.categories,
       phoneNumbers: updatedData.phoneNumbers.split(",").map(num => num.trim())

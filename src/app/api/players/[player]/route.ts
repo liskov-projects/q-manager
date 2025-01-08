@@ -1,15 +1,29 @@
+import Tournament from "@/components/Tournaments/TournamentCard";
 import dbConnect from "@/lib/db";
-import PlayerModel from "@/models/PlayerModel";
+// import PlayerModel from "@/models/PlayerModel";
+import TournamentModel from "@/models/TournamentModel";
 import {NextRequest} from "next/server";
+import findPlayerInTournament from "../../utilities/findPlayerInTournament";
 
 export async function PUT(request: NextRequest, {params}) {
-  const id = params.player;
-  const body = await request.json();
+  console.log("params are: ", params);
+
+  const playerId = params.player;
+  const {tournamentID, ...body} = await request.json();
+
+  console.log("tournamentID: ", tournamentID);
+  console.log("body: ", body);
 
   try {
     await dbConnect();
-    // Simulate update logic
-    const updatedPlayer = await PlayerModel.findOneAndUpdate(
+
+    const tournamentToUpdate = await TournamentModel.findOne({_id: tournamentID});
+    console.log("tournamentToUpdate: ", tournamentToUpdate);
+
+    const foundPlayer = findPlayerInTournament(tournamentToUpdate, playerId);
+    console.log("foundPlayer: ", foundPlayer);
+
+    const updatedPlayer = await TournamentModel.findOneAndUpdate(
       {_id: id}, // Match by MongoDB ObjectId
       {...body}, // Update
       {new: true} // Return the updated document
