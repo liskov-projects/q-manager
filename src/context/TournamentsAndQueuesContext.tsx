@@ -12,11 +12,7 @@ import {usePathname} from "next/navigation";
 import {useUser} from "@clerk/nextjs";
 
 // Types
-import {
-  TPlayer,
-  TTournament,
-  TTournamentsAndQueuesContextProps
-} from "@/types/Types";
+import {TPlayer, TTournament, TTournamentsAndQueuesContextProps} from "@/types/Types";
 
 const TournamentsAndQueuesContext = createContext<
   TTournamentsAndQueuesContextProps | undefined
@@ -40,7 +36,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const pathname = usePathname();
   const {isSignedIn, user} = useUser();
   // console.log(user, "user");
-
+  console.log("in the context", currentTournament);
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
   // Fetch Players and Tournaments on Mount

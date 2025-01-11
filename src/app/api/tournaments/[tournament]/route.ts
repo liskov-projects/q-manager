@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   // console.log(typeof url);
 
   const tournamentId = url?.split("/").pop();
-  // console.log(tournamentId);
+  console.log("tournamentID: ", tournamentId);
   // Ensure the database is connected
   await dbConnect();
 
@@ -33,11 +33,11 @@ export async function GET(req: NextRequest) {
     //   status: 200,
     //   headers: {"Content-Type": "application/json"}
     // });
-    const tournaments = await TournamentModel.findById(tournamentId)
+    const tournament = await TournamentModel.findById(tournamentId)
       .select("players") // Populate player references
       .populate("queues.queueItems"); // Populate queue player references
-
-    return new Response(JSON.stringify(tournaments), {
+    console.log("backend: ", tournament);
+    return new Response(JSON.stringify(tournament), {
       headers: {"Content-Type": "application/json"}
     });
     // res.status(200).json(players);

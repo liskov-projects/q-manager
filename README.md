@@ -147,3 +147,13 @@ Tournament Collection
 ## GET /api/queues
 
     Retrieves all queues.
+
+# Seeding utilities | dev purposes
+
+## npm run seed:tournaments
+
+    Populates the db with 7 empty tournaments
+
+## npm run seed:players
+
+    Populates the db with players. Players are added into the players collection & to the corresponding tournament

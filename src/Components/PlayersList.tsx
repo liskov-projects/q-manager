@@ -29,7 +29,7 @@ export default function PlayersList({title, players}) {
   // }, []);
   //coming throught
   // console.log("In the PlayerList: ", currentTournamentPlayers);
-
+  // console.log("Players: ", players);
   return (
     // REVIEW: viewport height
     <div id="modal-root">

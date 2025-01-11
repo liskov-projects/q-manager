@@ -10,9 +10,7 @@ export const playerSchema = new mongoose.Schema(
       // used to refer this field to tournament._id
       type: String,
       required: true
-    },
-    assignedToQueue: Boolean,
-    processedThroughQueue: Boolean
+    }
   },
   {collection: "players"}
 );

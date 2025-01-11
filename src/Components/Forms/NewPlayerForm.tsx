@@ -18,8 +18,7 @@ export default function NewPlayerForm() {
   const [newPlayers, setNewPlayers] = useState<TPlayer>({
     names: "",
     categories: "",
-    phoneNumbers: "",
-    tournamentId: ""
+    phoneNumbers: ""
     //
   });
 
@@ -51,8 +50,6 @@ export default function NewPlayerForm() {
       names: newPlayers.names,
       categories: incomingCategories,
       phoneNumbers: incomingPhoneNumbers,
-      assignedToQueue: false,
-      processThroughQueue: false,
       tournamentId: currentTournament._id
     };
 
@@ -88,8 +85,7 @@ export default function NewPlayerForm() {
     setNewPlayers({
       names: "",
       categories: "",
-      phoneNumbers: "",
-      tournamentId: ""
+      phoneNumbers: ""
     });
     // console.log(newPlayers);
   }
