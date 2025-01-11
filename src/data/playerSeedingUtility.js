@@ -1,5 +1,6 @@
 import {MongoClient} from "mongodb";
-import playerSeeds from "./playerSeeds.js";
+// import playerSeeds from "./playerSeeds.js";
+import playersData from "./playersData.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -22,8 +23,8 @@ const seedPlayers = async () => {
     const tournamentCollection = db.collection("tournaments");
 
     // Insert players into the players collection
-    await playerCollection.insertMany(playerSeeds);
-    console.log(`Inserted ${playerSeeds.length} players into the database`);
+    await playerCollection.insertMany(playersData);
+    console.log(`Inserted ${playersData.length} players into the database`);
 
     // Fetch all players and tournaments
     const newPlayers = await playerCollection.find().toArray();

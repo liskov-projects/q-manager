@@ -1,46 +1,48 @@
-import Tournament from "@/components/Tournaments/TournamentCard";
+import mongoose from "mongoose";
+
 import dbConnect from "@/lib/db";
-// import PlayerModel from "@/models/PlayerModel";
+// models
+import PlayerModel from "@/models/PlayerModel";
 import TournamentModel from "@/models/TournamentModel";
+//
 import {NextRequest} from "next/server";
-import findPlayerInTournament from "../../utilities/findPlayerInTournament";
 
-export async function PUT(request: NextRequest, {params}) {
-  console.log("params are: ", params);
+export async function PUT(request: NextRequest) {
+  const {tournamentID, ...player} = await request.json();
 
-  const playerId = params.player;
-  const {tournamentID, ...body} = await request.json();
-
-  console.log("tournamentID: ", tournamentID);
-  console.log("body: ", body);
+  // WORKS:
+  // console.log("tournamentID: ", tournamentID);
+  // console.log("PLAYER: ", player);
 
   try {
     await dbConnect();
 
-    const tournamentToUpdate = await TournamentModel.findOne({
-      _id: tournamentID
-    });
-    const jsTournament = tournamentToUpdate.toObject();
-    console.log("jsTournament: ", Array.isArray(jsTournament.queues));
-    // console.log("tournamentToUpdate: ", tournamentToUpdate);
+    // const playerObjectId = new mongoose.Types.ObjectId(player._id);
 
-    const foundPlayer = findPlayerInTournament(jsTournament, playerId);
-    console.log("foundPlayer: ", foundPlayer);
-
-    const updatedPlayer = await TournamentModel.findOneAndUpdate(
-      {_id: playerId}, // Match by MongoDB ObjectId
-      {...body}, // Update
+    const updatedPlayer = await PlayerModel.findOneAndUpdate(
+      {_id: player._id}, // Match by MongoDB ObjectId
+      {...player}, // Update
+      // FIXME: does it work?
       {new: true} // Return the updated document
     );
 
-    if (!updatedPlayer) {
-      return new Response(JSON.stringify({error: "Player not found"}), {
-        status: 404,
-        headers: {"Content-Type": "application/json"}
-      });
-    }
+    // console.log("playerObjectId", playerObjectId);
+    // console.log("player to update: ", updatedPlayer);
+    // console.log("tournament to update: ", tournamentToUpdate);
 
-    return new Response(JSON.stringify(updatedPlayer), {
+    // find the tournament for the updated player
+    // Update the player inside the tournament's players array
+    const updatedTournament = await TournamentModel.findOneAndUpdate(
+      {_id: tournamentID, "unProcessedQItems._id": updatedPlayer._id},
+
+      {$set: {"unProcessedQItems.$": updatedPlayer}},
+      {new: true} // Return the updated tournament document
+    );
+
+    // WORKS:
+    // console.log("tournament to update ", updatedTournament);
+
+    return new Response(JSON.stringify(updatedTournament), {
       status: 200,
       headers: {"Content-Type": "application/json"}
     });
