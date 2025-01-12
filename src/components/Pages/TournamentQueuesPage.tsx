@@ -23,12 +23,13 @@ export default function TournamentQueuesPage({thisTournamentId}) {
   } = useTournamentsAndQueuesContext();
 
   // console.log("in the component", currentTournament);
-  useEffect(() => {
-    if (thisTournamentId) {
-      const thisTournament = fetchPlayersByTournamentId(thisTournamentId);
-      setCurrentTournament(thisTournament);
-    }
-  }, [thisTournamentId]);
+  // OLD:
+  // useEffect(() => {
+  //   if (thisTournamentId) {
+  //     const thisTournament = fetchPlayersByTournamentId(thisTournamentId);
+  //     setCurrentTournament(thisTournament);
+  //   }
+  // }, [thisTournamentId]);
 
   if (!currentTournament) {
     return <div>Loading...</div>; // Add a loading state

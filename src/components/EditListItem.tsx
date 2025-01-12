@@ -13,12 +13,12 @@ export default function EditListItem({
   setEditMode: () => void;
 }) {
   console.log("inside the edit card ", item);
-  const {setCurrentTournamentPlayers} = useTournamentsAndQueuesContext();
+  const {setCurrentTournament} = useTournamentsAndQueuesContext();
   //   FIXME: singular/plural
   const [updatedData, setUpdatedData] = useState({
     names: item.names,
     categories: item.categories,
-    phoneNumbers: item?.phoneNumbers?.join(", ")
+    phoneNumbers: item.phoneNumbers.join(", ")
   });
 
   // getting the tournament id
@@ -55,8 +55,8 @@ export default function EditListItem({
         console.log("getting the updatedPlayer correctly:", updatedPlayer);
 
         // setPlayers(prev => [...prev, data]);
-        setCurrentTournamentPlayers(prevPlayers => {
-          return prevPlayers.map(
+        setCurrentTournament(prevTournament => {
+          return prevTournament?.unProcessedQItems.map(
             player => (player._id === updatedPlayer._id ? updatedPlayer : player) // Update the player in the list
           );
         });
