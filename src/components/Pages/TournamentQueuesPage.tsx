@@ -32,7 +32,7 @@ export default function TournamentQueuesPage({thisTournamentId}) {
   // }, [thisTournamentId]);
 
   if (!currentTournament) {
-    return <div>Loading...</div>; // Add a loading state
+    return <div className="flex self-center">Loading...</div>; // Add a loading state
   }
 
   return (

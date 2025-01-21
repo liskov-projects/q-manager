@@ -21,7 +21,8 @@ const TournamentsAndQueuesContext = createContext<
 export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) => {
   //NOTE: Queues are derived from the tournament state
 
-  const [players, setPlayers] = useState<TPlayer[]>([]);
+  //FIXME: not used anywhere
+  // // const [players, setPlayers] = useState<TPlayer[]>([]);
   const [draggedItem, setDraggedItem] = useState<TPlayer | null>(null);
 
   // Tournaments State
@@ -47,6 +48,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   }, []);
 
   // WORKS: sets both the tournamnet and its players | Sync Current Tournament with URL Pathname
+  // FIXME: needs to get the updated list of players for a particular tournament | a separate useEffect?
   useEffect(() => {
     // console.log("Current Pathname:", pathname);
     // console.log("Tournaments:", tournaments);
