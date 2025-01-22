@@ -198,8 +198,8 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   return (
     <TournamentsAndQueuesContext.Provider
       value={{
-        players,
-        setPlayers,
+        // players,
+        // setPlayers,
         markPlayerAsProcessed,
         // queues,
         // setQueues,

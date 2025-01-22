@@ -51,15 +51,11 @@ export default function EditListItem({
       });
 
       if (res.ok) {
-        const updatedPlayer = await res.json();
-        console.log("getting upadting the player correctly:", updatedPlayer);
+        const updatedTournament = await res.json();
+        console.log("getting updated player correctly:", updatedTournament);
 
         // setPlayers(prev => [...prev, data]);
-        setCurrentTournament(prevTournament => {
-          return prevTournament?.unProcessedQItems.map(
-            player => (player._id === updatedPlayer._id ? updatedPlayer : player) // Update the player in the list
-          );
-        });
+        setCurrentTournament(updatedTournament);
         // console.log(currentTournamentPlayers);
 
         setEditMode(false);

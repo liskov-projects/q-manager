@@ -32,6 +32,7 @@ export async function PUT(request: NextRequest) {
 
     // find the tournament for the updated player
     // Update the player inside the tournament's players array
+    // TODO: make a function to search for a player in any list
     const updatedTournament = await TournamentModel.findOneAndUpdate(
       {_id: tournamentID, "unProcessedQItems._id": updatedPlayer._id},
 
