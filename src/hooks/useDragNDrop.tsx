@@ -53,20 +53,22 @@ const useDragNDrop = () => {
   // General handle drop function for different drop targets
   const handleDrop = ({
     e,
-    dropTarget
+    dropTarget,
+    index
   }: {
     e: React.MouseEvent<HTMLDivElement>;
     dropTarget: string | TQueue;
-    index?: number;
+    index?: number; // FIXME: handleSplice that takes the ind and the queue => does the splice for the queue
   }) => {
     e.preventDefault();
 
     if (!draggedItem) return;
 
     // Update the item's properties based on the target drop zone
-    const updatedItem = {...draggedItem};
+    // const updatedItem = {...draggedItem};
 
     if (dropTarget === "processed") {
+      console.log("dropping inside processed");
       setCurrentTournament(prev => {
         // has to have it as TS yell without
         if (!prev) return null;
@@ -75,7 +77,7 @@ const useDragNDrop = () => {
           unProcessedQItems: prev.unProcessedQItems.filter(
             player => player._id !== draggedItem._id
           ),
-          processedQItems: [...prev.processedQItems, updatedItem],
+          processedQItems: [...prev.processedQItems, draggedItem],
           queues: prev.queues.map(queue => ({
             ...queue,
             queueItems: queue.queueItems.filter(
@@ -90,6 +92,7 @@ const useDragNDrop = () => {
         };
       });
     } else if (dropTarget === "unprocessed") {
+      console.log("dropping inside unprocessed");
       setCurrentTournament(prev => {
         // has to have it as TS yell without
         if (!prev) return null;
@@ -98,7 +101,7 @@ const useDragNDrop = () => {
           processedQItems: prev.processedQItems.filter(
             player => player._id !== draggedItem._id
           ),
-          unProcessedQItems: [...prev.unProcessedQItems, updatedItem],
+          unProcessedQItems: [...prev.unProcessedQItems, draggedItem],
           queues: prev.queues.map(queue => ({
             ...queue,
             queueItems: queue.queueItems.filter(
@@ -113,35 +116,53 @@ const useDragNDrop = () => {
         };
       });
     } else if (typeof dropTarget === "object" && dropTarget.id) {
+      // comes through
+      // console.log("dropping inside a queue");
+      console.log("DRAGGED ITEM:", draggedItem);
+      console.log("drop  target", dropTarget);
+      // console.log("index", index);
       setCurrentTournament(prev => {
         // has to have it as TS yell without
         if (!prev) return null;
+
+        let currentQueueId;
+        // find which queue we're currently in
+        prev.queues.find(queue => {
+          if (queue.queueItems.some(player => player._id === draggedItem._id)) {
+            currentQueueId = queue.id;
+          }
+        });
+        const isSameQueue = currentQueueId === dropTarget.id;
+        // takes out the item from the source queue
+        const updatedQueues = prev.queues.map(queue => ({
+          ...queue,
+          queueItems: queue.queueItems.filter(player => player._id != draggedItem._id)
+        }));
+
+        if (isSameQueue) {
+          const targetQueue = updatedQueues.find(q => q.id === dropTarget.id);
+          if (targetQueue) {
+            targetQueue.queueItems.splice(index + 1, 0, draggedItem);
+          }
+        } else {
+          updatedQueues.forEach(queue => {
+            if (queue.id === dropTarget.id) {
+              queue.queueItems.splice(index + 1, 0, draggedItem);
+            }
+          });
+        }
         return {
           ...prev,
+          // takes the item out of the initial arr
           unProcessedQItems: prev.unProcessedQItems.filter(
             player => player._id !== draggedItem._id
           ),
+          // takes the item out of the arr
           processedQItems: prev.processedQItems.filter(
             player => player._id !== draggedItem._id
           ),
-          queues: prev.queues.map(queue => {
-            if (queue.queueItems.some(player => player._id === draggedItem._id)) {
-              return {
-                ...queue,
-                queueItems: queue.queueItems.filter(
-                  player => player._id !== draggedItem._id
-                )
-              };
-            }
-            if (queue.id === dropTarget.id) {
-              return {
-                ...queue,
-                queueItems: [...queue.queueItems, updatedItem]
-              };
-            }
-            return queue;
-          }),
-          // has to have it as TS yell without
+          queues: updatedQueues,
+          // has to have this, TS yells without
           name: prev.name,
           adminUser: prev.adminUser,
           description: prev.description,

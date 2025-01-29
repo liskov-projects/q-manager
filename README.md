@@ -152,8 +152,8 @@ Tournament Collection
 
 ## npm run seed:tournaments
 
-    Populates the db with 7 empty tournaments
+    Populates the db with 7 empty tournaments - 1st
 
 ## npm run seed:players
 
-    Populates the db with players. Players are added into the players collection & to the corresponding tournament
+    Populates the db with players. Players are added into the players collection & to the corresponding tournament - use 2d

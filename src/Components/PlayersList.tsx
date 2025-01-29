@@ -12,7 +12,7 @@ import PlayerListItem from "./PlayerListItem";
 import {TPlayer} from "@/types/Types";
 // import DropDownFilter from "./DropDownFilter";
 
-export default function PlayersList({title, players}) {
+export default function PlayersList({title, players, zone}) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
 
@@ -80,7 +80,7 @@ export default function PlayersList({title, players}) {
                 height={60}
                 index={index}
                 dropTarget="unprocessed" // drop target for unprocessed players
-                onDrop={e => handleDrop({e, dropTarget: "unprocessed", index})}
+                onDrop={e => handleDrop({e, dropTarget: zone, index})}
               />
             </Fragment>
           ))}

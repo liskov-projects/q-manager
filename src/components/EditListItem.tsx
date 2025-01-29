@@ -52,7 +52,7 @@ export default function EditListItem({
 
       if (res.ok) {
         const updatedTournament = await res.json();
-        console.log("getting updated player correctly:", updatedTournament);
+        // console.log("getting updated player correctly:", updatedTournament);
 
         // setPlayers(prev => [...prev, data]);
         setCurrentTournament(updatedTournament);

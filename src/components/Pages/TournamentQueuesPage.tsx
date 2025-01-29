@@ -66,6 +66,7 @@ export default function TournamentQueuesPage({thisTournamentId}) {
           <PlayersList
             title={"Unprocessed Players"}
             players={currentTournament.unProcessedQItems}
+            zone={"unprocessed"}
           />
         </div>
 
@@ -86,6 +87,7 @@ export default function TournamentQueuesPage({thisTournamentId}) {
           <PlayersList
             title={"Processed Players"}
             players={currentTournament.processedQItems}
+            zone={"processed"}
           />
           {/* <ProcessedPlayers /> */}
         </div>
