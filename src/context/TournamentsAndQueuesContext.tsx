@@ -40,9 +40,10 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // console.log("in the context", currentTournament);
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
+  // console.log("RUNNING INSIDE CONTEXT")
   // Fetch Players and Tournaments on Mount
   useEffect(() => {
-    console.log("RUNNING HERE IN USEEFFECT");
+    // console.log("RUNNING HERE IN USEEFFECT");
     // fetchPlayers();
     fetchTournaments();
   }, []);
@@ -50,9 +51,9 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // WORKS: sets both the tournamnet and its players | Sync Current Tournament with URL Pathname
   // FIXME: needs to get the updated list of players for a particular tournament | a separate useEffect?
   useEffect(() => {
-    console.log("Current Pathname:", pathname);
-    console.log("Tournaments:", tournaments);
-    console.log("Current Tournament:", currentTournament);
+    // console.log("Current Pathname:", pathname);
+    // console.log("Tournaments:", tournaments);
+    // console.log("Current Tournament:", currentTournament);
 
     const segments = pathname.split("/");
     const id = segments.pop();

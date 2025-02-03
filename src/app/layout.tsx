@@ -29,6 +29,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("In the ROOTLAYOUT");
   return (
     <ClerkProvider>
       <TournamentsAndQueuesProvider>

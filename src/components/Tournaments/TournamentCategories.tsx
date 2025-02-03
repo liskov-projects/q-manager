@@ -1,6 +1,7 @@
 import Button from "@/components/Buttons/Button";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 export default function TournamentCategories({
   categories,
@@ -9,6 +10,7 @@ export default function TournamentCategories({
   categories: string[];
   children: React.ReactNode;
 }) {
+  const {currentTournament} = useTournamentsAndQueuesContext();
   const [editMode, setEditMode] = useState(false);
   const [editedCategories, setEditedCategories] = useState([...categories]);
 
@@ -26,9 +28,26 @@ export default function TournamentCategories({
     updatedCategories.splice(index, 1);
     setEditedCategories(updatedCategories);
   };
-  const handleSaveChanges = async () => {
-    // FIXME:
-    // await fetch("/alltournaments") send data to BE
+  const handleSaveChanges = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const updatedCategories = [...editedCategories];
+    try {
+      const res = await fetch(`api/tournaments/${currentTournament._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedCategories)
+      });
+
+      if (res.ok) {
+        // do we want to get back the tournament or only its categories?
+        const updatedCategories = await res.json();
+        console.log("getting the updated categories", updatedCategories);
+      }
+    } catch (error) {
+      console.error("Couldn't update the categories", error);
+    }
     setEditMode(false);
   };
 
