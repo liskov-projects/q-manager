@@ -31,17 +31,17 @@ export default function RootLayout({
 }>) {
   console.log("In the ROOTLAYOUT");
   return (
-    <ClerkProvider>
-      <TournamentsAndQueuesProvider>
-        <html lang="en">
-          <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-            {/* looks like this component cannot use Clerk hook for some reason */}
-            <Header />
-            {children}
-          </body>
-        </html>
-        {/* </ContextWrapper> */}
-      </TournamentsAndQueuesProvider>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ClerkProvider>
+          <TournamentsAndQueuesProvider>
+                {/* looks like this component cannot use Clerk hook for some reason */}
+                <Header />
+                {children}
+            {/* </ContextWrapper> */}
+          </TournamentsAndQueuesProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }

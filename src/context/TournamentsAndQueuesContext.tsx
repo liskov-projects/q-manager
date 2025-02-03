@@ -43,7 +43,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // console.log("RUNNING INSIDE CONTEXT")
   // Fetch Players and Tournaments on Mount
   useEffect(() => {
-    // console.log("RUNNING HERE IN USEEFFECT");
+    console.log("RUNNING HERE IN USEEFFECT");
     // fetchPlayers();
     fetchTournaments();
   }, []);

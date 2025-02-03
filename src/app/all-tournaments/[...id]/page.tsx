@@ -5,17 +5,23 @@ import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesCont
 import TournamentQueuesPage from "@/components/Pages/TournamentQueuesPage";
 import TournamentCategories from "@/components/Tournaments/TournamentCategories";
 
-export default function TournamentPage({params}: {params: {_id: string}}) {
+export default function TournamentPage({params}: {params: {id: string[]}}) {
   const {tournaments, tournamentOwner} = useTournamentsAndQueuesContext();
   // all are coming through
   // console.log("all tournaments", tournaments);
   // console.log("params", params);
 
-  const ID = params.id.toString();
-  const currentTournament = tournaments.find(tournament => tournament._id === ID);
-  // console.log("CURRENT TOURNAMENT", currentTournament);
+  const tournamentIdInRoute = params.id[0];
+  console.log("TOURNAMENT ID IN ROUTE PAGE")
+  console.log(params.id[0])
 
-  const {name, categories} = currentTournament;
+  console.log("TOURNAMENTS")
+  console.log(tournaments)
+
+  const currentTournament = tournaments.find(tournament => tournament._id === tournamentIdInRoute);
+  // console.log("CURRENT TOURNAMENT", currentTournament);
+  
+  const { name = "", categories = [] } = currentTournament || {};
 
   return (
     <div>
@@ -29,7 +35,7 @@ export default function TournamentPage({params}: {params: {_id: string}}) {
         </div>
       </h1>
       {tournamentOwner && <NewQueueForm />}
-      <TournamentQueuesPage thisTournamentId={params._id} />
+      <TournamentQueuesPage thisTournamentId={params.id} />
     </div>
   );
 }

@@ -1,11 +1,11 @@
-import PlayerModel from "@/models/PlayerModel";
+// import PlayerModel from "@/models/PlayerModel";
 import TournamentModel from "@/models/TournamentModel";
 import dbConnect from "@/lib/db";
 // for older version
 // import type {NextApiRequest, NextApiResponse} from "next";
 // new version
 import {NextRequest, NextResponse} from "next/server";
-import Tournament from "@/components/Tournaments/TournamentCard";
+// import Tournament from "@/components/Tournaments/TournamentCard";
 
 // NOTE: move the POST here as well?
 export async function GET(req: NextRequest) {
@@ -16,6 +16,8 @@ export async function GET(req: NextRequest) {
 
   const tournamentId = url?.split("/").pop();
   console.log("tournamentID: ", tournamentId);
+  console.log("TOURNAMENT ID IN GET ON ROUTE")
+  console.log(tournamentId)
   // Ensure the database is connected
   await dbConnect();
 
