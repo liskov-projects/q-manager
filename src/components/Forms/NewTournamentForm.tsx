@@ -4,6 +4,7 @@ import {TTournament} from "@/types/Types";
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
 import {useUser} from "@clerk/nextjs";
+// import ImageUpload from "../drafts/ImageUpload";
 
 // allows for partial form from existing Type
 type TTournamentForm = Partial<TTournament> & {
@@ -24,6 +25,7 @@ export default function NewTournamentForm() {
   // any signed in user can create a new tournamnet
   const {isSignedIn, user} = useUser();
 
+  // reacts to different inputs
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const {name, value, type, files} = e.target;
 
@@ -41,7 +43,7 @@ export default function NewTournamentForm() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // FIXME:
+    // FIXME: should be made at the tournament level
     const incomingCategories =
       typeof newTournament.categories === "string"
         ? newTournament.categories.split(",").map(category => category.trim())
@@ -50,6 +52,10 @@ export default function NewTournamentForm() {
     // TODO: make empty queues objects
     const numberOfQueues = Number(newTournament.queues);
 
+    // const queuesArr = Array.from({length: numberOfQueues}, (_, index) => ({
+    //   queueName: `queue ${index + 1}`,
+    //   queueItems: []
+    // }));
     // data to send to backend
     const newItem = {
       name: newTournament.name,
@@ -57,7 +63,7 @@ export default function NewTournamentForm() {
       adminUser: user?.id,
       image: newTournament.image,
       description: newTournament.description,
-      numberOfQueues: numberOfQueues
+      queues: numberOfQueues
     };
 
     // console.log("Data sent to backend: ", newItem);
@@ -88,14 +94,14 @@ export default function NewTournamentForm() {
     }
 
     //FIXME: ressetting the form
-    setNewTournament({
-      name: "",
-      categories: [],
-      adminUser: "",
-      image: "",
-      description: "",
-      numberOfQueues: 0
-    });
+    // setNewTournament({
+    //   name: "",
+    //   categories: [],
+    //   adminUser: "",
+    //   image: "",
+    //   description: "",
+    //   numberOfQueues: 0
+    // });
     // console.log(newTournament);
   }
   if (!isSignedIn) return null;
@@ -143,15 +149,15 @@ export default function NewTournamentForm() {
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             /> */}
-
-            <label htmlFor="image">Image</label>
-            <label htmlFor="image">Image</label>
-            <input
+            {/* FIXME: S3 troubles - implement this later */}
+            {/* <label htmlFor="image">Image</label>
+            <ImageUpload /> */}
+            {/* <input
               type="file"
               name="image"
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
-            />
+            /> */}
 
             <label htmlFor="description">Description</label>
             <input

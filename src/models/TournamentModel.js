@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import {playerSchema} from "./PlayerModel";
-// import {queueSchema} from "./QueueModel.js";
+import {queueSchema} from "./QueueModel.js";
 const tournamentSchema = new mongoose.Schema(
   {
     // _id: String,
@@ -12,10 +12,7 @@ const tournamentSchema = new mongoose.Schema(
     // NEW:
     unProcessedQItems: [playerSchema],
     processedQItems: [playerSchema],
-    queues: {
-      queueName: String,
-      queueItems: [playerSchema]
-    }
+    queues: [{type: queueSchema, required: true}]
   },
   {collection: "tournaments"}
 );

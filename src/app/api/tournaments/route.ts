@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/db";
 import TournamentModel from "@/models/TournamentModel";
 import {NextRequest} from "next/server";
+import QueueModel from "@/models/QueueModel";
 
 export async function GET() {
   await dbConnect();
@@ -15,16 +16,25 @@ export async function POST(req: NextRequest) {
   await dbConnect();
 
   const body = await req.json();
-  // console.log("Recieved at backend: ", body);
-  const {name, categories, adminUser, image, description, queues, players} = body;
+  const {name, categories, adminUser, image, description, numberOfQueues} = body;
+
+  console.log("Recieved at backend: ", body);
+  console.log("queues", numberOfQueues);
+
+  const queues = Array.from({length: numberOfQueues}, (_, index) => {
+    return new QueueModel({
+      queueName: `queue ${index + 1}`,
+      queueItems: []
+    });
+  });
+
   const newTournament = new TournamentModel({
     name,
     categories,
     adminUser,
     image,
     description,
-    queues,
-    players
+    queues
   });
 
   await newTournament.save();
