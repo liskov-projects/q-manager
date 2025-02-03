@@ -37,7 +37,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const pathname = usePathname();
   const {isSignedIn, user} = useUser();
   // console.log(user, "user");
-  console.log("in the context", currentTournament);
+  // console.log("in the context", currentTournament);
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
   // Fetch Players and Tournaments on Mount

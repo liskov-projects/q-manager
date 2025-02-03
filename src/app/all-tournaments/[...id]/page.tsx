@@ -1,17 +1,32 @@
 // enables the tournamentOwner check
 "use client";
-import QueuesPage from "@/components/Pages/TournamentQueuesPage";
 import NewQueueForm from "@/components/Forms/NewQueueForm";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import TournamentQueuesPage from "@/components/Pages/TournamentQueuesPage";
+import TournamentCategories from "@/components/Tournaments/TournamentCategories";
 
 export default function TournamentPage({params}: {params: {_id: string}}) {
-  const {tournamentOwner} = useTournamentsAndQueuesContext();
+  const {tournaments, tournamentOwner} = useTournamentsAndQueuesContext();
+
+  // all are coming through
+  // console.log(tournaments);
+  // console.log("params", params);
+  // console.log(params.id.toString());
+  const ID = params.id.toString();
+  const currentTournament = tournaments.find(tourn => tourn._id === ID);
+  // console.log(currentTournament);
+  const {name, categories} = currentTournament;
+
   return (
     <div>
       <h1 className="text-center text-2xl font-bold">
         {/* TODO: change */}
-        Tournament name: {params._id}
+        <span>Tournament name: {name}</span>
+        <div className="flex, flex-row items-center justify-between mt-2">
+          <TournamentCategories categories={categories}>
+            Categories:
+          </TournamentCategories>
+        </div>
       </h1>
       {tournamentOwner && <NewQueueForm />}
       <TournamentQueuesPage thisTournamentId={params._id} />
