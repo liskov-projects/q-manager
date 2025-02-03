@@ -22,7 +22,7 @@ export default function TournamentCard({tournament}: {tournament: TTournament}) 
           height={250}
         />
         {/* TODO: more styling here */}
-        <span className="mt-2 mb-4 text-ml text-gray-600 italic">{description}</span>
+        <div className="text-lg m-2 text-gray-600 font-semibold">{description}</div>
         <TournamentCategories categories={categories} />
       </Link>
     </div>
