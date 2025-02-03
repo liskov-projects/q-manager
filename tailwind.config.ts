@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       boxShadow: {
-        'left-bottom-lg': '-4px 4px 10px rgba(0, 0, 0, 0.5)', 
+        "left-bottom-lg": "-4px 4px 10px rgba(0, 0, 0, 0.5)"
       },
       colors: {
         background: "var(--background)",
@@ -31,6 +31,7 @@ const config: Config = {
         },
         shell: {
           50: "#EEEEE4",
+          75: "#e7e0ca",
           100: "#D7DADE",
           200: "#747A82",
           300: "#505458"

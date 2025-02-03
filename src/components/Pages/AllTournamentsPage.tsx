@@ -2,7 +2,7 @@
 import {useState} from "react";
 import SectionHeader from "@/components/SectionHeader";
 import Button from "@/components/Buttons/Button";
-import Tournament from "@/components/Tournaments/TournamentCard";
+import TournamentCard from "@/components/Tournaments/TournamentCard";
 import NewTournamentForm from "@/components/Forms/NewTournamentForm";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
@@ -34,9 +34,9 @@ export default function AllTournamentsPage() {
             Refresh
           </Button>
         </div>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {tournamentsToShow.map((tournament, index) => (
-            <Tournament key={index} tournament={tournament} />
+            <TournamentCard key={index} tournament={tournament} />
           ))}
         </ul>
       </div>
