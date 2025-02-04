@@ -12,26 +12,30 @@ export default function TournamentPage({params}: {params: {id: string[]}}) {
   // console.log("params", params);
 
   const tournamentIdInRoute = params.id[0];
-  console.log("TOURNAMENT ID IN ROUTE PAGE")
-  console.log(params.id[0])
+  // console.log("TOURNAMENT ID IN ROUTE PAGE")
+  // console.log(params.id[0])
 
-  console.log("TOURNAMENTS")
-  console.log(tournaments)
+  // console.log("TOURNAMENTS")
+  // console.log(tournaments)
 
-  const currentTournament = tournaments.find(tournament => tournament._id === tournamentIdInRoute);
-  // console.log("CURRENT TOURNAMENT", currentTournament);
-  
-  const { name = "", categories = [] } = currentTournament || {};
+  const currentTournament = tournaments.find(
+    tournament => tournament._id === tournamentIdInRoute
+  );
+  console.log("CURRENT TOURNAMENT", currentTournament);
+
+  const {name = "", categories = []} = currentTournament || {};
 
   return (
     <div>
       <h1 className="text-center text-2xl font-bold">
         {/* TODO: change */}
         <span>Tournament name: {name}</span>
-        <div className="flex, flex-row items-center justify-between mt-2">
-          <TournamentCategories categories={categories}>
-            Categories:
-          </TournamentCategories>
+        <div className="flex flex-row justify-center items-center mt-2">
+          {/* <h3>Categories:</h3> */}
+          <TournamentCategories
+            categories={categories}
+            tournamentId={currentTournament?._id}
+          />
         </div>
       </h1>
       {tournamentOwner && <NewQueueForm />}
