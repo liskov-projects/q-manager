@@ -1,13 +1,24 @@
 import {useState} from "react";
 import CategoryPill from "./CategoryPill";
+import Button from "../Buttons/Button";
 
 export default function CategoryList({
   editedCategories,
   setEditedCategories,
   className,
-  //   tournamentId,
-  editMode
+  editMode,
+  setEditMode
 }) {
+  const [newCategory, setNewCategory] = useState("");
+
+  const handleAddCategory = () => {
+    if (newCategory.trim() !== "" && !editedCategories.includes(newCategory)) {
+      setEditedCategories([...editedCategories, newCategory]);
+      setNewCategory("");
+      setEditMode(false);
+    }
+  };
+
   const handleEditCategory = (index: number, newCategory: string) => {
     const updatedCategories = [...editedCategories];
     updatedCategories[index] = newCategory;
@@ -33,5 +44,25 @@ export default function CategoryList({
     );
   });
 
-  return <div className={className}>{categoryList}</div>;
+  return (
+    <div className={className}>
+      {categoryList}
+      {editMode && (
+        <div className="mt-2 flex items-center gap-2">
+          <input
+            type="text"
+            value={newCategory}
+            onChange={e => setNewCategory(e.target.value)}
+            placeholder="Add category"
+            className="px-2 py-1 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brick-200"
+          />
+          <Button
+            className="px-3 py-1 bg-brick-200 text-shell-50 rounded-full text-sm hover:bg-tennis-50 hover:text-shell-100 transition"
+            onClick={handleAddCategory}>
+            Add
+          </Button>
+        </div>
+      )}
+    </div>
+  );
 }

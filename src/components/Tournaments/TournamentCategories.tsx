@@ -49,7 +49,7 @@ export default function TournamentCategories({
         editedCategories={editedCategories}
         setEditedCategories={setEditedCategories}
         editMode={editMode}
-        tournamentId={tournamentId}
+        setEditMode={setEditMode}
       />
       {canEdit ? null : (
         <Button

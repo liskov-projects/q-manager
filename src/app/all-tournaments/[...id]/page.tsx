@@ -27,7 +27,6 @@ export default function TournamentPage({params}: {params: {id: string[]}}) {
   return (
     <div>
       <h1 className="text-center text-2xl font-bold">
-        {/* TODO: change */}
         <span>Tournament name: {name}</span>
         <div className="flex flex-row justify-center items-center mt-2">
           <TournamentCategories
