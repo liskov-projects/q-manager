@@ -13,11 +13,11 @@ export default function CategoryPill({
   onDeleteCategory: (index: number) => void;
 }) {
   return (
-    <div>
+    <>
       {editMode ? (
         <>
           <input
-            className="mx-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium focus:outline-none focus:bg-tennis-100 focus:text-shell-00"
+            className="mx-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium focus:outline-none focus:bg-tennis-100 focus:text-shell-200"
             type="text"
             value={category}
             onChange={e => onEditCategory(index, e.target.value)}
@@ -33,6 +33,6 @@ export default function CategoryPill({
           {category}
         </span>
       )}
-    </div>
+    </>
   );
 }

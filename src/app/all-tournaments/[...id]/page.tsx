@@ -1,4 +1,3 @@
-// enables the tournamentOwner check
 "use client";
 import NewQueueForm from "@/components/Forms/NewQueueForm";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
@@ -31,7 +30,6 @@ export default function TournamentPage({params}: {params: {id: string[]}}) {
         {/* TODO: change */}
         <span>Tournament name: {name}</span>
         <div className="flex flex-row justify-center items-center mt-2">
-          {/* <h3>Categories:</h3> */}
           <TournamentCategories
             categories={categories}
             tournamentId={currentTournament?._id}

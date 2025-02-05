@@ -1,7 +1,8 @@
 import Button from "@/components/Buttons/Button";
-import CategoryPill from "./CategoryPill";
+import CategoryList from "./CategoryList";
 import {usePathname} from "next/navigation";
 import {useState} from "react";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 export default function TournamentCategories({
   categories,
@@ -10,23 +11,13 @@ export default function TournamentCategories({
   categories: string[];
   tournamentId: string;
 }) {
-  const [editMode, setEditMode] = useState(false);
+  const {tournamentOwner} = useTournamentsAndQueuesContext();
   const [editedCategories, setEditedCategories] = useState([...categories]);
 
+  const [editMode, setEditMode] = useState(false);
+
   const pathname = usePathname();
-  const noEdit = pathname === "/all-tournaments";
-
-  const handleEditCategory = (index: number, newCategory: string) => {
-    const updatedCategories = [...editedCategories];
-    updatedCategories[index] = newCategory;
-    setEditedCategories(updatedCategories);
-  };
-
-  const handleDeleteCategory = (index: number) => {
-    const updatedCategories = [...editedCategories];
-    updatedCategories.splice(index, 1);
-    setEditedCategories(updatedCategories);
-  };
+  const canEdit = pathname === "/all-tournaments" || !tournamentOwner;
 
   const handleSaveChanges = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -51,34 +42,27 @@ export default function TournamentCategories({
     setEditMode(false);
   };
 
-  const categoryList = editedCategories.map((category, index) => {
-    return (
-      <CategoryPill
-        category={category}
-        key={index}
-        index={index}
-        editMode={editMode}
-        onEditCategory={handleEditCategory}
-        onDeleteCategory={handleDeleteCategory}
-      />
-    );
-  });
-
   return (
     <div className="">
-      {categoryList}
+      <CategoryList
+        className="flex flex-row"
+        editedCategories={editedCategories}
+        setEditedCategories={setEditedCategories}
+        editMode={editMode}
+        tournamentId={tournamentId}
+      />
+      {canEdit ? null : (
+        <Button
+          className="mx-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out"
+          onClick={() => setEditMode(!editMode)}>
+          {editMode ? "Cancel" : "✏️"}
+        </Button>
+      )}
       {editMode && (
         <Button
           className="mx-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out"
           onClick={handleSaveChanges}>
           Save
-        </Button>
-      )}
-      {noEdit ? null : (
-        <Button
-          className="mx-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out"
-          onClick={() => setEditMode(!editMode)}>
-          {editMode ? "Cancel" : "✏️"}
         </Button>
       )}
     </div>
