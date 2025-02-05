@@ -69,7 +69,7 @@ export default function EditListItem({
     <div className="flex flex-col ">
       <form
         onSubmit={handleSave}
-        className="flex flex-col h-30 p-6 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2 bg-slate-200">
+        className="flex flex-col h-30 p-6 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2 bg-shell-75">
         <Button
           className="flex ml-auto text-2xl font-bold hover:text-brick-200"
           onClick={() => setEditMode(false)}>

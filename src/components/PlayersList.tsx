@@ -72,10 +72,7 @@ export default function PlayersList({title, players, zone}) {
         <ul className="flex flex-col items-center">
           {players.map((player: TPlayer, index: number) => (
             <Fragment key={player._id}>
-              <PlayerListItem
-                item={player}
-                className="h-30 w-[92%] p-2 bg-slate-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
-              />
+              <PlayerListItem item={player} />
               <DropZone
                 height={60}
                 index={index}

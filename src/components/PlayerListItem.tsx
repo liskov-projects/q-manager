@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
@@ -8,18 +8,10 @@ import TagsList from "./TagsList";
 import EditListItem from "./EditListItem";
 // import Modal from "./drafts/Modal";
 
-export default function PlayerListItem({
-  item,
-  className
-}: {
-  item: TPlayer;
-  className: string;
-  queueId?: string;
-  onAddToQueue: () => void;
-}) {
+export default function PlayerListItem({item}: {item: TPlayer}) {
   const {tournamentOwner, setCurrentTournamentPlayers} =
     useTournamentsAndQueuesContext();
-    const {handleAddToShortestQueue} = useAddToQueues();
+  const {handleAddToShortestQueue} = useAddToQueues();
   const {handleDragStart, handleDragOver} = useDragNDrop();
   const [editMode, setEditMode] = useState(false);
 
@@ -44,8 +36,7 @@ export default function PlayerListItem({
       {!editMode ? (
         <li
           key={item._id}
-          className={`h-30 p-4 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2  ${className}`}
-          // className={className}
+          className="h-30 w-[92%] p-4 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
           draggable={`${!tournamentOwner ? false : true}`}
           onDragStart={() => handleDragStart(item)}
           onDragOver={e => handleDragOver(e)}>
@@ -83,12 +74,6 @@ export default function PlayerListItem({
       ) : (
         <EditListItem item={item} setEditMode={setEditMode} />
       )}
-      {/* TODO:
-      1. oclick the card changes to controlled input
-      2. create another component similar to the NewPlayerForm
-      3. use it for controlled input instead of the modal
-      4. Build api route for PUT
-       */}
     </>
   );
 }
