@@ -1,7 +1,7 @@
 import Button from "@/components/Buttons/Button";
 import CategoryList from "./CategoryList";
 import {usePathname} from "next/navigation";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 export default function TournamentCategories({
@@ -18,6 +18,11 @@ export default function TournamentCategories({
 
   const pathname = usePathname();
   const canEdit = pathname === "/all-tournaments" || !tournamentOwner;
+
+  // NOTE: unsire if it makes more good that bad
+  useEffect(() => {
+    setEditedCategories(categories);
+  }, [categories]);
 
   const handleSaveChanges = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
