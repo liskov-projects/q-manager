@@ -42,20 +42,13 @@ export default function NewTournamentForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
+    console.log("handle submit");
     // FIXME: should be made at the tournament level
     const incomingCategories =
       typeof newTournament.categories === "string"
         ? newTournament.categories.split(",").map(category => category.trim())
         : newTournament.categories;
 
-    // TODO: make empty queues objects
-    const numberOfQueues = Number(newTournament.queues);
-
-    // const queuesArr = Array.from({length: numberOfQueues}, (_, index) => ({
-    //   queueName: `queue ${index + 1}`,
-    //   queueItems: []
-    // }));
     // data to send to backend
     const newItem = {
       name: newTournament.name,
@@ -63,9 +56,9 @@ export default function NewTournamentForm() {
       adminUser: user?.id,
       image: newTournament.image,
       description: newTournament.description,
-      queues: numberOfQueues
+      numberOfQueues: newTournament.numberOfQueues
     };
-
+    // WORKS: as expected
     // console.log("Data sent to backend: ", newItem);
 
     try {
@@ -168,11 +161,11 @@ export default function NewTournamentForm() {
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
 
-            <label htmlFor="queues">Number of Queues</label>
+            <label htmlFor="numberOfQueues">Number of Queues</label>
             <input
               type="number"
-              name="queues"
-              value={newTournament.queues}
+              name="numberOfQueues"
+              value={newTournament.numberOfQueues}
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />

@@ -9,10 +9,10 @@ const tournamentSchema = new mongoose.Schema(
     adminUser: String,
     image: {type: String},
     description: {type: String},
-    // NEW:
     unProcessedQItems: [playerSchema],
     processedQItems: [playerSchema],
-    queues: [{type: queueSchema, required: true}]
+    // queues: [{type: queueSchema, required: true, default: []}]
+    queues: {type: [queueSchema], default: []}
   },
   {collection: "tournaments"}
 );

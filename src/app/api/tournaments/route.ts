@@ -18,15 +18,18 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const {name, categories, adminUser, image, description, numberOfQueues} = body;
 
-  console.log("Recieved at backend: ", body);
-  console.log("queues", numberOfQueues);
+  // console.log("Recieved at backend: ", body);
+  // console.log("numberOfQueues", numberOfQueues);
 
-  const queues = Array.from({length: numberOfQueues}, (_, index) => {
-    return new QueueModel({
-      queueName: `queue ${index + 1}`,
-      queueItems: []
-    });
-  });
+  const queues = [];
+  for (let i = 0; i < parseInt(numberOfQueues, 10); i++) {
+    queues.push(
+      new QueueModel({
+        queueName: `queue ${i + 1}`,
+        queueItems: []
+      })
+    );
+  }
 
   const newTournament = new TournamentModel({
     name,
@@ -43,31 +46,3 @@ export async function POST(req: NextRequest) {
     headers: {"Content-Type": "application/json"}
   });
 }
-
-// NEW: not working
-// export async function POST(req: NextRequest) {
-//   await dbConnect();
-
-//   const body = await req.json();
-//   const {name, categories, adminUser, image, description, queues, players} = body;
-
-//   // Ensure `players` and `queues.queueItems` contain only `_id`
-//   const newTournament = new TournamentModel({
-//     name,
-//     categories,
-//     adminUser,
-//     image,
-//     description,
-//     queues: queues.map(queue => ({
-//       ...queue,
-//       queueItems: queue.queueItems.map(player => player._id)
-//     })),
-//     players: players.map(player => player._id)
-//   });
-
-//   await newTournament.save();
-
-//   return new Response(JSON.stringify(newTournament), {
-//     headers: {"Content-Type": "application/json"}
-//   });
-// }

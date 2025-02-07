@@ -19,7 +19,7 @@ export default function CategoryList({
     }
   };
 
-  const handleEditCategory = (index: number, newCategory: string) => {
+  const handleEditCategories = (index: number, newCategory: string) => {
     const updatedCategories = [...editedCategories];
     updatedCategories[index] = newCategory;
     setEditedCategories(updatedCategories);
@@ -38,7 +38,7 @@ export default function CategoryList({
         key={index}
         index={index}
         editMode={editMode}
-        onEditCategory={handleEditCategory}
+        onEditCategory={handleEditCategories}
         onDeleteCategory={handleDeleteCategory}
       />
     );
