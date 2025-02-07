@@ -41,9 +41,9 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
   // console.log("RUNNING INSIDE CONTEXT")
-  // Fetch Players and Tournaments on Mount
+  //WORKS: as expected Fetch Players and Tournaments on Mount
   useEffect(() => {
-    console.log("RUNNING HERE IN USEEFFECT");
+    // console.log("RUNNING HERE IN USEEFFECT");
     // fetchPlayers();
     fetchTournaments();
   }, []);
@@ -74,26 +74,32 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     tournament => tournament.adminUser === user?.id
   );
 
-  // FIXME: what if they want to add another queue on the go?
-  // Add or Remove Queues
+  //WORKS: Adds Queues
   const addMoreQueues = () => {
     const newQueue = {
-      queueName: (queues.length + 1).toString(),
+      queueName: (currentTournament.queues.length + 1).toString(),
       queueItems: [],
-      id: queues.length.toString()
+      id: currentTournament.queues.length.toString()
     };
-    setQueues(prev => [...prev]);
-  };
-  const removeQueues = () => {
-    setQueues(prev => prev.slice(0, -1));
+
+    setCurrentTournament(prevTournament => {
+      if (!prevTournament) return prevTournament;
+      return {
+        ...prevTournament,
+        queues: [...prevTournament?.queues, newQueue]
+      };
+    });
   };
 
-  const markPlayerAsProcessed = (playerId: string) => {
-    setPlayers(prev =>
-      prev.map(player =>
-        player._id === playerId ? {...player, processedThroughQueue: true} : player
-      )
-    );
+  //WORKS: Removes Queues
+  const removeQueues = () => {
+    setCurrentTournament(prevTournament => {
+      if (!prevTournament) return prevTournament;
+      return {
+        ...prevTournament,
+        queues: prevTournament.queues.slice(0, -1)
+      };
+    });
   };
 
   // FIXME: will update the players INSIDE the tournament
@@ -115,12 +121,11 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     const response = await fetch(`/api/tournaments/`);
     const tournamentsData = await response.json();
     setTournaments(tournamentsData);
-    // comes through as expected
+    // WORKS: as expected
     // console.log("Tournaments");
     // console.log(tournamentsData);
   };
 
-  // NEW:
   // "NOTE" is this even needed?
   // const fetchPlayersByTournamentId = async (tournamentId: string) => {
   //   // console.log("TRYING TO FETCH PLAYERS");
@@ -190,7 +195,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // REVIEW: are these used anywhere???
   // Update Players and Queues
-  const updatePlayers = (updatedPlayers: TPlayer[]) => setPlayers(updatedPlayers);
+  // const updatePlayers = (updatedPlayers: TPlayer[]) => setPlayers(updatedPlayers);
   // const updateQueues = (updatedQueues: TQueue[]) => setQueues(updatedQueues);
 
   // const queues = currentTournament?.queues;
@@ -201,15 +206,14 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
       value={{
         // players,
         // setPlayers,
-        markPlayerAsProcessed,
         // queues,
         // setQueues,
-        // addMoreQueues,
-        // removeQueues,
+        addMoreQueues,
+        removeQueues,
         draggedItem,
         setDraggedItem,
         uniqueCategories,
-        updatePlayers,
+        // updatePlayers,
         // updateQueues,
         currentTournament,
         tournaments,
