@@ -41,7 +41,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
   // console.log("RUNNING INSIDE CONTEXT")
-  //WORKS: as expected Fetch Players and Tournaments on Mount
+  //WORKS: as expected Fetch Players and Tournaments on Mount || to fetch the newest tournament might have to use Websocket
   useEffect(() => {
     // console.log("RUNNING HERE IN USEEFFECT");
     // fetchPlayers();

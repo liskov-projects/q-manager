@@ -19,7 +19,6 @@ export default function NewPlayerForm() {
     names: "",
     categories: "",
     phoneNumbers: ""
-    //
   });
 
   // console.log("within the form ", currentTournament);
@@ -47,10 +46,10 @@ export default function NewPlayerForm() {
 
     // data to send to backend
     const newItem = {
+      tournamentId: currentTournament._id,
       names: newPlayers.names,
       categories: incomingCategories,
-      phoneNumbers: incomingPhoneNumbers,
-      tournamentId: currentTournament._id
+      phoneNumbers: incomingPhoneNumbers
     };
 
     // console.log("Data sent to backend: ", newItem);
@@ -114,7 +113,7 @@ export default function NewPlayerForm() {
             <input
               type="text"
               name="names"
-              value={newPlayers.name}
+              value={newPlayers.names}
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
@@ -132,7 +131,7 @@ export default function NewPlayerForm() {
             <input
               type="text"
               name="phoneNumbers"
-              value={newPlayers.phoneNumber}
+              value={newPlayers.phoneNumbers}
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />

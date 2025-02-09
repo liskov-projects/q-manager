@@ -6,6 +6,7 @@ import PlayerModel from "@/models/PlayerModel";
 import TournamentModel from "@/models/TournamentModel";
 //
 import {NextRequest} from "next/server";
+// import NewPlayerForm from "@/components/Forms/NewPlayerForm";
 
 export async function PUT(request: NextRequest) {
   const {tournamentID, ...player} = await request.json();

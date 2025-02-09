@@ -13,7 +13,7 @@ export default function CategoryPill({
   onDeleteCategory: (index: number) => void;
 }) {
   return (
-    <div clalssName="flex flex-row">
+    <div className="flex flex-row">
       {editMode ? (
         <>
           <input

@@ -29,15 +29,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("In the ROOTLAYOUT");
+  // console.log("In the ROOTLAYOUT");
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClerkProvider>
           <TournamentsAndQueuesProvider>
-                {/* looks like this component cannot use Clerk hook for some reason */}
-                <Header />
-                {children}
+            {/* looks like this component cannot use Clerk hook for some reason */}
+            <Header />
+            {children}
             {/* </ContextWrapper> */}
           </TournamentsAndQueuesProvider>
         </ClerkProvider>

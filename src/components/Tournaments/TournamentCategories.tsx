@@ -5,7 +5,7 @@ import {useState, useEffect} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 export default function TournamentCategories({
-  categories,
+  categories = [],
   tournamentId
 }: {
   categories: string[];
