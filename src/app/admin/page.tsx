@@ -7,7 +7,7 @@ export default function AdminPage() {
   return (
     <div className="flex flex-col">
       <NewTournamentForm />
-      <NewQueueForm />
+      {/* <NewQueueForm /> */}
       <NewPlayerForm />
     </div>
   );

@@ -59,7 +59,7 @@ export default function ButtonGroup({tournamentId}) {
         <Button
           onClick={() => saveTournament(tournamentId)}
           className="flex-grow bg-tennis-200 hover:bg-tennis-100 text-shell-300 hover:text-shell-200 py-2 h-[45px] px-4 rounded my-2 mx-2">
-          SAVE tournament
+          SAVE current queues
         </Button>
       </div>
     </div>

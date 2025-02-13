@@ -75,12 +75,12 @@ export default function NewQueueForm() {
   return (
     <>
       <div className="flex flex-col items-center justify-center my-4 ">
-        <SectionHeader>Add a Queue</SectionHeader>
+        {/* <SectionHeader>Add a Queue</SectionHeader> */}
 
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
           className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center">
-          {`${isExpanded ? "hide " : "show"} the form`}
+          {`${isExpanded ? "Hide the form" : "New Queue"}`}
         </Button>
       </div>
 

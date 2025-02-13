@@ -12,7 +12,7 @@ export default function User() {
   return (
     <div className="flex items-center">
       {isSignedIn ? (
-        <div className="flex flex-row m-8">
+        <div className="flex flex-row">
           <div className="w-16 h-16 rounded-full overflow-hidden">
             <Image
               src={user.imageUrl} // Clerk's profile image URL
@@ -22,9 +22,7 @@ export default function User() {
               height={16}
             />
           </div>
-          <div className="ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100">
-            <SignOutButton>Sign out</SignOutButton>
-          </div>
+          <SignOutButton>Sign out</SignOutButton>
         </div>
       ) : (
         <Link

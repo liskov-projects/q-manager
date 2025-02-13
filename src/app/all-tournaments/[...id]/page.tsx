@@ -5,14 +5,14 @@ import NewQueueForm from "@/components/Forms/NewQueueForm";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 export default function TournamentPage({params}: {params: {_id: string}}) {
-  const {tournamentOwner} = useTournamentsAndQueuesContext();
+  const {tournamentOwner, currentTournament} = useTournamentsAndQueuesContext();
   return (
     <div>
       <h1 className="text-center text-2xl font-bold">
         {/* TODO: change */}
-        Tournament name: {params._id}
+        Tournament: {currentTournament?.name}
       </h1>
-      {tournamentOwner && <NewQueueForm />}
+      {/* {tournamentOwner && <NewQueueForm />} */}
       <QueuesPage />
     </div>
   );

@@ -6,6 +6,7 @@ import QueuesGridMini from "./QueuesGridMini";
 import SectionHeader from "../SectionHeader";
 import Button from "../Buttons/Button";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import NewQueueForm from "../Forms/NewQueueForm";
 
 export default function QueuesContainer() {
   const [showAlternateView, setShowAlternateView] = useState(false);
@@ -15,8 +16,10 @@ export default function QueuesContainer() {
 
   return (
     <div className="p-2">
-      <SectionHeader>Queues</SectionHeader>
-
+      <div className="flex justify-between items-center">
+        <SectionHeader>Queues</SectionHeader>
+        <NewQueueForm />
+      </div>
       <Button
         onClick={() => setShowAlternateView(!showAlternateView)}
         className="mb-4 mx-4 p-2 bg-blue-500 text-white font-bold rounded">
