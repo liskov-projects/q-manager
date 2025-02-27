@@ -1,14 +1,16 @@
 "use client";
 
-import {useState, Fragment, useEffect} from "react";
-import useDragNDrop from "@/hooks/useDragNDrop";
+import {useState, Fragment} from "react";
+// components
 import Button from "./Buttons/Button";
 import DropZone from "./DropZone";
 import SectionHeader from "./SectionHeader";
+import PlayerListItem from "./PlayerListItem";
 // context
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-
-import PlayerListItem from "./PlayerListItem";
+// hooks
+import useDragNDrop from "@/hooks/useDragNDrop";
+// types
 import {TPlayer} from "@/types/Types";
 // import DropDownFilter from "./DropDownFilter";
 
@@ -23,19 +25,12 @@ export default function PlayersList({title, players, zone}) {
   } = useTournamentsAndQueuesContext();
   const {handleDrop} = useDragNDrop();
 
-  // FIXME: will refresh the players if new are added
-  // useEffect(() => {
-  //   fetchNewPlayers();
-  // }, []);
-  //coming throught
-  // console.log("In the PlayerList: ", currentTournamentPlayers);
-  // console.log("Players: ", players);
   return (
     // REVIEW: viewport height
     <div id="modal-root">
       <SectionHeader>{title}</SectionHeader>
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
-        {!tournamentOwner ? null : (
+        {/* {!tournamentOwner ? null : (
           <Button
             // FIXME: refresh the players
             onClick={() => {
@@ -47,7 +42,7 @@ export default function PlayersList({title, players, zone}) {
             }>
             UPDATE PLAYERS
           </Button>
-        )}
+        )} */}
         {/* TODO: extract into a separate comp? */}
         <input
           className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-4"

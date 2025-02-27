@@ -7,30 +7,58 @@ import QueuesContainer from "@/components/Queue/QueuesContainer";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {usePathname} from "next/navigation";
+// NEW:
+import io from "socket.io-client";
+const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
 
 export default function TournamentQueuesPage({thisTournamentId}) {
   const [visibleSection, setVisibleSection] = useState("queues");
   // const [thisTournamentId, setThisTournamentId] = useState(null);
-
+  // NEW:
+  const [socket, setSocket] = useState(null);
   const pathname = usePathname();
 
   const {
     // fetchPlayersByTournamentId,
     setCurrentTournament,
     tournaments,
-    currentTournamentPlayers,
+    // currentTournamentPlayers,
     currentTournament
   } = useTournamentsAndQueuesContext();
 
-  // console.log("in the component", currentTournament);
-  // OLD:
-  // useEffect(() => {
-  //   if (thisTournamentId) {
-  //     const thisTournament = fetchPlayersByTournamentId(thisTournamentId);
-  //     setCurrentTournament(thisTournament);
-  //   }
-  // }, [thisTournamentId]);
+  useEffect(() => {
+    if (thisTournamentId && tournaments.length > 0) {
+      const thisTournament = tournaments.find(
+        tournament => tournament._id === thisTournamentId
+      );
+      setCurrentTournament(thisTournament);
+    }
+  }, [thisTournamentId, tournaments]);
 
+  useEffect(() => {
+    const newSocket = io(SOCKET_URL);
+    setSocket(newSocket);
+    // cleanup func to stop the socket
+    return () => newSocket.disconnect;
+    // shouldn't there be a dependency? we want this to run more than once?
+  }, []);
+
+  useEffect(() => {
+    // guard so TS doesn't yell
+    if (!socket || !thisTournamentId) return;
+
+    socket.on("tournamentUpdated", updatedTournament => {
+      if (updatedTournament._id === thisTournamentId) {
+        setCurrentTournament(updatedTournament);
+      }
+    });
+    return () => {
+      socket.off("updatedTournament");
+    };
+  }, [socket, thisTournamentId]);
+  //
+
+  // FIXME: barely seen on the screen | STYLE
   if (!currentTournament) {
     return <div className="flex self-center">Loading...</div>; // Add a loading state
   }
@@ -62,7 +90,7 @@ export default function TournamentQueuesPage({thisTournamentId}) {
           className={`p-2 w-full lg:w-1/4 ${
             visibleSection === "unprocessed" ? "block" : "hidden lg:block"
           }`}>
-          <NewPlayerForm />
+          <NewPlayerForm socket={socket} tournamentId={thisTournamentId} />
           <PlayersList
             title={"Unprocessed Players"}
             players={currentTournament.unProcessedQItems}

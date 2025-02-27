@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import {ClerkProvider} from "@clerk/nextjs";
 import {TournamentsAndQueuesProvider} from "@/context/TournamentsAndQueuesContext";
+import {SocketProvider} from "@/context/SocketContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,10 +36,10 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClerkProvider>
           <TournamentsAndQueuesProvider>
-            {/* looks like this component cannot use Clerk hook for some reason */}
-            <Header />
-            {children}
-            {/* </ContextWrapper> */}
+            <SocketProvider>
+              <Header />
+              {children}
+            </SocketProvider>
           </TournamentsAndQueuesProvider>
         </ClerkProvider>
       </body>

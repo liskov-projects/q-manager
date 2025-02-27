@@ -28,11 +28,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // Tournaments State
   const [tournaments, setTournaments] = useState<TTournament[]>([]);
   const [currentTournament, setCurrentTournament] = useState<TTournament | null>();
-  // const [currentTournamentPlayers, setCurrentTournamentPlayers] =
-  //   useState<TTournamentPlayersState>({
-  //     unProcessedQItems: [],
-  //     processedQItems: []
-  //   });
+  const [fetchTrigger, setFetchTrigger] = useState(false);
 
   const pathname = usePathname();
   const {isSignedIn, user} = useUser();
@@ -49,7 +45,11 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   }, []);
 
   // WORKS: sets both the tournamnet and its players | Sync Current Tournament with URL Pathname
-  // FIXME: needs to get the updated list of players for a particular tournament | a separate useEffect?
+
+  // FIXME: needs a function to hit an endpoint and get the new data for a tournament
+  // 1.  make endpoint to get a single tourn
+  // 2. make a func that hits it
+  // 3. when a change to db is made (update) use the func to pull down the tourn we need
   useEffect(() => {
     // console.log("Current Pathname:", pathname);
     // console.log("Tournaments:", tournaments);
@@ -73,6 +73,35 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const filteredTournaments = tournaments.filter(
     tournament => tournament.adminUser === user?.id
   );
+
+  // NEW:
+
+  const fetchNewPlayers = async (tournamentId: string) => {
+    try {
+      const response = await fetch(`/api/tournament/${tournamentId}`);
+      const playersData = await response.json();
+
+      const playersForTournament = playersData.filter(
+        (player: TPlayer) => player.tournamentId === tournamentId
+      );
+
+      console.log("Fetched Players: ", playersForTournament);
+
+      setCurrentTournament(prevTournament =>
+        prevTournament
+          ? {...prevTournament, unprocessedPlayers: playersForTournament}
+          : prevTournament
+      );
+    } catch (error) {
+      console.error("Error fetching players:", error);
+    }
+  };
+  useEffect(() => {
+    if (currentTournament) {
+      fetchNewPlayers(currentTournament._id);
+    }
+  }, [fetchTrigger]);
+  //
 
   //WORKS: Adds Queues
   const addMoreQueues = () => {
@@ -102,20 +131,6 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     });
   };
 
-  // FIXME: will update the players INSIDE the tournament
-  // const fetchNewPlayers = async () => {
-  //   // console.log("THIS (FETCH PLAYERS?!!");
-  //   const response = await fetch("../api/players/");
-  //   const playersData = await response.json();
-  //   const playersForTournament = playersData.filter(
-  //     (player: TPlayer) => player.tournamentId === currentTournament?._id
-  //   );
-
-  //   // comes through
-  //   console.log("fetchPlayers playerForTourn: ", playersForTournament);
-  //   setCurrentTournamentPlayers(playersForTournament);
-  // };
-
   //WORKS: as expected gets ALL tournaments
   const fetchTournaments = async () => {
     const response = await fetch(`/api/tournaments/`);
@@ -125,40 +140,6 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     // console.log("Tournaments");
     // console.log(tournamentsData);
   };
-
-  // "NOTE" is this even needed?
-  // const fetchPlayersByTournamentId = async (tournamentId: string) => {
-  //   // console.log("TRYING TO FETCH PLAYERS");
-  //   // console.log("TOURNAMENT ID");
-  //   // console.log(tournamentId);
-
-  //   if (!tournamentId) {
-  //     console.error("Tournament ID is required to fetch data");
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await fetch(`/api/tournaments/${tournamentId}/`);
-  //     if (!response.ok) {
-  //       throw new Error(`Error fetching tournament: ${response.statusText}`);
-  //     }
-
-  //     const tournamentData = await response.json();
-  //     const tournamentPlayersData = tournamentData.queues.flatMap(
-  //       queue => queue.queueItems || []
-  //     );
-  //     // coming through
-  //     // console.log("IN THE CONTEXT: ", tournamentPlayersData);
-  //     // console.log(currentTournamentPlayers);
-  //     //this works
-  //     setCurrentTournamentPlayers(tournamentPlayersData);
-  //   } catch (error) {
-  //     console.error("Error fetching tournament:", error);
-  //   }
-  // };
-
-  // coming through
-  // console.log(currentTournamentPlayers);
 
   //WORKS: Derived Categories from Players
   const uniqueCategories = useMemo(() => {
@@ -193,40 +174,23 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     }
   };
 
-  // REVIEW: are these used anywhere???
-  // Update Players and Queues
-  // const updatePlayers = (updatedPlayers: TPlayer[]) => setPlayers(updatedPlayers);
-  // const updateQueues = (updatedQueues: TQueue[]) => setQueues(updatedQueues);
-
-  // const queues = currentTournament?.queues;
-  // console.log(queues);
-
   return (
     <TournamentsAndQueuesContext.Provider
       value={{
-        // players,
-        // setPlayers,
-        // queues,
-        // setQueues,
         addMoreQueues,
         removeQueues,
         draggedItem,
         setDraggedItem,
         uniqueCategories,
-        // updatePlayers,
-        // updateQueues,
         currentTournament,
         tournaments,
         setCurrentTournament,
         setTournaments,
         filteredTournaments,
         fetchTournaments,
-        // fetchNewPlayers,
-        // fetchPlayersByTournamentId,
-        // currentTournamentPlayers,
         tournamentOwner,
-        // setCurrentTournamentPlayers,
-        saveTournament
+        saveTournament,
+        setFetchTrigger
       }}>
       {children}
     </TournamentsAndQueuesContext.Provider>

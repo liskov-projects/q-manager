@@ -1,9 +1,6 @@
 // import PlayerModel from "@/models/PlayerModel";
 import TournamentModel from "@/models/TournamentModel";
 import dbConnect from "@/lib/db";
-// for older version
-// import type {NextApiRequest, NextApiResponse} from "next";
-// new version
 import {NextRequest, NextResponse} from "next/server";
 // import Tournament from "@/components/Tournaments/TournamentCard";
 
@@ -16,25 +13,12 @@ export async function GET(req: NextRequest) {
 
   const tournamentId = url?.split("/").pop();
   console.log("tournamentID: ", tournamentId);
-  console.log("TOURNAMENT ID IN GET ON ROUTE")
-  console.log(tournamentId)
+  console.log("TOURNAMENT ID IN GET ON ROUTE");
+  console.log(tournamentId);
   // Ensure the database is connected
   await dbConnect();
 
-  // already have GET
-  // if (req.method === "GET") {
   try {
-    // // Fetch players associated with the tournament ID
-    // const players = await PlayerModel.find({tournamentId});
-    // if (!players || players.length === 0) {
-    //   console.error("No players");
-    //   //  res.status(404).json({message: "No players found for this tournament."});
-    // }
-
-    // return new Response(JSON.stringify(players), {
-    //   status: 200,
-    //   headers: {"Content-Type": "application/json"}
-    // });
     const tournament = await TournamentModel.findById(tournamentId)
       .select("players") // Populate player references
       .populate("queues.queueItems"); // Populate queue player references

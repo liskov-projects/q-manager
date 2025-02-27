@@ -9,10 +9,11 @@ import {TPlayer} from "@/types/Types";
 import SectionHeader from "../SectionHeader";
 // import TTournament from "@/types/Tournament";
 
-export default function NewPlayerForm() {
+export default function NewPlayerForm({socket, tournamentID}) {
   // just check if logged in as the dropdown list is restricted to only the tournaments created by the logged in user
   const {isSignedIn} = useUser();
   const {currentTournament, filteredTournaments} = useTournamentsAndQueuesContext();
+  //NEW: socket
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newPlayers, setNewPlayers] = useState<TPlayer>({
@@ -67,6 +68,10 @@ export default function NewPlayerForm() {
       if (res.ok) {
         const data = await res.json();
         console.log("Added: ", data);
+        // NEW: socket
+        if (socket) {
+          socket.emit("addPlayer", data);
+        }
       } else {
         console.error("Error response:", res);
         throw new Error("Error adding item, status: " + res.status);
@@ -86,6 +91,7 @@ export default function NewPlayerForm() {
       categories: "",
       phoneNumbers: ""
     });
+
     // console.log(newPlayers);
   }
 
