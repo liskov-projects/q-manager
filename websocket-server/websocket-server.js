@@ -1,8 +1,12 @@
 require("dotenv").config();
 const express = require("express");
-const {Server} = require("socket.io");
+const { Server } = require("socket.io");
 const http = require("http");
 const cors = require("cors");
+
+const dbConnect = require("../src/lib/db");
+const PlayerModel = require("../src/models/PlayerModel");
+const TournamentModel = require("../src/models/TournamentModel");
 
 const app = express();
 const server = http.createServer(app);
@@ -19,14 +23,20 @@ io.on("connection", socket => {
   console.log(`Client connected ${socket.id}`);
   // registers the event
   socket.on("addPlayer", ({playerData, tournamentId}) => {
-    console.log(`New Player: ${playerData} added to Tournament ${tournamentId}`);
+
+    console.log(`New Player: ${JSON.stringify(playerData)} added to Tournament ${tournamentId}`);
+
+
+
+
     // broadcasts the update to all clients
     io.emit("tournamentUpdated", {tournamentId, playerData});
+
   });
 
   // disconnects
   socket.on("disconnect", () => {
-    console.log(`Client disconnectd: ${socket.id}`);
+    console.log(`Client disconnected: ${socket.id}`);
   });
 });
 
