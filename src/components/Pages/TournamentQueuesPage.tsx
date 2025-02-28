@@ -8,14 +8,13 @@ import ButtonGroup from "@/components/Buttons/ButtonGroup";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {usePathname} from "next/navigation";
 // NEW:
-import io from "socket.io-client";
-const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL;
+import {useSocket} from "@/context/SocketContext";
 
 export default function TournamentQueuesPage({thisTournamentId}) {
   const [visibleSection, setVisibleSection] = useState("queues");
   // const [thisTournamentId, setThisTournamentId] = useState(null);
   // NEW:
-  const [socket, setSocket] = useState(null);
+  const socket = useSocket();
   const pathname = usePathname();
 
   const {
@@ -35,13 +34,11 @@ export default function TournamentQueuesPage({thisTournamentId}) {
     }
   }, [thisTournamentId, tournaments]);
 
-  useEffect(() => {
-    const newSocket = io(SOCKET_URL);
-    setSocket(newSocket);
-    // cleanup func to stop the socket
-    return () => newSocket.disconnect;
-    // shouldn't there be a dependency? we want this to run more than once?
-  }, []);
+  // useEffect(() => {
+  //   // cleanup func to stop the socket
+  //   return () => socket.disconnect();
+  //   // shouldn't there be a dependency? we want this to run more than once?
+  // }, []);
 
   useEffect(() => {
     // guard so TS doesn't yell
@@ -53,7 +50,7 @@ export default function TournamentQueuesPage({thisTournamentId}) {
       }
     });
     return () => {
-      socket.off("updatedTournament");
+      socket.on("updatedTournament");
     };
   }, [socket, thisTournamentId]);
   //

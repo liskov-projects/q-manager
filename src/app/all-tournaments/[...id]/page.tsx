@@ -36,7 +36,7 @@ export default function TournamentPage({params}: {params: {id: string[]}}) {
         </div>
       </h1>
       {tournamentOwner && <NewQueueForm />}
-      <TournamentQueuesPage thisTournamentId={params.id} />
+      <TournamentQueuesPage tournamentId={currentTournament?._id} />
     </div>
   );
 }

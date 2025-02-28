@@ -70,7 +70,7 @@ export default function NewPlayerForm({socket, tournamentID}) {
         console.log("Added: ", data);
         // NEW: socket
         if (socket) {
-          socket.emit("addPlayer", data);
+          socket.emit("addPlayer", {data, tournamentID});
         }
       } else {
         console.error("Error response:", res);

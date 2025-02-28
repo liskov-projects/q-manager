@@ -12,9 +12,10 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
   useEffect(() => {
     const socketInstance = io(SOCKET_URL);
     setSocket(socketInstance);
-
+    console.log("SOCKET IS SET");
     // returns a cleanup func
     return () => {
+      console.log("cleanup func in SocketContext");
       socketInstance.disconnect();
     };
   }, []);
