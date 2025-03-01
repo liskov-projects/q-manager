@@ -16,7 +16,6 @@ export const playerSchema = new mongoose.Schema(
 );
 
 // makes sure we only create a new model if we don't already have it
-const PlayerModel =
+export const PlayerModel =
   mongoose.models.PlayerModel || mongoose.model("PlayerModel", playerSchema);
 
-export default PlayerModel;

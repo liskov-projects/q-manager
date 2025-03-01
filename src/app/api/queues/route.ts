@@ -1,7 +1,6 @@
-import TournamentModel from "@/models/TournamentModel";
+import {TournamentModel} from "@/models/TournamentModel";
 import dbConnect from "@/lib/db";
-import QueueModel from "@/models/QueueModel";
-// import TournamentModel from "@/models/TournamentModel";
+import {QueueModel} from "@/models/QueueModel";
 import {NextRequest} from "next/server";
 
 export async function GET() {

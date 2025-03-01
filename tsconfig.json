@@ -28,6 +28,6 @@
     ".next/types/**/*.ts",
     "global.d.ts",
     "src/components/User.tsx"
-, "src/models/TournamentModel.js", "src/models/QueueModel.js", "src/models/PlayerModel.js"  ],
+, "src/models/TournamentModel.js", "src/models/QueueModel.js", "src/models/PlayerModel.js", "src/websocket-server/websocket-server.js"  ],
   "exclude": ["node_modules"]
 }

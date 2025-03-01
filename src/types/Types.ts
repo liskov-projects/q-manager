@@ -56,7 +56,6 @@ export type TTournamentsAndQueuesContextProps = {
   fetchPlayersByTournamentId: (id: string) => Promise<void>;
   currentTournamentPlayers: TPlayer[];
   setCurrentTournamentPlayers: React.Dispatch<React.SetStateAction<TPlayer[]>>;
-
   tournamentOwner: boolean;
 };
 

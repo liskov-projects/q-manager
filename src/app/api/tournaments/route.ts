@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/db";
-import TournamentModel from "@/models/TournamentModel";
+import {TournamentModel} from "@/models/TournamentModel";
 import {NextRequest} from "next/server";
 import QueueModel from "@/models/QueueModel";
 

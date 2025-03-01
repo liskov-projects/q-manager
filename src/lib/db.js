@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
+dotenv.config({ path: "../../.env.local" });
 
 const MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) throw new Error("Define MONGO_URI");
@@ -24,7 +25,7 @@ async function dbConnect() {
         // useUnifiedTopology: true
       })
       .then(mongoose => {
-        console.log("new connection");
+        console.log("new DB connection");
         return mongoose;
       })
       .catch(err => console.error("MongoDB connection error", err));

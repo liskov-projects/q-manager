@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {playerSchema} from "./PlayerModel";
+import {playerSchema} from "./PlayerModel.js";
 
 export const queueSchema = new mongoose.Schema({
   queueName: {type: String, required: true},

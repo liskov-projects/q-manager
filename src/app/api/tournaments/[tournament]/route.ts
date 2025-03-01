@@ -1,5 +1,5 @@
 // import PlayerModel from "@/models/PlayerModel";
-import TournamentModel from "@/models/TournamentModel";
+import {TournamentModel} from "@/models/TournamentModel";
 import dbConnect from "@/lib/db";
 import {NextRequest, NextResponse} from "next/server";
 // import Tournament from "@/components/Tournaments/TournamentCard";

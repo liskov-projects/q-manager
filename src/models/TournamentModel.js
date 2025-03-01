@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
-import {playerSchema} from "./PlayerModel";
+import {playerSchema} from "./PlayerModel.js";
 import {queueSchema} from "./QueueModel.js";
-const tournamentSchema = new mongoose.Schema(
+
+export const tournamentSchema = new mongoose.Schema(
   {
     // _id: String,
     name: {type: String, required: true},
@@ -17,8 +18,6 @@ const tournamentSchema = new mongoose.Schema(
   {collection: "tournaments"}
 );
 
-const TournamentModel =
+export const TournamentModel =
   mongoose.models.TournamentModel ||
   mongoose.model("TournamentModel", tournamentSchema);
-
-export default TournamentModel;
