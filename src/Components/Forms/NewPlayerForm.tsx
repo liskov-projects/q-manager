@@ -9,7 +9,7 @@ import {TPlayer} from "@/types/Types";
 import SectionHeader from "../SectionHeader";
 // import TTournament from "@/types/Tournament";
 
-export default function NewPlayerForm({socket, tournamentID}) {
+export default function NewPlayerForm({socket}) {
   // just check if logged in as the dropdown list is restricted to only the tournaments created by the logged in user
   const {isSignedIn} = useUser();
   const {currentTournament, filteredTournaments} = useTournamentsAndQueuesContext();
@@ -19,7 +19,8 @@ export default function NewPlayerForm({socket, tournamentID}) {
   const [newPlayers, setNewPlayers] = useState<TPlayer>({
     names: "",
     categories: "",
-    phoneNumbers: ""
+    phoneNumbers: "",
+    // tournamentId: currentTournament?._id,
   });
 
   // console.log("within the form ", currentTournament);
@@ -54,35 +55,36 @@ export default function NewPlayerForm({socket, tournamentID}) {
     };
 
     // console.log("Data sent to backend: ", newItem);
+    if (socket) {
+      socket.emit("addPlayer", {playerData: newItem, tournamentId: currentTournament?._id});
+    }
 
-    try {
-      const res = await fetch("/api/players", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newItem)
-      });
+    // try {
+      // const res = await fetch("/api/players", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify(newItem)
+      // });
 
       // check response code
-      if (res.ok) {
-        const data = await res.json();
-        console.log("Added: ", data);
-        // NEW: socket
-        if (socket) {
-          socket.emit("addPlayer", {data, tournamentID});
-        }
-      } else {
-        console.error("Error response:", res);
-        throw new Error("Error adding item, status: " + res.status);
-      }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error("Error adding item: ", err.message);
-      } else {
-        console.error("Unknown error: ", err);
-      }
-    }
+    //   if (res.ok) {
+    //     const data = await res.json();
+    //     console.log("Added: ", data);
+    //     // NEW: socket
+        
+    //   } else {
+    //     console.error("Error response:", res);
+    //     throw new Error("Error adding item, status: " + res.status);
+    //   }
+    // } catch (err: unknown) {
+    //   if (err instanceof Error) {
+    //     console.error("Error adding item: ", err.message);
+    //   } else {
+    //     console.error("Unknown error: ", err);
+    //   }
+    // }
 
     // FIXME:
     // ressetting the form
