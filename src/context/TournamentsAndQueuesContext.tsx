@@ -5,10 +5,11 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useRef,
   useMemo,
   ReactNode
 } from "react";
-import {usePathname, useParams} from "next/navigation";
+import {useParams} from "next/navigation";
 import {useUser} from "@clerk/nextjs";
 
 // Types
@@ -25,6 +26,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const [tournaments, setTournaments] = useState<TTournament[]>([]);
   const [currentTournament, setCurrentTournament] = useState<TTournament | null>(null);
   // const [currentTournamentId, setCurrentTournamentId] = useState<string | null>(null);
+  const currentTournamentRef = useRef<TTournament | null>(null);
 
   const params = useParams();
   
@@ -33,8 +35,10 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // console.log("in the context", currentTournament);
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
 
-  // console.log("RUNNING INSIDE CONTEXT")
-  //WORKS: as expected Fetch Players and Tournaments on Mount || to fetch the newest tournament might have to use Websocket
+  useEffect(() => {
+    currentTournamentRef.current = currentTournament;
+  }, [currentTournament]);
+
   useEffect(() => {
     // console.log("RUNNING HERE IN USEEFFECT");
     // fetchPlayers();
@@ -81,9 +85,12 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const addPlayerToTournament = (playerData, tournamentId) => {
     console.log("addPlayerToTournament RAN");
     console.log("CURRENT TOURNAMENT IN ADDPLAYERFROMSOCKET", currentTournament);
+    console.log("🔍 currentTournamentREF.current:", currentTournamentRef.current);
 
-    if (currentTournament) {
+    if (currentTournamentRef.current) {
       setCurrentTournament(prevTournament => {
+        console.log("PREV TOURNAMENT")
+        console.log(prevTournament)
         if (!prevTournament) return prevTournament; // Ensure prevTournament exists
         console.log("SETTING THE TOURNAMENT");
         return {
