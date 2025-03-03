@@ -51,7 +51,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
     console.log("PARAMS ID", params?.id)
 
-    const tournamentId = params?.id[0];
+    const tournamentId = Array.isArray(params.id) ? params.id[0] : params.id;
   
     if (!tournamentId) {
       console.warn("⚠️ No tournament ID found in URL.");
@@ -160,7 +160,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   //WORKS: as expected gets ALL tournaments
   const fetchTournaments = async () => {
-    const response = await fetch(`/api/tournaments/`);
+    const response = await fetch(`/api/tournament/`);
     const tournamentsData = await response.json();
     setTournaments(tournamentsData);
     // WORKS: as expected
