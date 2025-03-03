@@ -1,25 +1,27 @@
 "use client";
 
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useUser} from "@clerk/nextjs";
 // components
 import Button from "../Buttons/Button";
 import {TPlayer} from "@/types/Types";
 import SectionHeader from "../SectionHeader";
+import {useSocket} from "@/context/SocketContext";
 // import TTournament from "@/types/Tournament";
 
-export default function NewPlayerForm({socket}) {
+export default function NewPlayerForm() {
   // just check if logged in as the dropdown list is restricted to only the tournaments created by the logged in user
   const {isSignedIn} = useUser();
-  const {currentTournament, filteredTournaments} = useTournamentsAndQueuesContext();
-  //NEW: socket
+  const {currentTournament, setCurrentTournament, filteredTournaments} =
+    useTournamentsAndQueuesContext();
+  const {socket} = useSocket();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newPlayers, setNewPlayers] = useState<TPlayer>({
     names: "",
     categories: "",
-    phoneNumbers: "",
+    phoneNumbers: ""
     // tournamentId: currentTournament?._id,
   });
 
@@ -34,7 +36,7 @@ export default function NewPlayerForm({socket}) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // console.log("New player data: ", newPlayers.phoneNumbers.split(","));
+    console.log("New player data: ", newPlayers);
 
     const incomingCategories =
       typeof newPlayers.categories === "string"
@@ -48,32 +50,37 @@ export default function NewPlayerForm({socket}) {
 
     // data to send to backend
     const newItem = {
-      tournamentId: currentTournament._id,
+      tournamentId: currentTournament?._id,
       names: newPlayers.names,
       categories: incomingCategories,
       phoneNumbers: incomingPhoneNumbers
     };
 
     // console.log("Data sent to backend: ", newItem);
+
     if (socket) {
-      socket.emit("addPlayer", {playerData: newItem, tournamentId: currentTournament?._id});
+      console.log("EMITTING SOCKET EVENT FOR ADD PLAYER");
+      socket.emit("addPlayer", {
+        playerData: newItem,
+        tournamentId: currentTournament?._id
+      });
     }
 
     // try {
-      // const res = await fetch("/api/players", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify(newItem)
-      // });
+    // const res = await fetch("/api/players", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(newItem)
+    // });
 
-      // check response code
+    // check response code
     //   if (res.ok) {
     //     const data = await res.json();
     //     console.log("Added: ", data);
     //     // NEW: socket
-        
+
     //   } else {
     //     console.error("Error response:", res);
     //     throw new Error("Error adding item, status: " + res.status);

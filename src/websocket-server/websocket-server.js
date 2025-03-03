@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
-import { Server } from "socket.io";
+import {Server} from "socket.io";
 import http from "http";
 import cors from "cors";
 
@@ -23,38 +23,41 @@ const io = new Server(server, {
 });
 
 io.on("connection", async socket => {
-  
   await dbConnect();
 
   console.log(`Client connected ${socket.id}`);
   // registers the event
   socket.on("addPlayer", async ({playerData, tournamentId}) => {
-
-    console.log(`New Player: ${JSON.stringify(playerData)} added to Tournament ${tournamentId}`);
+    console.log(
+      `New Player: ${JSON.stringify(playerData)} added to Tournament ${tournamentId}`
+    );
 
     // Find the tournament by ID and push the new player to `unProcessedQItems`
     const updatedTournament = await TournamentModel.findByIdAndUpdate(
       tournamentId,
-      { $push: { unProcessedQItems: playerData } },
-      { new: true } // Returns the updated document
+      {$push: {unProcessedQItems: playerData}},
+      {new: true} // Returns the updated document
     );
 
     if (!updatedTournament) {
       console.error("Tournament not found:", tournamentId);
-      return socket.emit("errorMessage", { error: "Tournament not found" });
+      return socket.emit("errorMessage", {error: "Tournament not found"});
     }
 
     console.log("Updated tournament:", updatedTournament);
 
     // Emit a success message
-    io.emit("tournamentUpdated", {
+    io.emit("playerAdded", {
+      message: "io.emit playerAdded",
       tournamentId,
-      change: { type: "addPlayer", playerData },
-      updatedTournament,
+      change: {type: "addPlayer", playerData},
+      updatedTournament
     });
 
-    socket.emit("playerAddedSuccess", { message: "Player added successfully" });
-
+    socket.emit("playerAdded", {
+      message: "socket.emit Player added",
+      data: {tournamentId, playerData}
+    });
   });
 
   // disconnects

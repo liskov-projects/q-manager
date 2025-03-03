@@ -3,53 +3,40 @@ import NewQueueForm from "@/components/Forms/NewQueueForm";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import TournamentQueuesPage from "@/components/Pages/TournamentQueuesPage";
 import TournamentCategories from "@/components/Tournaments/TournamentCategories";
-import { SocketProvider, useSocket } from "@/context/SocketContext";
-import { useEffect } from "react";
+import {useSocket} from "@/context/SocketContext";
+import {useEffect} from "react";
 
 export default function TournamentPage({params}: {params: {id: string[]}}) {
   const {tournaments, tournamentOwner} = useTournamentsAndQueuesContext();
   // VERA IF YOU LIKE
-  // const {updateTournamentWithNewPlayer} = useTournamentsAndQueuesContext();
+  const {fetchNewPlayers, addPlayerToTournament} = useTournamentsAndQueuesContext();
+  // NEW:
   const socket = useSocket();
-
-  useEffect(() => {
-    if (!socket) return;
-
-    // ✅ Listen for a successful player addition (only for the requesting client)
-    socket.on("playerAddedSuccess", ({ message, data }) => {
-      console.log("SOCKET SUCCESS ADD PLAYER", message);
-
-      // updateTournamentWithNewPlayer(data.tournamentId, data.playerData)
-
-    });
-
-    // ✅ Listen for tournament updates (broadcasted to all clients)
-    // socket.on("tournamentUpdated", ({ tournamentId, change, updatedTournament }) => {
-    //   console.log("Tournament update received:", change);
-
-    //   if (change.type === "addPlayer") {
-    //     // ✅ Update the local state with the new player
-    //     setTournament(updatedTournament);
-    //   }
-    // });
-
-    // ✅ Listen for errors
-    // socket.on("errorMessage", ({ error }) => {
-    //   console.error("Error from server:", error);
-    //   alert(error); // Show error to user
-    // });
-
-    return () => {
-      socket.off("playerAddedSuccess");
-      socket.off("tournamentUpdated");
-      socket.off("errorMessage");
-    };
-  }, [socket]);
+  const tournamentIdInRoute = params.id[0];
   // all are coming through
   // console.log("all tournaments", tournaments);
   // console.log("params", params);
 
-  const tournamentIdInRoute = params.id[0];
+  // NEW:
+  // useEffect(() => {
+  //   console.log("socket setup RAN in USEEFFECT");
+  //   if (!socket) return;
+
+  //   socket.on("tournamentUpdated", () => {
+  //     console.log("tournamnet updated recieved at the front");
+  //   });
+
+  //   socket.on("playerAdded", ({message, data}) => {
+  //     console.log("this is the MESSAGE: ", message, "this is the DATA: ", data);
+  //     addPlayerToTournament(data, tournamentIdInRoute);
+  //   });
+  //   // return () => {
+  //   //   socket.offAny("playerAdded");
+  //   // };
+  //   // return () => socket.disconnect();
+  //   return;
+  // }, []);
+
   // console.log("TOURNAMENT ID IN ROUTE PAGE")
   // console.log(params.id[0])
 

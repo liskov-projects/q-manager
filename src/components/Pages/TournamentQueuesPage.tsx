@@ -14,7 +14,7 @@ export default function TournamentQueuesPage({thisTournamentId}) {
   const [visibleSection, setVisibleSection] = useState("queues");
   // const [thisTournamentId, setThisTournamentId] = useState(null);
   // NEW:
-  const socket = useSocket();
+  // const socket = useSocket();
   const pathname = usePathname();
 
   const {
@@ -25,14 +25,14 @@ export default function TournamentQueuesPage({thisTournamentId}) {
     currentTournament
   } = useTournamentsAndQueuesContext();
 
-  useEffect(() => {
-    if (thisTournamentId && tournaments.length > 0) {
-      const thisTournament = tournaments.find(
-        tournament => tournament._id === thisTournamentId
-      );
-      setCurrentTournament(thisTournament);
-    }
-  }, [thisTournamentId, tournaments]);
+  // useEffect(() => {
+  //   if (thisTournamentId && tournaments.length > 0) {
+  //     const thisTournament = tournaments.find(
+  //       tournament => tournament._id === thisTournamentId
+  //     );
+  //     setCurrentTournament(thisTournament);
+  //   }
+  // }, [thisTournamentId, tournaments]);
 
   // useEffect(() => {
   //   // cleanup func to stop the socket
@@ -40,19 +40,19 @@ export default function TournamentQueuesPage({thisTournamentId}) {
   //   // shouldn't there be a dependency? we want this to run more than once?
   // }, []);
 
-  useEffect(() => {
-    // guard so TS doesn't yell
-    if (!socket || !thisTournamentId) return;
+  // useEffect(() => {
+  //   // guard so TS doesn't yell
+  //   if (!socket || !thisTournamentId) return;
 
-    socket.on("tournamentUpdated", updatedTournament => {
-      if (updatedTournament._id === thisTournamentId) {
-        setCurrentTournament(updatedTournament);
-      }
-    });
-    return () => {
-      socket.on("updatedTournament");
-    };
-  }, [socket, thisTournamentId]);
+  //   socket.on("tournamentUpdated", updatedTournament => {
+  //     if (updatedTournament._id === thisTournamentId) {
+  //       setCurrentTournament(updatedTournament);
+  //     }
+  //   });
+  //   return () => {
+  //     socket.on("updatedTournament");
+  //   };
+  // }, [socket, thisTournamentId]);
   //
 
   // FIXME: barely seen on the screen | STYLE
@@ -87,7 +87,7 @@ export default function TournamentQueuesPage({thisTournamentId}) {
           className={`p-2 w-full lg:w-1/4 ${
             visibleSection === "unprocessed" ? "block" : "hidden lg:block"
           }`}>
-          <NewPlayerForm socket={socket} tournamentId={thisTournamentId} />
+          <NewPlayerForm tournamentId={thisTournamentId} />
           <PlayersList
             title={"Unprocessed Players"}
             players={currentTournament.unProcessedQItems}

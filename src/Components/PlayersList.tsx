@@ -30,19 +30,6 @@ export default function PlayersList({title, players, zone}) {
     <div id="modal-root">
       <SectionHeader>{title}</SectionHeader>
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
-        {/* {!tournamentOwner ? null : (
-          <Button
-            // FIXME: refresh the players
-            onClick={() => {
-              // console.log("ONCLICK IS THIS TRIGGERING");
-              fetchNewPlayers(); // Call the function
-            }}
-            className={
-              "ml-6 my-4 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
-            }>
-            UPDATE PLAYERS
-          </Button>
-        )} */}
         {/* TODO: extract into a separate comp? */}
         <input
           className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-4"

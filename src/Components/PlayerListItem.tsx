@@ -15,7 +15,7 @@ export default function PlayerListItem({item}: {item: TPlayer}) {
   const {handleDragStart, handleDragOver} = useDragNDrop();
   const [editMode, setEditMode] = useState(false);
 
-  // NEW:
+  // FIXME:
   const handleDelete = async () => {
     try {
       const res = await fetch(`/api/players/${item._id}`, {

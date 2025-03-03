@@ -19,16 +19,11 @@ const TournamentsAndQueuesContext = createContext<
 >(undefined);
 
 export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) => {
-  //NOTE: Queues are derived from the tournament state
-
-  //FIXME: not used anywhere
-  // // const [players, setPlayers] = useState<TPlayer[]>([]);
   const [draggedItem, setDraggedItem] = useState<TPlayer | null>(null);
 
   // Tournaments State
   const [tournaments, setTournaments] = useState<TTournament[]>([]);
   const [currentTournament, setCurrentTournament] = useState<TTournament | null>();
-  const [fetchTrigger, setFetchTrigger] = useState(false);
 
   const pathname = usePathname();
   const {isSignedIn, user} = useUser();
@@ -45,11 +40,6 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   }, []);
 
   // WORKS: sets both the tournamnet and its players | Sync Current Tournament with URL Pathname
-
-  // FIXME: needs a function to hit an endpoint and get the new data for a tournament
-  // 1.  make endpoint to get a single tourn
-  // 2. make a func that hits it
-  // 3. when a change to db is made (update) use the func to pull down the tourn we need
   useEffect(() => {
     // console.log("Current Pathname:", pathname);
     // console.log("Tournaments:", tournaments);
@@ -69,13 +59,29 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   }, [pathname, tournaments]);
   // console.log("in the context", currentTournament);
 
+  // NEW:
+  const addPlayerToTournament = (player, tournamentId) => {
+    console.log("addPlayerToTournament RAN");
+    console.log("currentTournament ", currentTournament);
+
+    if (currentTournament) {
+      setCurrentTournament(prevTournament => {
+        if (!prevTournament) return prevTournament; // Ensure prevTournament exists
+        console.log("SETTING THE TOURNAMENT");
+        return {
+          ...prevTournament, // Create a new tournament object
+          unProcessedQItems: [...prevTournament.unProcessedQItems, player] // Create a new array
+        };
+      });
+    }
+  };
+
   // Filtered Tournaments
   const filteredTournaments = tournaments.filter(
     tournament => tournament.adminUser === user?.id
   );
 
-  // NEW:
-
+  // to get the newest players after one is added
   const fetchNewPlayers = async (tournamentId: string) => {
     try {
       const response = await fetch(`/api/tournament/${tournamentId}`);
@@ -96,11 +102,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
       console.error("Error fetching players:", error);
     }
   };
-  useEffect(() => {
-    if (currentTournament) {
-      fetchNewPlayers(currentTournament._id);
-    }
-  }, [fetchTrigger]);
+
   //
 
   //WORKS: Adds Queues
@@ -190,7 +192,8 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         fetchTournaments,
         tournamentOwner,
         saveTournament,
-        setFetchTrigger
+        fetchNewPlayers,
+        addPlayerToTournament
       }}>
       {children}
     </TournamentsAndQueuesContext.Provider>
