@@ -50,14 +50,18 @@ io.on("connection", async socket => {
     io.emit("playerAdded", {
       message: "io.emit playerAdded",
       tournamentId,
-      change: {type: "addPlayer", playerData},
-      updatedTournament
+      change: { type: "addPlayer", playerData },
+      updatedTournament,
+      playerData
     });
-
-    socket.emit("playerAdded", {
-      message: "socket.emit Player added",
-      data: {tournamentId, playerData}
-    });
+    console.log("📡 Sent io.emit(playerAdded)", tournamentId, playerData);
+    
+    // socket.emit("playerAdded", {
+    //   message: "socket.emit Player added",
+    //   data: { tournamentId, playerData }
+    // });
+    // console.log("📡 Sent socket.emit(playerAdded)", tournamentId, playerData);
+    
   });
 
   // disconnects

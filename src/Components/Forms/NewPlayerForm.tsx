@@ -151,7 +151,7 @@ export default function NewPlayerForm() {
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
 
-            <label htmlFor="tournamentId">Tournament</label>
+            {/* <label htmlFor="tournamentId">Tournament</label>
             <select
               name="tournamentId"
               value={newPlayers.tournamentId}
@@ -163,7 +163,7 @@ export default function NewPlayerForm() {
                   {tournament.name}
                 </option>
               ))}
-            </select>
+            </select> */}
           </div>
 
           <Button className=" ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">

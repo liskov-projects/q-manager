@@ -1,59 +1,18 @@
 "use client";
 
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import NewPlayerForm from "@/components/Forms/NewPlayerForm";
 import PlayersList from "@/components/PlayersList";
 import QueuesContainer from "@/components/Queue/QueuesContainer";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import {usePathname} from "next/navigation";
-// NEW:
-import {useSocket} from "@/context/SocketContext";
 
-export default function TournamentQueuesPage({thisTournamentId}) {
+export default function TournamentQueuesPage({tournamentId}) {
   const [visibleSection, setVisibleSection] = useState("queues");
-  // const [thisTournamentId, setThisTournamentId] = useState(null);
-  // NEW:
-  // const socket = useSocket();
-  const pathname = usePathname();
 
   const {
-    // fetchPlayersByTournamentId,
-    setCurrentTournament,
-    tournaments,
-    // currentTournamentPlayers,
     currentTournament
   } = useTournamentsAndQueuesContext();
-
-  // useEffect(() => {
-  //   if (thisTournamentId && tournaments.length > 0) {
-  //     const thisTournament = tournaments.find(
-  //       tournament => tournament._id === thisTournamentId
-  //     );
-  //     setCurrentTournament(thisTournament);
-  //   }
-  // }, [thisTournamentId, tournaments]);
-
-  // useEffect(() => {
-  //   // cleanup func to stop the socket
-  //   return () => socket.disconnect();
-  //   // shouldn't there be a dependency? we want this to run more than once?
-  // }, []);
-
-  // useEffect(() => {
-  //   // guard so TS doesn't yell
-  //   if (!socket || !thisTournamentId) return;
-
-  //   socket.on("tournamentUpdated", updatedTournament => {
-  //     if (updatedTournament._id === thisTournamentId) {
-  //       setCurrentTournament(updatedTournament);
-  //     }
-  //   });
-  //   return () => {
-  //     socket.on("updatedTournament");
-  //   };
-  // }, [socket, thisTournamentId]);
-  //
 
   // FIXME: barely seen on the screen | STYLE
   if (!currentTournament) {
@@ -87,7 +46,7 @@ export default function TournamentQueuesPage({thisTournamentId}) {
           className={`p-2 w-full lg:w-1/4 ${
             visibleSection === "unprocessed" ? "block" : "hidden lg:block"
           }`}>
-          <NewPlayerForm tournamentId={thisTournamentId} />
+          <NewPlayerForm />
           <PlayersList
             title={"Unprocessed Players"}
             players={currentTournament.unProcessedQItems}
@@ -108,7 +67,7 @@ export default function TournamentQueuesPage({thisTournamentId}) {
             visibleSection === "processed" ? "block" : "hidden lg:block"
           }`}>
           {/* <SectionHeader>Button Group</SectionHeader> */}
-          <ButtonGroup tournamentId={thisTournamentId} />
+          <ButtonGroup tournamentId={tournamentId} />
           <PlayersList
             title={"Processed Players"}
             players={currentTournament.processedQItems}

@@ -1,6 +1,6 @@
 "use client";
 
-import {createContext, useContext, useEffect, ReactNode} from "react";
+import {createContext, useContext, useEffect, ReactNode, useState} from "react";
 import {io, Socket} from "socket.io-client";
 import {useTournamentsAndQueuesContext} from "./TournamentsAndQueuesContext";
 
@@ -15,21 +15,31 @@ const SocketContext = createContext<SocketContextType | null>(null);
 
 export const SocketProvider = ({children}: {children: ReactNode}) => {
   const {addPlayerToTournament} = useTournamentsAndQueuesContext();
-  const socket = io(SOCKET_URL);
-
+  const [socket, setSocket] = useState<Socket | null>(null);
+  
   useEffect(() => {
-    console.log("SOCKET CONNECTED");
+    const socketInstance = io(SOCKET_URL);
+    setSocket(socketInstance); // ✅ Save socket instance in state
+  
+    console.log("🔌 Connecting to WebSocket...");
+  
+    // ✅ Attach event listeners immediately
+    socketInstance.on("connect", () => {
+      console.log("✅ WebSocket Connected, Socket ID:", socketInstance.id);
+    });
 
     // Update global tournament state when a tournament update is received
-    socket.on("playerAdded", ({tournamentId, playerData}) => {
-      console.log("Player added by websocket:", playerData);
+    socketInstance.on("playerAdded", ({tournamentId, playerData, message}) => {
+      console.log("PLAYER ADDED BY WEBSOCKET:", playerData);
+      console.log("WHERE IS THE MESSAGE FROM")
+      console.log(message)
       addPlayerToTournament(playerData, tournamentId);
     });
 
     return () => {
       console.log("Cleaning up SocketContext listeners");
-      socket.off("playerAdded");
-      socket.disconnect();
+      socketInstance.off("playerAdded");
+      socketInstance.disconnect();
     };
   }, []);
 

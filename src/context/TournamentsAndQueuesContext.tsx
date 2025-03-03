@@ -8,7 +8,7 @@ import React, {
   useMemo,
   ReactNode
 } from "react";
-import {usePathname} from "next/navigation";
+import {usePathname, useParams} from "next/navigation";
 import {useUser} from "@clerk/nextjs";
 
 // Types
@@ -23,9 +23,11 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // Tournaments State
   const [tournaments, setTournaments] = useState<TTournament[]>([]);
-  const [currentTournament, setCurrentTournament] = useState<TTournament | null>();
+  const [currentTournament, setCurrentTournament] = useState<TTournament | null>(null);
+  // const [currentTournamentId, setCurrentTournamentId] = useState<string | null>(null);
 
-  const pathname = usePathname();
+  const params = useParams();
+  
   const {isSignedIn, user} = useUser();
   // console.log(user, "user");
   // console.log("in the context", currentTournament);
@@ -41,28 +43,44 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // WORKS: sets both the tournamnet and its players | Sync Current Tournament with URL Pathname
   useEffect(() => {
-    // console.log("Current Pathname:", pathname);
-    // console.log("Tournaments:", tournaments);
-    // console.log("Current Tournament:", currentTournament);
+    console.log("🔄 CURRENT TOURNAMENT SETTING USEEFFECT");
 
-    const segments = pathname.split("/");
-    const id = segments.pop();
+    console.log("PARAMS ID", params?.id)
 
-    if (id && tournaments.length > 0) {
-      const foundTournament = tournaments.find(tournament => tournament._id === id);
-      // console.log("Found TOURNAMENT");
-      // console.log(foundTournament);
-      if (foundTournament) {
-        setCurrentTournament(foundTournament);
-      }
+    const tournamentId = params?.id[0];
+  
+    if (!tournamentId) {
+      console.warn("⚠️ No tournament ID found in URL.");
+      return;
     }
-  }, [pathname, tournaments]);
-  // console.log("in the context", currentTournament);
+  
+    fetchTournament(tournamentId);
+
+  }, [params?.id]); // ✅ Runs when `pathname` changes
+  
+  // ✅ Fetch the single tournament directly from the API
+  const fetchTournament = async (tournamentId: string) => {
+    try {
+      console.log("🎯 Fetching tournament:", tournamentId);
+      const response = await fetch(`/api/tournament/${tournamentId}`);
+
+      if (!response.ok) {
+        throw new Error(`Error fetching tournament: ${response.statusText}`);
+      }
+
+      const tournamentData = await response.json();
+      console.log("✅ Tournament fetched:", tournamentData);
+      setCurrentTournament(tournamentData);
+      
+    } catch (error) {
+      console.error("❌ Failed to fetch tournament:", error);
+    }
+  };
 
   // NEW:
-  const addPlayerToTournament = (player, tournamentId) => {
+  const addPlayerToTournament = (playerData, tournamentId) => {
     console.log("addPlayerToTournament RAN");
-    console.log("currentTournament ", currentTournament);
+    console.log("CURRENT TOURNAMENT IN ADDPLAYERFROMSOCKET", currentTournament);
 
     if (currentTournament) {
       setCurrentTournament(prevTournament => {
@@ -70,7 +88,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         console.log("SETTING THE TOURNAMENT");
         return {
           ...prevTournament, // Create a new tournament object
-          unProcessedQItems: [...prevTournament.unProcessedQItems, player] // Create a new array
+          unProcessedQItems: [...prevTournament.unProcessedQItems, playerData] // Create a new array
         };
       });
     }
