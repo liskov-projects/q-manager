@@ -3,6 +3,7 @@ import express from "express";
 import {Server} from "socket.io";
 import http from "http";
 import cors from "cors";
+import mongoose from "mongoose";
 
 import {PlayerModel} from "../models/PlayerModel.js";
 import {TournamentModel} from "../models/TournamentModel.js";
@@ -26,16 +27,19 @@ io.on("connection", async socket => {
   await dbConnect();
 
   console.log(`Client connected ${socket.id}`);
+
   // registers the event
   socket.on("addPlayer", async ({playerData, tournamentId}) => {
     console.log(
       `New Player: ${JSON.stringify(playerData)} added to Tournament ${tournamentId}`
     );
 
+    // this makes sure the player has the id
+    const playerWithId = {...playerData, _id: new mongoose.Types.ObjectId()};
     // Find the tournament by ID and push the new player to `unProcessedQItems`
     const updatedTournament = await TournamentModel.findByIdAndUpdate(
       tournamentId,
-      {$push: {unProcessedQItems: playerData}},
+      {$push: {unProcessedQItems: playerWithId}},
       {new: true} // Returns the updated document
     );
 
@@ -50,18 +54,28 @@ io.on("connection", async socket => {
     io.emit("playerAdded", {
       message: "io.emit playerAdded",
       tournamentId,
-      change: { type: "addPlayer", playerData },
+      // change: {type: "addPlayer", playerData},
       updatedTournament,
-      playerData
+      playerData: playerWithId
     });
     console.log("📡 Sent io.emit(playerAdded)", tournamentId, playerData);
-    
+
     // socket.emit("playerAdded", {
     //   message: "socket.emit Player added",
     //   data: { tournamentId, playerData }
     // });
     // console.log("📡 Sent socket.emit(playerAdded)", tournamentId, playerData);
-    
+  });
+
+  // NEW:
+  socket.on("playerDropped", ({message, draggedItem}) => {
+    console.log(message, draggedItem);
+
+    io.emit("droppedPlayer", {
+      message: "roundtrip made for the playerDropped",
+      draggedItem
+    });
+    console.log("📡 Sent io.emit(playerDropped)");
   });
 
   // disconnects

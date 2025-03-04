@@ -1,7 +1,8 @@
+"use client";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {TQueue} from "@/types/Types";
 import {useState} from "react";
-
+import {useSocket} from "@/context/SocketContext";
 export default function DropZone({
   onDrop,
   index,
@@ -18,7 +19,8 @@ export default function DropZone({
   dropTarget?: TQueue | string;
   height: number;
 }) {
-  const {tournamentOwner} = useTournamentsAndQueuesContext();
+  const {tournamentOwner, draggedItem} = useTournamentsAndQueuesContext();
+  const {socket} = useSocket();
 
   const [isDraggedOver, setIsDraggedOver] = useState(false);
 
@@ -38,6 +40,12 @@ export default function DropZone({
       onDrop={event => {
         setIsDraggedOver(false);
         onDrop(event, queue, index);
+        socket?.emit("playerDropped", {
+          message: "playerDropped from DropZone",
+          draggedItem,
+          queue,
+          index
+        });
       }}
       onDragOver={event => event.preventDefault()}
     />

@@ -29,7 +29,7 @@ export default function CategoryPill({
           </Button>
         </>
       ) : (
-        <span className="mx-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium">
+        <span className="flex mx-4 my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium">
           {category}
         </span>
       )}

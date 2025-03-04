@@ -10,16 +10,16 @@ export default function TournamentCategories({
 }: {
   categories: string[];
   tournamentId: string;
+  // classname: string;
 }) {
   const {tournamentOwner} = useTournamentsAndQueuesContext();
   const [editedCategories, setEditedCategories] = useState([...categories]);
 
-  const [editMode, setEditMode] = useState(false);
+  // const [editMode, setEditMode] = useState(false);
 
   const pathname = usePathname();
   const canEdit = pathname === "/all-tournaments" || !tournamentOwner;
 
-  // NOTE: unsire if it makes more good that bad
   useEffect(() => {
     setEditedCategories(categories);
   }, [categories]);
@@ -48,15 +48,14 @@ export default function TournamentCategories({
   };
 
   return (
-    <div className="">
+    <div className="flex flex-col">
       <CategoryList
-        className="flex flex-row"
         editedCategories={editedCategories}
         setEditedCategories={setEditedCategories}
-        editMode={editMode}
-        setEditMode={setEditMode}
+        // editMode={editMode}
+        // setEditMode={setEditMode}
       />
-      {canEdit ? null : (
+      {/* {canEdit ? null : (
         <Button
           className="mx-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out"
           onClick={() => setEditMode(!editMode)}>
@@ -69,7 +68,7 @@ export default function TournamentCategories({
           onClick={handleSaveChanges}>
           Save
         </Button>
-      )}
+      )} */}
     </div>
   );
 }

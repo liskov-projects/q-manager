@@ -24,12 +24,14 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // Tournaments State
   const [tournaments, setTournaments] = useState<TTournament[]>([]);
-  const [currentTournament, setCurrentTournament] = useState<TTournament | null>(null);
+  const [currentTournament, setCurrentTournament] = useState<TTournament | null>(
+    null
+  );
   // const [currentTournamentId, setCurrentTournamentId] = useState<string | null>(null);
   const currentTournamentRef = useRef<TTournament | null>(null);
 
   const params = useParams();
-  
+
   const {isSignedIn, user} = useUser();
   // console.log(user, "user");
   // console.log("in the context", currentTournament);
@@ -52,16 +54,15 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     console.log("PARAMS ID", params)
 
     const tournamentId = Array.isArray(params.id) ? params.id[0] : null
-  
+
     if (!tournamentId) {
       console.warn("⚠️ No tournament ID found in URL.");
       return;
     }
-  
-    fetchTournament(tournamentId);
 
+    fetchTournament(tournamentId);
   }, [params?.id]); // ✅ Runs when `pathname` changes
-  
+
   // ✅ Fetch the single tournament directly from the API
   const fetchTournament = async (tournamentId: string) => {
     try {
@@ -75,24 +76,23 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
       const tournamentData = await response.json();
       console.log("✅ Tournament fetched:", tournamentData);
       setCurrentTournament(tournamentData);
-      
     } catch (error) {
       console.error("❌ Failed to fetch tournament:", error);
     }
   };
 
-  // NEW:
+  // WORKS:
   const addPlayerToTournament = (playerData, tournamentId) => {
-    console.log("addPlayerToTournament RAN");
-    console.log("CURRENT TOURNAMENT IN ADDPLAYERFROMSOCKET", currentTournament);
-    console.log("🔍 currentTournamentREF.current:", currentTournamentRef.current);
+    // console.log("addPlayerToTournament RAN");
+    // console.log("CURRENT TOURNAMENT IN ADDPLAYERFROMSOCKET", currentTournament);
+    // console.log("🔍 currentTournamentREF.current:", currentTournamentRef.current);
 
     if (currentTournamentRef.current) {
       setCurrentTournament(prevTournament => {
-        console.log("PREV TOURNAMENT")
-        console.log(prevTournament)
+        // console.log("PREV TOURNAMENT")
+        // console.log(prevTournament)
         if (!prevTournament) return prevTournament; // Ensure prevTournament exists
-        console.log("SETTING THE TOURNAMENT");
+        // console.log("SETTING THE TOURNAMENT");
         return {
           ...prevTournament, // Create a new tournament object
           unProcessedQItems: [...prevTournament.unProcessedQItems, playerData] // Create a new array
