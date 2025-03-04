@@ -42,7 +42,7 @@ const useDragNDrop = () => {
           player => player._id !== draggedItem._id
         ),
         queues: prev.queues.map(queue =>
-          queue.id === dropQueue.id
+          queue._id === dropQueue._id
             ? {...queue, queueItems: [...queue.queueItems, updatedItem]}
             : queue
         )
@@ -144,7 +144,7 @@ const useDragNDrop = () => {
         // find which queue we're currently in
         prev.queues.find(queue => {
           if (queue.queueItems.some(player => player._id === draggedItem._id)) {
-            currentQueueId = queue.id;
+            currentQueueId = queue._id;
           }
         });
         const isSameQueue = currentQueueId === dropTarget.id;
@@ -155,13 +155,13 @@ const useDragNDrop = () => {
         }));
 
         if (isSameQueue) {
-          const targetQueue = updatedQueues.find(q => q.id === dropTarget.id);
+          const targetQueue = updatedQueues.find(q => q._id === dropTarget._id);
           if (targetQueue) {
             targetQueue.queueItems.splice(index + 1, 0, draggedItem);
           }
         } else {
           updatedQueues.forEach(queue => {
-            if (queue.id === dropTarget.id) {
+            if (queue._id === dropTarget._id) {
               queue.queueItems.splice(index + 1, 0, draggedItem);
             }
           });

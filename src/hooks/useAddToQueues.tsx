@@ -37,7 +37,7 @@ const useAddToQueues = () => {
     }
     //copy the queues
     const updatedQueues = currentTournament.queues.map(queue =>
-      queue.id === shortestQueue.id
+      queue._id === shortestQueue._id
         ? {...queue, queueItems: [...queue.queueItems, itemToAdd]}
         : queue
     );
