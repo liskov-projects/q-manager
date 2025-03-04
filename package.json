@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed:players": "node src/data/playerSeedingUtility.js",
-    "seed:tournaments": "node src/data/tournamentSeedingUtility.js"
+    "seed:tournaments": "node src/data/tournamentSeedingUtility.js",
+    "seed:both": "node src/data/tournamentSeedingUtility.js && node src/data/playerSeedingUtility.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.3.4",

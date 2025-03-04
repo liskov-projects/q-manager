@@ -10,7 +10,7 @@ import {TournamentModel} from "../models/TournamentModel.js";
 
 import dbConnect from "../lib/db.js"; // Ensure correct path
 
-dotenv.config({path: "../.env.local"});
+dotenv.config({path: "../.env"});
 
 const app = express();
 const server = http.createServer(app);
@@ -75,7 +75,7 @@ io.on("connection", async socket => {
       message: "roundtrip made for the playerDropped",
       draggedItem
     });
-    
+
     console.log("📡 Sent io.emit(playerDropped)");
   });
 

@@ -6,32 +6,26 @@ const tournamentsData = [
     image: "",
     queues: [
       {
-        id: "q1",
         queueName: "Location 1",
         queueItems: []
       },
       {
-        id: "q2",
         queueName: "Location 2",
         queueItems: []
       },
       {
-        id: "q3",
         queueName: "Location 3",
         queueItems: []
       },
       {
-        id: "q4",
         queueName: "Location 4",
         queueItems: []
       },
       {
-        id: "q5",
         queueName: "Location 5",
         queueItems: []
       },
       {
-        id: "q6",
         queueName: "Location 6",
         queueItems: []
       }
@@ -47,32 +41,26 @@ const tournamentsData = [
     image: "",
     queues: [
       {
-        id: "q1",
         queueName: "Location 1",
         queueItems: []
       },
       {
-        id: "q2",
         queueName: "Location 2",
         queueItems: []
       },
       {
-        id: "q3",
         queueName: "Location 3",
         queueItems: []
       },
       {
-        id: "q4",
         queueName: "Location 4",
         queueItems: []
       },
       {
-        id: "q5",
         queueName: "Location 5",
         queueItems: []
       },
       {
-        id: "q6",
         queueName: "Location 6",
         queueItems: []
       }
@@ -88,32 +76,26 @@ const tournamentsData = [
     image: "",
     queues: [
       {
-        id: "q1",
         queueName: "Location 1",
         queueItems: []
       },
       {
-        id: "q2",
         queueName: "Location 2",
         queueItems: []
       },
       {
-        id: "q3",
         queueName: "Location 3",
         queueItems: []
       },
       {
-        id: "q4",
         queueName: "Location 4",
         queueItems: []
       },
       {
-        id: "q5",
         queueName: "Location 5",
         queueItems: []
       },
       {
-        id: "q6",
         queueName: "Location 6",
         queueItems: []
       }
@@ -129,32 +111,26 @@ const tournamentsData = [
     image: "",
     queues: [
       {
-        id: "q1",
         queueName: "Location 1",
         queueItems: []
       },
       {
-        id: "q2",
         queueName: "Location 2",
         queueItems: []
       },
       {
-        id: "q3",
         queueName: "Location 3",
         queueItems: []
       },
       {
-        id: "q4",
         queueName: "Location 4",
         queueItems: []
       },
       {
-        id: "q5",
         queueName: "Location 5",
         queueItems: []
       },
       {
-        id: "q6",
         queueName: "Location 6",
         queueItems: []
       }
@@ -170,32 +146,26 @@ const tournamentsData = [
     image: "",
     queues: [
       {
-        id: "q1",
         queueName: "Location 1",
         queueItems: []
       },
       {
-        id: "q2",
         queueName: "Location 2",
         queueItems: []
       },
       {
-        id: "q3",
         queueName: "Location 3",
         queueItems: []
       },
       {
-        id: "q4",
         queueName: "Location 4",
         queueItems: []
       },
       {
-        id: "q5",
         queueName: "Location 5",
         queueItems: []
       },
       {
-        id: "q6",
         queueName: "Location 6",
         queueItems: []
       }
@@ -211,32 +181,26 @@ const tournamentsData = [
     image: "",
     queues: [
       {
-        id: "q1",
         queueName: "Location 1",
         queueItems: []
       },
       {
-        id: "q2",
         queueName: "Location 2",
         queueItems: []
       },
       {
-        id: "q3",
         queueName: "Location 3",
         queueItems: []
       },
       {
-        id: "q4",
         queueName: "Location 4",
         queueItems: []
       },
       {
-        id: "q5",
         queueName: "Location 5",
         queueItems: []
       },
       {
-        id: "q6",
         queueName: "Location 6",
         queueItems: []
       }
@@ -252,32 +216,26 @@ const tournamentsData = [
     image: "",
     queues: [
       {
-        id: "q1",
         queueName: "Location 1",
         queueItems: []
       },
       {
-        id: "q2",
         queueName: "Location 2",
         queueItems: []
       },
       {
-        id: "q3",
         queueName: "Location 3",
         queueItems: []
       },
       {
-        id: "q4",
         queueName: "Location 4",
         queueItems: []
       },
       {
-        id: "q5",
         queueName: "Location 5",
         queueItems: []
       },
       {
-        id: "q6",
         queueName: "Location 6",
         queueItems: []
       }

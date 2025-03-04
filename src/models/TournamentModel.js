@@ -4,7 +4,8 @@ import {queueSchema} from "./QueueModel.js";
 
 export const tournamentSchema = new mongoose.Schema(
   {
-    // _id: String,
+    // is it neede here?
+    _id: {type: mongoose.Types.ObjectId, auto: true, required: true},
     name: {type: String, required: true},
     categories: [{type: String, required: true}],
     adminUser: String,

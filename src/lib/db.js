@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 // dotenv.config();
-dotenv.config({ path: "../../.env.local" });
+dotenv.config({path: "../../.env"});
 
 const MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) throw new Error("Define MONGO_URI");
