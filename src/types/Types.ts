@@ -57,6 +57,7 @@ export type TTournamentsAndQueuesContextProps = {
   currentTournamentPlayers: TPlayer[];
   setCurrentTournamentPlayers: React.Dispatch<React.SetStateAction<TPlayer[]>>;
   tournamentOwner: boolean;
+  addPlayerToTournament: (playerData: TPlayer, tournamentId: string) => void;
 };
 
 // Route Context Props
