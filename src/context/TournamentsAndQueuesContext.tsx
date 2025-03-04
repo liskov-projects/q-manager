@@ -49,9 +49,9 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   useEffect(() => {
     console.log("🔄 CURRENT TOURNAMENT SETTING USEEFFECT");
 
-    console.log("PARAMS ID", params?.id)
+    console.log("PARAMS ID", params)
 
-    const tournamentId = Array.isArray(params.id) ? params.id[0] : params.id;
+    const tournamentId = Array.isArray(params.id) ? params.id[0] : null
   
     if (!tournamentId) {
       console.warn("⚠️ No tournament ID found in URL.");
