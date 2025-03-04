@@ -9,6 +9,9 @@ import {TPlayer} from "@/types/Types";
 import SectionHeader from "../SectionHeader";
 import {useSocket} from "@/context/SocketContext";
 // import TTournament from "@/types/Tournament";
+// NEW: pills work
+import TagsList from "../TagsList";
+import TournamentCategories from "../Tournaments/TournamentCategories";
 
 export default function NewPlayerForm() {
   // just check if logged in as the dropdown list is restricted to only the tournaments created by the logged in user
@@ -17,7 +20,7 @@ export default function NewPlayerForm() {
     useTournamentsAndQueuesContext();
   const {socket} = useSocket();
 
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const [newPlayers, setNewPlayers] = useState<TPlayer>({
     names: "",
     categories: "",
@@ -27,6 +30,25 @@ export default function NewPlayerForm() {
 
   // console.log("within the form ", currentTournament);
   // console.log("tournamentID: ", currentTournament?._id);
+
+  // NEW:
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSelectedCategories(currentTournament?.categories || []);
+  }, [currentTournament?.categories]);
+
+  function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const category = e.target.value;
+    if (category && !selectedCategories.includes(category)) {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  }
+
+  function removeCategory(categoryToRemove: string) {
+    setSelectedCategories(selectedCategories.filter(cat => cat !== categoryToRemove));
+  }
+  //
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
@@ -38,10 +60,10 @@ export default function NewPlayerForm() {
     e.preventDefault();
     console.log("New player data: ", newPlayers);
 
-    const incomingCategories =
-      typeof newPlayers.categories === "string"
-        ? newPlayers.categories.split(",").map(category => category.trim())
-        : newPlayers.categories;
+    // const incomingCategories =
+    //   typeof newPlayers.categories === "string"
+    //     ? newPlayers.categories.split(",").map(category => category.trim())
+    //     : newPlayers.categories;
 
     const incomingPhoneNumbers =
       typeof newPlayers.phoneNumbers === "string"
@@ -52,7 +74,7 @@ export default function NewPlayerForm() {
     const newItem = {
       tournamentId: currentTournament?._id,
       names: newPlayers.names,
-      categories: incomingCategories,
+      categories: selectedCategories,
       phoneNumbers: incomingPhoneNumbers
     };
 
@@ -66,35 +88,6 @@ export default function NewPlayerForm() {
       });
     }
 
-    // try {
-    // const res = await fetch("/api/players", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(newItem)
-    // });
-
-    // check response code
-    //   if (res.ok) {
-    //     const data = await res.json();
-    //     console.log("Added: ", data);
-    //     // NEW: socket
-
-    //   } else {
-    //     console.error("Error response:", res);
-    //     throw new Error("Error adding item, status: " + res.status);
-    //   }
-    // } catch (err: unknown) {
-    //   if (err instanceof Error) {
-    //     console.error("Error adding item: ", err.message);
-    //   } else {
-    //     console.error("Unknown error: ", err);
-    //   }
-    // }
-
-    // FIXME:
-    // ressetting the form
     setNewPlayers({
       names: "",
       categories: "",
@@ -133,15 +126,6 @@ export default function NewPlayerForm() {
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
 
-            <label htmlFor="categories">Categories</label>
-            <input
-              type="text"
-              name="categories"
-              value={newPlayers.categories}
-              onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
-            />
-
             <label htmlFor="phoneNumbers">Phone Number</label>
             <input
               type="text"
@@ -151,19 +135,36 @@ export default function NewPlayerForm() {
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
 
-            {/* <label htmlFor="tournamentId">Tournament</label>
+            <label htmlFor="categories">Categories</label>
+
+            {/* <label htmlFor="tournamentId">Tournament</label> */}
             <select
-              name="tournamentId"
-              value={newPlayers.tournamentId}
-              onChange={handleChange}
+              name="categories"
+              value={newPlayers.categories}
+              onChange={handleCategoryChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200">
-              <option value="">Select a tournament</option>
-              {filteredTournaments?.map((tournament, idx) => (
-                <option key={idx} value={tournament._id}>
-                  {tournament.name}
+              <option value="">Select categories</option>
+              {currentTournament?.categories.map((category, idx) => (
+                <option key={idx} value={category}>
+                  {category}
                 </option>
               ))}
-            </select> */}
+            </select>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {selectedCategories.map(category => (
+                <span
+                  key={category}
+                  className=" my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium">
+                  {category}
+                  <button
+                    onClick={() => removeCategory(category)}
+                    className="ml-2 text-sm text-white-500">
+                    ✕
+                  </button>
+                </span>
+              ))}
+            </div>
+            {/* <TournamentCategories items={newPlayers.categories} /> */}
           </div>
 
           <Button className=" ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">

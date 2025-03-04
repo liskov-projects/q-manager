@@ -1,6 +1,6 @@
 import TPlayer from "@/types/Player";
 
-export default function TagsList({item}: {item: TPlayer}) {
+export default function TagsList({item}: {item: TPlayer | string[]}) {
   const categories = Array.isArray(item.categories)
     ? item.categories
     : [item.categories];

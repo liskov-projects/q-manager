@@ -30,7 +30,11 @@ export default function TournamentCard({tournament}: {tournament: TTournament}) 
           {description}
         </div>
 
-        <TournamentCategories categories={categories} />
+        <TournamentCategories
+          categories={categories}
+          tournamentId={_id}
+          classname={"flex flex-row"}
+        />
       </Link>
     </div>
   );
