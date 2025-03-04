@@ -23,6 +23,7 @@ export default function PlayersList({title, players, zone}) {
     // fetchNewPlayers,
     tournamentOwner
   } = useTournamentsAndQueuesContext();
+  // NEW:
   const {handleDrop} = useDragNDrop();
 
   return (
@@ -59,6 +60,7 @@ export default function PlayersList({title, players, zone}) {
                 height={60}
                 index={index}
                 dropTarget="unprocessed" // drop target for unprocessed players
+                // NEW:
                 onDrop={e => handleDrop({e, dropTarget: zone, index})}
               />
             </Fragment>

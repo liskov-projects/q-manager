@@ -1,14 +1,15 @@
 "use client";
-
+//contexts
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import {useSocket} from "@/context/SocketContext";
+// types
 import {TPlayer} from "@/types/Types";
 import {TQueue} from "@/types/Types"; // Import TQueue
-import React from "react";
 
 const useDragNDrop = () => {
   const {setCurrentTournament, draggedItem, setDraggedItem} =
     useTournamentsAndQueuesContext();
-
+  // const {socket} = useSocket();
   // Handle drag start
   const handleDragStart = (draggedItem: TPlayer) => {
     setDraggedItem(draggedItem);
@@ -63,6 +64,18 @@ const useDragNDrop = () => {
     e.preventDefault();
 
     if (!draggedItem) return;
+    // NEW:
+    // socket?.emit("playerDropped", updatedTournament);
+
+    // if (socket) {
+    //   // console.log("EMITTING SOCKET EVENT FOR ADD PLAYER");
+    //   socket.emit("playerDropped", {
+    //     index,
+    //     dropTarget,
+    //     draggedItem,
+    //     message: "hello from front end"
+    //   });
+    // }
 
     // Update the item's properties based on the target drop zone
     // const updatedItem = {...draggedItem};
@@ -72,7 +85,7 @@ const useDragNDrop = () => {
       setCurrentTournament(prev => {
         // has to have it as TS yell without
         if (!prev) return null;
-        return {
+        const updatedTournament = {
           ...prev,
           unProcessedQItems: prev.unProcessedQItems.filter(
             player => player._id !== draggedItem._id
@@ -90,6 +103,8 @@ const useDragNDrop = () => {
           description: prev.description,
           categories: prev.categories || []
         };
+        // NEW:
+        return updatedTournament;
       });
     } else if (dropTarget === "unprocessed") {
       console.log("dropping inside unprocessed");

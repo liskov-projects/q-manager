@@ -59,7 +59,7 @@ export default function NewPlayerForm() {
     // console.log("Data sent to backend: ", newItem);
 
     if (socket) {
-      console.log("EMITTING SOCKET EVENT FOR ADD PLAYER");
+      // console.log("EMITTING SOCKET EVENT FOR ADD PLAYER");
       socket.emit("addPlayer", {
         playerData: newItem,
         tournamentId: currentTournament?._id

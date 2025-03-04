@@ -3,6 +3,8 @@
 import {createContext, useContext, useEffect, ReactNode, useState} from "react";
 import {io, Socket} from "socket.io-client";
 import {useTournamentsAndQueuesContext} from "./TournamentsAndQueuesContext";
+// NEW:
+import useDragNDrop from "@/hooks/useDragNDrop";
 
 const SOCKET_URL: string =
   process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000/";
@@ -15,25 +17,34 @@ const SocketContext = createContext<SocketContextType | null>(null);
 
 export const SocketProvider = ({children}: {children: ReactNode}) => {
   const {addPlayerToTournament} = useTournamentsAndQueuesContext();
+  // NEW:
+  const {handleDrop} = useDragNDrop();
+
   const [socket, setSocket] = useState<Socket | null>(null);
-  
+
   useEffect(() => {
     const socketInstance = io(SOCKET_URL);
     setSocket(socketInstance); // ✅ Save socket instance in state
-  
+
     console.log("🔌 Connecting to WebSocket...");
-  
+
     // ✅ Attach event listeners immediately
     socketInstance.on("connect", () => {
       console.log("✅ WebSocket Connected, Socket ID:", socketInstance.id);
     });
 
-    // Update global tournament state when a tournament update is received
+    //WORKS: Update global tournament state when a tournament update is received
     socketInstance.on("playerAdded", ({tournamentId, playerData, message}) => {
-      console.log("PLAYER ADDED BY WEBSOCKET:", playerData);
-      console.log("WHERE IS THE MESSAGE FROM")
-      console.log(message)
+      // console.log("PLAYER ADDED BY WEBSOCKET:", playerData);
+      // console.log("WHERE IS THE MESSAGE FROM")
+      // console.log(message)
       addPlayerToTournament(playerData, tournamentId);
+    });
+
+    // NEW:
+    socketInstance.on("playerDropped", ({message, draggedItem}) => {
+      console.log("player dropped", draggedItem);
+      console.log(message);
     });
 
     return () => {
