@@ -14,6 +14,8 @@ export default function TournamentQueuesPage({tournamentId}) {
     currentTournament
   } = useTournamentsAndQueuesContext();
 
+  console.log(currentTournament)
+
   // FIXME: barely seen on the screen | STYLE
   if (!currentTournament) {
     return <div className="flex self-center">Loading...</div>; // Add a loading state

@@ -62,7 +62,7 @@ export default function NewTournamentForm() {
     // console.log("Data sent to backend: ", newItem);
 
     try {
-      const res = await fetch("/api/tournaments", {
+      const res = await fetch("/api/tournament", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -75,6 +75,7 @@ io.on("connection", async socket => {
       message: "roundtrip made for the playerDropped",
       draggedItem
     });
+    
     console.log("📡 Sent io.emit(playerDropped)");
   });
 
