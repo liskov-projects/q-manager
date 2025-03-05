@@ -12,7 +12,7 @@ export default function NewQueueForm() {
   const {isSignedIn} = useUser();
   const {currentTournament, filteredTournaments} = useTournamentsAndQueuesContext();
 
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  // const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newQueue, setNewQueue] = useState<TQueue>({
     queueName: "",
     queueItems: [],
@@ -74,19 +74,19 @@ export default function NewQueueForm() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center my-4 ">
+      <div className="flex flex-col items-center justify-center my-2 ">
         <SectionHeader>Add a Queue</SectionHeader>
 
-        <Button
+        {/* <Button
           onClick={() => setIsExpanded(!isExpanded)}
           className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center">
           {`${isExpanded ? "hide " : "show"} the form`}
-        </Button>
+        </Button> */}
       </div>
 
-      {isExpanded && (
+      {/* {isExpanded && ( */}
         <form
-          className="flex flex-row items-center my-10 justify-around px-4 mx-4"
+          className="flex flex-row items-center my-4 justify-around px-2 mx-2"
           onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label htmlFor="name">Name</label>
@@ -123,10 +123,10 @@ export default function NewQueueForm() {
           </div>
 
           <Button className=" ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
-            Add a queue
+            Add the queue
           </Button>
         </form>
-      )}
+      {/* )} */}
     </>
   );
 }
