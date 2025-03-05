@@ -5,6 +5,7 @@ import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
 import {useUser} from "@clerk/nextjs";
 // import ImageUpload from "../drafts/ImageUpload";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 // allows for partial form from existing Type
 type TTournamentForm = Partial<TTournament> & {
@@ -19,12 +20,12 @@ export default function NewTournamentForm() {
     adminUser: "",
     image: "",
     description: "",
-    numberOfQueues: 0
+    numberOfQueues: ""
   });
 
   // any signed in user can create a new tournamnet
   const {isSignedIn, user} = useUser();
-
+  const {fetchTournaments} = useTournamentsAndQueuesContext();
   // reacts to different inputs
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const {name, value, type, files} = e.target;
@@ -42,7 +43,7 @@ export default function NewTournamentForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("handle submit");
+    console.log("handle submit tournament");
     // FIXME: should be made at the tournament level
     const incomingCategories =
       typeof newTournament.categories === "string"
@@ -74,6 +75,7 @@ export default function NewTournamentForm() {
       if (res.ok) {
         const data = await res.json();
         console.log("Added: ", data);
+        fetchTournaments();
       } else {
         console.error("Error response:", res);
         throw new Error("Error adding item, status: " + res.status);
@@ -163,6 +165,7 @@ export default function NewTournamentForm() {
 
             <label htmlFor="numberOfQueues">Number of Queues</label>
             <input
+              placeholder="3"
               type="number"
               name="numberOfQueues"
               value={newTournament.numberOfQueues}

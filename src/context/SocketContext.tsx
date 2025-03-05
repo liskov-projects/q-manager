@@ -44,7 +44,7 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
     // NEW:
     socketInstance.on("playerDropped", ({message, draggedItem}) => {
       console.log("player dropped", draggedItem);
-      console.log(message);
+      console.log("player dropped message", message);
     });
 
     return () => {

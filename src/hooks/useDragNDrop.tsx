@@ -65,6 +65,7 @@ const useDragNDrop = () => {
 
     if (!draggedItem) return;
     // NEW:
+
     // socket?.emit("playerDropped", updatedTournament);
 
     // if (socket) {
@@ -82,6 +83,7 @@ const useDragNDrop = () => {
 
     if (dropTarget === "processed") {
       console.log("dropping inside processed");
+      console.log("handleDrop drop target (processed)", dropTarget);
       setCurrentTournament(prev => {
         // has to have it as TS yell without
         if (!prev) return null;
@@ -108,6 +110,7 @@ const useDragNDrop = () => {
       });
     } else if (dropTarget === "unprocessed") {
       console.log("dropping inside unprocessed");
+      console.log("handleDrop drop target (unprocessed)", dropTarget);
       setCurrentTournament(prev => {
         // has to have it as TS yell without
         if (!prev) return null;
@@ -130,7 +133,7 @@ const useDragNDrop = () => {
           categories: prev.categories || []
         };
       });
-    } else if (typeof dropTarget === "object" && dropTarget.id) {
+    } else if (typeof dropTarget === "object" && dropTarget._id) {
       // comes through
       // console.log("dropping inside a queue");
       console.log("DRAGGED ITEM:", draggedItem);
@@ -147,7 +150,7 @@ const useDragNDrop = () => {
             currentQueueId = queue._id;
           }
         });
-        const isSameQueue = currentQueueId === dropTarget.id;
+        const isSameQueue = currentQueueId === dropTarget._id;
         // takes out the item from the source queue
         const updatedQueues = prev.queues.map(queue => ({
           ...queue,

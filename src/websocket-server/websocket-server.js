@@ -68,16 +68,47 @@ io.on("connection", async socket => {
   });
 
   // NEW:
-  socket.on("playerDropped", ({message, draggedItem}) => {
-    console.log(message, draggedItem);
+  socket.on(
+    "playerDropped",
+    async ({message, draggedItem, dropTarget, tournamentId, index}) => {
+      console.log(message, draggedItem);
+      console.log("drop target", dropTarget);
 
-    io.emit("droppedPlayer", {
-      message: "roundtrip made for the playerDropped",
-      draggedItem
-    });
+      const tournamentToUpdate = await TournamentModel.findOne({_id: tournamentId});
 
-    console.log("📡 Sent io.emit(playerDropped)");
-  });
+      const newUnprocessedItems = tournamentToUpdate.unProcessedQItems.filter(
+        item => item._id.toString() !== draggedItem._id.toString()
+      );
+
+      // Save the filtered result back to the database
+      await TournamentModel.updateOne(
+        {_id: tournamentId},
+        {$set: {unProcessedQItems: newUnprocessedItems}}
+      );
+
+      // const newProcessedItems = tournamentToUpdate.processedQItems.filter(item => item._id !== draggedItem._id);
+
+      // tournamentToUpdate.queues.map(queue => {
+
+      // })
+
+      // if (dropTarget === "unprocessed") {
+      //   tournamentToUpdate.unProcessedQItems.splice(index + 1, 0, draggedItem);
+      // }
+      // if (dropTarget === "processed") {
+      //   tournamentToUpdate.processedQItems.splice(index + 1, 0, draggedItem);
+      // } else {
+      //   const targetQueue = tournamentToUpdate.queues.find(dropTarget);
+      //   targetQueue.queueItems.splice(index + 1, 0, draggedItem);
+      // }
+      io.emit("playerDropped", {
+        message: "roundtrip made for the playerDropped",
+        draggedItem
+      });
+
+      console.log("📡 Sent io.emit(playerDropped)");
+    }
+  );
 
   // disconnects
   socket.on("disconnect", () => {

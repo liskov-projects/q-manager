@@ -7,7 +7,8 @@ export default function DropZone({
   onDrop,
   index,
   queue,
-  height
+  height,
+  dropTarget
 }: {
   onDrop: (
     event: React.DragEvent<HTMLDivElement>,
@@ -19,13 +20,16 @@ export default function DropZone({
   dropTarget?: TQueue | string;
   height: number;
 }) {
-  const {tournamentOwner, draggedItem} = useTournamentsAndQueuesContext();
+  const {tournamentOwner, draggedItem, currentTournament} =
+    useTournamentsAndQueuesContext();
   const {socket} = useSocket();
 
   const [isDraggedOver, setIsDraggedOver] = useState(false);
 
   const handleDragEnter = () => setIsDraggedOver(true);
   const handleDragLeave = () => setIsDraggedOver(false);
+
+  console.log("dropTarget in DropZone", dropTarget);
 
   if (!tournamentOwner) return null;
   return (
@@ -39,12 +43,14 @@ export default function DropZone({
       onDragLeave={handleDragLeave}
       onDrop={event => {
         setIsDraggedOver(false);
-        onDrop(event, queue, index);
+        // onDrop(event, queue, index);
         socket?.emit("playerDropped", {
           message: "playerDropped from DropZone",
           draggedItem,
+          dropTarget,
           queue,
-          index
+          index,
+          tournamentId: currentTournament?._id
         });
       }}
       onDragOver={event => event.preventDefault()}
