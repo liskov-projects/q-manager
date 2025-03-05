@@ -76,14 +76,35 @@ io.on("connection", async socket => {
 
       const tournamentToUpdate = await TournamentModel.findOne({_id: tournamentId});
 
+      // ✅ Remove from `unProcessedQItems`
       const newUnprocessedItems = tournamentToUpdate.unProcessedQItems.filter(
         item => item._id.toString() !== draggedItem._id.toString()
       );
 
-      // Save the filtered result back to the database
-      await TournamentModel.updateOne(
-        {_id: tournamentId},
-        {$set: {unProcessedQItems: newUnprocessedItems}}
+      // ✅ Remove from `processedQItems`
+      const newProcessedItems = tournamentToUpdate.processedQItems.filter(
+        item => item._id.toString() !== draggedItem._id.toString()
+      );
+
+      // ✅ Remove from `queues.queueItems`
+      const newQueues = tournamentToUpdate.queues.map(queue => ({
+        ...queue,
+        queueItems: queue.queueItems.filter(
+          item => item._id.toString() !== draggedItem._id.toString()
+        )
+      }));
+
+      // ✅ Update the tournament in one go
+      const updatedTournament = await TournamentModel.findByIdAndUpdate(
+        tournamentId,
+        {
+          $set: {
+            unProcessedQItems: newUnprocessedItems,
+            processedQItems: newProcessedItems,
+            queues: newQueues
+          }
+        },
+        { new: true } // ✅ Return the updated tournament
       );
 
       // const newProcessedItems = tournamentToUpdate.processedQItems.filter(item => item._id !== draggedItem._id);
