@@ -13,10 +13,12 @@ import useDragNDrop from "@/hooks/useDragNDrop";
 // types
 import {TPlayer} from "@/types/Types";
 // import DropDownFilter from "./DropDownFilter";
+import NewPlayerForm from "./Forms/NewPlayerForm";
 
 export default function PlayersList({title, players, zone}) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
+  const [showNewPlayerForm, setShowNewPlayerForm] = useState(false)
 
   const {
     uniqueCategories,
@@ -26,10 +28,16 @@ export default function PlayersList({title, players, zone}) {
   // NEW:
   const {handleDrop} = useDragNDrop();
 
+  const toggleNewPlayerForm = () => {
+    setShowNewPlayerForm(prev => !prev);
+  }
+
   return (
     // REVIEW: viewport height
     <div id="modal-root">
       <SectionHeader>{title}</SectionHeader>
+      <div onClick={toggleNewPlayerForm}> + </div>
+      {showNewPlayerForm && <NewPlayerForm />}
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
         {/* TODO: extract into a separate comp? */}
         <input

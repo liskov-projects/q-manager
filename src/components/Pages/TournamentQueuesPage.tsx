@@ -1,17 +1,19 @@
 "use client";
 
 import {useState} from "react";
-import NewPlayerForm from "@/components/Forms/NewPlayerForm";
+// import NewPlayerForm from "@/components/Forms/NewPlayerForm";
 import PlayersList from "@/components/PlayersList";
 import QueuesContainer from "@/components/Queue/QueuesContainer";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+// import NewQueueForm from "../Forms/NewQueueForm";
 
 export default function TournamentQueuesPage({tournamentId}) {
   const [visibleSection, setVisibleSection] = useState("queues");
 
   const {
-    currentTournament
+    currentTournament,
+    tournamentOwner
   } = useTournamentsAndQueuesContext();
 
   console.log(currentTournament)
@@ -48,7 +50,7 @@ export default function TournamentQueuesPage({tournamentId}) {
           className={`p-2 w-full lg:w-1/4 ${
             visibleSection === "unprocessed" ? "block" : "hidden lg:block"
           }`}>
-          <NewPlayerForm />
+          {/* <NewPlayerForm /> */}
           <PlayersList
             title={"Unprocessed Players"}
             players={currentTournament.unProcessedQItems}
