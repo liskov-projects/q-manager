@@ -1,43 +1,35 @@
 "use client";
-
+// hooks
 import {useState, Fragment} from "react";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import useDragNDrop from "@/hooks/useDragNDrop";
 // components
-import Button from "./Buttons/Button";
 import DropZone from "./DropZone";
 import SectionHeader from "./SectionHeader";
 import PlayerListItem from "./PlayerListItem";
-// context
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-// hooks
-import useDragNDrop from "@/hooks/useDragNDrop";
 // types
 import {TPlayer} from "@/types/Types";
-// import DropDownFilter from "./DropDownFilter";
-import NewPlayerForm from "./Forms/NewPlayerForm";
 
-export default function PlayersList({title, players, zone}) {
+export default function PlayersList({
+  title,
+  players,
+  zone
+}: {
+  title: string;
+  players: TPlayer[];
+  zone: string;
+}) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
-  const [showNewPlayerForm, setShowNewPlayerForm] = useState(false)
 
-  const {
-    uniqueCategories,
-    // fetchNewPlayers,
-    tournamentOwner
-  } = useTournamentsAndQueuesContext();
+  const {currentTournament} = useTournamentsAndQueuesContext();
   // NEW:
   const {handleDrop} = useDragNDrop();
-
-  const toggleNewPlayerForm = () => {
-    setShowNewPlayerForm(prev => !prev);
-  }
 
   return (
     // REVIEW: viewport height
     <div id="modal-root">
       <SectionHeader>{title}</SectionHeader>
-      <div onClick={toggleNewPlayerForm}> + </div>
-      {showNewPlayerForm && <NewPlayerForm />}
       <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
         {/* TODO: extract into a separate comp? */}
         <input
@@ -53,7 +45,7 @@ export default function PlayersList({title, players, zone}) {
             className="bg-brick-200 my-2 rounded text-shell-100 p-2"
             onChange={e => setFilter(e.target.value)}>
             <option value="show all">show all...</option>
-            {uniqueCategories.map((category: string, index: number) => (
+            {currentTournament?.categories.map((category: string, index: number) => (
               <option key={index} value={category}>
                 {category}
               </option>

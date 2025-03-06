@@ -168,12 +168,13 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     // console.log(tournamentsData);
   };
 
-  //WORKS: Derived Categories from Players
+  //WORKS: Derived Categories from Players for one tournament
   const uniqueCategories = useMemo(() => {
     const categories = tournaments.flatMap(tournament => tournament.categories || []);
     return Array.from(new Set(categories));
-  }, [currentTournament]);
-  // console.log(uniqueCategories);
+  }, [tournaments]);
+
+  // console.log("in the context ", uniqueCategories);
 
   // "FIXME:"
   const saveTournament = async tournamentId => {
