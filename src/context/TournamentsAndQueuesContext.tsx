@@ -205,16 +205,16 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         setDraggedItem,
         uniqueCategories,
         currentTournament,
-        tournaments,
         setCurrentTournament,
+        currentTournamentRef,
+        tournamentOwner,
+        tournaments,
         setTournaments,
         filteredTournaments,
         fetchTournaments,
-        tournamentOwner,
         saveTournament,
         fetchNewPlayers,
-        addPlayerToTournament,
-        currentTournamentRef
+        addPlayerToTournament
       }}>
       {children}
     </TournamentsAndQueuesContext.Provider>

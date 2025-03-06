@@ -30,31 +30,22 @@ export type TTournament = {
 
 // Tournament and Queues Context Props
 export type TTournamentsAndQueuesContextProps = {
-  players: TPlayer[];
-  setPlayers: React.Dispatch<React.SetStateAction<TPlayer[]>>;
-  markPlayerAsProcessed: (playerId: string) => void; // Mark a player as processed
-  queues: TQueue[];
-  setQueues: React.Dispatch<React.SetStateAction<TQueue[]>>;
   addMoreQueues: () => void; // Add a new queue
   removeQueues: () => void; // Remove a queue
   draggedItem: TPlayer | null; // Currently dragged player
   setDraggedItem: React.Dispatch<React.SetStateAction<TPlayer | null>>;
   uniqueCategories: string[]; // List of unique player categories
-  updatePlayers: (updatedPlayers: TPlayer[]) => void; // Update players state
-  updateQueues: (updatedQueues: TQueue[]) => void; // Update queues state
   currentTournament?: TTournament | null; // The currently active tournament
-  tournaments: TTournament[]; // List of all tournaments
   setCurrentTournament: React.Dispatch<React.SetStateAction<TTournament | null>>;
+  currentTournamentRef: React.MutableRefObject<TTournament | null>;
+  tournamentOwner: boolean | undefined;
+  tournaments: TTournament[]; // List of all tournaments
   setTournaments: React.Dispatch<React.SetStateAction<TTournament[]>>;
   filteredTournaments: TTournament[]; // Tournaments filtered by criteria
   fetchTournaments: () => Promise<void>; // Fetch tournaments from the server
-  fetchPlayers: () => Promise<void>; // Fetch players from the server,
-  fetchPlayersByTournamentId: (id: string) => Promise<void>;
-  currentTournamentPlayers: TPlayer[];
-  setCurrentTournamentPlayers: React.Dispatch<React.SetStateAction<TPlayer[]>>;
-  tournamentOwner: boolean | undefined;
+  saveTournament: () => Promise<void>;
+  fetchNewPlayers: (tournamentId: string) => Promise<void>; // Fetch players from the server,
   addPlayerToTournament: (playerData: TPlayer, tournamentId: string) => void;
-  saveTournament: 
 };
 
 // Route Context Props
