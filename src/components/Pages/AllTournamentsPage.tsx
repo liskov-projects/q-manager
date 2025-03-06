@@ -1,10 +1,12 @@
 "use client";
+// hooks
 import {useState} from "react";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+// components
 import SectionHeader from "@/components/SectionHeader";
 import Button from "@/components/Buttons/Button";
 import TournamentCard from "@/components/Tournaments/TournamentCard";
 import NewTournamentForm from "@/components/Forms/NewTournamentForm";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 // FIXME: dev purposes
 // import mockTournaments from "@/Data/tournaments";
@@ -17,7 +19,7 @@ export default function AllTournamentsPage() {
     return (
       search.length === 0 ||
       tournament.name.toLowerCase().includes(search) ||
-      tournament.categories.toLoweCase().includes(search) ||
+      tournament.categories.toLowerCase().includes(search) ||
       tournament.description.toLowerCase().includes(search)
     );
   });

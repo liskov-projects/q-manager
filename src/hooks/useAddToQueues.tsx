@@ -1,12 +1,9 @@
 "use client";
-
-// TODO: Cleanup all the console.logs
-
-// Types
+// context
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+// types
 import {TPlayer} from "@/types/Types";
 import {TQueue} from "@/types/Types";
-// Context
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 const useAddToQueues = () => {
   // NOTE: find out if it's needed here or we can use the parameters passed in the ButtonGroup.tsx

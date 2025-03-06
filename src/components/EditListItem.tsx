@@ -1,20 +1,21 @@
-import {TPlayer} from "@/types/Types";
-import Button from "./Buttons/Button";
+// hooks
 import {useState} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {usePathname} from "next/navigation";
+// types
+import {TPlayer} from "@/types/Types";
+// components
+import Button from "./Buttons/Button";
 
 export default function EditListItem({
   item,
   setEditMode
 }: {
   item: TPlayer;
-  //   should be boolean
   setEditMode: () => void;
 }) {
   console.log("inside the edit card ", item);
   const {setCurrentTournament} = useTournamentsAndQueuesContext();
-  //   FIXME: singular/plural
   const [updatedData, setUpdatedData] = useState({
     names: item.names,
     categories: item.categories,

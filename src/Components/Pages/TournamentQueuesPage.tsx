@@ -1,11 +1,11 @@
 "use client";
-
+// hooks
 import {useState} from "react";
-// import NewPlayerForm from "@/components/Forms/NewPlayerForm";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+// components
 import PlayersList from "@/components/PlayersList";
 import QueuesContainer from "@/components/Queue/QueuesContainer";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 // import NewQueueForm from "../Forms/NewQueueForm";
 
 export default function TournamentQueuesPage({tournamentId}) {

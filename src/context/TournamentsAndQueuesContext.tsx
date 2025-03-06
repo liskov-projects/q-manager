@@ -27,7 +27,6 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const [currentTournament, setCurrentTournament] = useState<TTournament | null>(
     null
   );
-  // const [currentTournamentId, setCurrentTournamentId] = useState<string | null>(null);
   const currentTournamentRef = useRef<TTournament | null>(null);
 
   const params = useParams();
@@ -63,7 +62,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     fetchTournament(tournamentId);
   }, [params?.id]); // ✅ Runs when `pathname` changes
 
-  // ✅ Fetch the single tournament directly from the API
+  // Fetch the single tournament directly from the API
   const fetchTournament = async (tournamentId: string) => {
     try {
       // console.log("Fetching tournament:", tournamentId);
@@ -85,7 +84,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   const addPlayerToTournament = (playerData, tournamentId) => {
     // console.log("addPlayerToTournament RAN");
     // console.log("CURRENT TOURNAMENT IN ADDPLAYERFROMSOCKET", currentTournament);
-    // console.log("🔍 currentTournamentREF.current:", currentTournamentRef.current);
+    // console.log("currentTournamentREF.current:", currentTournamentRef.current);
 
     if (currentTournamentRef.current) {
       setCurrentTournament(prevTournament => {
@@ -128,8 +127,6 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     }
   };
 
-  //
-
   //WORKS: Adds Queues
   const addMoreQueues = () => {
     const newQueue = {
@@ -163,9 +160,6 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     const response = await fetch(`/api/tournament/`);
     const tournamentsData = await response.json();
     setTournaments(tournamentsData);
-    // WORKS: as expected
-    // console.log("Tournaments");
-    // console.log(tournamentsData);
   };
 
   //WORKS: Derived Categories from Players for one tournament

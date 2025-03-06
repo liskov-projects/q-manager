@@ -60,6 +60,11 @@ The Queue Management App is a React-based application designed to facilitate the
 "queueItems": []
 }
 
+# Code organisation
+
+    Every input at the top of the file follows the order: hooks - types - components
+    The app core functoinality is divided into groups and the relevant hooks
+
 # Key Components
 
 ## Player List

@@ -1,6 +1,9 @@
+// hooks
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import useDragNDrop from "@/hooks/useDragNDrop";
+// types
 import {TPlayer} from "@/types/Types";
+// components
 import TagsList from "../TagsList";
 
 export default function QueueListItem({

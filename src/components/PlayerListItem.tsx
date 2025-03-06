@@ -1,12 +1,14 @@
+// hooks
 import {useState} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
+// types
 import {TPlayer} from "@/types/Types";
-import Button from "./Buttons/Button"; // Adjust the import if the button is in a different path
+// components
+import Button from "./Buttons/Button";
 import TagsList from "./TagsList";
 import EditListItem from "./EditListItem";
-// import Modal from "./drafts/Modal";
 
 export default function PlayerListItem({item}: {item: TPlayer}) {
   const {tournamentOwner, setCurrentTournamentPlayers} =

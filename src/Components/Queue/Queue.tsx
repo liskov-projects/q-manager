@@ -1,21 +1,21 @@
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+// hooks
 import {useState} from "react";
-import DropZone from "../DropZone";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
+// types
+import {TQueue} from "@/types/Types";
+// components
+import DropZone from "../DropZone";
 import Button from "../Buttons/Button";
 import QueueStatus from "./QueueStatus";
 import QueuePositionLabel from "./QueuePositionLabel";
-import {TQueue} from "@/types/Types";
 import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "./QueueListItem";
-import useDragNDrop from "@/hooks/useDragNDrop";
 
 export default function Queue({queue, index}: {queue: TQueue; index: number}) {
   const {handleProgressOneStep} = useAddToQueues();
   const {tournamentOwner} = useTournamentsAndQueuesContext();
 
-  const {handleEmptyQueue, handleDrop} = useDragNDrop();
-  // FIXME: false
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (

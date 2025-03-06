@@ -1,16 +1,14 @@
 "use client";
 //contexts
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import {useSocket} from "@/context/SocketContext";
 // types
 import {TPlayer} from "@/types/Types";
-import {TQueue} from "@/types/Types"; // Import TQueue
+import {TQueue} from "@/types/Types";
 
 const useDragNDrop = () => {
   const {setCurrentTournament, draggedItem, setDraggedItem} =
     useTournamentsAndQueuesContext();
-  // const {socket} = useSocket();
-  // Handle drag start
+
   const handleDragStart = (draggedItem: TPlayer) => {
     setDraggedItem(draggedItem);
   };
@@ -62,6 +60,7 @@ const useDragNDrop = () => {
 
     setDraggedItem(null);
   };
+
   // General handle drop function for different drop targets
   const handleDrop = ({
     e,
@@ -75,7 +74,6 @@ const useDragNDrop = () => {
     e.preventDefault();
 
     if (!draggedItem) return;
-    // NEW:
 
     if (dropTarget === "processed") {
       console.log("dropping inside processed");
@@ -101,7 +99,6 @@ const useDragNDrop = () => {
           description: prev.description,
           categories: prev.categories || []
         };
-        // NEW:
         return updatedTournament;
       });
     } else if (dropTarget === "unprocessed") {

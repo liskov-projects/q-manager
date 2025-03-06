@@ -1,12 +1,15 @@
 "use client";
+// hooks
 import {useState} from "react";
 import {useUser} from "@clerk/nextjs";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+// types
 import {TQueue} from "@/types/Types";
+// components
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
 
-// fixme
+// FIXME:
 // controlled input
 export default function NewQueueForm() {
   const {isSignedIn} = useUser();
@@ -85,47 +88,47 @@ export default function NewQueueForm() {
       </div>
 
       {/* {isExpanded && ( */}
-        <form
-          className="flex flex-row items-center my-4 justify-around px-2 mx-2"
-          onSubmit={handleSubmit}>
-          <div className="flex flex-col">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              name="queueNames"
-              value={newQueue.queueName}
-              onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
-            />
+      <form
+        className="flex flex-row items-center my-4 justify-around px-2 mx-2"
+        onSubmit={handleSubmit}>
+        <div className="flex flex-col">
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            name="queueNames"
+            value={newQueue.queueName}
+            onChange={handleChange}
+            className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+          />
 
-            <label htmlFor="phoneNumbers">Players</label>
-            <input
-              type="text"
-              name="queueItems"
-              value={newQueue.queueItems}
-              onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
-            />
+          <label htmlFor="phoneNumbers">Players</label>
+          <input
+            type="text"
+            name="queueItems"
+            value={newQueue.queueItems}
+            onChange={handleChange}
+            className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+          />
 
-            <label htmlFor="tournamentId">Tournament</label>
-            <select
-              name="tournamentId"
-              value={newQueue.tournamentId}
-              onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200">
-              <option value="">Select a tournament</option>
-              {filteredTournaments?.map((tournament, idx) => (
-                <option key={idx} value={tournament._id}>
-                  {tournament.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <label htmlFor="tournamentId">Tournament</label>
+          <select
+            name="tournamentId"
+            value={newQueue.tournamentId}
+            onChange={handleChange}
+            className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200">
+            <option value="">Select a tournament</option>
+            {filteredTournaments?.map((tournament, idx) => (
+              <option key={idx} value={tournament._id}>
+                {tournament.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-          <Button className=" ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
-            Add the queue
-          </Button>
-        </form>
+        <Button className=" ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
+          Add the queue
+        </Button>
+      </form>
       {/* )} */}
     </>
   );

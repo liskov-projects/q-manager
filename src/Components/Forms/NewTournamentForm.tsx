@@ -74,7 +74,7 @@ export default function NewTournamentForm() {
       description: newTournament.description,
       numberOfQueues: newTournament.numberOfQueues
     };
-    // WORKS: as expected
+
     // console.log("Data sent to backend: ", newItem);
 
     try {
@@ -86,7 +86,6 @@ export default function NewTournamentForm() {
         body: JSON.stringify(newItem)
       });
 
-      // check response code
       if (res.ok) {
         const data = await res.json();
         console.log("Added: ", data);

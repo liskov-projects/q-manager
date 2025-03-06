@@ -1,22 +1,23 @@
 "use client";
-
-import React, {useState} from "react";
+// hooks
+import {useState} from "react";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+// components
 import QueuesGrid from "./QueuesGrid";
 import QueuesGridMini from "./QueuesGridMini";
 import SectionHeader from "../SectionHeader";
 import Button from "../Buttons/Button";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import NewQueueForm from "../Forms/NewQueueForm"
+import NewQueueForm from "../Forms/NewQueueForm";
 
 export default function QueuesContainer() {
   const [showAlternateView, setShowAlternateView] = useState(false);
-  const {addMoreQueues, removeQueues, queues} = useTournamentsAndQueuesContext();
-  const [showQueueForm, setShowQueueForm] = useState(false)
+  const {addMoreQueues, removeQueues} = useTournamentsAndQueuesContext();
+  const [showQueueForm, setShowQueueForm] = useState(false);
   const {tournamentOwner} = useTournamentsAndQueuesContext();
 
   const toggleQueueForm = () => {
-    setShowQueueForm((prev) => !prev);
-  }
+    setShowQueueForm(prev => !prev);
+  };
 
   return (
     <div className="p-2">

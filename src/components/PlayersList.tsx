@@ -59,9 +59,7 @@ export default function PlayersList({
               <DropZone
                 height={60}
                 index={index}
-                dropTarget="unprocessed" // drop target for unprocessed players
-                // NEW:
-                onDrop={e => handleDrop({e, dropTarget: zone, index})}
+                dropTarget={zone} // zone specifies which field we're dropping into
               />
             </Fragment>
           ))}

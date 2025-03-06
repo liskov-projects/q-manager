@@ -1,8 +1,9 @@
 "use client";
-import User from "@/components/User";
-// import Button from "./Buttons/Button";
-import Link from "next/link";
+// hooks
 import {usePathname} from "next/navigation";
+// components
+import User from "@/components/User";
+import Link from "next/link";
 import LiskovLogo from "@/Components/Svgs/LiskovLogo.tsx";
 
 export default function Header() {

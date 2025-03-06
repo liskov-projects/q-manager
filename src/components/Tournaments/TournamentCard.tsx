@@ -1,5 +1,7 @@
-import Image from "next/image";
+// types
 import {TTournament} from "@/types/Types";
+// components
+import Image from "next/image";
 import Link from "next/link";
 import SectionHeader from "../SectionHeader";
 import TournamentCategories from "./TournamentCategories";
@@ -30,11 +32,7 @@ export default function TournamentCard({tournament}: {tournament: TTournament}) 
           {description}
         </div>
 
-        <TournamentCategories
-          categories={categories}
-          tournamentId={_id}
-          classname={"flex flex-row"}
-        />
+        <TournamentCategories categories={categories} tournamentId={_id} />
       </Link>
     </div>
   );

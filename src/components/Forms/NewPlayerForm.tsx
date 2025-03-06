@@ -1,23 +1,19 @@
 "use client";
-
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+// hooks
 import {useEffect, useState} from "react";
 import {useUser} from "@clerk/nextjs";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import {useSocket} from "@/context/SocketContext";
+// types
+import {TPlayer} from "@/types/Types";
 // components
 import Button from "../Buttons/Button";
-import {TPlayer} from "@/types/Types";
 import SectionHeader from "../SectionHeader";
-import {useSocket} from "@/context/SocketContext";
-// import TTournament from "@/types/Tournament";
-// NEW: pills work
-import TagsList from "../TagsList";
-import TournamentCategories from "../Tournaments/TournamentCategories";
 
 export default function NewPlayerForm() {
   // just check if logged in as the dropdown list is restricted to only the tournaments created by the logged in user
   const {isSignedIn} = useUser();
-  const {currentTournament, setCurrentTournament, filteredTournaments} =
-    useTournamentsAndQueuesContext();
+  const {currentTournament} = useTournamentsAndQueuesContext();
   const {socket} = useSocket();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
@@ -25,13 +21,11 @@ export default function NewPlayerForm() {
     names: "",
     categories: "",
     phoneNumbers: ""
-    // tournamentId: currentTournament?._id,
   });
 
   // console.log("within the form ", currentTournament);
   // console.log("tournamentID: ", currentTournament?._id);
 
-  // NEW:
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -48,7 +42,6 @@ export default function NewPlayerForm() {
   function removeCategory(categoryToRemove: string) {
     setSelectedCategories(selectedCategories.filter(cat => cat !== categoryToRemove));
   }
-  //
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
@@ -59,11 +52,6 @@ export default function NewPlayerForm() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log("New player data: ", newPlayers);
-
-    // const incomingCategories =
-    //   typeof newPlayers.categories === "string"
-    //     ? newPlayers.categories.split(",").map(category => category.trim())
-    //     : newPlayers.categories;
 
     const incomingPhoneNumbers =
       typeof newPlayers.phoneNumbers === "string"
@@ -137,7 +125,6 @@ export default function NewPlayerForm() {
 
             <label htmlFor="categories">Categories</label>
 
-            {/* <label htmlFor="tournamentId">Tournament</label> */}
             <select
               name="categories"
               value={newPlayers.categories}
@@ -164,7 +151,6 @@ export default function NewPlayerForm() {
                 </span>
               ))}
             </div>
-            {/* <TournamentCategories items={newPlayers.categories} /> */}
           </div>
 
           <Button className=" ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">

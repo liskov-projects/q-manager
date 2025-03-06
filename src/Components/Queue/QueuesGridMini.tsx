@@ -1,7 +1,7 @@
 "use client";
-
+//hooks
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import React from "react";
+// types
 import {TQueue} from "@/types/Types";
 
 export default function QueuesGridAlternate() {
@@ -24,7 +24,7 @@ export default function QueuesGridAlternate() {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {currentTournament.queues.map((queue: TQueue) => (
+      {currentTournament?.queues.map((queue: TQueue) => (
         <div
           key={queue._id}
           className={`flex flex-col items-center justify-center h-24 w-24 border-8 border-black ${getBackgroundColor(

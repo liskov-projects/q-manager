@@ -1,20 +1,17 @@
 "use client";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import {TQueue} from "@/types/Types";
+// hooks
 import {useState} from "react";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import {useSocket} from "@/context/SocketContext";
+// types
+import {TQueue} from "@/types/Types";
+
 export default function DropZone({
-  onDrop,
   index,
   queue,
-  height,
-  dropTarget
+  dropTarget,
+  height
 }: {
-  onDrop: (
-    event: React.DragEvent<HTMLDivElement>,
-    queue?: TQueue,
-    index?: number
-  ) => void;
   index?: number;
   queue?: TQueue;
   dropTarget?: TQueue | string;
@@ -41,9 +38,8 @@ export default function DropZone({
       }}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
-      onDrop={event => {
+      onDrop={() => {
         setIsDraggedOver(false);
-        // onDrop(event, queue, index);
         socket?.emit("playerDropped", {
           message: "playerDropped from DropZone",
           draggedItem,
