@@ -32,7 +32,6 @@ const useDragNDrop = () => {
     const updatedItem = {...draggedItem};
 
     setCurrentTournament(prev => {
-      // FIXME:
       return {
         ...prev,
         unProcessedQItems: prev.unProcessedQItems.filter(
@@ -41,11 +40,23 @@ const useDragNDrop = () => {
         processedQItems: prev.processedQItems.filter(
           player => player._id !== draggedItem._id
         ),
-        queues: prev.queues.map(queue =>
-          queue._id === dropQueue._id
-            ? {...queue, queueItems: [...queue.queueItems, updatedItem]}
-            : queue
-        )
+        queues: prev.queues.map(queue => {
+          if (queue._id === dropQueue._id) {
+            // Add the item to the dropQueue
+            return {
+              ...queue,
+              queueItems: [...queue.queueItems, updatedItem]
+            };
+          } else {
+            // Filter out the draggedItem from all other queues
+            return {
+              ...queue,
+              queueItems: queue.queueItems.filter(
+                item => item._id !== draggedItem._id
+              )
+            };
+          }
+        })
       };
     });
 
