@@ -148,7 +148,7 @@ export default function NewTournamentForm() {
               value=""
               onChange={handleCategoryChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200">
-              <option value="">Select categories</option>
+              <option value="">Select categories (doubles, teens)</option>
               {uniqueCategories.map((category, idx) => (
                 <option key={idx} value={category}>
                   {category}

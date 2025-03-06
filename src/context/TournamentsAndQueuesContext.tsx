@@ -219,7 +219,8 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         tournamentOwner,
         saveTournament,
         fetchNewPlayers,
-        addPlayerToTournament
+        addPlayerToTournament,
+        currentTournamentRef
       }}>
       {children}
     </TournamentsAndQueuesContext.Provider>

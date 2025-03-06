@@ -16,7 +16,8 @@ interface SocketContextType {
 const SocketContext = createContext<SocketContextType | null>(null);
 
 export const SocketProvider = ({children}: {children: ReactNode}) => {
-  const {addPlayerToTournament, currentTournament} = useTournamentsAndQueuesContext();
+  const {addPlayerToTournament, currentTournament, setCurrentTournament} =
+    useTournamentsAndQueuesContext();
   // NEW:
   const {handleDrop} = useDragNDrop();
 
@@ -42,66 +43,57 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
     });
 
     // NEW:
-    socketInstance.on("playerDropped", ({message, draggedItem, index, tournamentId, drop}) => {
-      console.log("player dropped", draggedItem);
-      console.log("player dropped message", message);
+    socketInstance.on(
+      "playerDropped",
+      ({message, draggedItem, index, tournamentId, dropTarget}) => {
+        console.log("player dropped", draggedItem);
+        console.log("player dropped message", message);
 
+        if (!currentTournament) {
+          console.error("Tournament not found.");
+          return socketInstance.emit("errorMessage", {error: "Tournament not found"});
+        }
 
-      
-            if (!currentTournament) {
-              console.error("Tournament not found.");
-              return socketInstance.emit("errorMessage", {error: "Tournament not found"});
-            }
-      
-            //removes item from their source arrays
-            const newUnprocessedItems = currentTournament.unProcessedQItems.filter(
-              item => item._id !== draggedItem._id
-            );
-      
-            const newProcessedItems = currentTournament.processedQItems.filter(
-              item => item._id !== draggedItem._id
-            );
-      
-            // makes a copy of the queues & ensures there're no references to MongoDB properties (pure JS object) with 
-            const newQueues = currentTournament.queues.map(queue => ({
-              ...queue, //here
-              queueItems: queue.queueItems.filter(
-                item => item._id !== draggedItem._id
-              )
-            }));
-      
-            // adds items to the correesponding group
-            if (dropTarget === "unprocessed") {
-              newUnprocessedItems.splice(index + 1, 0, draggedItem);
-            } else if (dropTarget === "processed") {
-              newProcessedItems.splice(index + 1, 0, draggedItem);
-            } else {
-              const queueToSplice = newQueues.find(
-                queue => queue._id === dropTarget
-              );
-      
-              if (queueToSplice) {
-                queueToSplice.queueItems = [
-                  ...queueToSplice.queueItems.slice(0, index + 1),
-                  draggedItem,
-                  ...queueToSplice.queueItems.slice(index + 1)
-                ];
-              }
-            }
-      
-            //sends the updated tournament to the DB
-            const updatedTournament = await TournamentModel.findByIdAndUpdate(
-              tournamentId,
-              {
-                $set: {
-                  unProcessedQItems: newUnprocessedItems,
-                  processedQItems: newProcessedItems,
-                  queues: newQueues
-                }
-              },
-              {new: true}
-            );
-    });
+        //removes item from their source arrays
+        const newUnprocessedItems = currentTournament.unProcessedQItems.filter(
+          item => item._id !== draggedItem._id
+        );
+
+        const newProcessedItems = currentTournament.processedQItems.filter(
+          item => item._id !== draggedItem._id
+        );
+
+        // makes a copy of the queues & ensures there're no references to MongoDB properties (pure JS object) with
+        const newQueues = currentTournament.queues.map(queue => ({
+          ...queue, //here
+          queueItems: queue.queueItems.filter(item => item._id !== draggedItem._id)
+        }));
+
+        // adds items to the correesponding group
+        if (dropTarget === "unprocessed") {
+          newUnprocessedItems.splice(index + 1, 0, draggedItem);
+        } else if (dropTarget === "processed") {
+          newProcessedItems.splice(index + 1, 0, draggedItem);
+        } else {
+          const queueToSplice = newQueues.find(queue => queue._id === dropTarget);
+
+          if (queueToSplice) {
+            queueToSplice.queueItems = [
+              ...queueToSplice.queueItems.slice(0, index + 1),
+              draggedItem,
+              ...queueToSplice.queueItems.slice(index + 1)
+            ];
+          }
+        }
+
+        setCurrentTournament(prev => ({
+          ...prev,
+          unProcessedQItems: newUnprocessedItems,
+          processedQItems: newProcessedItems,
+          queues: newQueues
+        }));
+      }
+    );
 
     return () => {
       console.log("Cleaning up SocketContext listeners");
