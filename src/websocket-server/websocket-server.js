@@ -132,14 +132,15 @@ io.on("connection", async socket => {
         draggedItem,
         index,
         tournamentId,
-        dropTarget
+        dropTarget,
+        updatedTournament
       });
 
       console.log("📡 Sent io.emit(playerDropped)");
     }
   );
 
-  // NEW: hookup addToShortest
+  // FIXME: remove from original array
   socket.on("addPlayerToShortestQ", async ({playerData, tournamentId}) => {
     console.log(`Player: ${JSON.stringify(playerData)} added to Queue`);
 
@@ -161,9 +162,11 @@ io.on("connection", async socket => {
     //     item => item._id.toString() !== playerData._id.toString()
     //   );
     // }
+    // FIXME: here
     const updatedUnProcessedQItems = foundTournament.unProcessedQItems.filter(
       item => item._id.toString() !== playerData._id.toString()
     );
+    console.log("UPDATED UNPROCESSED LIST: ", updatedUnProcessedQItems); // as expected
     const updatedProcessedQItems = foundTournament.processedQItems.filter(
       item => item._id.toString() !== playerData._id.toString()
     );
@@ -182,7 +185,7 @@ io.on("connection", async socket => {
       tournamentId,
       {
         $set: {
-          unprocessedQItems: updatedUnProcessedQItems,
+          unProcessedQItems: updatedUnProcessedQItems,
           processedQItems: updatedProcessedQItems,
           queues: foundTournament.queues
         }

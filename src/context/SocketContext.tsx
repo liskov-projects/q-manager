@@ -48,13 +48,17 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     );
 
-    socketInstance.on("playerDropped", ({draggedItem, index, dropTarget}) => {
-      try {
-        handleDrop(draggedItem, index, dropTarget);
-      } catch (error) {
-        console.error("handleDrop failed in context: ", error.message);
+    socketInstance.on(
+      "playerDropped",
+      ({draggedItem, index, dropTarget, updatedTournament}) => {
+        try {
+          setCurrentTournament(updatedTournament);
+          // handleDrop(draggedItem, index, dropTarget);
+        } catch (error) {
+          console.error("handleDrop failed in context: ", error.message);
+        }
       }
-    });
+    );
     socketInstance.on("addPlayerToShortestQ", ({playerData, updatedTournament}) => {
       console.log(playerData);
       try {
