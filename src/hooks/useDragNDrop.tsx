@@ -25,27 +25,28 @@ const useDragNDrop = () => {
     // console.log("curTourn", currentTournamentRef);
 
     //removes item from their source arrays
-    const newUnprocessedItems = currentTournamentRef.current.unProcessedQItems.filter(
-      (item: TPlayer) => item._id !== draggedItem._id
-    );
+    const newUnprocessedItems: TPlayer[] | undefined =
+      currentTournamentRef?.current?.unProcessedQItems.filter(
+        (item: TPlayer) => item._id !== draggedItem._id
+      );
 
-    const newProcessedItems = currentTournamentRef.current.processedQItems.filter(
+    const newProcessedItems = currentTournamentRef?.current?.processedQItems.filter(
       (item: TPlayer) => item._id !== draggedItem._id
     );
 
     // makes a copy of the queues & ensures there're no references to MongoDB properties (pure JS object) with
-    const newQueues = currentTournamentRef.current.queues.map((queue: TQueue) => ({
+    const newQueues = currentTournamentRef?.current?.queues.map((queue: TQueue) => ({
       ...queue, //here
       queueItems: queue.queueItems.filter(item => item._id !== draggedItem._id)
     }));
 
     // adds items to the correesponding group
     if (dropTarget === "unprocessed") {
-      newUnprocessedItems.splice(index + 1, 0, draggedItem);
+      newUnprocessedItems?.splice(index + 1, 0, draggedItem);
     } else if (dropTarget === "processed") {
-      newProcessedItems.splice(index + 1, 0, draggedItem);
+      newProcessedItems?.splice(index + 1, 0, draggedItem);
     } else {
-      const queueToSplice = newQueues.find(
+      const queueToSplice = newQueues?.find(
         (queue: TQueue) => queue._id === dropTarget
       );
 
@@ -236,7 +237,6 @@ const useDragNDrop = () => {
   return {
     handleDragStart,
     handleDragOver,
-    // handleEmptyQueue,
     handleDrop,
     draggedItem
   };

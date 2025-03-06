@@ -27,6 +27,37 @@ io.on("connection", async socket => {
   await dbConnect();
 
   console.log(`Client connected ${socket.id}`);
+  socket.on("addPlayer", async ({playerData, tournamentId}) => {
+    console.log(
+      `New Player: ${JSON.stringify(playerData)} added to Tournament ${tournamentId}`
+    );
+
+    // this makes sure the player has the id
+    const playerWithId = {...playerData, _id: new mongoose.Types.ObjectId()};
+    // Find the tournament by ID and push the new player to `unProcessedQItems`
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournamentId,
+      {$push: {unProcessedQItems: playerWithId}},
+      {new: true} // Returns the updated document
+    );
+
+    if (!updatedTournament) {
+      console.error("Tournament not found:", tournamentId);
+      return socket.emit("errorMessage", {error: "Tournament not found"});
+    }
+
+    console.log("Updated tournament:", updatedTournament);
+
+    // Emit a success message
+    io.emit("playerAdded", {
+      message: "io.emit playerAdded",
+      tournamentId,
+      // change: {type: "addPlayer", playerData},
+      updatedTournament,
+      playerData: playerWithId
+    });
+    console.log("📡 Sent io.emit(playerAdded)", tournamentId, playerData);
+  });
 
   // WORKS:
   socket.on(

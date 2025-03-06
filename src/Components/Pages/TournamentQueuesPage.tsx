@@ -7,6 +7,7 @@ import PlayersList from "@/components/PlayersList";
 import QueuesContainer from "@/components/Queue/QueuesContainer";
 import ButtonGroup from "@/components/Buttons/ButtonGroup";
 // import NewQueueForm from "../Forms/NewQueueForm";
+import NewPlayerForm from "../Forms/NewPlayerForm";
 
 export default function TournamentQueuesPage({tournamentId}) {
   const [visibleSection, setVisibleSection] = useState("queues");
@@ -47,7 +48,7 @@ export default function TournamentQueuesPage({tournamentId}) {
           className={`p-2 w-full lg:w-1/4 ${
             visibleSection === "unprocessed" ? "block" : "hidden lg:block"
           }`}>
-          {/* <NewPlayerForm /> */}
+          <NewPlayerForm />
           <PlayersList
             title={"Unprocessed Players"}
             players={currentTournament.unProcessedQItems}
