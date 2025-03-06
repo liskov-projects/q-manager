@@ -69,7 +69,7 @@ export default function Queue({queue, index}: {queue: TQueue; index: number}) {
                     height={60}
                     index={index}
                     dropTarget={queue._id} // Pass queue as drop target
-                    onDrop={e => handleDrop({e, dropTarget: queue, index})}
+                    // onDrop={e => handleDrop({e, dropTarget: queue, index})}
                   />
                 </li>
               ))}
@@ -80,7 +80,7 @@ export default function Queue({queue, index}: {queue: TQueue; index: number}) {
               <DropZone
                 height={60}
                 dropTarget={queue._id}
-                onDrop={e => handleEmptyQueue(e, queue)}
+                // onDrop={e => handleEmptyQueue(e, queue)}
               />
             </div>
           )}

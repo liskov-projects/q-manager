@@ -16,7 +16,7 @@ interface SocketContextType {
 const SocketContext = createContext<SocketContextType | null>(null);
 
 export const SocketProvider = ({children}: {children: ReactNode}) => {
-  const {addPlayerToTournament, currentTournament, setCurrentTournament} =
+  const {addPlayerToTournament, currentTournamentRef, setCurrentTournament} =
     useTournamentsAndQueuesContext();
   // NEW:
   const {handleDrop} = useDragNDrop();
@@ -48,23 +48,24 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       ({message, draggedItem, index, tournamentId, dropTarget}) => {
         console.log("player dropped", draggedItem);
         console.log("player dropped message", message);
-
-        if (!currentTournament) {
+        console.log("curTourn", currentTournamentRef);
+        if (!currentTournamentRef.current) {
           console.error("Tournament not found.");
           return socketInstance.emit("errorMessage", {error: "Tournament not found"});
         }
 
         //removes item from their source arrays
-        const newUnprocessedItems = currentTournament.unProcessedQItems.filter(
-          item => item._id !== draggedItem._id
-        );
+        const newUnprocessedItems =
+          currentTournamentRef.current.unProcessedQItems.filter(
+            item => item._id !== draggedItem._id
+          );
 
-        const newProcessedItems = currentTournament.processedQItems.filter(
+        const newProcessedItems = currentTournamentRef.current.processedQItems.filter(
           item => item._id !== draggedItem._id
         );
 
         // makes a copy of the queues & ensures there're no references to MongoDB properties (pure JS object) with
-        const newQueues = currentTournament.queues.map(queue => ({
+        const newQueues = currentTournamentRef.current.queues.map(queue => ({
           ...queue, //here
           queueItems: queue.queueItems.filter(item => item._id !== draggedItem._id)
         }));

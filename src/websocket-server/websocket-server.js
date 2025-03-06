@@ -95,7 +95,11 @@ io.on("connection", async socket => {
 
       io.emit("playerDropped", {
         message: "roundtrip made for the playerDropped",
-        draggedItem
+        message,
+        draggedItem,
+        index,
+        tournamentId,
+        dropTarget
       });
 
       console.log("📡 Sent io.emit(playerDropped)");

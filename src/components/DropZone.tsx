@@ -43,7 +43,7 @@ export default function DropZone({
       onDragLeave={handleDragLeave}
       onDrop={event => {
         setIsDraggedOver(false);
-        onDrop(event, queue, index);
+        // onDrop(event, queue, index);
         socket?.emit("playerDropped", {
           message: "playerDropped from DropZone",
           draggedItem,
