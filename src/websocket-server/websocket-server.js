@@ -27,6 +27,8 @@ io.on("connection", async socket => {
   await dbConnect();
 
   console.log(`Client connected ${socket.id}`);
+
+  // WORKS:
   socket.on("addPlayer", async ({playerData, tournamentId}) => {
     console.log(
       `New Player: ${JSON.stringify(playerData)} added to Tournament ${tournamentId}`
@@ -136,6 +138,67 @@ io.on("connection", async socket => {
       console.log("📡 Sent io.emit(playerDropped)");
     }
   );
+
+  // NEW: hookup addToShortest
+  socket.on("addPlayerToShortestQ", async ({playerData, tournamentId}) => {
+    console.log(`Player: ${JSON.stringify(playerData)} added to Queue`);
+
+    //finds the tournament in the db
+    const foundTournament = await TournamentModel.findById(tournamentId);
+    if (!foundTournament)
+      socket.emit({error: "Tournament not found in addPlayerToShortestQ"});
+
+    //removes the player from un/Processed arrs
+    // const isUnProcessed = foundTournament.unProcessedQItems.some(
+    //   item => item._id.toString() === playerData._id.toString()
+    // );
+    // if (isUnProcessed) {
+    //   foundTournament.unProcessedQItems = foundTournament.unProcessedQItems.filter(
+    //     item => item._id.toString() !== playerData._id.toString()
+    //   );
+    // } else {
+    //   foundTournament.processedQItems = foundTournament.processedQItems.filter(
+    //     item => item._id.toString() !== playerData._id.toString()
+    //   );
+    // }
+    const updatedUnProcessedQItems = foundTournament.unProcessedQItems.filter(
+      item => item._id.toString() !== playerData._id.toString()
+    );
+    const updatedProcessedQItems = foundTournament.processedQItems.filter(
+      item => item._id.toString() !== playerData._id.toString()
+    );
+    // finds the shortes Q
+    let shortestQ = foundTournament.queues.reduce((shortest, current) =>
+      current.queueItems.length < shortest.queueItems.length ? current : shortest
+    ); // .reduce compare shortest with current finding the one satifying the condition
+
+    if (!shortestQ) socket.emit({error: "no valid queue found"}); //NOTE: what if they're all even?
+
+    // adds the player
+    shortestQ.queueItems.push(playerData);
+
+    // updates the db
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournamentId,
+      {
+        $set: {
+          unprocessedQItems: updatedUnProcessedQItems,
+          processedQItems: updatedProcessedQItems,
+          queues: foundTournament.queues
+        }
+      },
+      {new: true}
+    );
+    if (!updatedTournament) socket.emit({error: "error updating the tournament"});
+
+    // broadcasts the updated data
+    io.emit("addPlayerToShortestQ", {
+      message: "Player added to the shortest queue",
+      updatedTournament,
+      playerData
+    });
+    console.log("📡 Sent io.emit(playerAddedToShortestQ)", tournamentId, playerData);
+  });
 
   // disconnects
   socket.on("disconnect", () => {

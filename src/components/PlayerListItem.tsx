@@ -3,6 +3,7 @@ import {useState} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
+import {useSocket} from "@/context/SocketContext";
 // types
 import {TPlayer} from "@/types/Types";
 // components
@@ -11,27 +12,27 @@ import TagsList from "./TagsList";
 import EditListItem from "./EditListItem";
 
 export default function PlayerListItem({item}: {item: TPlayer}) {
-  const {tournamentOwner, setCurrentTournamentPlayers} =
-    useTournamentsAndQueuesContext();
-  const {handleAddToShortestQueue} = useAddToQueues();
+  const {tournamentOwner, currentTournament} = useTournamentsAndQueuesContext();
+  // const {handleAddToShortestQueue} = useAddToQueues();
+  const {socket} = useSocket();
   const {handleDragStart, handleDragOver} = useDragNDrop();
   const [editMode, setEditMode] = useState(false);
 
-  // FIXME:
-  const handleDelete = async () => {
-    try {
-      const res = await fetch(`/api/players/${item._id}`, {
-        method: "DELETE"
-      });
-      if (res.ok) {
-        setCurrentTournamentPlayers(current =>
-          current.filter(el => el._id !== item._id)
-        );
-      }
-    } catch (err) {
-      return new Error("Error deleting a player", err);
-    }
-  };
+  // // FIXME:
+  // const handleDelete = async () => {
+  //   try {
+  //     const res = await fetch(`/api/players/${item._id}`, {
+  //       method: "DELETE"
+  //     });
+  //     if (res.ok) {
+  //       setCurrentTournamentPlayers(current =>
+  //         current.filter(el => el._id !== item._id)
+  //       );
+  //     }
+  //   } catch (err) {
+  //     return new Error("Error deleting a player", err);
+  //   }
+  // };
 
   return (
     <>
@@ -54,7 +55,8 @@ export default function PlayerListItem({item}: {item: TPlayer}) {
                 </Button>
                 <Button
                   className="mx-2 px-5 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
-                  onClick={handleDelete}>
+                  // onClick={handleDelete}
+                >
                   🗑️
                 </Button>
               </div>
@@ -67,7 +69,15 @@ export default function PlayerListItem({item}: {item: TPlayer}) {
           {/* Add to Shortest Queue Button */}
           {!tournamentOwner ? null : (
             <Button
-              onClick={() => handleAddToShortestQueue(item._id)}
+              onClick={() => {
+                console.log("clicked the button to see the item ", item);
+                if (socket)
+                  socket.emit("addPlayerToShortestQ", {
+                    message: "emitting add to shortes",
+                    playerData: item,
+                    tournamentId: currentTournament?._id
+                  });
+              }}
               className="px-10 py-5 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center">
               ADD TO SHORTEST QUEUE ⬆️
             </Button>

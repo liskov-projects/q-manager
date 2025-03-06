@@ -2,12 +2,13 @@
 // context
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 // types
-import {TPlayer} from "@/types/Types";
+import {TPlayer, TTournament} from "@/types/Types";
 import {TQueue} from "@/types/Types";
 
 const useAddToQueues = () => {
   // NOTE: find out if it's needed here or we can use the parameters passed in the ButtonGroup.tsx
-  const {currentTournament, setCurrentTournament} = useTournamentsAndQueuesContext();
+  const {currentTournament, setCurrentTournament, currentTournamentRef} =
+    useTournamentsAndQueuesContext();
 
   /**
    *WORKS: Find the shortest queue based on the number of items.
@@ -21,19 +22,24 @@ const useAddToQueues = () => {
   /**
    *WORKS: Adds a specific item to the shortest queue.
    */
-  const handleAddToShortestQueue = (itemId: string | undefined) => {
-    const shortestQueue = findShortestQueue(currentTournament.queues);
+  const handleAddToShortestQueue = (
+    playerData: string | undefined,
+    updatedTournament: TTournament
+  ) => {
+    console.log("runnning handleAddToShortestQ");
+    console.log("playersData", playerData);
+    const shortestQueue = findShortestQueue(currentTournamentRef?.queues);
     // copy the items
     const currentPlayers = [
-      ...currentTournament.unProcessedQItems,
-      ...currentTournament.processedQItems
+      ...currentTournamentRef?.unProcessedQItems,
+      ...currentTournamentRef?.processedQItems
     ];
-    const itemToAdd = currentPlayers.find(player => player._id === itemId);
+    const itemToAdd = currentPlayers.find(player => player._id === playerData._id);
     if (!itemToAdd) {
       throw new Error("Item not found");
     }
     //copy the queues
-    const updatedQueues = currentTournament.queues.map(queue =>
+    const updatedQueues = currentTournamentRef?.queues.map(queue =>
       queue._id === shortestQueue._id
         ? {...queue, queueItems: [...queue.queueItems, itemToAdd]}
         : queue
@@ -45,10 +51,10 @@ const useAddToQueues = () => {
         ...prevTournament,
         queues: updatedQueues,
         unProcessedQItems: prevTournament?.unProcessedQItems.filter(
-          player => player._id !== itemId
+          player => player._id !== playerData._id
         ),
         processedQItems: prevTournament?.processedQItems.filter(
-          player => player._id !== itemId
+          player => player._id !== playerData._id
         )
       };
     });
@@ -66,7 +72,7 @@ const useAddToQueues = () => {
     ];
     // console.log("UnassignedPL", unassignedPlayers);
 
-    const updatedQueues = [...currentTournament?.queues];
+    const updatedQueues = [...currentTournamentRef?.queues];
     unassignedPlayers.forEach(player => {
       const targetQeueue = findShortestQueue(updatedQueues);
       targetQeueue.queueItems.push(player);
