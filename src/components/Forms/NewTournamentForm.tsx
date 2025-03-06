@@ -1,15 +1,16 @@
-import {useState} from "react";
-// components
+// hooks
+import {useState, useEffect} from "react";
+import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import {useUser} from "@clerk/nextjs";
+// types
 import {TTournament} from "@/types/Types";
+// components
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
-import {useUser} from "@clerk/nextjs";
-// import ImageUpload from "../drafts/ImageUpload";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 
 // allows for partial form from existing Type
 type TTournamentForm = Partial<TTournament> & {
-  numberOfQueues: number;
+  numberOfQueues: number | string;
 };
 
 export default function NewTournamentForm() {
@@ -25,8 +26,27 @@ export default function NewTournamentForm() {
 
   // any signed in user can create a new tournamnet
   const {isSignedIn, user} = useUser();
-  const {fetchTournaments} = useTournamentsAndQueuesContext();
-  // reacts to different inputs
+  const {fetchTournaments, uniqueCategories} = useTournamentsAndQueuesContext();
+
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSelectedCategories(newTournament?.categories || []);
+  }, [newTournament?.categories]);
+
+  // console.log(uniqueCategories);
+
+  function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const category = e.target.value;
+    if (category && !selectedCategories.includes(category)) {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  }
+
+  function removeCategory(categoryToRemove: string) {
+    setSelectedCategories(selectedCategories.filter(cat => cat !== categoryToRemove));
+  }
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const {name, value, type, files} = e.target;
 
@@ -43,17 +63,12 @@ export default function NewTournamentForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("handle submit tournament");
-    // FIXME: should be made at the tournament level
-    const incomingCategories =
-      typeof newTournament.categories === "string"
-        ? newTournament.categories.split(",").map(category => category.trim())
-        : newTournament.categories;
+    // console.log("handle submit tournament");
 
     // data to send to backend
     const newItem = {
       name: newTournament.name,
-      categories: incomingCategories,
+      categories: selectedCategories,
       adminUser: user?.id,
       image: newTournament.image,
       description: newTournament.description,
@@ -88,15 +103,14 @@ export default function NewTournamentForm() {
       }
     }
 
-    //FIXME: ressetting the form
-    // setNewTournament({
-    //   name: "",
-    //   categories: [],
-    //   adminUser: "",
-    //   image: "",
-    //   description: "",
-    //   numberOfQueues: 0
-    // });
+    setNewTournament({
+      name: "",
+      categories: [],
+      adminUser: "",
+      image: "",
+      description: "",
+      numberOfQueues: ""
+    });
     // console.log(newTournament);
   }
   if (!isSignedIn) return null;
@@ -128,31 +142,33 @@ export default function NewTournamentForm() {
             />
 
             <label htmlFor="categories">Categories</label>
-            <input
-              type="text"
-              name="categories"
-              value={newTournament.categories}
-              onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
-            />
 
-            {/* <label htmlFor="adminUser">Admin User</label>
-            <input
-              type="text"
-              name="adminUser"
-              value={newTournament.adminUser}
-              onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
-            /> */}
-            {/* FIXME: S3 troubles - implement this later */}
-            {/* <label htmlFor="image">Image</label>
-            <ImageUpload /> */}
-            {/* <input
-              type="file"
-              name="image"
-              onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
-            /> */}
+            <select
+              name="categories"
+              value=""
+              onChange={handleCategoryChange}
+              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200">
+              <option value="">Select categories</option>
+              {uniqueCategories.map((category, idx) => (
+                <option key={idx} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {selectedCategories.map(category => (
+                <span
+                  key={category}
+                  className=" my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium">
+                  {category}
+                  <button
+                    onClick={() => removeCategory(category)}
+                    className="ml-2 text-sm text-white-500">
+                    ✕
+                  </button>
+                </span>
+              ))}
+            </div>
 
             <label htmlFor="description">Description</label>
             <input
@@ -172,16 +188,6 @@ export default function NewTournamentForm() {
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
-            {/* REVIEW: find how to later */}
-            {/* <label htmlFor="players">Upload Players</label>
-            <input
-              type="file"
-              accept=".csv"
-              name="players"
-              value={newTournament.players}
-              onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
-            /> */}
             <Button className="self-center my-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
               Add the Tournament!
             </Button>

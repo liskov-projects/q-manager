@@ -1,13 +1,9 @@
-// src/types/types.ts
-
 // Player Type
 export type TPlayer = {
   _id?: string; // Optional ID from MongoDB
   names?: string; // Changed `names` to `name` for clarity
   categories?: string | string[]; // A single category or multiple
   phoneNumbers?: string; // Singular for consistency
-  // assignedToQueue?: boolean;
-  // processedThroughQueue?: boolean;
   tournamentId: string; // The ID of the associated tournament
 };
 
@@ -56,8 +52,9 @@ export type TTournamentsAndQueuesContextProps = {
   fetchPlayersByTournamentId: (id: string) => Promise<void>;
   currentTournamentPlayers: TPlayer[];
   setCurrentTournamentPlayers: React.Dispatch<React.SetStateAction<TPlayer[]>>;
-  tournamentOwner: boolean;
+  tournamentOwner: boolean | undefined;
   addPlayerToTournament: (playerData: TPlayer, tournamentId: string) => void;
+  saveTournament: 
 };
 
 // Route Context Props
