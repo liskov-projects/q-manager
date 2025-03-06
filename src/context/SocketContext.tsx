@@ -34,15 +34,19 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       console.log("✅ WebSocket Connected, Socket ID:", socketInstance.id);
     });
 
-    socketInstance.on("playerAdded", ({tournamentId, playerData, message}) => {
-      // console.log("PLAYER ADDED BY WEBSOCKET:", playerData);
-      // console.log(message)
-      try {
-        addPlayerToTournament(playerData, tournamentId);
-      } catch (error) {
-        console.error("addPlayer failed ", error.message);
+    socketInstance.on(
+      "playerAdded",
+      ({tournamentId, playerData, updatedTournament, message}) => {
+        // console.log("PLAYER ADDED BY WEBSOCKET:", playerData);
+        // console.log(message)
+        try {
+          setCurrentTournament(updatedTournament);
+          // addPlayerToTournament(playerData, tournamentId);
+        } catch (error) {
+          console.error("addPlayer failed ", error.message);
+        }
       }
-    });
+    );
 
     socketInstance.on("playerDropped", ({draggedItem, index, dropTarget}) => {
       try {
