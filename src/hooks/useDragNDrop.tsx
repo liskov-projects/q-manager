@@ -19,22 +19,22 @@ const useDragNDrop = () => {
   ): void => e.preventDefault();
 
   // WORKS: this is exported & used in SocketContext
-  const handleDrop = (draggedItem, index, dropTarget) => {
+  const handleDrop = (draggedItem: TPlayer, index: number, dropTarget: string) => {
     // console.log("player dropped", draggedItem);
     // console.log("player dropped message", message);
     // console.log("curTourn", currentTournamentRef);
 
     //removes item from their source arrays
     const newUnprocessedItems = currentTournamentRef.current.unProcessedQItems.filter(
-      item => item._id !== draggedItem._id
+      (item: TPlayer) => item._id !== draggedItem._id
     );
 
     const newProcessedItems = currentTournamentRef.current.processedQItems.filter(
-      item => item._id !== draggedItem._id
+      (item: TPlayer) => item._id !== draggedItem._id
     );
 
     // makes a copy of the queues & ensures there're no references to MongoDB properties (pure JS object) with
-    const newQueues = currentTournamentRef.current.queues.map(queue => ({
+    const newQueues = currentTournamentRef.current.queues.map((queue: TQueue) => ({
       ...queue, //here
       queueItems: queue.queueItems.filter(item => item._id !== draggedItem._id)
     }));
@@ -45,7 +45,9 @@ const useDragNDrop = () => {
     } else if (dropTarget === "processed") {
       newProcessedItems.splice(index + 1, 0, draggedItem);
     } else {
-      const queueToSplice = newQueues.find(queue => queue._id === dropTarget);
+      const queueToSplice = newQueues.find(
+        (queue: TQueue) => queue._id === dropTarget
+      );
 
       if (queueToSplice) {
         queueToSplice.queueItems = [
