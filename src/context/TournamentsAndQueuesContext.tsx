@@ -49,11 +49,11 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   // WORKS: sets both the tournamnet and its players | Sync Current Tournament with URL Pathname
   useEffect(() => {
-    console.log("🔄 CURRENT TOURNAMENT SETTING USEEFFECT");
+    // console.log("CURRENT TOURNAMENT SETTING USEEFFECT");
 
-    console.log("PARAMS ID", params)
+    // console.log("PARAMS ID", params);
 
-    const tournamentId = Array.isArray(params.id) ? params.id[0] : null
+    const tournamentId = Array.isArray(params.id) ? params.id[0] : null;
 
     if (!tournamentId) {
       console.warn("⚠️ No tournament ID found in URL.");
@@ -66,7 +66,7 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
   // ✅ Fetch the single tournament directly from the API
   const fetchTournament = async (tournamentId: string) => {
     try {
-      console.log("🎯 Fetching tournament:", tournamentId);
+      // console.log("Fetching tournament:", tournamentId);
       const response = await fetch(`/api/tournament/${tournamentId}`);
 
       if (!response.ok) {
@@ -74,14 +74,14 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
       }
 
       const tournamentData = await response.json();
-      console.log("✅ Tournament fetched:", tournamentData);
+      // console.log("Tournament fetched:", tournamentData);
       setCurrentTournament(tournamentData);
     } catch (error) {
-      console.error("❌ Failed to fetch tournament:", error);
+      console.error("Failed to fetch tournament:", error);
     }
   };
 
-  // WORKS:
+  // WORKS: socket-related
   const addPlayerToTournament = (playerData, tournamentId) => {
     // console.log("addPlayerToTournament RAN");
     // console.log("CURRENT TOURNAMENT IN ADDPLAYERFROMSOCKET", currentTournament);

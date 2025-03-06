@@ -11,12 +11,9 @@ import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesCont
 export default function TournamentQueuesPage({tournamentId}) {
   const [visibleSection, setVisibleSection] = useState("queues");
 
-  const {
-    currentTournament,
-    tournamentOwner
-  } = useTournamentsAndQueuesContext();
+  const {currentTournament, tournamentOwner} = useTournamentsAndQueuesContext();
 
-  console.log(currentTournament)
+  // console.log(currentTournament)
 
   // FIXME: barely seen on the screen | STYLE
   if (!currentTournament) {

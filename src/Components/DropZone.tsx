@@ -29,7 +29,7 @@ export default function DropZone({
   const handleDragEnter = () => setIsDraggedOver(true);
   const handleDragLeave = () => setIsDraggedOver(false);
 
-  console.log("dropTarget in DropZone", dropTarget);
+  // console.log("dropTarget in DropZone", dropTarget);
 
   if (!tournamentOwner) return null;
   return (
@@ -43,7 +43,7 @@ export default function DropZone({
       onDragLeave={handleDragLeave}
       onDrop={event => {
         setIsDraggedOver(false);
-        // onDrop(event, queue, index);
+        onDrop(event, queue, index);
         socket?.emit("playerDropped", {
           message: "playerDropped from DropZone",
           draggedItem,

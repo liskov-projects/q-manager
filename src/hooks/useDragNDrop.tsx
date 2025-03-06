@@ -59,27 +59,12 @@ const useDragNDrop = () => {
   }: {
     e: React.MouseEvent<HTMLDivElement>;
     dropTarget: string | TQueue;
-    index?: number; // FIXME: handleSplice that takes the ind and the queue => does the splice for the queue
+    index?: number;
   }) => {
     e.preventDefault();
 
     if (!draggedItem) return;
     // NEW:
-
-    // socket?.emit("playerDropped", updatedTournament);
-
-    // if (socket) {
-    //   // console.log("EMITTING SOCKET EVENT FOR ADD PLAYER");
-    //   socket.emit("playerDropped", {
-    //     index,
-    //     dropTarget,
-    //     draggedItem,
-    //     message: "hello from front end"
-    //   });
-    // }
-
-    // Update the item's properties based on the target drop zone
-    // const updatedItem = {...draggedItem};
 
     if (dropTarget === "processed") {
       console.log("dropping inside processed");

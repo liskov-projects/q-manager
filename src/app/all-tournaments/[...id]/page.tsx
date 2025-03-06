@@ -6,7 +6,7 @@ import TournamentCategories from "@/components/Tournaments/TournamentCategories"
 export default function TournamentPage({params}: {params: {id: string[]}}) {
   const {tournamentOwner, currentTournament} = useTournamentsAndQueuesContext();
 
-  console.log("CURRENT TOURNAMENT", currentTournament);
+  // console.log("CURRENT TOURNAMENT", currentTournament);
 
   const {name = "", categories = []} = currentTournament || {};
 
