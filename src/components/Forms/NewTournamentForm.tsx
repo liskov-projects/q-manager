@@ -30,6 +30,8 @@ export default function NewTournamentForm() {
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
+  const [customCategory, setCustomCategory] = useState("");
+
   useEffect(() => {
     setSelectedCategories(newTournament?.categories || []);
   }, [newTournament?.categories]);
@@ -61,6 +63,22 @@ export default function NewTournamentForm() {
     });
   }
 
+  function handleCustomCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setCustomCategory(e.target.value);
+  }
+  function addCustomCategory(e) {
+    e.preventDefault();
+    if (
+      customCategory &&
+      !uniqueCategories.includes(customCategory) &&
+      !selectedCategories.includes(customCategory)
+    ) {
+      uniqueCategories.push(customCategory);
+      setSelectedCategories([...selectedCategories, customCategory]);
+    }
+    setCustomCategory(""); // Clear input field
+  }
+  //
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     // console.log("handle submit tournament");
@@ -140,7 +158,26 @@ export default function NewTournamentForm() {
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
 
-            <label htmlFor="categories">Categories</label>
+            <label htmlFor="categories" className="text-xl">
+              Categories
+            </label>
+
+            <label htmlFor="customCategory">Add Custom Category</label>
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                name="customCategory"
+                value={customCategory}
+                onChange={handleCustomCategoryChange}
+                className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+              />
+              <Button
+                type="button"
+                onClick={e => addCustomCategory(e)}
+                className="bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
+                Add
+              </Button>
+            </div>
 
             <select
               name="categories"
