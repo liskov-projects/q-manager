@@ -15,7 +15,7 @@ import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "./QueueListItem";
 
 export default function Queue({queue, index}: {queue: TQueue; index: number}) {
-  const {handleProgressOneStep} = useAddToQueues();
+  // const {handleProgressOneStep} = useAddToQueues();
   const {tournamentOwner, currentTournament} = useTournamentsAndQueuesContext();
   const {socket} = useSocket();
 

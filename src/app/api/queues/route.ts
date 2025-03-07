@@ -1,7 +1,8 @@
 import {TournamentModel} from "@/models/TournamentModel";
 import dbConnect from "@/lib/db";
 import {QueueModel} from "@/models/QueueModel";
-import {NextRequest} from "next/server";
+import {TQueue} from "@/types/Types";
+import {NextRequest, NextResponse} from "next/server";
 
 export async function GET() {
   await dbConnect();
@@ -27,61 +28,40 @@ export async function GET() {
   });
 }
 
+// NEW:
 export async function POST(req: NextRequest) {
-  await dbConnect();
+  console.log("Adding new queue...");
 
-  const body = await req.json();
-  // console.log("Recieved at backend: ", body);
-  // handles incoming JSON
-  const {queueName, queueItems} = body;
+  try {
+    await dbConnect();
+    const body: TQueue = await req.json();
+    const {queueName, queueItems, tournamentId} = body;
 
-  // NEW:
-  // const tournament = await TournamentModel.find({_id: new Object(tournamentId)});
-  //
-  // console.log("Names: ", names);
-  // console.log("Categories: ", categories);
-  // console.log("phoneNumbers: ", phoneNumbers);
-  // console.log("at the back ", tournamentId);
-  // creates a new entry using the incoming data
-  const newQueue = new QueueModel({
-    queueName,
-    queueItems
-  });
+    // Validate request data
+    if (!queueName || !tournamentId) {
+      return NextResponse.json(
+        {error: "Queue name and tournament ID are required"},
+        {status: 400}
+      );
+    }
 
-  // saves to db
-  await newQueue.save();
+    // Find the tournament
+    const tournament = await TournamentModel.findById(tournamentId);
+    if (!tournament) {
+      return NextResponse.json({error: "Tournament not found"}, {status: 404});
+    }
 
-  // Response - NextJS constructor that sends data to from server to client
-  return new Response(JSON.stringify(newQueue), {
-    headers: {"Content-Type": "application/json"}
-  });
+    // Add the new queue
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournamentId,
+      {$push: {queues: {queueName, queueItems}}}, // Append queue
+      {new: true}
+    );
+
+    console.log("Queue added:", updatedTournament);
+    return NextResponse.json(updatedTournament, {status: 201});
+  } catch (error) {
+    console.error("Error adding queue:", error);
+    return NextResponse.json({error: "Failed to add queue"}, {status: 500});
+  }
 }
-
-// import mongoose from "mongoose";
-// import Tournament from "@/models/Tournament"; // Your Mongoose model
-
-// export default async function handler(req, res) {
-//   if (req.method === "POST") {
-//     const { tournamentId, queueName, newItem } = req.body;
-
-//     try {
-//       // Find the tournament and update the specified queue
-// const updatedTournament = await Tournament.findOneAndUpdate(
-//         { _id: tournamentId, "queues.queueName": queueName },
-//         { $push: { "queues.$.queueItems": newItem } }, // $ is a positional operator
-//         { new: true } // Returns the updated document
-//       );
-
-//       if (!updatedTournament) {
-//         return res.status(404).json({ message: "Tournament or queue not found" });
-//       }
-
-//       res.status(200).json({ message: "Item added successfully", updatedTournament });
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).json({ message: "Internal Server Error" });
-//     }
-//   } else {
-//     res.status(405).json({ message: "Method Not Allowed" });
-//   }
-// }

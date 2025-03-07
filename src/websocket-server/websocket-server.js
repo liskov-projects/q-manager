@@ -299,7 +299,7 @@ io.on("connection", async socket => {
     });
   });
 
-  // WORKS::
+  // NEW:
   socket.on("processQueueOneStep", async ({tournamentId, queueIndex}) => {
     try {
       // Fetch the tournament from DB

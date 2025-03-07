@@ -28,25 +28,6 @@ export default function QueuesContainer() {
         className="mb-4 mx-4 p-2 bg-blue-500 text-white font-bold rounded">
         {showAlternateView ? "Show Detailed View" : "Show Grid View"}
       </Button>
-      {!tournamentOwner ? null : (
-        <>
-          <Button
-            onClick={() => addMoreQueues()}
-            className="mb-4 p-2 bg-red-500 text-white font-bold rounded">
-            + queue
-          </Button>
-          <Button
-            onClick={() => removeQueues()}
-            className="mb-4 mx-4 p-2 bg-red-500 text-white font-bold rounded">
-            - queue
-          </Button>
-          <Button
-            onClick={() => toggleQueueForm()}
-            className="mb-4 mx-4 p-2 bg-red-500 text-white font-bold rounded">
-            new queue form
-          </Button>
-        </>
-      )}
       {showAlternateView ? <QueuesGridMini /> : <QueuesGrid />}
     </div>
   );
