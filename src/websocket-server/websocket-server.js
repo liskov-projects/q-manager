@@ -128,19 +128,18 @@ io.on("connection", async socket => {
 
       io.emit("playerDropped", {
         message: "roundtrip made for the playerDropped",
-        message,
         draggedItem,
         index,
-        tournamentId,
-        dropTarget,
-        updatedTournament
+        dropTarget
+        // tournamentId,
+        // updatedTournament
       });
 
       console.log("📡 Sent io.emit(playerDropped)");
     }
   );
 
-  // FIXME: remove from original array
+  // WORKS:
   socket.on("addPlayerToShortestQ", async ({playerData, tournamentId}) => {
     console.log(`Player: ${JSON.stringify(playerData)} added to Queue`);
 
@@ -150,23 +149,10 @@ io.on("connection", async socket => {
       socket.emit({error: "Tournament not found in addPlayerToShortestQ"});
 
     //removes the player from un/Processed arrs
-    // const isUnProcessed = foundTournament.unProcessedQItems.some(
-    //   item => item._id.toString() === playerData._id.toString()
-    // );
-    // if (isUnProcessed) {
-    //   foundTournament.unProcessedQItems = foundTournament.unProcessedQItems.filter(
-    //     item => item._id.toString() !== playerData._id.toString()
-    //   );
-    // } else {
-    //   foundTournament.processedQItems = foundTournament.processedQItems.filter(
-    //     item => item._id.toString() !== playerData._id.toString()
-    //   );
-    // }
-    // FIXME: here
     const updatedUnProcessedQItems = foundTournament.unProcessedQItems.filter(
       item => item._id.toString() !== playerData._id.toString()
     );
-    console.log("UPDATED UNPROCESSED LIST: ", updatedUnProcessedQItems); // as expected
+
     const updatedProcessedQItems = foundTournament.processedQItems.filter(
       item => item._id.toString() !== playerData._id.toString()
     );

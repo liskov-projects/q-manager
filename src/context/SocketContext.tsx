@@ -34,31 +34,24 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       console.log("✅ WebSocket Connected, Socket ID:", socketInstance.id);
     });
 
-    socketInstance.on(
-      "playerAdded",
-      ({tournamentId, playerData, updatedTournament, message}) => {
-        // console.log("PLAYER ADDED BY WEBSOCKET:", playerData);
-        // console.log(message)
-        try {
-          setCurrentTournament(updatedTournament);
-          // addPlayerToTournament(playerData, tournamentId);
-        } catch (error) {
-          console.error("addPlayer failed ", error.message);
-        }
+    socketInstance.on("playerAdded", ({updatedTournament}) => {
+      // console.log("PLAYER ADDED BY WEBSOCKET:", playerData);
+      // console.log(message)
+      try {
+        setCurrentTournament(updatedTournament);
+      } catch (error) {
+        console.error("addPlayer failed in context", error.message);
       }
-    );
+    });
 
-    socketInstance.on(
-      "playerDropped",
-      ({draggedItem, index, dropTarget, updatedTournament}) => {
-        try {
-          setCurrentTournament(updatedTournament);
-          // handleDrop(draggedItem, index, dropTarget);
-        } catch (error) {
-          console.error("handleDrop failed in context: ", error.message);
-        }
+    socketInstance.on("playerDropped", ({draggedItem, index, dropTarget}) => {
+      try {
+        handleDrop(draggedItem, index, dropTarget);
+        // setCurrentTournament(updatedTournament);
+      } catch (error) {
+        console.error("handleDrop failed in context: ", error.message);
       }
-    );
+    });
     socketInstance.on("addPlayerToShortestQ", ({playerData, updatedTournament}) => {
       console.log(playerData);
       try {

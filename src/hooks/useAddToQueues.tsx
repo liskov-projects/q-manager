@@ -28,18 +28,19 @@ const useAddToQueues = () => {
   ) => {
     console.log("runnning handleAddToShortestQ");
     console.log("playersData", playerData);
-    const shortestQueue = findShortestQueue(currentTournamentRef?.queues);
+    console.log(currentTournamentRef.current?.queues);
+    const shortestQueue = findShortestQueue(currentTournamentRef.current?.queues);
     // copy the items
     const currentPlayers = [
-      ...currentTournamentRef?.unProcessedQItems,
-      ...currentTournamentRef?.processedQItems
+      ...currentTournamentRef.current?.unProcessedQItems,
+      ...currentTournamentRef.current?.processedQItems
     ];
     const itemToAdd = currentPlayers.find(player => player._id === playerData._id);
     if (!itemToAdd) {
       throw new Error("Item not found");
     }
     //copy the queues
-    const updatedQueues = currentTournamentRef?.queues.map(queue =>
+    const updatedQueues = currentTournamentRef.current?.queues.map(queue =>
       queue._id === shortestQueue._id
         ? {...queue, queueItems: [...queue.queueItems, itemToAdd]}
         : queue

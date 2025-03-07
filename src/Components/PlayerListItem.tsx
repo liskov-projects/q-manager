@@ -1,7 +1,7 @@
 // hooks
 import {useState} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import useAddToQueues from "@/hooks/useAddToQueues";
+// import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import {useSocket} from "@/context/SocketContext";
 // types
@@ -13,9 +13,9 @@ import EditListItem from "./EditListItem";
 
 export default function PlayerListItem({item}: {item: TPlayer}) {
   const {tournamentOwner, currentTournament} = useTournamentsAndQueuesContext();
-  // const {handleAddToShortestQueue} = useAddToQueues();
   const {socket} = useSocket();
   const {handleDragStart, handleDragOver} = useDragNDrop();
+  // const {handleAddToShortestQueue} = useAddToQueues();
   const [editMode, setEditMode] = useState(false);
 
   // // FIXME:
@@ -63,10 +63,8 @@ export default function PlayerListItem({item}: {item: TPlayer}) {
             )}
           </div>
 
-          {/* Tags List */}
           <TagsList item={item} />
 
-          {/* Add to Shortest Queue Button */}
           {!tournamentOwner ? null : (
             <Button
               onClick={() => {
@@ -77,6 +75,8 @@ export default function PlayerListItem({item}: {item: TPlayer}) {
                     playerData: item,
                     tournamentId: currentTournament?._id
                   });
+                // NOTE: optimistic UI
+                // handleAddToShortestQueue(item);
               }}
               className="px-10 py-5 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center">
               ADD TO SHORTEST QUEUE ⬆️
