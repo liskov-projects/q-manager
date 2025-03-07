@@ -52,6 +52,7 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
         console.error("handleDrop failed in context: ", error.message);
       }
     });
+
     socketInstance.on("addPlayerToShortestQ", ({playerData, updatedTournament}) => {
       console.log(playerData);
       try {
@@ -59,6 +60,23 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
         // handleAddToShortestQueue(playerData, updatedTournament);
       } catch (error) {
         console.error("Failed to update tournament data", error.message);
+      }
+    });
+
+    socketInstance.on("addAllPlayersToQueues", ({updatedTournament}) => {
+      try {
+        setCurrentTournament(updatedTournament);
+      } catch (error) {
+        console.error("failed to add all players to queues", error.message);
+      }
+    });
+
+    // NEW:
+    socketInstance.on("uprocessAllPlayers", ({updatedTournament}) => {
+      try {
+        setCurrentTournament(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
       }
     });
     return () => {

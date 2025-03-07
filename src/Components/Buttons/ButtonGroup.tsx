@@ -1,13 +1,16 @@
 "use client";
-
-import Button from "./Button";
+// hooks
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
+import {useSocket} from "@/context/SocketContext";
+// components
+import Button from "./Button";
 import SectionHeader from "../SectionHeader";
 
 export default function ButtonGroup({tournamentId}) {
   const {currentTournament, tournamentOwner, saveTournament} =
     useTournamentsAndQueuesContext();
+  const {socket} = useSocket();
 
   const {
     handleAddAllToQueues,
@@ -22,13 +25,18 @@ export default function ButtonGroup({tournamentId}) {
   return (
     <div className="my-4">
       <SectionHeader>Button Group</SectionHeader>
-      {/* // FIXME: like the idea of colorful btn here */}
       <div className="flex flex-col justify-around h-50 my-12">
         <div className="flex">
           <Button
             className="bg-bluestone-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[800px] px-4 rounded my-2 mx-2 min-w-30 text-nowrap"
             onClick={() => {
-              handleAddAllToQueues(currentTournament);
+              if (socket) {
+                socket.emit("addAllPlayersToQueues", {
+                  tournament: currentTournament
+                });
+              }
+              // optimistic UI
+              // handleAddAllToQueues(currentTournament);
             }}>
             Add all
           </Button>
@@ -44,7 +52,14 @@ export default function ButtonGroup({tournamentId}) {
           <Button
             className="bg-brick-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
             onClick={() => {
-              handleUnprocessAll(currentTournament);
+              if (socket) {
+                console.log("emitting uprocessAllPlayers from the button");
+                socket.emit("uprocessAllPlayers", {
+                  tournament: currentTournament
+                });
+              }
+              // optimistic UI
+              // handleUnprocessAll(currentTournament);
             }}>
             Unprocess all
           </Button>

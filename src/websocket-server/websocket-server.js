@@ -161,7 +161,7 @@ io.on("connection", async socket => {
       current.queueItems.length < shortest.queueItems.length ? current : shortest
     ); // .reduce compare shortest with current finding the one satifying the condition
 
-    if (!shortestQ) socket.emit({error: "no valid queue found"}); //NOTE: what if they're all even?
+    if (!shortestQ) socket.emit({error: "no valid queue found"});
 
     // adds the player
     shortestQ.queueItems.push(playerData);
@@ -187,6 +187,88 @@ io.on("connection", async socket => {
       playerData
     });
     console.log("📡 Sent io.emit(playerAddedToShortestQ)", tournamentId, playerData);
+  });
+
+  // WORKS:
+  socket.on("addAllPlayersToQueues", async ({tournament}) => {
+    //  call db
+    const foundTournament = await TournamentModel.findById(tournament._id);
+    if (!foundTournament)
+      socket.emit({error: "Tournament not found in addPlayerToShortestQ"});
+    // update the data - backend
+    //NOTE: makes a pool of ALL players | or we want only UNPROCESSED?
+    const unassignedPlayers = [
+      ...tournament.unProcessedQItems,
+      ...tournament.processedQItems
+    ];
+
+    // update the queues
+    const updatedQueues = [...foundTournament?.queues];
+
+    unassignedPlayers.forEach(player => {
+      const targetQeueue = updatedQueues.reduce((shortest, current) =>
+        current.queueItems.length < shortest.queueItems.length ? current : shortest
+      );
+      if (!targetQeueue) socket.emit({error: "no valid queue found"});
+
+      targetQeueue.queueItems.push(player);
+    });
+    // call db to save
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournament._id,
+      {
+        $set: {
+          unProcessedQItems: [],
+          processedQItems: [],
+          queues: updatedQueues
+        }
+      },
+      {new: true}
+    );
+
+    // broadcasts updated data
+    io.emit("addAllPlayersToQueues", {
+      message: "all Players added to queues",
+      updatedTournament
+    });
+  });
+
+  // NEW:
+  socket.on("uprocessAllPlayers", async ({tournament}) => {
+    // db call to get the data
+    const foundTournament = await TournamentModel.findById(tournament._id);
+    if (!foundTournament) socket.emit("tournament not found in uprocessAllPlayers");
+
+    // processes the data
+    const poolOfPlayers = foundTournament.queues
+      .map(queue => queue.queueItems)
+      .flat()
+      .concat(foundTournament.processedQItems);
+
+    const clearedQueues = foundTournament.queues.map(queue => ({
+      ...queue,
+      queueItems: []
+    }));
+
+    // db call to update
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournament._id,
+      {
+        $set: {
+          unProcessedQItems: poolOfPlayers,
+          processedQItems: [],
+          // updates every queue's queueItems
+          "queues.$[].queueItems": []
+        }
+      },
+      {new: true}
+    );
+
+    // emits the event to the front
+    io.emit("uprocessAllPlayers", {
+      message: "All player are removed from the queues",
+      updatedTournament
+    });
   });
 
   // disconnects
