@@ -299,6 +299,61 @@ io.on("connection", async socket => {
     });
   });
 
+  // WORKS::
+  socket.on("processQueueOneStep", async ({tournamentId, queueIndex}) => {
+    try {
+      // Fetch the tournament from DB
+      const foundTournament = await TournamentModel.findById(tournamentId);
+      if (!foundTournament) {
+        return socket.emit("error", {
+          message: "Tournament not found in processOnePlayer"
+        });
+      }
+
+      // Ensure the queue index is valid
+      if (queueIndex < 0 || queueIndex >= foundTournament.queues.length) {
+        return socket.emit("error", {message: "Invalid queue index"});
+      }
+
+      // Get the queue and remove the first player
+      const queueToUpdate = foundTournament.queues[queueIndex];
+      const processedPlayer = queueToUpdate.queueItems.shift();
+
+      if (!processedPlayer) {
+        return socket.emit("error", {message: "No player to process in this queue"});
+      }
+
+      // Update the tournament
+      const updatedTournament = await TournamentModel.findByIdAndUpdate(
+        tournamentId,
+        {
+          $set: {
+            [`queues.${queueIndex}.queueItems`]: queueToUpdate.queueItems
+          },
+          $push: {processedQItems: processedPlayer}
+        },
+        {new: true}
+      );
+
+      if (!updatedTournament) {
+        return socket.emit("error", {
+          message: "Error updating tournament in processOnePlayer"
+        });
+      }
+
+      // Emit the updated data
+      io.emit("processQueueOneStep", {
+        message: "One player processed from queue",
+        updatedTournament
+      });
+
+      console.log("📡 Sent io.emit(processOnePlayer)", updatedTournament);
+    } catch (error) {
+      console.error("Error in processOnePlayer:", error);
+      socket.emit("error", {message: "Internal server error in processOnePlayer"});
+    }
+  });
+
   // disconnects
   socket.on("disconnect", () => {
     console.log(`Client disconnected: ${socket.id}`);

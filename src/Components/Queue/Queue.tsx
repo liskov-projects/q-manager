@@ -2,6 +2,8 @@
 import {useState} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
+import {useSocket} from "@/context/SocketContext";
+
 // types
 import {TQueue} from "@/types/Types";
 // components
@@ -14,7 +16,8 @@ import QueueListItem from "./QueueListItem";
 
 export default function Queue({queue, index}: {queue: TQueue; index: number}) {
   const {handleProgressOneStep} = useAddToQueues();
-  const {tournamentOwner} = useTournamentsAndQueuesContext();
+  const {tournamentOwner, currentTournament} = useTournamentsAndQueuesContext();
+  const {socket} = useSocket();
 
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -36,7 +39,17 @@ export default function Queue({queue, index}: {queue: TQueue; index: number}) {
               ? "bg-brick-200 text-shell-100 hover:bg-tennis-50 hover:text-shell-300"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
-            onClick={() => handleProgressOneStep(index)}
+            onClick={() => {
+              if (socket) {
+                socket.emit("processQueueOneStep", {
+                  message: "emitting processQueueOneStep",
+                  queueIndex: index,
+                  tournamentId: currentTournament?._id
+                });
+              }
+              // optimistic UI
+              // handleProgressOneStep(index);
+            }}
             disabled={queue.queueItems.length === 0}>
             PROGRESS QUEUE ⬆️
           </Button>

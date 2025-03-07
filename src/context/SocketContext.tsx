@@ -89,6 +89,15 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     });
 
+    // WORKS:
+    socketInstance.on("processQueueOneStep", ({updatedTournament}) => {
+      try {
+        setCurrentTournament(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+
     return () => {
       console.log("Cleaning up SocketContext listeners");
       socketInstance.off("playerAdded");
