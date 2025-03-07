@@ -45,7 +45,7 @@ export default function TournamentQueuesPage({tournamentId}) {
       <div className="flex flex-col lg:flex-row justify-around">
         {/* Section for adding players and viewing unprocessed list */}
         <div
-          className={`p-2 w-full lg:w-1/4 ${
+          className={`p-2 w-full lg:w-1/5 ${
             visibleSection === "unprocessed" ? "block" : "hidden lg:block"
           }`}>
           <NewPlayerForm />
@@ -57,7 +57,7 @@ export default function TournamentQueuesPage({tournamentId}) {
         </div>
 
         <div
-          className={`p-2 w-full lg:w-2/4 ${
+          className={`p-2 w-full lg:w-2/5 ${
             visibleSection === "queues" ? "block" : "hidden lg:block"
           }`}>
           <QueuesContainer />
@@ -65,7 +65,7 @@ export default function TournamentQueuesPage({tournamentId}) {
 
         {/* Processed players section */}
         <div
-          className={`p-2 w-full lg:w-1/4 ${
+          className={`p-2 w-full lg:w-3/5 ${
             visibleSection === "processed" ? "block" : "hidden lg:block"
           }`}>
           {/* <SectionHeader>Button Group</SectionHeader> */}
