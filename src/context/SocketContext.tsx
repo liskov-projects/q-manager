@@ -71,7 +71,7 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     });
 
-    // NEW:
+    // WORKS:
     socketInstance.on("uprocessAllPlayers", ({updatedTournament}) => {
       try {
         setCurrentTournament(updatedTournament);
@@ -79,6 +79,16 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
         console.error(error.message);
       }
     });
+
+    // WORKS:
+    socketInstance.on("processAllPlayers", ({updatedTournament}) => {
+      try {
+        setCurrentTournament(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+
     return () => {
       console.log("Cleaning up SocketContext listeners");
       socketInstance.off("playerAdded");

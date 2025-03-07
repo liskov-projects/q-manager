@@ -66,7 +66,14 @@ export default function ButtonGroup({tournamentId}) {
           <Button
             className="bg-bluestone-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
             onClick={() => {
-              handleProcessAll(currentTournament);
+              if (socket) {
+                console.log("emitting PROCESSAllPlayers from the button");
+                socket.emit("processAllPlayers", {
+                  tournament: currentTournament
+                });
+              }
+              // optimistic UI
+              // handleProcessAll(currentTournament);
             }}>
             Process all
           </Button>

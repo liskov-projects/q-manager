@@ -233,7 +233,7 @@ io.on("connection", async socket => {
     });
   });
 
-  // NEW:
+  // WORKS::
   socket.on("uprocessAllPlayers", async ({tournament}) => {
     // db call to get the data
     const foundTournament = await TournamentModel.findById(tournament._id);
@@ -245,11 +245,6 @@ io.on("connection", async socket => {
       .flat()
       .concat(foundTournament.processedQItems);
 
-    const clearedQueues = foundTournament.queues.map(queue => ({
-      ...queue,
-      queueItems: []
-    }));
-
     // db call to update
     const updatedTournament = await TournamentModel.findByIdAndUpdate(
       tournament._id,
@@ -257,6 +252,39 @@ io.on("connection", async socket => {
         $set: {
           unProcessedQItems: poolOfPlayers,
           processedQItems: [],
+          // updates every queue's queueItems
+          "queues.$[].queueItems": []
+        }
+      },
+      {new: true}
+    );
+
+    // emits the event to the front
+    io.emit("uprocessAllPlayers", {
+      message: "All player are removed from the queues",
+      updatedTournament
+    });
+  });
+
+  // WORKS:
+  socket.on("processAllPlayers", async ({tournament}) => {
+    // db call to get the data
+    const foundTournament = await TournamentModel.findById(tournament._id);
+    if (!foundTournament) socket.emit("tournament not found in uprocessAllPlayers");
+
+    // processes the data
+    const poolOfPlayers = foundTournament.queues
+      .map(queue => queue.queueItems)
+      .flat()
+      .concat(foundTournament.unProcessedQItems);
+
+    // db call to update
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournament._id,
+      {
+        $set: {
+          unProcessedQItems: [],
+          processedQItems: poolOfPlayers,
           // updates every queue's queueItems
           "queues.$[].queueItems": []
         }
