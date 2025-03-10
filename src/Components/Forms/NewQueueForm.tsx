@@ -3,6 +3,7 @@
 import {useState} from "react";
 import {useUser} from "@clerk/nextjs";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import {useSocket} from "@/context/SocketContext";
 // types
 import {TQueue} from "@/types/Types";
 // components
@@ -19,6 +20,8 @@ export default function NewQueueForm() {
     queueItems: [],
     tournamentId: ""
   });
+  // NEW:
+  const {socket} = useSocket();
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
@@ -38,32 +41,41 @@ export default function NewQueueForm() {
 
     console.log("Data sent to backend: ", newItem);
 
-    try {
-      const res = await fetch("/api/queues", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newItem)
+    // try {
+    //   const res = await fetch("/api/queues", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(newItem)
+    //   });
+
+    //   // check response code
+    //   if (res.ok) {
+    //     const data = await res.json();
+    //     console.log("Added: ", data);
+    //     // setCurrentTournament(data);
+    //   } else {
+    //     console.error("Error response:", res);
+    //     throw new Error("Error adding item, status: " + res.status);
+    //   }
+    // } catch (err: unknown) {
+    //   if (err instanceof Error) {
+    //     console.error("Error adding item: ", err.message);
+    //   } else {
+    //     console.error("Unknown error: ", err);
+    //   }
+    // }
+
+    //NEW: socket goes here:
+    if (socket) {
+      // console.log("EMITTING SOCKET EVENT FOR ADD Queue");
+      socket.emit("addQueue", {
+        newQueue: newItem,
+        tournamentId: currentTournament?._id
       });
-
-      // check response code
-      if (res.ok) {
-        const data = await res.json();
-        console.log("Added: ", data);
-        setCurrentTournament(data);
-      } else {
-        console.error("Error response:", res);
-        throw new Error("Error adding item, status: " + res.status);
-      }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error("Error adding item: ", err.message);
-      } else {
-        console.error("Unknown error: ", err);
-      }
     }
-
+    //
     setNewQueue({
       queueName: "",
       queueItems: [],

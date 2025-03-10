@@ -29,6 +29,7 @@ export default function Queue({queue, index}: {queue: TQueue; index: number}) {
         <h3 className="text-xl font-semibold text-bluestone-200 mb-4">
           Queue {queue.queueName}
         </h3>
+        <Button onClick={() => console.log("deleting a queue")}>delete</Button>
       </div>
       {!tournamentOwner ? null : (
         <>

@@ -98,6 +98,15 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     });
 
+    // NEW:
+    socketInstance.on("addQueue", ({updatedTournament}) => {
+      try {
+        setCurrentTournament(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+
     return () => {
       console.log("Cleaning up SocketContext listeners");
       socketInstance.off("playerAdded");

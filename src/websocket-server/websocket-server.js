@@ -299,7 +299,7 @@ io.on("connection", async socket => {
     });
   });
 
-  // NEW:
+  // WORKS:
   socket.on("processQueueOneStep", async ({tournamentId, queueIndex}) => {
     try {
       // Fetch the tournament from DB
@@ -352,6 +352,34 @@ io.on("connection", async socket => {
       console.error("Error in processOnePlayer:", error);
       socket.emit("error", {message: "Internal server error in processOnePlayer"});
     }
+  });
+
+  // NEW:
+  socket.on("addQueue", async ({tournamentId, newQueue}) => {
+    console.log(
+      `New Queue: ${JSON.stringify(newQueue)} added to Tournament ${tournamentId}`
+    );
+
+    // Find the tournament by ID and push the new queue to queues
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournamentId,
+      {$push: {queues: newQueue}},
+      {new: true} // Returns the updated document
+    );
+
+    if (!updatedTournament) {
+      console.error("Tournament not found:", tournamentId);
+      return socket.emit("errorMessage", {error: "Tournament not found"});
+    }
+
+    console.log("Updated tournament:", updatedTournament);
+
+    // Emit a success message
+    io.emit("addQueue", {
+      message: "io.emit addQueue",
+      updatedTournament
+    });
+    console.log("📡 Sent io.emit(addQueue)", tournamentId, newQueue);
   });
 
   // disconnects
