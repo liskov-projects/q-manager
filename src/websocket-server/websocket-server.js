@@ -2,13 +2,10 @@ import dotenv from "dotenv";
 import express from "express";
 import {Server} from "socket.io";
 import http from "http";
-import cors from "cors";
 import mongoose from "mongoose";
-
-import {PlayerModel} from "../models/PlayerModel.js";
 import {TournamentModel} from "../models/TournamentModel.js";
 
-import dbConnect from "../lib/db.js"; // Ensure correct path
+import dbConnect from "../lib/db.js";
 
 dotenv.config({path: "../.env"});
 
@@ -28,7 +25,6 @@ io.on("connection", async socket => {
 
   console.log(`Client connected ${socket.id}`);
 
-  // WORKS:
   socket.on("addPlayer", async ({playerData, tournamentId}) => {
     console.log(
       `New Player: ${JSON.stringify(playerData)} added to Tournament ${tournamentId}`
@@ -60,7 +56,6 @@ io.on("connection", async socket => {
     console.log("📡 Sent io.emit(playerAdded)", tournamentId, playerData);
   });
 
-  // WORKS:
   socket.on("editPlayer", async ({tournamentId, playerData}) => {
     console.log(`Player: ${JSON.stringify(playerData)} has been updated`);
 
@@ -89,7 +84,33 @@ io.on("connection", async socket => {
     console.log("📡 Sent io.emit(editPlayer)", tournamentId, playerData);
   });
 
-  // WORKS:
+  socket.on("deletePlayer", async ({playerToDelete, tournamentId}) => {
+    console.log(
+      `Delete Player: ${JSON.stringify(
+        playerToDelete
+      )} deleted from Tournament ${tournamentId}`
+    );
+
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournamentId,
+      {$pull: {unProcessedQItems: playerToDelete}},
+      {new: true}
+    );
+
+    if (!updatedTournament) {
+      console.error("Tournament not found:", tournamentId);
+      return socket.emit("errorMessage", {error: "Tournament not found"});
+    }
+
+    console.log("Updated tournament:", updatedTournament);
+
+    io.emit("deletePlayer", {
+      message: "io.emit deletePlayer",
+      updatedTournament
+    });
+    console.log("📡 Sent io.emit(deletePlayer)", tournamentId);
+  });
+
   socket.on(
     "playerDropped",
     async ({message, draggedItem, dropTarget, tournamentId, index}) => {
@@ -167,7 +188,6 @@ io.on("connection", async socket => {
     }
   );
 
-  // WORKS:
   socket.on("addPlayerToShortestQ", async ({playerData, tournamentId}) => {
     console.log(`Player: ${JSON.stringify(playerData)} added to Queue`);
 
@@ -217,7 +237,6 @@ io.on("connection", async socket => {
     console.log("📡 Sent io.emit(playerAddedToShortestQ)", tournamentId, playerData);
   });
 
-  // WORKS:
   socket.on("addAllPlayersToQueues", async ({tournament}) => {
     //  call db
     const foundTournament = await TournamentModel.findById(tournament._id);
@@ -261,7 +280,6 @@ io.on("connection", async socket => {
     });
   });
 
-  // WORKS::
   socket.on("uprocessAllPlayers", async ({tournament}) => {
     // db call to get the data
     const foundTournament = await TournamentModel.findById(tournament._id);
@@ -294,7 +312,6 @@ io.on("connection", async socket => {
     });
   });
 
-  // WORKS:
   socket.on("processAllPlayers", async ({tournament}) => {
     // db call to get the data
     const foundTournament = await TournamentModel.findById(tournament._id);
@@ -327,7 +344,6 @@ io.on("connection", async socket => {
     });
   });
 
-  // WORKS:
   socket.on("processQueueOneStep", async ({tournamentId, queueIndex}) => {
     try {
       // Fetch the tournament from DB
@@ -382,7 +398,6 @@ io.on("connection", async socket => {
     }
   });
 
-  // NEW:
   socket.on("addQueue", async ({tournamentId, newQueue}) => {
     console.log(
       `New Queue: ${JSON.stringify(newQueue)} added to Tournament ${tournamentId}`
@@ -410,6 +425,32 @@ io.on("connection", async socket => {
     console.log("📡 Sent io.emit(addQueue)", tournamentId, newQueue);
   });
 
+  socket.on("deleteQueue", async ({tournamentId, queueToDelete}) => {
+    console.log(
+      `Delete Queue: ${JSON.stringify(
+        queueToDelete
+      )} deleted from Tournament ${tournamentId}`
+    );
+
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournamentId,
+      {$pull: {queues: queueToDelete}},
+      {new: true}
+    );
+
+    if (!updatedTournament) {
+      console.error("Tournament not found:", tournamentId);
+      return socket.emit("errorMessage", {error: "Tournament not found"});
+    }
+
+    console.log("Updated tournament:", updatedTournament);
+
+    io.emit("deleteQueue", {
+      message: "io.emit deletePlayer",
+      updatedTournament
+    });
+    console.log("📡 Sent io.emit(deleteQueue)", tournamentId);
+  });
   // disconnects
   socket.on("disconnect", () => {
     console.log(`Client disconnected: ${socket.id}`);

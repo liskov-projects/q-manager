@@ -1,7 +1,6 @@
 // hooks
 import {useState} from "react";
 import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import useAddToQueues from "@/hooks/useAddToQueues";
 import {useSocket} from "@/context/SocketContext";
 
 // types
@@ -15,7 +14,6 @@ import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "./QueueListItem";
 
 export default function Queue({queue, index}: {queue: TQueue; index: number}) {
-  // const {handleProgressOneStep} = useAddToQueues();
   const {tournamentOwner, currentTournament} = useTournamentsAndQueuesContext();
   const {socket} = useSocket();
 
@@ -29,7 +27,20 @@ export default function Queue({queue, index}: {queue: TQueue; index: number}) {
         <h3 className="text-xl font-semibold text-bluestone-200 mb-4">
           Queue {queue.queueName}
         </h3>
-        <Button onClick={() => console.log("deleting a queue")}>delete</Button>
+        {!tournamentOwner ? null : (
+          <Button
+            className="mx-2 px-5 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
+            onClick={() => {
+              if (socket) {
+                socket.emit("deleteQueue", {
+                  tournamentId: currentTournament?._id,
+                  queueToDelete: queue
+                });
+              }
+            }}>
+            🗑️
+          </Button>
+        )}
       </div>
       {!tournamentOwner ? null : (
         <>

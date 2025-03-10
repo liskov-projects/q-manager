@@ -50,6 +50,7 @@ export default function EditListItem({
         playerData: updatedCard
       });
     }
+
     setEditMode(false);
   };
   return (

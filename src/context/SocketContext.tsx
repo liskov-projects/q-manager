@@ -44,7 +44,14 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     });
 
-    // NEW:
+    socketInstance.on("deletePlayer", ({updatedTournament}) => {
+      try {
+        setCurrentTournament(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+
     socketInstance.on("editPlayer", ({updatedTournament}) => {
       try {
         setCurrentTournament(updatedTournament);
@@ -80,7 +87,6 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     });
 
-    // WORKS:
     socketInstance.on("uprocessAllPlayers", ({updatedTournament}) => {
       try {
         setCurrentTournament(updatedTournament);
@@ -89,7 +95,6 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     });
 
-    // WORKS:
     socketInstance.on("processAllPlayers", ({updatedTournament}) => {
       try {
         setCurrentTournament(updatedTournament);
@@ -98,7 +103,6 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     });
 
-    // WORKS:
     socketInstance.on("processQueueOneStep", ({updatedTournament}) => {
       try {
         setCurrentTournament(updatedTournament);
@@ -107,8 +111,15 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     });
 
-    // WORKS:
     socketInstance.on("addQueue", ({updatedTournament}) => {
+      try {
+        setCurrentTournament(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+
+    socketInstance.on("deleteQueue", ({updatedTournament}) => {
       try {
         setCurrentTournament(updatedTournament);
       } catch (error) {
