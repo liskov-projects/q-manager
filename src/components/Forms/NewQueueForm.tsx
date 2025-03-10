@@ -11,16 +11,13 @@ import Button from "../Buttons/Button";
 
 export default function NewQueueForm() {
   const {isSignedIn} = useUser();
-  const {currentTournament, filteredTournaments, setCurrentTournament} =
-    useTournamentsAndQueuesContext();
-  // WORKS:
+  const {currentTournament} = useTournamentsAndQueuesContext();
   const [canEdit, setCanEdit] = useState(false);
   const [newQueue, setNewQueue] = useState<TQueue>({
     queueName: "",
     queueItems: [],
     tournamentId: ""
   });
-  // NEW:
   const {socket} = useSocket();
 
   function handleChange(
@@ -41,33 +38,7 @@ export default function NewQueueForm() {
 
     console.log("Data sent to backend: ", newItem);
 
-    // try {
-    //   const res = await fetch("/api/queues", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(newItem)
-    //   });
-
-    //   // check response code
-    //   if (res.ok) {
-    //     const data = await res.json();
-    //     console.log("Added: ", data);
-    //     // setCurrentTournament(data);
-    //   } else {
-    //     console.error("Error response:", res);
-    //     throw new Error("Error adding item, status: " + res.status);
-    //   }
-    // } catch (err: unknown) {
-    //   if (err instanceof Error) {
-    //     console.error("Error adding item: ", err.message);
-    //   } else {
-    //     console.error("Unknown error: ", err);
-    //   }
-    // }
-
-    //NEW: socket goes here:
+    //WORKS: socket goes here:
     if (socket) {
       // console.log("EMITTING SOCKET EVENT FOR ADD Queue");
       socket.emit("addQueue", {

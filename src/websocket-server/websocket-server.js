@@ -54,11 +54,39 @@ io.on("connection", async socket => {
     io.emit("playerAdded", {
       message: "io.emit playerAdded",
       tournamentId,
-      // change: {type: "addPlayer", playerData},
       updatedTournament,
       playerData: playerWithId
     });
     console.log("📡 Sent io.emit(playerAdded)", tournamentId, playerData);
+  });
+
+  // WORKS:
+  socket.on("editPlayer", async ({tournamentId, playerData}) => {
+    console.log(`Player: ${JSON.stringify(playerData)} has been updated`);
+
+    const tournamentObjectId = new mongoose.Types.ObjectId(tournamentId);
+    const playerObjectId = new mongoose.Types.ObjectId(playerData._id);
+
+    const updatedTournament = await TournamentModel.findOneAndUpdate(
+      // finds the tournament AND the player
+      {_id: tournamentObjectId, "unProcessedQItems._id": playerObjectId},
+      // finds the item in the array and overwrites it
+      {$set: {"unProcessedQItems.$": playerData}},
+      {new: true}
+    );
+
+    if (!updatedTournament) {
+      console.error("Tournament not found:", tournamentId);
+      return socket.emit("errorMessage", {error: "Tournament not found"});
+    }
+
+    console.log("Updated tournament:", updatedTournament);
+
+    io.emit("editPlayer", {
+      message: "io.emit editPlayer",
+      updatedTournament
+    });
+    console.log("📡 Sent io.emit(editPlayer)", tournamentId, playerData);
   });
 
   // WORKS:

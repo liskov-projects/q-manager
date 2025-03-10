@@ -44,6 +44,15 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     });
 
+    // NEW:
+    socketInstance.on("editPlayer", ({updatedTournament}) => {
+      try {
+        setCurrentTournament(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+    //
     socketInstance.on("playerDropped", ({draggedItem, index, dropTarget}) => {
       try {
         handleDrop(draggedItem, index, dropTarget);
@@ -98,7 +107,7 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       }
     });
 
-    // NEW:
+    // WORKS:
     socketInstance.on("addQueue", ({updatedTournament}) => {
       try {
         setCurrentTournament(updatedTournament);
