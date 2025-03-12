@@ -1,20 +1,20 @@
 // hooks
-import {useState} from "react";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useState } from "react";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
-import {useSocket} from "@/context/SocketContext";
+import { useSocket } from "@/context/SocketContext";
 // types
-import {TPlayer} from "@/types/Types";
+import { TPlayer } from "@/types/Types";
 // components
 import Button from "./Buttons/Button";
 import TagsList from "./TagsList";
 import EditListItem from "./EditListItem";
 
-export default function PlayerListItem({item}: {item: TPlayer}) {
-  const {tournamentOwner, currentTournament} = useTournamentsAndQueuesContext();
-  const {socket} = useSocket();
-  const {handleDragStart, handleDragOver} = useDragNDrop();
+export default function PlayerListItem({ item }: { item: TPlayer }) {
+  const { tournamentOwner, currentTournament } = useTournamentsAndQueuesContext();
+  const { socket } = useSocket();
+  const { handleDragStart, handleDragOver } = useDragNDrop();
   // const {handleAddToShortestQueue} = useAddToQueues();
   const [editMode, setEditMode] = useState(false);
 
@@ -42,7 +42,8 @@ export default function PlayerListItem({item}: {item: TPlayer}) {
           className="h-30 w-[92%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
           draggable={`${!tournamentOwner ? false : true}`}
           onDragStart={() => handleDragStart(item)}
-          onDragOver={e => handleDragOver(e)}>
+          onDragOver={(e) => handleDragOver(e)}
+        >
           {/* Player Name */}
           <div className="player-name font-semibold text-lg">
             {item.names}
@@ -50,7 +51,8 @@ export default function PlayerListItem({item}: {item: TPlayer}) {
               <div className="flex flex-row">
                 <Button
                   className="mx-2 px-3 py-1 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
-                  onClick={() => setEditMode(true)}>
+                  onClick={() => setEditMode(true)}
+                >
                   ✏️
                 </Button>
                 <Button
@@ -73,12 +75,13 @@ export default function PlayerListItem({item}: {item: TPlayer}) {
                   socket.emit("addPlayerToShortestQ", {
                     message: "emitting add to shortes",
                     playerData: item,
-                    tournamentId: currentTournament?._id
+                    tournamentId: currentTournament?._id,
                   });
                 // NOTE: optimistic UI
                 // handleAddToShortestQueue(item);
               }}
-              className="px-10 py-5 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center">
+              className="px-10 py-5 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
+            >
               ADD TO SHORTEST QUEUE ⬆️
             </Button>
           )}

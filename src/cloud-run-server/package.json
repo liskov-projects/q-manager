@@ -1,0 +1,16 @@
+{
+  "name": "cloud-run-server",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "cloud-run-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

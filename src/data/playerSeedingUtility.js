@@ -1,4 +1,4 @@
-import {MongoClient} from "mongodb";
+import { MongoClient } from "mongodb";
 // import playerSeeds from "./playerSeeds.js";
 import playersData from "./playersData.js";
 import dotenv from "dotenv";
@@ -51,7 +51,7 @@ const seedPlayers = async () => {
         if (playerIndex < newPlayers.length) {
           playersToInsert.push({
             ...newPlayers[playerIndex],
-            tournamentId: tournament._id.toString()
+            tournamentId: tournament._id.toString(),
           });
           playerIndex++;
         }
@@ -61,7 +61,7 @@ const seedPlayers = async () => {
       if (remainingPlayers > 0 && playerIndex < newPlayers.length) {
         playersToInsert.push({
           ...newPlayers[playerIndex],
-          tournamentId: tournament._id.toString()
+          tournamentId: tournament._id.toString(),
         });
         playerIndex++;
         remainingPlayers--;
@@ -76,13 +76,11 @@ const seedPlayers = async () => {
 
       // Update the tournament document in the database
       await tournamentCollection.updateOne(
-        {_id: tournament._id},
-        {$set: {unProcessedQItems: playersToInsert}}
+        { _id: tournament._id },
+        { $set: { unProcessedQItems: playersToInsert } }
       );
 
-      console.log(
-        `Assigned ${playersToInsert.length} players to tournament "${tournament.name}"`
-      );
+      console.log(`Assigned ${playersToInsert.length} players to tournament "${tournament.name}"`);
     }
 
     console.log("Player seeding completed successfully");

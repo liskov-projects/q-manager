@@ -1,0 +1,7 @@
+# Ignore build files
+.next
+node_modules
+build
+
+# Ignore generated files
+coverage

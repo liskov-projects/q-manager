@@ -1,7 +1,7 @@
 "use client";
 // hooks
-import {useState} from "react";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useState } from "react";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // components
 import QueuesGrid from "./QueuesGrid";
 import QueuesGridMini from "./QueuesGridMini";
@@ -11,12 +11,12 @@ import NewQueueForm from "../Forms/NewQueueForm";
 
 export default function QueuesContainer() {
   const [showAlternateView, setShowAlternateView] = useState(false);
-  const {addMoreQueues, removeQueues} = useTournamentsAndQueuesContext();
+  const { addMoreQueues, removeQueues } = useTournamentsAndQueuesContext();
   const [showQueueForm, setShowQueueForm] = useState(false);
-  const {tournamentOwner} = useTournamentsAndQueuesContext();
+  const { tournamentOwner } = useTournamentsAndQueuesContext();
 
   const toggleQueueForm = () => {
-    setShowQueueForm(prev => !prev);
+    setShowQueueForm((prev) => !prev);
   };
 
   return (
@@ -25,24 +25,28 @@ export default function QueuesContainer() {
       {tournamentOwner && showQueueForm && <NewQueueForm />}
       <Button
         onClick={() => setShowAlternateView(!showAlternateView)}
-        className="mb-4 mx-4 p-2 bg-blue-500 text-white font-bold rounded">
+        className="mb-4 mx-4 p-2 bg-blue-500 text-white font-bold rounded"
+      >
         {showAlternateView ? "Show Detailed View" : "Show Grid View"}
       </Button>
       {!tournamentOwner ? null : (
         <>
           <Button
             onClick={() => addMoreQueues()}
-            className="mb-4 p-2 bg-red-500 text-white font-bold rounded">
+            className="mb-4 p-2 bg-red-500 text-white font-bold rounded"
+          >
             + queue
           </Button>
           <Button
             onClick={() => removeQueues()}
-            className="mb-4 mx-4 p-2 bg-red-500 text-white font-bold rounded">
+            className="mb-4 mx-4 p-2 bg-red-500 text-white font-bold rounded"
+          >
             - queue
           </Button>
           <Button
             onClick={() => toggleQueueForm()}
-            className="mb-4 mx-4 p-2 bg-red-500 text-white font-bold rounded">
+            className="mb-4 mx-4 p-2 bg-red-500 text-white font-bold rounded"
+          >
             new queue form
           </Button>
         </>

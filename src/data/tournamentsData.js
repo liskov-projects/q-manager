@@ -7,32 +7,32 @@ const tournamentsData = [
     queues: [
       {
         queueName: "Location 1",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 2",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 3",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 4",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 5",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 6",
-        queueItems: []
-      }
+        queueItems: [],
+      },
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual echuca regional tournament."
+    description: "The annual echuca regional tournament.",
   },
   {
     name: "Ballarat Open",
@@ -42,32 +42,32 @@ const tournamentsData = [
     queues: [
       {
         queueName: "Location 1",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 2",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 3",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 4",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 5",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 6",
-        queueItems: []
-      }
+        queueItems: [],
+      },
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual ballarat open tournament."
+    description: "The annual ballarat open tournament.",
   },
   {
     name: "Melbourne Championship",
@@ -77,32 +77,32 @@ const tournamentsData = [
     queues: [
       {
         queueName: "Location 1",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 2",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 3",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 4",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 5",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 6",
-        queueItems: []
-      }
+        queueItems: [],
+      },
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual melbourne championship tournament."
+    description: "The annual melbourne championship tournament.",
   },
   {
     name: "Geelong Invitational",
@@ -112,32 +112,32 @@ const tournamentsData = [
     queues: [
       {
         queueName: "Location 1",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 2",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 3",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 4",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 5",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 6",
-        queueItems: []
-      }
+        queueItems: [],
+      },
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual geelong invitational tournament."
+    description: "The annual geelong invitational tournament.",
   },
   {
     name: "Bendigo Cup",
@@ -147,32 +147,32 @@ const tournamentsData = [
     queues: [
       {
         queueName: "Location 1",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 2",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 3",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 4",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 5",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 6",
-        queueItems: []
-      }
+        queueItems: [],
+      },
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual bendigo cup tournament."
+    description: "The annual bendigo cup tournament.",
   },
   {
     name: "Shepparton Classic",
@@ -182,32 +182,32 @@ const tournamentsData = [
     queues: [
       {
         queueName: "Location 1",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 2",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 3",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 4",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 5",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 6",
-        queueItems: []
-      }
+        queueItems: [],
+      },
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual shepparton classic tournament."
+    description: "The annual shepparton classic tournament.",
   },
   {
     name: "Warrnambool Series",
@@ -217,33 +217,33 @@ const tournamentsData = [
     queues: [
       {
         queueName: "Location 1",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 2",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 3",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 4",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 5",
-        queueItems: []
+        queueItems: [],
       },
       {
         queueName: "Location 6",
-        queueItems: []
-      }
+        queueItems: [],
+      },
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual warrnambool series tournament."
-  }
+    description: "The annual warrnambool series tournament.",
+  },
 ];
 
 export default tournamentsData;

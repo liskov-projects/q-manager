@@ -16,7 +16,7 @@ export async function GET(req: NextRequest, { params }: { params: { tournamentId
   await dbConnect();
 
   try {
-    const tournament = await TournamentModel.findById(tournamentId)
+    const tournament = await TournamentModel.findById(tournamentId);
 
     if (!tournament) {
       return NextResponse.json({ error: "Tournament not found" }, { status: 404 });
@@ -46,11 +46,9 @@ export async function PUT(req: NextRequest, { params }: { params: { tournamentId
     console.log("🔄 Update body:", body);
 
     // ✅ Update tournament
-    const updatedTournament = await TournamentModel.findByIdAndUpdate(
-      tournamentId,
-      body,
-      { new: true }
-    );
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(tournamentId, body, {
+      new: true,
+    });
 
     if (!updatedTournament) {
       return NextResponse.json({ error: "Tournament not found" }, { status: 404 });

@@ -1,13 +1,12 @@
 "use client";
 
-import {createContext, useContext, useEffect, ReactNode, useState} from "react";
-import {io, Socket} from "socket.io-client";
-import {useTournamentsAndQueuesContext} from "./TournamentsAndQueuesContext";
+import { createContext, useContext, useEffect, ReactNode, useState, useRef } from "react";
+import { io, Socket } from "socket.io-client";
+import { useTournamentsAndQueuesContext } from "./TournamentsAndQueuesContext";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import useAddToQueues from "@/hooks/useAddToQueues";
 
-const SOCKET_URL: string =
-  process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000/";
+const SOCKET_URL: string = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000/";
 
 interface SocketContextType {
   socket: Socket | null;
@@ -15,11 +14,17 @@ interface SocketContextType {
 
 const SocketContext = createContext<SocketContextType | null>(null);
 
-export const SocketProvider = ({children}: {children: ReactNode}) => {
-  const {addPlayerToTournament, setCurrentTournament} =
-    useTournamentsAndQueuesContext();
-  const {handleDrop} = useDragNDrop();
-  const {handleAddToShortestQueue} = useAddToQueues();
+export const SocketProvider = ({ children }: { children: ReactNode }) => {
+  const { addPlayerToTournament, setCurrentTournament } = useTournamentsAndQueuesContext();
+  const { handleDrop } = useDragNDrop();
+  const { handleAddToShortestQueue } = useAddToQueues();
+
+  // ✅ Create stable refs to avoid dependency issues
+  const setCurrentTournamentRef = useRef(setCurrentTournament);
+  setCurrentTournamentRef.current = setCurrentTournament;
+
+  const handleDropRef = useRef(handleDrop);
+  handleDropRef.current = handleDrop;
 
   const [socket, setSocket] = useState<Socket | null>(null);
 
@@ -34,65 +39,65 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
       console.log("✅ WebSocket Connected, Socket ID:", socketInstance.id);
     });
 
-    socketInstance.on("playerAdded", ({updatedTournament}) => {
+    socketInstance.on("playerAdded", ({ updatedTournament }) => {
       // console.log("PLAYER ADDED BY WEBSOCKET:", playerData);
       // console.log(message)
       try {
-        setCurrentTournament(updatedTournament);
+        setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
         console.error("addPlayer failed in context", error.message);
       }
     });
 
-    socketInstance.on("playerDropped", ({draggedItem, index, dropTarget}) => {
+    socketInstance.on("playerDropped", ({ draggedItem, index, dropTarget }) => {
       try {
-        handleDrop(draggedItem, index, dropTarget);
+        handleDropRef.current(draggedItem, index, dropTarget);
         // setCurrentTournament(updatedTournament);
       } catch (error) {
         console.error("handleDrop failed in context: ", error.message);
       }
     });
 
-    socketInstance.on("addPlayerToShortestQ", ({playerData, updatedTournament}) => {
+    socketInstance.on("addPlayerToShortestQ", ({ playerData, updatedTournament }) => {
       console.log(playerData);
       try {
-        setCurrentTournament(updatedTournament);
+        setCurrentTournamentRef.current(updatedTournament);
         // handleAddToShortestQueue(playerData, updatedTournament);
       } catch (error) {
         console.error("Failed to update tournament data", error.message);
       }
     });
 
-    socketInstance.on("addAllPlayersToQueues", ({updatedTournament}) => {
+    socketInstance.on("addAllPlayersToQueues", ({ updatedTournament }) => {
       try {
-        setCurrentTournament(updatedTournament);
+        setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
         console.error("failed to add all players to queues", error.message);
       }
     });
 
     // WORKS:
-    socketInstance.on("uprocessAllPlayers", ({updatedTournament}) => {
+    socketInstance.on("uprocessAllPlayers", ({ updatedTournament }) => {
       try {
-        setCurrentTournament(updatedTournament);
+        setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
         console.error(error.message);
       }
     });
 
     // WORKS:
-    socketInstance.on("processAllPlayers", ({updatedTournament}) => {
+    socketInstance.on("processAllPlayers", ({ updatedTournament }) => {
       try {
-        setCurrentTournament(updatedTournament);
+        setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
         console.error(error.message);
       }
     });
 
     // WORKS:
-    socketInstance.on("processQueueOneStep", ({updatedTournament}) => {
+    socketInstance.on("processQueueOneStep", ({ updatedTournament }) => {
       try {
-        setCurrentTournament(updatedTournament);
+        setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
         console.error(error.message);
       }
@@ -107,7 +112,7 @@ export const SocketProvider = ({children}: {children: ReactNode}) => {
     };
   }, []);
 
-  return <SocketContext.Provider value={{socket}}>{children}</SocketContext.Provider>;
+  return <SocketContext.Provider value={{ socket }}>{children}</SocketContext.Provider>;
 };
 
 export const useSocket = () => {

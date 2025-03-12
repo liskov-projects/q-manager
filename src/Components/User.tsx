@@ -1,12 +1,12 @@
 "use client";
 // hooks
-import {SignOutButton, useUser} from "@clerk/nextjs";
+import { SignOutButton, useUser } from "@clerk/nextjs";
 // components
 import Link from "next/link";
 import Image from "next/image";
 
 export default function User() {
-  const {isSignedIn, user} = useUser();
+  const { isSignedIn, user } = useUser();
   return (
     <div className="flex items-center">
       {isSignedIn ? (
@@ -25,7 +25,8 @@ export default function User() {
       ) : (
         <Link
           href="/login"
-          className="text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100">
+          className="text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100"
+        >
           Sign In
         </Link>
       )}

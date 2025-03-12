@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/db";
-import {TournamentModel} from "@/models/TournamentModel";
-import {NextRequest} from "next/server";
+import { TournamentModel } from "@/models/TournamentModel";
+import { NextRequest } from "next/server";
 import QueueModel from "@/models/QueueModel";
 
 export async function GET() {
@@ -8,7 +8,7 @@ export async function GET() {
   const tournaments = await TournamentModel.find({});
   // console.log(tournaments);
   return new Response(JSON.stringify(tournaments), {
-    headers: {"Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json" },
   });
 }
 // OLD: used to work
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   await dbConnect();
 
   const body = await req.json();
-  const {name, categories, adminUser, image, description, numberOfQueues} = body;
+  const { name, categories, adminUser, image, description, numberOfQueues } = body;
 
   // console.log("Recieved at backend: ", body);
   // console.log("numberOfQueues", numberOfQueues);
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     queues.push(
       new QueueModel({
         queueName: `queue ${i + 1}`,
-        queueItems: []
+        queueItems: [],
       })
     );
   }
@@ -37,12 +37,12 @@ export async function POST(req: NextRequest) {
     adminUser,
     image,
     description,
-    queues
+    queues,
   });
 
   await newTournament.save();
 
   return new Response(JSON.stringify(newTournament), {
-    headers: {"Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json" },
   });
 }

@@ -1,10 +1,10 @@
 import dbConnect from "@/lib/db";
-import {PlayerModel} from "@/models/PlayerModel";
-import {QueueModel} from "@/models/QueueModel";
-import {TournamentModel} from "@/models/TournamentModel";
-import {error} from "console";
+import { PlayerModel } from "@/models/PlayerModel";
+import { QueueModel } from "@/models/QueueModel";
+import { TournamentModel } from "@/models/TournamentModel";
+import { error } from "console";
 // import TournamentModel from "@/models/TournamentModel";
-import {NextRequest} from "next/server";
+import { NextRequest } from "next/server";
 
 // export async function GET() {
 //   await dbConnect();
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   // console.log("Recieved at backend: ", body);
   // handles incoming JSON
-  const {names, categories, phoneNumbers, tournamentId} = body;
+  const { names, categories, phoneNumbers, tournamentId } = body;
 
   // NEW:
   // const tournament = await TournamentModel.find({_id: new Object(tournamentId)});
@@ -42,26 +42,23 @@ export async function POST(req: NextRequest) {
     names,
     categories,
     phoneNumbers,
-    tournamentId
+    tournamentId,
   });
 
   const updatedTournament = await TournamentModel.findOneAndUpdate(
-    {_id: tournamentId},
-    {$push: {unProcessedQItems: newPlayer}},
-    {new: true}
+    { _id: tournamentId },
+    { $push: { unProcessedQItems: newPlayer } },
+    { new: true }
   );
 
   if (!updatedTournament) {
-    return new Response(JSON.stringify({error: "Tournament not found"}), {
-      status: 404
+    return new Response(JSON.stringify({ error: "Tournament not found" }), {
+      status: 404,
     });
   }
 
   // Step 4: Return success response
-  return new Response(
-    JSON.stringify({player: newPlayer, tournament: updatedTournament}),
-    {
-      headers: {"Content-Type": "application/json"}
-    }
-  );
+  return new Response(JSON.stringify({ player: newPlayer, tournament: updatedTournament }), {
+    headers: { "Content-Type": "application/json" },
+  });
 }

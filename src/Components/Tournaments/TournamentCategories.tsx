@@ -1,18 +1,18 @@
 // hooks
-import {useState, useEffect} from "react";
-import {usePathname} from "next/navigation";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // components
 import CategoryList from "./CategoryList";
 
 export default function TournamentCategories({
   categories = [],
-  tournamentId
+  tournamentId,
 }: {
   categories: string[];
   tournamentId: string | undefined;
 }) {
-  const {tournamentOwner} = useTournamentsAndQueuesContext();
+  const { tournamentOwner } = useTournamentsAndQueuesContext();
   const [editedCategories, setEditedCategories] = useState([...categories]);
 
   const pathname = usePathname();
@@ -30,9 +30,9 @@ export default function TournamentCategories({
       const res = await fetch(`api/tournaments/${tournamentId}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedCategories)
+        body: JSON.stringify(updatedCategories),
       });
 
       if (res.ok) {
@@ -46,10 +46,7 @@ export default function TournamentCategories({
 
   return (
     <div className="flex flex-col">
-      <CategoryList
-        editedCategories={editedCategories}
-        setEditedCategories={setEditedCategories}
-      />
+      <CategoryList editedCategories={editedCategories} setEditedCategories={setEditedCategories} />
     </div>
   );
 }

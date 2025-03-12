@@ -1,25 +1,24 @@
 "use client";
 // hooks
-import {useState} from "react";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import {useSocket} from "@/context/SocketContext";
+import { useState } from "react";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
+import { useSocket } from "@/context/SocketContext";
 // types
-import {TQueue} from "@/types/Types";
+import { TQueue } from "@/types/Types";
 
 export default function DropZone({
   index,
   queue,
   dropTarget,
-  height
+  height,
 }: {
   index?: number;
   queue?: TQueue;
   dropTarget?: TQueue | string;
   height: number;
 }) {
-  const {tournamentOwner, draggedItem, currentTournament} =
-    useTournamentsAndQueuesContext();
-  const {socket} = useSocket();
+  const { tournamentOwner, draggedItem, currentTournament } = useTournamentsAndQueuesContext();
+  const { socket } = useSocket();
 
   const [isDraggedOver, setIsDraggedOver] = useState(false);
 
@@ -34,7 +33,7 @@ export default function DropZone({
       className="drop-zone w-[95%] transition-all duration-200 bg-gray-200 my-2 rounded"
       style={{
         height: isDraggedOver ? `${height}px` : "20px",
-        minHeight: "20px"
+        minHeight: "20px",
       }}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
@@ -46,10 +45,10 @@ export default function DropZone({
           dropTarget,
           queue,
           index,
-          tournamentId: currentTournament?._id
+          tournamentId: currentTournament?._id,
         });
       }}
-      onDragOver={event => event.preventDefault()}
+      onDragOver={(event) => event.preventDefault()}
     />
   );
 }

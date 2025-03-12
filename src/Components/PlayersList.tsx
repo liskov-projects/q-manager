@@ -1,19 +1,19 @@
 "use client";
 // hooks
-import {useState, Fragment} from "react";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useState, Fragment } from "react";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import useDragNDrop from "@/hooks/useDragNDrop";
 // components
 import DropZone from "./DropZone";
 import SectionHeader from "./SectionHeader";
 import PlayerListItem from "./PlayerListItem";
 // types
-import {TPlayer} from "@/types/Types";
+import { TPlayer } from "@/types/Types";
 
 export default function PlayersList({
   title,
   players,
-  zone
+  zone,
 }: {
   title: string;
   players: TPlayer[];
@@ -22,9 +22,9 @@ export default function PlayersList({
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
 
-  const {currentTournament} = useTournamentsAndQueuesContext();
+  const { currentTournament } = useTournamentsAndQueuesContext();
   // NEW:
-  const {handleDrop} = useDragNDrop();
+  const { handleDrop } = useDragNDrop();
 
   return (
     // REVIEW: viewport height
@@ -37,13 +37,14 @@ export default function PlayersList({
           type="text"
           placeholder="search player..."
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
         {/* TODO: dropdown categories list | extract*/}
         <div className="flex justify-center">
           <select
             className="bg-brick-200 my-2 rounded text-shell-100 p-2"
-            onChange={e => setFilter(e.target.value)}>
+            onChange={(e) => setFilter(e.target.value)}
+          >
             <option value="show all">show all...</option>
             {currentTournament?.categories.map((category: string, index: number) => (
               <option key={index} value={category}>

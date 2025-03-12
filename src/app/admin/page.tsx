@@ -1,7 +1,7 @@
 "use client";
-import NewPlayerForm from "@/components/Forms/NewPlayerForm";
-import NewQueueForm from "@/components/Forms/NewQueueForm";
-import NewTournamentForm from "@/components/Forms/NewTournamentForm";
+import NewPlayerForm from "@/Components/Forms/NewPlayerForm";
+import NewQueueForm from "@/Components/Forms/NewQueueForm";
+import NewTournamentForm from "@/Components/Forms/NewTournamentForm";
 
 export default function AdminPage() {
   return (

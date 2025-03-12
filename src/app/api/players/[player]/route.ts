@@ -5,11 +5,10 @@ import dbConnect from "@/lib/db";
 import PlayerModel from "@/models/PlayerModel";
 import TournamentModel from "@/models/TournamentModel";
 //
-import {NextRequest} from "next/server";
-// import NewPlayerForm from "@/components/Forms/NewPlayerForm";
+import { NextRequest } from "next/server";
 
 export async function PUT(request: NextRequest) {
-  const {tournamentID, ...player} = await request.json();
+  const { tournamentID, ...player } = await request.json();
 
   // WORKS:
   // console.log("tournamentID: ", tournamentID);
@@ -21,10 +20,10 @@ export async function PUT(request: NextRequest) {
     // const playerObjectId = new mongoose.Types.ObjectId(player._id);
 
     const updatedPlayer = await PlayerModel.findOneAndUpdate(
-      {_id: player._id}, // Match by MongoDB ObjectId
-      {...player}, // Update
+      { _id: player._id }, // Match by MongoDB ObjectId
+      { ...player }, // Update
       // FIXME: does it work?
-      {new: true} // Return the updated document
+      { new: true } // Return the updated document
     );
 
     // console.log("playerObjectId", playerObjectId);
@@ -35,10 +34,10 @@ export async function PUT(request: NextRequest) {
     // Update the player inside the tournament's players array
     // TODO: make a function to search for a player in any list
     const updatedTournament = await TournamentModel.findOneAndUpdate(
-      {_id: tournamentID, "unProcessedQItems._id": updatedPlayer._id},
+      { _id: tournamentID, "unProcessedQItems._id": updatedPlayer._id },
 
-      {$set: {"unProcessedQItems.$": updatedPlayer}},
-      {new: true} // Return the updated tournament document
+      { $set: { "unProcessedQItems.$": updatedPlayer } },
+      { new: true } // Return the updated tournament document
     );
 
     // WORKS:
@@ -46,13 +45,13 @@ export async function PUT(request: NextRequest) {
 
     return new Response(JSON.stringify(updatedTournament), {
       status: 200,
-      headers: {"Content-Type": "application/json"}
+      headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Error updating player: ", error);
-    return new Response(JSON.stringify({error: "Failed to update player"}), {
+    return new Response(JSON.stringify({ error: "Failed to update player" }), {
       status: 500,
-      headers: {"Content-Type": "application/json"}
+      headers: { "Content-Type": "application/json" },
     });
   }
 }
@@ -63,26 +62,26 @@ export async function DELETE(request: NextRequest) {
   try {
     await dbConnect();
 
-    const deletedItem = await PlayerModel.findOneAndDelete({idToDelete});
+    const deletedItem = await PlayerModel.findOneAndDelete({ idToDelete });
 
     if (!deletedItem) {
-      return new Response(JSON.stringify({error: "Player not found"}), {
+      return new Response(JSON.stringify({ error: "Player not found" }), {
         status: 404,
-        headers: {"Content-Type": "application/json"}
+        headers: { "Content-Type": "application/json" },
       });
     }
 
-    return new Response(JSON.stringify({message: "Deleted successfully"}), {
+    return new Response(JSON.stringify({ message: "Deleted successfully" }), {
       status: 200,
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
   } catch (error) {
     console.error("Error deleting player:", error);
-    return new Response(JSON.stringify({error: "Failed to delete player"}), {
+    return new Response(JSON.stringify({ error: "Failed to delete player" }), {
       status: 500,
-      headers: {"Content-Type": "application/json"}
+      headers: { "Content-Type": "application/json" },
     });
   }
 }

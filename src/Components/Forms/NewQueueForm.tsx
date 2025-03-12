@@ -1,10 +1,10 @@
 "use client";
 // hooks
-import {useState} from "react";
-import {useUser} from "@clerk/nextjs";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // types
-import {TQueue} from "@/types/Types";
+import { TQueue } from "@/types/Types";
 // components
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
@@ -12,20 +12,20 @@ import SectionHeader from "../SectionHeader";
 // FIXME:
 // controlled input
 export default function NewQueueForm() {
-  const {isSignedIn} = useUser();
-  const {currentTournament, filteredTournaments} = useTournamentsAndQueuesContext();
+  const { isSignedIn } = useUser();
+  const { currentTournament, filteredTournaments } = useTournamentsAndQueuesContext();
 
   // const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newQueue, setNewQueue] = useState<TQueue>({
     queueName: "",
     queueItems: [],
-    tournamentId: ""
+    tournamentId: "",
   });
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
   ) {
-    setNewQueue({...newQueue, [e.target.name]: e.target.value});
+    setNewQueue({ ...newQueue, [e.target.name]: e.target.value });
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -35,7 +35,7 @@ export default function NewQueueForm() {
     const newItem = {
       queueName: newQueue.queueName,
       queueItems: newQueue.queueItems,
-      tournamentId: currentTournament?._id
+      tournamentId: currentTournament?._id,
     };
 
     console.log("Data sent to backend: ", newItem);
@@ -44,9 +44,9 @@ export default function NewQueueForm() {
       const res = await fetch("/api/tournament", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(newItem)
+        body: JSON.stringify(newItem),
       });
 
       // check response code
@@ -68,7 +68,7 @@ export default function NewQueueForm() {
     setNewQueue({
       queueName: "",
       queueItems: [],
-      tournamentId: ""
+      tournamentId: "",
     });
   }
 
@@ -90,7 +90,8 @@ export default function NewQueueForm() {
       {/* {isExpanded && ( */}
       <form
         className="flex flex-row items-center my-4 justify-around px-2 mx-2"
-        onSubmit={handleSubmit}>
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col">
           <label htmlFor="name">Name</label>
           <input
@@ -115,7 +116,8 @@ export default function NewQueueForm() {
             name="tournamentId"
             value={newQueue.tournamentId}
             onChange={handleChange}
-            className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200">
+            className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+          >
             <option value="">Select a tournament</option>
             {filteredTournaments?.map((tournament, idx) => (
               <option key={idx} value={tournament._id}>

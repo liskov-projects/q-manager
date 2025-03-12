@@ -1,18 +1,18 @@
 "use client";
 // hooks
-import {useState} from "react";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useState } from "react";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // components
-import PlayersList from "@/components/PlayersList";
-import QueuesContainer from "@/components/Queue/QueuesContainer";
-import ButtonGroup from "@/components/Buttons/ButtonGroup";
+import PlayersList from "@/Components/PlayersList";
+import QueuesContainer from "@/Components/Queue/QueuesContainer";
+import ButtonGroup from "@/Components/Buttons/ButtonGroup";
 // import NewQueueForm from "../Forms/NewQueueForm";
 import NewPlayerForm from "../Forms/NewPlayerForm";
 
-export default function TournamentQueuesPage({tournamentId}) {
+export default function TournamentQueuesPage({ tournamentId }) {
   const [visibleSection, setVisibleSection] = useState("queues");
 
-  const {currentTournament, tournamentOwner} = useTournamentsAndQueuesContext();
+  const { currentTournament, tournamentOwner } = useTournamentsAndQueuesContext();
 
   // console.log(currentTournament)
 
@@ -25,19 +25,13 @@ export default function TournamentQueuesPage({tournamentId}) {
     <>
       {/* Mobile toggle button group */}
       <div className="lg:hidden flex justify-around my-4">
-        <button
-          onClick={() => setVisibleSection("queues")}
-          className="p-2 bg-sky-200 rounded">
+        <button onClick={() => setVisibleSection("queues")} className="p-2 bg-sky-200 rounded">
           Queues
         </button>
-        <button
-          onClick={() => setVisibleSection("unprocessed")}
-          className="p-2 bg-sky-200 rounded">
+        <button onClick={() => setVisibleSection("unprocessed")} className="p-2 bg-sky-200 rounded">
           Unprocessed
         </button>
-        <button
-          onClick={() => setVisibleSection("processed")}
-          className="p-2 bg-sky-200 rounded">
+        <button onClick={() => setVisibleSection("processed")} className="p-2 bg-sky-200 rounded">
           Processed
         </button>
       </div>
@@ -47,7 +41,8 @@ export default function TournamentQueuesPage({tournamentId}) {
         <div
           className={`p-2 w-full lg:w-1/5 ${
             visibleSection === "unprocessed" ? "block" : "hidden lg:block"
-          }`}>
+          }`}
+        >
           <NewPlayerForm />
           <PlayersList
             title={"Unprocessed Players"}
@@ -57,17 +52,19 @@ export default function TournamentQueuesPage({tournamentId}) {
         </div>
 
         <div
-          className={`p-2 w-full lg:w-2/5 ${
+          className={`p-2 w-full lg:w-3/5 ${
             visibleSection === "queues" ? "block" : "hidden lg:block"
-          }`}>
+          }`}
+        >
           <QueuesContainer />
         </div>
 
         {/* Processed players section */}
         <div
-          className={`p-2 w-full lg:w-3/5 ${
+          className={`p-2 w-full lg:w-1/5 ${
             visibleSection === "processed" ? "block" : "hidden lg:block"
-          }`}>
+          }`}
+        >
           {/* <SectionHeader>Button Group</SectionHeader> */}
           <ButtonGroup tournamentId={tournamentId} />
           <PlayersList

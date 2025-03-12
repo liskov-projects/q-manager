@@ -1,10 +1,7 @@
-import AllTournamentsPage from "@/components/Pages/AllTournamentsPage";
+import AllTournamentsPage from "@/Components/Pages/AllTournamentsPage";
 // FIXME: dev purposes
 // import mockTournaments from "@/Data/tournaments";
 
 export default function AllTournaments() {
-
-  return (
-      <AllTournamentsPage />
-  );
+  return <AllTournamentsPage />;
 }

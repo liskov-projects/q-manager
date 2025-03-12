@@ -1,26 +1,26 @@
 "use client";
 // hooks
-import {useEffect, useState} from "react";
-import {useUser} from "@clerk/nextjs";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import {useSocket} from "@/context/SocketContext";
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
+import { useSocket } from "@/context/SocketContext";
 // types
-import {TPlayer} from "@/types/Types";
+import { TPlayer } from "@/types/Types";
 // components
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
 
 export default function NewPlayerForm() {
   // just check if logged in as the dropdown list is restricted to only the tournaments created by the logged in user
-  const {isSignedIn} = useUser();
-  const {currentTournament} = useTournamentsAndQueuesContext();
-  const {socket} = useSocket();
+  const { isSignedIn } = useUser();
+  const { currentTournament } = useTournamentsAndQueuesContext();
+  const { socket } = useSocket();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const [newPlayers, setNewPlayers] = useState<TPlayer>({
     names: "",
     categories: "",
-    phoneNumbers: ""
+    phoneNumbers: "",
   });
 
   // console.log("within the form ", currentTournament);
@@ -40,13 +40,13 @@ export default function NewPlayerForm() {
   }
 
   function removeCategory(categoryToRemove: string) {
-    setSelectedCategories(selectedCategories.filter(cat => cat !== categoryToRemove));
+    setSelectedCategories(selectedCategories.filter((cat) => cat !== categoryToRemove));
   }
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
   ) {
-    setNewPlayers({...newPlayers, [e.target.name]: e.target.value});
+    setNewPlayers({ ...newPlayers, [e.target.name]: e.target.value });
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -55,7 +55,7 @@ export default function NewPlayerForm() {
 
     const incomingPhoneNumbers =
       typeof newPlayers.phoneNumbers === "string"
-        ? newPlayers.phoneNumbers.split(",").map(number => number.trim())
+        ? newPlayers.phoneNumbers.split(",").map((number) => number.trim())
         : newPlayers.phoneNumbers;
 
     // data to send to backend
@@ -63,7 +63,7 @@ export default function NewPlayerForm() {
       tournamentId: currentTournament?._id,
       names: newPlayers.names,
       categories: selectedCategories,
-      phoneNumbers: incomingPhoneNumbers
+      phoneNumbers: incomingPhoneNumbers,
     };
 
     // console.log("Data sent to backend: ", newItem);
@@ -72,14 +72,14 @@ export default function NewPlayerForm() {
       // console.log("EMITTING SOCKET EVENT FOR ADD PLAYER");
       socket.emit("addPlayer", {
         playerData: newItem,
-        tournamentId: currentTournament?._id
+        tournamentId: currentTournament?._id,
       });
     }
 
     setNewPlayers({
       names: "",
       categories: "",
-      phoneNumbers: ""
+      phoneNumbers: "",
     });
 
     // console.log(newPlayers);
@@ -95,7 +95,8 @@ export default function NewPlayerForm() {
 
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center">
+          className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center"
+        >
           {`${isExpanded ? "hide " : "show"} the form`}
         </Button>
       </div>
@@ -103,7 +104,8 @@ export default function NewPlayerForm() {
       {isExpanded && (
         <form
           className="flex flex-row items-center my-10 justify-around px-4 mx-4"
-          onSubmit={handleSubmit}>
+          onSubmit={handleSubmit}
+        >
           <div className="flex flex-col">
             <label htmlFor="name">Name</label>
             <input
@@ -129,7 +131,8 @@ export default function NewPlayerForm() {
               name="categories"
               value={newPlayers.categories}
               onChange={handleCategoryChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200">
+              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+            >
               <option value="">Select categories</option>
               {currentTournament?.categories.map((category, idx) => (
                 <option key={idx} value={category}>
@@ -138,14 +141,16 @@ export default function NewPlayerForm() {
               ))}
             </select>
             <div className="mt-2 flex flex-wrap gap-2">
-              {selectedCategories.map(category => (
+              {selectedCategories.map((category) => (
                 <span
                   key={category}
-                  className=" my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium">
+                  className=" my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
+                >
                   {category}
                   <button
                     onClick={() => removeCategory(category)}
-                    className="ml-2 text-sm text-white-500">
+                    className="ml-2 text-sm text-white-500"
+                  >
                     ✕
                   </button>
                 </span>

@@ -1,0 +1,5 @@
+{
+  "watch": ["src/websocket-server"],
+  "ext": "js,json",
+  "exec": "node src/websocket-server/websocket-server.js"
+}

@@ -1,10 +1,10 @@
-import {useState} from "react";
+import { useState } from "react";
 import CategoryPill from "./CategoryPill";
 import Button from "../Buttons/Button";
 
 export default function CategoryList({
   editedCategories,
-  setEditedCategories
+  setEditedCategories,
   // editMode,
   // setEditMode
 }) {

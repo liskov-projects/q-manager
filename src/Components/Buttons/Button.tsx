@@ -1,10 +1,10 @@
-import {ReactNode} from "react";
+import { ReactNode } from "react";
 
 export default function Button({
   children,
   className,
   onClick,
-  disabled
+  disabled,
 }: {
   children: ReactNode;
   className: string;

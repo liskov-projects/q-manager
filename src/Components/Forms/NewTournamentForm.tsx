@@ -1,9 +1,9 @@
 // hooks
-import {useState, useEffect} from "react";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
-import {useUser} from "@clerk/nextjs";
+import { useState, useEffect } from "react";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
+import { useUser } from "@clerk/nextjs";
 // types
-import {TTournament} from "@/types/Types";
+import { TTournament } from "@/types/Types";
 // components
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
@@ -21,12 +21,12 @@ export default function NewTournamentForm() {
     adminUser: "",
     image: "",
     description: "",
-    numberOfQueues: ""
+    numberOfQueues: "",
   });
 
   // any signed in user can create a new tournamnet
-  const {isSignedIn, user} = useUser();
-  const {fetchTournaments, uniqueCategories} = useTournamentsAndQueuesContext();
+  const { isSignedIn, user } = useUser();
+  const { fetchTournaments, uniqueCategories } = useTournamentsAndQueuesContext();
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -44,20 +44,15 @@ export default function NewTournamentForm() {
   }
 
   function removeCategory(categoryToRemove: string) {
-    setSelectedCategories(selectedCategories.filter(cat => cat !== categoryToRemove));
+    setSelectedCategories(selectedCategories.filter((cat) => cat !== categoryToRemove));
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const {name, value, type, files} = e.target;
+    const { name, value, type, files } = e.target;
 
     setNewTournament({
       ...newTournament,
-      [name]:
-        type === "file" && files
-          ? files[0]
-          : type === "number"
-          ? Number(value)
-          : value
+      [name]: type === "file" && files ? files[0] : type === "number" ? Number(value) : value,
     });
   }
 
@@ -72,7 +67,7 @@ export default function NewTournamentForm() {
       adminUser: user?.id,
       image: newTournament.image,
       description: newTournament.description,
-      numberOfQueues: newTournament.numberOfQueues
+      numberOfQueues: newTournament.numberOfQueues,
     };
 
     // console.log("Data sent to backend: ", newItem);
@@ -81,9 +76,9 @@ export default function NewTournamentForm() {
       const res = await fetch("/api/tournament", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(newItem)
+        body: JSON.stringify(newItem),
       });
 
       if (res.ok) {
@@ -108,7 +103,7 @@ export default function NewTournamentForm() {
       adminUser: "",
       image: "",
       description: "",
-      numberOfQueues: ""
+      numberOfQueues: "",
     });
     // console.log(newTournament);
   }
@@ -121,15 +116,14 @@ export default function NewTournamentForm() {
 
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center">
+          className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center"
+        >
           {`${isExpanded ? "hide " : "show"} the form`}
         </Button>
       </div>
 
       {isExpanded && (
-        <form
-          className="flex flex-row items-center my-10 justify-around"
-          onSubmit={handleSubmit}>
+        <form className="flex flex-row items-center my-10 justify-around" onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label htmlFor="name">Tournament Name</label>
             <input
@@ -146,7 +140,8 @@ export default function NewTournamentForm() {
               name="categories"
               value=""
               onChange={handleCategoryChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200">
+              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+            >
               <option value="">Select categories (doubles, teens)</option>
               {uniqueCategories.map((category, idx) => (
                 <option key={idx} value={category}>
@@ -155,14 +150,16 @@ export default function NewTournamentForm() {
               ))}
             </select>
             <div className="mt-2 flex flex-wrap gap-2">
-              {selectedCategories.map(category => (
+              {selectedCategories.map((category) => (
                 <span
                   key={category}
-                  className=" my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium">
+                  className=" my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
+                >
                   {category}
                   <button
                     onClick={() => removeCategory(category)}
-                    className="ml-2 text-sm text-white-500">
+                    className="ml-2 text-sm text-white-500"
+                  >
                     ✕
                   </button>
                 </span>

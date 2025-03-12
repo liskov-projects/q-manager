@@ -1,25 +1,25 @@
 "use client";
 //hooks
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // types
-import {TQueue} from "@/types/Types";
+import { TQueue } from "@/types/Types";
 
 export default function QueuesGridAlternate() {
-  const {currentTournament} = useTournamentsAndQueuesContext();
+  const { currentTournament } = useTournamentsAndQueuesContext();
 
   // Function to get background color based on queue length
   const getBackgroundColor = (queueLength: number) => {
     return queueLength >= 4
       ? "bg-sky-400" // Friendly sky-blue for 4+ items
       : queueLength === 3
-      ? "bg-yellow-300" // Slightly urgent color for 3 items
-      : queueLength === 2
-      ? "bg-orange-400" // More alarming color for 2 items
-      : queueLength === 1
-      ? "bg-red-400" // Most urgent color for 1 item
-      : queueLength === 0
-      ? "bg-red-500"
-      : "bg-green-200"; // Neutral color for empty queue
+        ? "bg-yellow-300" // Slightly urgent color for 3 items
+        : queueLength === 2
+          ? "bg-orange-400" // More alarming color for 2 items
+          : queueLength === 1
+            ? "bg-red-400" // Most urgent color for 1 item
+            : queueLength === 0
+              ? "bg-red-500"
+              : "bg-green-200"; // Neutral color for empty queue
   };
 
   return (
@@ -29,7 +29,8 @@ export default function QueuesGridAlternate() {
           key={queue._id}
           className={`flex flex-col items-center justify-center h-24 w-24 border-8 border-black ${getBackgroundColor(
             queue.queueItems.length
-          )}`}>
+          )}`}
+        >
           <h3 className="text-center text-lg font-bold">{queue.queueName}</h3>
           <span className="text-xl font-bold">{queue.queueItems.length}</span>
         </div>

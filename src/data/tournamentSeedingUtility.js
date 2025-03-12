@@ -1,4 +1,4 @@
-import {MongoClient, ObjectId} from "mongodb"; // Import ObjectId
+import { MongoClient, ObjectId } from "mongodb"; // Import ObjectId
 import tournamentsData from "./tournamentsData.js";
 import dotenv from "dotenv";
 
@@ -18,12 +18,12 @@ async function seedTournaments() {
     const tournamentCollection = db.collection("tournaments");
 
     // Ensure each queue gets an ObjectId before insertion
-    const modifiedTournamentsData = tournamentsData.map(tournament => ({
+    const modifiedTournamentsData = tournamentsData.map((tournament) => ({
       ...tournament,
-      queues: tournament.queues.map(queue => ({
+      queues: tournament.queues.map((queue) => ({
         ...queue,
-        _id: new ObjectId() // Assign MongoDB ObjectId to each queue
-      }))
+        _id: new ObjectId(), // Assign MongoDB ObjectId to each queue
+      })),
     }));
 
     // Insert tournaments and capture inserted documents

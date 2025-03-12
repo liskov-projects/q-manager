@@ -1,7 +1,7 @@
-import {TournamentModel} from "@/models/TournamentModel";
+import { TournamentModel } from "@/models/TournamentModel";
 import dbConnect from "@/lib/db";
-import {QueueModel} from "@/models/QueueModel";
-import {NextRequest} from "next/server";
+import { QueueModel } from "@/models/QueueModel";
+import { NextRequest } from "next/server";
 
 export async function GET() {
   await dbConnect();
@@ -9,21 +9,21 @@ export async function GET() {
     {
       $group: {
         _id: "$tournamentId",
-        queues: {$push: "$$ROOT"}
-      }
+        queues: { $push: "$$ROOT" },
+      },
     },
     {
       $lookup: {
         from: "tournaments",
         localField: "_id",
-        as: "tournamentDetails"
-      }
-    }
+        as: "tournamentDetails",
+      },
+    },
   ]);
   console.log("QUEUES");
   console.log(queues);
   return new Response(JSON.stringify(queues), {
-    headers: {"Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json" },
   });
 }
 
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   // console.log("Recieved at backend: ", body);
   // handles incoming JSON
-  const {queueName, queueItems} = body;
+  const { queueName, queueItems } = body;
 
   // NEW:
   // const tournament = await TournamentModel.find({_id: new Object(tournamentId)});
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
   // creates a new entry using the incoming data
   const newQueue = new QueueModel({
     queueName,
-    queueItems
+    queueItems,
   });
 
   // saves to db
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
 
   // Response - NextJS constructor that sends data to from server to client
   return new Response(JSON.stringify(newQueue), {
-    headers: {"Content-Type": "application/json"}
+    headers: { "Content-Type": "application/json" },
   });
 }
 

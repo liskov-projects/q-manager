@@ -1,12 +1,12 @@
 "use client";
 //contexts
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // types
-import {TPlayer} from "@/types/Types";
-import {TQueue} from "@/types/Types";
+import { TPlayer } from "@/types/Types";
+import { TQueue } from "@/types/Types";
 
 const useDragNDrop = () => {
-  const {setCurrentTournament, draggedItem, setDraggedItem, currentTournamentRef} =
+  const { setCurrentTournament, draggedItem, setDraggedItem, currentTournamentRef } =
     useTournamentsAndQueuesContext();
 
   const handleDragStart = (draggedItem: TPlayer) => {
@@ -37,7 +37,7 @@ const useDragNDrop = () => {
     // makes a copy of the queues & ensures there're no references to MongoDB properties (pure JS object) with
     const newQueues = currentTournamentRef?.current?.queues.map((queue: TQueue) => ({
       ...queue, //here
-      queueItems: queue.queueItems.filter(item => item._id !== draggedItem._id)
+      queueItems: queue.queueItems.filter((item) => item._id !== draggedItem._id),
     }));
 
     // adds items to the correesponding group
@@ -46,24 +46,22 @@ const useDragNDrop = () => {
     } else if (dropTarget === "processed") {
       newProcessedItems?.splice(index + 1, 0, draggedItem);
     } else {
-      const queueToSplice = newQueues?.find(
-        (queue: TQueue) => queue._id === dropTarget
-      );
+      const queueToSplice = newQueues?.find((queue: TQueue) => queue._id === dropTarget);
 
       if (queueToSplice) {
         queueToSplice.queueItems = [
           ...queueToSplice.queueItems.slice(0, index + 1),
           draggedItem,
-          ...queueToSplice.queueItems.slice(index + 1)
+          ...queueToSplice.queueItems.slice(index + 1),
         ];
       }
     }
 
-    setCurrentTournament(prev => ({
+    setCurrentTournament((prev) => ({
       ...prev,
       unProcessedQItems: newUnprocessedItems,
       processedQItems: newProcessedItems,
-      queues: newQueues
+      queues: newQueues,
     }));
   };
 
@@ -238,7 +236,7 @@ const useDragNDrop = () => {
     handleDragStart,
     handleDragOver,
     handleDrop,
-    draggedItem
+    draggedItem,
   };
 };
 export default useDragNDrop;

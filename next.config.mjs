@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone", // ✅ Makes the app self-contained for Cloud Run
+  env: {
+    NEXT_PUBLIC_WEBSOCKET_URL: process.env.NEXT_PUBLIC_WEBSOCKET_URL || "",
+  },
   typescript: {
-    ignoreBuildErrors: true
+    ignoreBuildErrors: true,
   },
   images: {
     remotePatterns: [
@@ -9,10 +13,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "img.clerk.com",
         port: "",
-        search: ""
-      }
-    ]
-  }
+        search: "",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

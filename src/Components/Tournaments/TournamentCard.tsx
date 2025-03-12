@@ -1,19 +1,17 @@
 // types
-import {TTournament} from "@/types/Types";
+import { TTournament } from "@/types/Types";
 // components
 import Image from "next/image";
 import Link from "next/link";
 import SectionHeader from "../SectionHeader";
 import TournamentCategories from "./TournamentCategories";
 
-export default function TournamentCard({tournament}: {tournament: TTournament}) {
-  const {name, _id, description, categories} = tournament;
+export default function TournamentCard({ tournament }: { tournament: TTournament }) {
+  const { name, _id, description, categories } = tournament;
 
   return (
     <div className="w-full min-h-[450px] flex flex-col items-center border border-gray-300 shadow-md rounded-lg p-4 bg-shell-75 transition-all duration-300 hover:shadow-lg hover:-translate-y-2">
-      <Link
-        href={`/all-tournaments/${_id}`}
-        className="flex flex-col items-center w-full h-full">
+      <Link href={`/all-tournaments/${_id}`} className="flex flex-col items-center w-full h-full">
         <SectionHeader>{name}</SectionHeader>
 
         {/* Image Container */}

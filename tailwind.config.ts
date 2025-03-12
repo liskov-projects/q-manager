@@ -1,16 +1,16 @@
-import type {Config} from "tailwindcss";
+import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   content: [
     // "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}"
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       boxShadow: {
-        "left-bottom-lg": "-4px 4px 10px rgba(0, 0, 0, 0.5)"
+        "left-bottom-lg": "-4px 4px 10px rgba(0, 0, 0, 0.5)",
       },
       colors: {
         background: "var(--background)",
@@ -21,41 +21,41 @@ const config: Config = {
           100: "#76B5C5",
           200: "#197A98",
           300: "#266176",
-          400: "#1D4B5B"
+          400: "#1D4B5B",
         },
         brick: {
           50: "#F39678",
           100: "#E28743",
           200: "#F45B26",
-          300: "#F1260A"
+          300: "#F1260A",
         },
         shell: {
           50: "#EEEEE4",
           75: "#e7e0ca",
           100: "#D7DADE",
           200: "#747A82",
-          300: "#505458"
+          300: "#505458",
         },
         tennis: {
           50: "#EEFC72",
           100: "#E5F644",
-          200: "#D0E323"
+          200: "#D0E323",
         },
         licorice: {
-          50: "#21130D"
-        }
-      }
-    }
+          50: "#21130D",
+        },
+      },
+    },
   },
   plugins: [
-    plugin(function ({addComponents}) {
+    plugin(function ({ addComponents }) {
       addComponents({
         ".text-heading": {
           fontWeight: "700",
-          color: "rgb(25, 122, 152)"
-        }
+          color: "rgb(25, 122, 152)",
+        },
       });
-    })
-  ]
+    }),
+  ],
 };
 export default config;

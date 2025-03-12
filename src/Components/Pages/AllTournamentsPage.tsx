@@ -1,21 +1,21 @@
 "use client";
 // hooks
-import {useState} from "react";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useState } from "react";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // components
-import SectionHeader from "@/components/SectionHeader";
-import Button from "@/components/Buttons/Button";
-import TournamentCard from "@/components/Tournaments/TournamentCard";
-import NewTournamentForm from "@/components/Forms/NewTournamentForm";
+import SectionHeader from "@/Components/SectionHeader";
+import Button from "@/Components/Buttons/Button";
+import TournamentCard from "@/Components/Tournaments/TournamentCard";
+import NewTournamentForm from "@/Components/Forms/NewTournamentForm";
 
 // FIXME: dev purposes
 // import mockTournaments from "@/Data/tournaments";
 
 export default function AllTournamentsPage() {
-  const {tournaments, fetchTournaments} = useTournamentsAndQueuesContext();
+  const { tournaments, fetchTournaments } = useTournamentsAndQueuesContext();
   const [search, setSearch] = useState("");
 
-  const tournamentsToShow = tournaments.filter(tournament => {
+  const tournamentsToShow = tournaments.filter((tournament) => {
     return (
       search.length === 0 ||
       tournament.name.toLowerCase().includes(search) ||
@@ -32,7 +32,8 @@ export default function AllTournamentsPage() {
           <SectionHeader>Tournaments</SectionHeader>
           <Button
             onClick={() => fetchTournaments()}
-            className="self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100">
+            className="self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100"
+          >
             Refresh
           </Button>
         </div>
@@ -50,7 +51,7 @@ export default function AllTournamentsPage() {
           type="text"
           placeholder="player, tournament..."
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
         <NewTournamentForm />
       </div>

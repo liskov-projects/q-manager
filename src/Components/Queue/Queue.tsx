@@ -1,11 +1,11 @@
 // hooks
-import {useState} from "react";
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useState } from "react";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
-import {useSocket} from "@/context/SocketContext";
+import { useSocket } from "@/context/SocketContext";
 
 // types
-import {TQueue} from "@/types/Types";
+import { TQueue } from "@/types/Types";
 // components
 import DropZone from "../DropZone";
 import Button from "../Buttons/Button";
@@ -14,21 +14,20 @@ import QueuePositionLabel from "./QueuePositionLabel";
 import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "./QueueListItem";
 
-export default function Queue({queue, index}: {queue: TQueue; index: number}) {
-  const {handleProgressOneStep} = useAddToQueues();
-  const {tournamentOwner, currentTournament} = useTournamentsAndQueuesContext();
-  const {socket} = useSocket();
+export default function Queue({ queue, index }: { queue: TQueue; index: number }) {
+  const { handleProgressOneStep } = useAddToQueues();
+  const { tournamentOwner, currentTournament } = useTournamentsAndQueuesContext();
+  const { socket } = useSocket();
 
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
     <div
       className="rounded-lg shadow-left-bottom-lg p-2 flex flex-col border-3 border-grey-300"
-      onDragOver={event => event.preventDefault()}>
+      onDragOver={(event) => event.preventDefault()}
+    >
       <div className="flex flex-row justify-around">
-        <h3 className="text-xl font-semibold text-bluestone-200 mb-4">
-          Queue {queue.queueName}
-        </h3>
+        <h3 className="text-xl font-semibold text-bluestone-200 mb-4">Queue {queue.queueName}</h3>
       </div>
       {!tournamentOwner ? null : (
         <>
@@ -44,20 +43,18 @@ export default function Queue({queue, index}: {queue: TQueue; index: number}) {
                 socket.emit("processQueueOneStep", {
                   message: "emitting processQueueOneStep",
                   queueIndex: index,
-                  tournamentId: currentTournament?._id
+                  tournamentId: currentTournament?._id,
                 });
               }
               // optimistic UI
               // handleProgressOneStep(index);
             }}
-            disabled={queue.queueItems.length === 0}>
+            disabled={queue.queueItems.length === 0}
+          >
             PROGRESS QUEUE ⬆️
           </Button>
           <QueueStatus queue={queue} />
-          <ButtonExpand
-            isExpanded={isExpanded}
-            onClick={() => setIsExpanded(!isExpanded)}
-          />
+          <ButtonExpand isExpanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)} />
         </>
       )}
 

@@ -1,23 +1,18 @@
 "use client";
 // hooks
-import {useTournamentsAndQueuesContext} from "@/context/TournamentsAndQueuesContext";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import useAddToQueues from "@/hooks/useAddToQueues";
-import {useSocket} from "@/context/SocketContext";
+import { useSocket } from "@/context/SocketContext";
 // components
 import Button from "./Button";
 import SectionHeader from "../SectionHeader";
 
-export default function ButtonGroup({tournamentId}) {
-  const {currentTournament, tournamentOwner, saveTournament} =
-    useTournamentsAndQueuesContext();
-  const {socket} = useSocket();
+export default function ButtonGroup({ tournamentId }) {
+  const { currentTournament, tournamentOwner, saveTournament } = useTournamentsAndQueuesContext();
+  const { socket } = useSocket();
 
-  const {
-    handleAddAllToQueues,
-    handleRedistributeQueues,
-    handleProcessAll,
-    handleUnprocessAll
-  } = useAddToQueues();
+  const { handleAddAllToQueues, handleRedistributeQueues, handleProcessAll, handleUnprocessAll } =
+    useAddToQueues();
 
   // hides the components from guests
   if (!tournamentOwner) return null;
@@ -32,19 +27,21 @@ export default function ButtonGroup({tournamentId}) {
             onClick={() => {
               if (socket) {
                 socket.emit("addAllPlayersToQueues", {
-                  tournament: currentTournament
+                  tournament: currentTournament,
                 });
               }
               // optimistic UI
               // handleAddAllToQueues(currentTournament);
-            }}>
+            }}
+          >
             Add all
           </Button>
           <Button
             className="bg-brick-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
             onClick={() => {
               handleRedistributeQueues();
-            }}>
+            }}
+          >
             Redestribute
           </Button>
         </div>
@@ -55,12 +52,13 @@ export default function ButtonGroup({tournamentId}) {
               if (socket) {
                 console.log("emitting uprocessAllPlayers from the button");
                 socket.emit("uprocessAllPlayers", {
-                  tournament: currentTournament
+                  tournament: currentTournament,
                 });
               }
               // optimistic UI
               // handleUnprocessAll(currentTournament);
-            }}>
+            }}
+          >
             Unprocess all
           </Button>
           <Button
@@ -69,18 +67,20 @@ export default function ButtonGroup({tournamentId}) {
               if (socket) {
                 console.log("emitting PROCESSAllPlayers from the button");
                 socket.emit("processAllPlayers", {
-                  tournament: currentTournament
+                  tournament: currentTournament,
                 });
               }
               // optimistic UI
               // handleProcessAll(currentTournament);
-            }}>
+            }}
+          >
             Process all
           </Button>
         </div>
         <Button
           onClick={() => saveTournament(tournamentId)}
-          className="flex-grow bg-tennis-200 hover:bg-tennis-100 text-shell-300 hover:text-shell-200 py-2 h-[45px] px-4 rounded my-2 mx-2">
+          className="flex-grow bg-tennis-200 hover:bg-tennis-100 text-shell-300 hover:text-shell-200 py-2 h-[45px] px-4 rounded my-2 mx-2"
+        >
           SAVE tournament
         </Button>
       </div>

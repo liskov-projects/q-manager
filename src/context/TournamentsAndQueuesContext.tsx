@@ -7,31 +7,29 @@ import React, {
   useEffect,
   useRef,
   useMemo,
-  ReactNode
+  ReactNode,
 } from "react";
-import {useParams} from "next/navigation";
-import {useUser} from "@clerk/nextjs";
+import { useParams } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 // Types
-import {TPlayer, TTournament, TTournamentsAndQueuesContextProps} from "@/types/Types";
+import { TPlayer, TTournament, TTournamentsAndQueuesContextProps } from "@/types/Types";
 
-const TournamentsAndQueuesContext = createContext<
-  TTournamentsAndQueuesContextProps | undefined
->(undefined);
+const TournamentsAndQueuesContext = createContext<TTournamentsAndQueuesContextProps | undefined>(
+  undefined
+);
 
-export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) => {
+export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode }) => {
   const [draggedItem, setDraggedItem] = useState<TPlayer | null>(null);
 
   // Tournaments State
   const [tournaments, setTournaments] = useState<TTournament[]>([]);
-  const [currentTournament, setCurrentTournament] = useState<TTournament | null>(
-    null
-  );
+  const [currentTournament, setCurrentTournament] = useState<TTournament | null>(null);
   const currentTournamentRef = useRef<TTournament | null>(null);
 
   const params = useParams();
 
-  const {isSignedIn, user} = useUser();
+  const { isSignedIn, user } = useUser();
   // console.log(user, "user");
   // console.log("in the context", currentTournament);
   const tournamentOwner = isSignedIn && user.id === currentTournament?.adminUser;
@@ -87,23 +85,21 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     // console.log("currentTournamentREF.current:", currentTournamentRef.current);
 
     if (currentTournamentRef.current) {
-      setCurrentTournament(prevTournament => {
+      setCurrentTournament((prevTournament) => {
         // console.log("PREV TOURNAMENT")
         // console.log(prevTournament)
         if (!prevTournament) return prevTournament; // Ensure prevTournament exists
         // console.log("SETTING THE TOURNAMENT");
         return {
           ...prevTournament, // Create a new tournament object
-          unProcessedQItems: [...prevTournament.unProcessedQItems, playerData] // Create a new array
+          unProcessedQItems: [...prevTournament.unProcessedQItems, playerData], // Create a new array
         };
       });
     }
   };
 
   // Filtered Tournaments
-  const filteredTournaments = tournaments.filter(
-    tournament => tournament.adminUser === user?.id
-  );
+  const filteredTournaments = tournaments.filter((tournament) => tournament.adminUser === user?.id);
 
   // to get the newest players after one is added
   const fetchNewPlayers = async (tournamentId: string) => {
@@ -117,9 +113,9 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
       console.log("Fetched Players: ", playersForTournament);
 
-      setCurrentTournament(prevTournament =>
+      setCurrentTournament((prevTournament) =>
         prevTournament
-          ? {...prevTournament, unprocessedPlayers: playersForTournament}
+          ? { ...prevTournament, unprocessedPlayers: playersForTournament }
           : prevTournament
       );
     } catch (error) {
@@ -132,25 +128,25 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
     const newQueue = {
       queueName: (currentTournament.queues.length + 1).toString(),
       queueItems: [],
-      id: currentTournament.queues.length.toString()
+      id: currentTournament.queues.length.toString(),
     };
 
-    setCurrentTournament(prevTournament => {
+    setCurrentTournament((prevTournament) => {
       if (!prevTournament) return prevTournament;
       return {
         ...prevTournament,
-        queues: [...prevTournament?.queues, newQueue]
+        queues: [...prevTournament?.queues, newQueue],
       };
     });
   };
 
   //WORKS: Removes Queues
   const removeQueues = () => {
-    setCurrentTournament(prevTournament => {
+    setCurrentTournament((prevTournament) => {
       if (!prevTournament) return prevTournament;
       return {
         ...prevTournament,
-        queues: prevTournament.queues.slice(0, -1)
+        queues: prevTournament.queues.slice(0, -1),
       };
     });
   };
@@ -164,14 +160,14 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
 
   //WORKS: Derived Categories from Players for one tournament
   const uniqueCategories = useMemo(() => {
-    const categories = tournaments.flatMap(tournament => tournament.categories || []);
+    const categories = tournaments.flatMap((tournament) => tournament.categories || []);
     return Array.from(new Set(categories));
   }, [tournaments]);
 
   // console.log("in the context ", uniqueCategories);
 
   // "FIXME:"
-  const saveTournament = async tournamentId => {
+  const saveTournament = async (tournamentId) => {
     // comes through OK
     // console.log(tournamentId);
     console.log("BEFORE TRY: ", currentTournament);
@@ -180,9 +176,9 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
       const res = await fetch(`/api/tournaments/${tournamentId}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(currentTournament)
+        body: JSON.stringify(currentTournament),
       });
 
       if (!res.ok) {
@@ -214,20 +210,20 @@ export const TournamentsAndQueuesProvider = ({children}: {children: ReactNode}) 
         fetchTournaments,
         saveTournament,
         fetchNewPlayers,
-        addPlayerToTournament
-      }}>
+        addPlayerToTournament,
+      }}
+    >
       {children}
     </TournamentsAndQueuesContext.Provider>
   );
 };
 
-export const useTournamentsAndQueuesContext =
-  (): TTournamentsAndQueuesContextProps => {
-    const context = useContext(TournamentsAndQueuesContext);
-    if (!context) {
-      throw new Error(
-        "useTournamentsAndQueuesContext must be used within a TournamentsAndQueuesProvider"
-      );
-    }
-    return context;
-  };
+export const useTournamentsAndQueuesContext = (): TTournamentsAndQueuesContextProps => {
+  const context = useContext(TournamentsAndQueuesContext);
+  if (!context) {
+    throw new Error(
+      "useTournamentsAndQueuesContext must be used within a TournamentsAndQueuesProvider"
+    );
+  }
+  return context;
+};
