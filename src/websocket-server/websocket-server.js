@@ -11,16 +11,19 @@ import http from "http";
 import mongoose from "mongoose";
 import cors from "cors";
 
+import dbConnect from "../lib/db.js";
+import { TournamentModel } from "../models/TournamentModel.js";
+
 // Load .env file
 dotenv.config();
 
 // ✅ Use dynamic import for TournamentModel
-const modelsPath = path.join(__dirname, "../models");
-const TournamentModel = (await import(`${modelsPath}/TournamentModel.js`)).default;
+// const modelsPath = path.join(__dirname, '../models');
+// const TournamentModel = (await import(`${modelsPath}/TournamentModel.js`)).default;
 
 // ✅ Use dynamic path for dbConnect
-const dbPath = path.join(__dirname, "../lib/db.js");
-const dbConnect = (await import(`${dbPath}`)).default;
+// const dbPath = path.join(__dirname, '../lib/db.js');
+// const dbConnect = (await import(`${dbPath}`)).default;
 
 dotenv.config();
 
