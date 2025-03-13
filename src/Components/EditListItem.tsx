@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { usePathname } from "next/navigation";
+import { useSocket } from "@/context/SocketContext";
 // types
 import { TPlayer } from "@/types/Types";
 // components
@@ -15,7 +16,8 @@ export default function EditListItem({
   setEditMode: () => void;
 }) {
   console.log("inside the edit card ", item);
-  const { setCurrentTournament } = useTournamentsAndQueuesContext();
+  const { currentTournament } = useTournamentsAndQueuesContext();
+  const { socket } = useSocket();
   const [updatedData, setUpdatedData] = useState({
     names: item.names,
     categories: item.categories,
@@ -42,30 +44,15 @@ export default function EditListItem({
       phoneNumbers: updatedData.phoneNumbers.split(",").map((num) => num.trim()),
     };
 
-    try {
-      const res = await fetch(`/api/players/${item._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedCard),
+    if (socket) {
+      socket.emit("editPlayer", {
+        tournamentId: currentTournament?._id,
+        playerData: updatedCard,
       });
-
-      if (res.ok) {
-        const updatedTournament = await res.json();
-        // console.log("getting updated player correctly:", updatedTournament);
-
-        // setPlayers(prev => [...prev, data]);
-        setCurrentTournament(updatedTournament);
-        // console.log(currentTournamentPlayers);
-
-        setEditMode(false);
-      }
-    } catch (error) {
-      console.error("Failed to update player:", error);
     }
-  };
 
+    setEditMode(false);
+  };
   return (
     <div className="flex flex-col ">
       <form

@@ -1,7 +1,7 @@
 "use client";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
-import TournamentQueuesPage from "@/components/Pages/TournamentQueuesPage";
-import TournamentCategories from "@/components/Tournaments/TournamentCategories";
+import TournamentQueuesPage from "@/Components/Pages/TournamentQueuesPage";
+import TournamentCategories from "@/Components/Tournaments/TournamentCategories";
 
 export default function TournamentPage({ params }: { params: { id: string[] } }) {
   const { tournamentOwner, currentTournament } = useTournamentsAndQueuesContext();

@@ -15,9 +15,8 @@ interface SocketContextType {
 const SocketContext = createContext<SocketContextType | null>(null);
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-  const { addPlayerToTournament, setCurrentTournament } = useTournamentsAndQueuesContext();
+  const { setCurrentTournament } = useTournamentsAndQueuesContext();
   const { handleDrop } = useDragNDrop();
-  const { handleAddToShortestQueue } = useAddToQueues();
 
   // ✅ Create stable refs to avoid dependency issues
   const setCurrentTournamentRef = useRef(setCurrentTournament);
@@ -49,6 +48,22 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
+    socketInstance.on("deletePlayer", ({ updatedTournament }) => {
+      try {
+        setCurrentTournamentRef.current(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+
+    socketInstance.on("editPlayer", ({ updatedTournament }) => {
+      try {
+        setCurrentTournamentRef.current(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+    //
     socketInstance.on("playerDropped", ({ draggedItem, index, dropTarget }) => {
       try {
         handleDropRef.current(draggedItem, index, dropTarget);
@@ -76,7 +91,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
-    // WORKS:
     socketInstance.on("uprocessAllPlayers", ({ updatedTournament }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
@@ -85,7 +99,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
-    // WORKS:
     socketInstance.on("processAllPlayers", ({ updatedTournament }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
@@ -94,7 +107,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
-    // WORKS:
     socketInstance.on("processQueueOneStep", ({ updatedTournament }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
@@ -103,11 +115,36 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
+    socketInstance.on("addQueue", ({ updatedTournament }) => {
+      try {
+        setCurrentTournamentRef.current(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+
+    socketInstance.on("deleteQueue", ({ updatedTournament }) => {
+      try {
+        setCurrentTournamentRef.current(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+
     return () => {
-      console.log("Cleaning up SocketContext listeners");
+      console.log("🔌 Cleaning up WebSocket listeners...");
+      socketInstance.off("connect");
       socketInstance.off("playerAdded");
-      socketInstance.off("playerDropped");
+      socketInstance.off("deletePlayer");
+      socketInstance.off("editPlayer");
       socketInstance.off("addPlayerToShortestQ");
+      socketInstance.off("addAllPlayersToQueues");
+      socketInstance.off("uprocessAllPlayers");
+      socketInstance.off("processAllPlayers");
+      socketInstance.off("processQueueOneStep");
+      socketInstance.off("addQueue");
+      socketInstance.off("deleteQueue");
+      socketInstance.off("playerDropped");
       socketInstance.disconnect();
     };
   }, []);

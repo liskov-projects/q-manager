@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 import dbConnect from "@/lib/db";
 // models
-import PlayerModel from "@/models/PlayerModel";
-import TournamentModel from "@/models/TournamentModel";
+import { PlayerModel } from "@/models/PlayerModel";
+import { TournamentModel } from "@/models/TournamentModel";
 //
 import { NextRequest } from "next/server";
 
