@@ -57,7 +57,7 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const idToDelete = request.body._id;
+  const idToDelete = request?.body?._id;
 
   try {
     await dbConnect();

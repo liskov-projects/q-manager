@@ -4,7 +4,6 @@ import { createContext, useContext, useEffect, ReactNode, useState, useRef } fro
 import { io, Socket } from "socket.io-client";
 import { useTournamentsAndQueuesContext } from "./TournamentsAndQueuesContext";
 import useDragNDrop from "@/hooks/useDragNDrop";
-import useAddToQueues from "@/hooks/useAddToQueues";
 
 const SOCKET_URL: string = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000/";
 

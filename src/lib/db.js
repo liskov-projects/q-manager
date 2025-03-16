@@ -1,11 +1,19 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-// dotenv.config();
-dotenv.config({ path: "../../.env" });
+// Only load dotenv in non-production environments
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
 
-const MONGO_URI = process.env.MONGO_URI;
-if (!MONGO_URI) throw new Error("Define MONGO_URI");
+const MONGO_URI = process.env.MONGO_URI || process.env.NEXT_PUBLIC_MONGO_URI;
+const MONG = process.env["MONGO_URI"];
+const SOMETHING_ELSE = process.env.NODE_ENV;
+const HHH = process.env.NEXT_RUNTIME;
+
+if (!MONGO_URI) {
+  throw new Error(`Define this damn MONGO_URI WTF = ${MONGO_URI}`);
+}
 
 // will allow to reuse the established connection
 let cached = global.mongoose;
