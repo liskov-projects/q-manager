@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "src/websocket-server/**"
-      - ".github/workflows/deploy-websocket-server.yml"
+      - 'src/websocket-server/**'
+      - '.github/workflows/deploy-websocket-server.yml'
 
 jobs:
   deploy:
@@ -29,11 +29,11 @@ jobs:
         with:
           project_id: "q-manager-453001"
 
-      # ✅ Step 4: Build and Push Docker Image
+      # ✅ Step 4: Build and Push Docker Image to GCR
       - name: Build and Push Docker Image
         run: |
           IMAGE_NAME="gcr.io/q-manager-453001/websocket-server:${{ github.sha }}"
-          docker build --platform=linux/amd64 -t $IMAGE_NAME -f ./Dockerfile .
+          docker build --platform=linux/amd64 -t $IMAGE_NAME -f src/websocket-server/Dockerfile .
           docker push $IMAGE_NAME
 
       # ✅ Step 5: Terraform Init
