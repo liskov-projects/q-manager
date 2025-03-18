@@ -3,7 +3,7 @@ import { TournamentModel } from "@/models/TournamentModel";
 import { NextRequest } from "next/server";
 import QueueModel from "@/models/QueueModel";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   await dbConnect();
   const tournaments = await TournamentModel.find({});
   // console.log(tournaments);
