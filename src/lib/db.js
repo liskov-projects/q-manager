@@ -1,18 +1,29 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// Only load dotenv in non-production environments
-if (process.env.NODE_ENV !== "production") {
-  dotenv.config();
-}
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const MONGO_URI = process.env.MONGO_URI || process.env.NEXT_PUBLIC_MONGO_URI;
-const MONG = process.env["MONGO_URI"];
-const SOMETHING_ELSE = process.env.NODE_ENV;
-const HHH = process.env.NEXT_RUNTIME;
+const envPath =
+  process.env.NODE_ENV === "production"
+    ? path.resolve(__dirname, "../../.env.production")
+    : path.resolve(__dirname, "../../.env.local");
+
+dotenv.config({ path: envPath });
+
+// console.log("Loaded ENV from:", envPath);
+// console.log("PORT =", process.env.PORT);
+// console.log("MONGO_URI =", process.env.MONGO_URI);
+
+const MONGO_URI = process.env.MONGO_URI;
+
+// console.log("PROCESS.ENV");
+// console.log(process.env);
 
 if (!MONGO_URI) {
-  throw new Error(`Define this damn MONGO_URI WTF = ${MONGO_URI}`);
+  throw new Error(`Define MONGO_URI = ${MONGO_URI}`);
 }
 
 // will allow to reuse the established connection

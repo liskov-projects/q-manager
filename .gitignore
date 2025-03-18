@@ -1,6 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+
+# Ignore node_modules in all subfolders
+**/node_modules/
 /node_modules
 /.pnp
 .pnp.js
@@ -35,3 +38,28 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Terraform state files
+*.tfstate
+*.tfstate.backup
+
+# Crash logs
+crash.log
+
+# Ignore Terraform working directory
+.terraform/
+.terraform.lock.hcl
+
+# Ignore Terraform plan files
+*.tfplan
+
+# Ignore sensitive variable files
+*.tfvars
+*.tfvars.json
+
+# Ignore log files
+*.log
+
+# Ignore generated files
+*.out
+

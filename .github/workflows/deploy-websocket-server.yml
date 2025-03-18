@@ -1,0 +1,50 @@
+name: Deploy WebSocket Server to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/websocket-server/**"
+      - ".github/workflows/deploy-websocket-server.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ✅ Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ✅ Step 2: Authenticate with Google Cloud
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCLOUD_SERVICE_KEY }}
+
+      # ✅ Step 3: Set up Google Cloud SDK
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: "q-manager-453001"
+
+      # ✅ Step 4: Build and Push Docker Image
+      - name: Build and Push Docker Image
+        run: |
+          IMAGE_NAME="gcr.io/q-manager-453001/websocket-server:${{ github.sha }}"
+          docker build --platform=linux/amd64 -t $IMAGE_NAME -f ./Dockerfile .
+          docker push $IMAGE_NAME
+
+      # ✅ Step 5: Terraform Init
+      - name: Terraform Init
+        working-directory: terraform/websocket-server
+        run: terraform init
+
+      # ✅ Step 6: Terraform Apply
+      - name: Terraform Apply
+        working-directory: terraform/websocket-server
+        run: |
+          terraform apply -var="image_tag=gcr.io/q-manager-453001/websocket-server:${{ github.sha }}" \
+                          -var="mongo_uri=${{ secrets.MONGO_URI }}" \
+                          -auto-approve

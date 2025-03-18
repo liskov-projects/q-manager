@@ -1,10 +1,3 @@
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-import dotenv from "dotenv";
 import express from "express";
 import { Server } from "socket.io";
 import http from "http";
@@ -14,7 +7,22 @@ import cors from "cors";
 import dbConnect from "../lib/db.js";
 import { TournamentModel } from "../models/TournamentModel.js";
 
-dotenv.config();
+import path from "path";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ✅ Look for .env.local in the root directory
+const envPath =
+  process.env.NODE_ENV === "production"
+    ? path.resolve(__dirname, "../../.env.production") // Go two levels up for root
+    : path.resolve(__dirname, "../../.env.local");
+
+dotenv.config({ path: envPath });
+
+const PORT = process.env.PORT;
 
 const app = express();
 const server = http.createServer(app);
@@ -470,5 +478,4 @@ io.on("connection", async (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 4000;
 server.listen(PORT, "0.0.0.0", () => console.log(`WebSocket server running on port ${PORT}`));
