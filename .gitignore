@@ -29,6 +29,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+# Ignore all .env files recursively
+**/.env
+**/.env.*
 .env*.local
 .env
 
