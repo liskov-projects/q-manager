@@ -162,3 +162,11 @@ Tournament Collection
 ## npm run seed:players
 
     Populates the db with players. Players are added into the players collection & to the corresponding tournament - use 2d
+
+# Tests
+
+    the test command is NODE_OPTIONS="--experimental-vm-modules" npx jest under the hood
+
+    it is so as Jest runs in ComonJS env, but we use ES modules with import/export
+
+    --experimental-vm-modules flag tells Node.js to enable native ESM support inside Jest, which is still not fully supported by default
