@@ -13,17 +13,17 @@ const envPath =
 
 dotenv.config({ path: envPath });
 
-console.log("Loaded ENV from:", envPath);
-console.log("PORT =", process.env.NEXT_PUBLIC_PORT);
-console.log("MONGO_URI =", process.env.NEXT_PUBLIC_MONGO_URI);
+// console.log("Loaded ENV from:", envPath);
+// console.log("PORT =", process.env.NEXT_PUBLIC_PORT);
+// console.log("NEXT_PUBLIC_MONGO_URI =", process.env.NEXT_PUBLIC_MONGO_URI);
 
 const MONGO_URI = process.env.NEXT_PUBLIC_MONGO_URI;
 
 console.log("PROCESS.ENV");
 console.log(process.env);
 
-if (!NEXT_PUBLIC_MONGO_URI) {
-  throw new Error(`Define MONGO_URI = ${NEXT_PUBLIC_MONGO_URI}`);
+if (!MONGO_URI) {
+  throw new Error(`Define NEXT_PUBLIC_MONGO_URI = ${MONGO_URI}`);
 }
 
 // will allow to reuse the established connection

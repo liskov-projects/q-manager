@@ -22,12 +22,12 @@ const envPath =
 
 dotenv.config({ path: envPath });
 
-const PORT = process.env.PORT;
+const PORT = process.env.NEXT_PUBLIC_PORT;
 
 const app = express();
 const server = http.createServer(app);
 
-console.log(`Starting WebSocket server on PORT=${process.env.PORT}`);
+console.log(`Starting WebSocket server on PORT=${process.env.NEXT_PUBLIC_PORT}`);
 
 app.use(
   cors({
