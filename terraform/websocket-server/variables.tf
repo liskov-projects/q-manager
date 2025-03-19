@@ -1,19 +1,25 @@
 variable "project_id" {
-  default = "q-manager-453001"
+  description = "GCP project ID"
+  type        = string
 }
 
 variable "region" {
-  default = "australia-southeast2"
+  description = "GCP region"
+  type        = string
 }
 
 variable "image_tag" {
-  description = "Docker image tag for the WebSocket server"
+  description = "Docker image tag"
+  type        = string
 }
 
 variable "mongo_uri" {
-  description = "MongoDB connection URI"
+  description = "MongoDB connection string"
+  type        = string
 }
 
-variable "environment" {
-  default = "production"
+variable "port" {
+  description = "Port the WebSocket server will listen on"
+  type        = number
+  default     = 4000
 }
