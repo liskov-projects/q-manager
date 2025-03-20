@@ -2,9 +2,12 @@ import { MongoClient } from "mongodb";
 // import playerSeeds from "./playerSeeds.js";
 import playersData from "./playersData.js";
 import dotenv from "dotenv";
-dotenv.config();
+import path from "path";
 
-const MONGO_URI = process.env.MONGO_URI;
+// Load from the project root
+dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
+
+const MONGO_URI = process.env.NEXT_PUBLIC_MONGO_URI;
 
 const seedPlayers = async () => {
   console.log("Starting the player seeding process...");

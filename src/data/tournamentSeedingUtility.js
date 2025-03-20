@@ -1,10 +1,12 @@
 import { MongoClient, ObjectId } from "mongodb"; // Import ObjectId
 import tournamentsData from "./tournamentsData.js";
 import dotenv from "dotenv";
+import path from "path";
 
-dotenv.config();
+// Load from the project root
+dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URI = process.env.NEXT_PUBLIC_MONGO_URI;
 
 async function seedTournaments() {
   console.log("TOURNAMENTS RAN");

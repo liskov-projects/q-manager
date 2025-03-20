@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+
+const port = process.env.PORT || 3000;
+console.log(`✅ Next.js running on port ${port}`);
+
 const nextConfig = {
   output: "standalone", // ✅ Makes the app self-contained for Cloud Run
   env: {

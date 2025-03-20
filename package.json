@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "TAILWIND_CONFIG=tailwind.config.ts next build",
-    "start": "next start",
+    "start": "node .next/standalone/server.js",
     "lint": "next lint --fix",
     "format": "prettier --write .",
     "seed:players": "node src/data/playerSeedingUtility.js",
