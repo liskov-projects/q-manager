@@ -22,7 +22,7 @@ const envPath =
 
 dotenv.config({ path: envPath });
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.NEXT_PUBLIC_PORT || 4000;
 
 const app = express();
 const server = http.createServer(app);

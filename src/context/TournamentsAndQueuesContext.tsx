@@ -39,7 +39,7 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
   }, [currentTournament]);
 
   useEffect(() => {
-    // console.log("RUNNING HERE IN USEEFFECT");
+    console.log("RUNNING HERE IN CONTEXT ALL TOURNAMENTS??");
     // fetchPlayers();
     fetchTournaments();
   }, []);
@@ -155,6 +155,7 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
   const fetchTournaments = async () => {
     const response = await fetch(`/api/tournament/`);
     const tournamentsData = await response.json();
+    console.log("response: ", tournamentsData);
     setTournaments(tournamentsData);
   };
 
