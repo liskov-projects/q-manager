@@ -1,11 +1,25 @@
 import { MongoClient, ObjectId } from "mongodb"; // Import ObjectId
 import tournamentsData from "./tournamentsData.js";
 import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+import path from "path";
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const MONGO_URI = process.env.MONGO_URI;
+// ✅ Look for .env.local in the root directory
+const envPath =
+  process.env.NODE_ENV === "production"
+    ? path.resolve(__dirname, "../../.env.production") // Go two levels up for root
+    : path.resolve(__dirname, "../../.env.local");
 
+dotenv.config({ path: envPath });
+
+const MONGO_URI = process.env.NEXT_PUBLIC_MONGO_URI;
+
+if (!process.env.MONGO_URI) {
+  throw new Error("MONGO_URI is undefined in TournamentSeeding! Check your .env file.");
+}
 async function seedTournaments() {
   console.log("TOURNAMENTS RAN");
 
