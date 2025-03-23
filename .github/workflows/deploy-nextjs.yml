@@ -34,12 +34,23 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # ✅ Create Buildx Builder (NEW STEP)
+      - name: Create Buildx Builder
+        run: |
+          docker buildx create --use
+          docker buildx inspect --bootstrap
+
+      # ✅ Debug Buildx Context (Optional)
+      - name: Debug Buildx Context
+        run: |
+          docker buildx ls
+
       - name: Build and Push Docker Image
         run: |
           IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
           docker buildx build --platform=linux/amd64 \
-            --build-arg NEXT_PUBLIC_MONGO_URI=${{ secrets.MONGO_URI }} \
-            -t $IMAGE_NAME -f Dockerfile . --push
+            --build-arg NEXT_PUBLIC_MONGO_URI="${{ secrets.MONGO_URI }}" \
+            -t "$IMAGE_NAME" -f Dockerfile . --push
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
