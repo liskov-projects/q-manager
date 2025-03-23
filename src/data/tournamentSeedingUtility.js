@@ -8,7 +8,7 @@ dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
 const MONGO_URI = process.env.NEXT_PUBLIC_MONGO_URI;
 
-if (!process.env.MONGO_URI) {
+if (!MONGO_URI) {
   throw new Error("MONGO_URI is undefined in TournamentSeeding! Check your .env file.");
 }
 

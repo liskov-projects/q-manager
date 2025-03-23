@@ -1,26 +1,28 @@
 # Stage 1: Build
-FROM node:20 as builder
-
+FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Install dependencies
 COPY package.json package-lock.json ./
-RUN npm install --frozen-lockfile
+RUN npm install --production
 
-# Copy source code and build
+# Copy source code and build locally
 COPY . .
 RUN npm run build
 
-# Stage 2: Production
-FROM node:20 as runner
+# Stage 2: Run
+FROM node:20-alpine AS runner
 WORKDIR /app
 
-# Copy standalone output from builder
-COPY --from=builder /app/.next/standalone ./
+# ✅ Copy pre-built app (no build needed at runtime)
+COPY --from=builder /app/.next/standalone ./ 
 COPY --from=builder /app/public ./public
 
-# Expose the port for Cloud Run
-EXPOSE 3000
+# ✅ Pass NODE_ENV to production
+ENV NODE_ENV="production"
 
-# Start the app using the wrapper
+# ✅ Expose port and start
+EXPOSE 8080
+
 CMD ["node", "server.js"]
+
