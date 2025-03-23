@@ -2,12 +2,13 @@ import { renderHook, act } from "@testing-library/react";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { oneItemForTests, oneTournamentForTests } from "@/data/dataForTests.js";
+import { TTournament } from "@/types/Types.js";
 
 jest.mock("@/context/TournamentsAndQueuesContext"); //to avoid the real implementation
 
 describe("testing useDragNDrop", () => {
   let setCurrentTournament: jest.Mock;
-  let currentTournamentRef: { current: any };
+  let currentTournamentRef: { current: TTournament };
 
   beforeEach(() => {
     setCurrentTournament = jest.fn(); //replaces the real setter

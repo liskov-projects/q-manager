@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "src/nextjs-app/**"
+      - "/**"
       - "terraform/nextjs/**"
       - ".github/workflows/deploy-nextjs.yml"
       - "!src/websocket-server/**"
