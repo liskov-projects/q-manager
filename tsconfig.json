@@ -40,7 +40,7 @@
     "src/models/QueueModel.js",
     "src/models/PlayerModel.js",
     "src/websocket-server/websocket-server.js",
-    "src/data/dataForTests.js"
+    "src/data/dataForTests.ts"
   ],
   "exclude": ["node_modules"]
 }

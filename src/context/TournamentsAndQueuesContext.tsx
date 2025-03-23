@@ -79,13 +79,13 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
   };
 
   // WORKS: socket-related
-  const addPlayerToTournament = (playerData, tournamentId) => {
+  const addPlayerToTournament = (playerData: TPlayer, tournamentId: string): void => {
     // console.log("addPlayerToTournament RAN");
     // console.log("CURRENT TOURNAMENT IN ADDPLAYERFROMSOCKET", currentTournament);
     // console.log("currentTournamentREF.current:", currentTournamentRef.current);
 
     if (currentTournamentRef.current) {
-      setCurrentTournament((prevTournament) => {
+      setCurrentTournament((prevTournament: TTournament | null) => {
         // console.log("PREV TOURNAMENT")
         // console.log(prevTournament)
         if (!prevTournament) return prevTournament; // Ensure prevTournament exists
@@ -113,7 +113,7 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
 
       console.log("Fetched Players: ", playersForTournament);
 
-      setCurrentTournament((prevTournament) =>
+      setCurrentTournament((prevTournament: TTournament | null) =>
         prevTournament
           ? { ...prevTournament, unprocessedPlayers: playersForTournament }
           : prevTournament
@@ -126,12 +126,12 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
   //WORKS: Adds Queues
   const addMoreQueues = () => {
     const newQueue = {
-      queueName: (currentTournament.queues.length + 1).toString(),
+      queueName: (currentTournament?.queues.length + 1).toString(),
       queueItems: [],
-      id: currentTournament.queues.length.toString(),
+      id: currentTournament?.queues.length.toString(),
     };
 
-    setCurrentTournament((prevTournament) => {
+    setCurrentTournament((prevTournament: TTournament | null) => {
       if (!prevTournament) return prevTournament;
       return {
         ...prevTournament,
@@ -142,7 +142,7 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
 
   //WORKS: Removes Queues
   const removeQueues = () => {
-    setCurrentTournament((prevTournament) => {
+    setCurrentTournament((prevTournament: TTournament | null) => {
       if (!prevTournament) return prevTournament;
       return {
         ...prevTournament,
@@ -168,7 +168,7 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
   // console.log("in the context ", uniqueCategories);
 
   // "FIXME:"
-  const saveTournament = async (tournamentId) => {
+  const saveTournament = async (tournamentId: string) => {
     // comes through OK
     // console.log(tournamentId);
     console.log("BEFORE TRY: ", currentTournament);

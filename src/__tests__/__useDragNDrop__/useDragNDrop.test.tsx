@@ -21,13 +21,15 @@ describe("testing useDragNDrop", () => {
   });
 
   //
-  test("removes dragged item from all lists", () => {
+  test("removes dragged item from all lists", async () => {
     const { result } = renderHook(() => useDragNDrop()); // initialises the hook
 
     act(() => {
       result.current.handleDrop(oneItemForTests, 0, "processed");
     }); //simulates the method, dropping the item into "processed"
 
+    // waits for the state to change
+    await new Promise(setImmediate);
     // check that the tournament has been set with the appropriate update
     expect(setCurrentTournament).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -36,14 +38,16 @@ describe("testing useDragNDrop", () => {
       })
     );
   });
+
   //
-  test("adds dragged item to correect queue", () => {
+  test("adds dragged item to correect queue", async () => {
     const { result } = renderHook(() => useDragNDrop());
 
     act(() => {
       result.current.handleDrop(oneItemForTests, 0, "q1");
     });
 
+    await new Promise(setImmediate);
     expect(setCurrentTournament).toHaveBeenCalledWith(
       expect.objectContaining({
         queues: expect.arrayContaining([

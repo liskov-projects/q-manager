@@ -1,9 +1,10 @@
+import mongoose from "mongoose";
 // Player Type
 export type TPlayer = {
   _id?: string; // Optional ID from MongoDB
-  names?: string; // Changed `names` to `name` for clarity
+  names?: string;
   categories?: string | string[]; // A single category or multiple
-  phoneNumbers?: string; // Singular for consistency
+  phoneNumbers?: string[];
   tournamentId: string; // The ID of the associated tournament
 };
 
