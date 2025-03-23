@@ -6,6 +6,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install --production
 
+# ✅ Log to confirm env value is being passed
+RUN echo "NEXT_PUBLIC_MONGO_URI: $NEXT_PUBLIC_MONGO_URI"
+
 # Copy source code and build locally
 COPY . .
 RUN npm run build
