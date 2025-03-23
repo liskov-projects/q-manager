@@ -5,9 +5,12 @@ on:
     branches:
       - main
     paths:
-      - "/**"
-      - "terraform/nextjs/**"
-      - ".github/workflows/deploy-nextjs.yml"
+      - "/**"                      # ✅ Catch all changes
+      - "Dockerfile"               # ✅ Ensure Dockerfile triggers it
+      - "terraform/nextjs/**"      # ✅ Next.js-specific Terraform
+      - ".github/workflows/deploy-nextjs.yml"  # ✅ Workflow changes
+
+      # 🚫 Exclude WebSocket files and config
       - "!src/websocket-server/**"
       - "!terraform/websocket-server/**"
       - "!.github/workflows/deploy-websocket-server.yml"
