@@ -33,7 +33,6 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-websocket-server/websocket-server:${{ github.sha }}"
-          # ✅ Authenticate Docker to Artifact Registry
           gcloud auth configure-docker australia-southeast2-docker.pkg.dev
           docker build --platform=linux/amd64 -t $IMAGE_NAME -f src/websocket-server/Dockerfile .
           docker push $IMAGE_NAME
