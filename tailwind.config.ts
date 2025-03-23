@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
 import path from "path";
 
-console.log('🧵 Tailwind scanning:', path.resolve(__dirname));
+console.log("🧵 Tailwind scanning:", path.resolve(__dirname));
 
 const config: Config = {
   content: [

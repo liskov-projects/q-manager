@@ -8,10 +8,9 @@ on:
       - "src/nextjs-app/**"
       - "terraform/nextjs/**"
       - ".github/workflows/deploy-nextjs.yml"
-    paths-ignore:
-      - "src/websocket-server/**"
-      - "terraform/websocket-server/**"
-      - ".github/workflows/deploy-websocket-server.yml"
+      - "!src/websocket-server/**"
+      - "!terraform/websocket-server/**"
+      - "!.github/workflows/deploy-websocket-server.yml"
 
 jobs:
   deploy:
