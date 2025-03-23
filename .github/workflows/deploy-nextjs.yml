@@ -5,10 +5,10 @@ on:
     branches:
       - main
     paths:
-      - "/**"                      # ✅ Catch all changes
-      - "Dockerfile"               # ✅ Ensure Dockerfile triggers it
-      - "terraform/nextjs/**"      # ✅ Next.js-specific Terraform
-      - ".github/workflows/deploy-nextjs.yml"  # ✅ Workflow changes
+      - "/**" # ✅ Catch all changes
+      - "Dockerfile" # ✅ Ensure Dockerfile triggers it
+      - "terraform/nextjs/**" # ✅ Next.js-specific Terraform
+      - ".github/workflows/deploy-nextjs.yml" # ✅ Workflow changes
 
       # 🚫 Exclude WebSocket files and config
       - "!src/websocket-server/**"
@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug Build Args
+        run: |
+          echo "NEXT_PUBLIC_MONGO_URI=${{ secrets.MONGO_URI }}"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
