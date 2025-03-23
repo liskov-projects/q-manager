@@ -49,8 +49,8 @@ jobs:
       - name: Terraform Apply
         working-directory: terraform/nextjs-app
         run: |
-                terraform apply -var="image_tag=australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}" \
-                                -var="project_id=q-manager-453001" \
-                                -var="region=australia-southeast2" \
-                                -var="mongo_uri=${{ secrets.MONGO_URI }}" \
-                                -auto-approve
+          terraform apply -var="image_tag=australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}" \
+                          -var="project_id=q-manager-453001" \
+                          -var="region=australia-southeast2" \
+                          -var="mongo_uri=${{ secrets.MONGO_URI }}" \
+                          -auto-approve
