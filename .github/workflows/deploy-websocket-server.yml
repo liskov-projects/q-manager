@@ -38,6 +38,11 @@ jobs:
           docker build --platform=linux/amd64 -t $IMAGE_NAME -f src/websocket-server/Dockerfile .
           docker push $IMAGE_NAME
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.6
+
       # ✅ Step 5: Terraform Init
       - name: Terraform Init
         working-directory: terraform/websocket-server
