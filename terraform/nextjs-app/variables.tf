@@ -19,5 +19,6 @@ variable "env" {
 }
 
 variable "mongo_uri" {
-  type = string
+  description = "MongoDB connection string"
+  type        = string
 }
