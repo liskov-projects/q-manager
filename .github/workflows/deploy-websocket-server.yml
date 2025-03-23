@@ -32,7 +32,7 @@ jobs:
       # ✅ Step 4: Build and Push Docker Image to GCR
       - name: Build and Push Docker Image
         run: |
-          IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/websocket-server/websocket-server:${{ github.sha }}"
+          IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-websocket-server/websocket-server:${{ github.sha }}"
           # ✅ Authenticate Docker to Artifact Registry
           gcloud auth configure-docker australia-southeast2-docker.pkg.dev
           docker build --platform=linux/amd64 -t $IMAGE_NAME -f src/websocket-server/Dockerfile .
@@ -47,6 +47,6 @@ jobs:
       - name: Terraform Apply
         working-directory: terraform/websocket-server
         run: |
-          terraform apply -var="image_tag=gcr.io/q-manager-453001/websocket-server:${{ github.sha }}" \
+          terraform apply -var="image_tag=australia-southeast2-docker.pkg.dev/q-manager-453001/websocket-server:${{ github.sha }}" \
                           -var="mongo_uri=${{ secrets.MONGO_URI }}" \
                           -auto-approve
