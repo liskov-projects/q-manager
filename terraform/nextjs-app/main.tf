@@ -31,6 +31,11 @@ resource "google_cloud_run_service" "nextjs_app" {
           value = "https://websocket-server-269155740970.australia-southeast2.run.app"
         }
 
+        env {
+          name  = "NEXT_PUBLIC_MONGO_URI"
+          value = var.mongo_uri
+        }
+
         # ✅ Startup probe – waits for the container to start
         startup_probe {
             http_get {

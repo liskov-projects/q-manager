@@ -17,3 +17,7 @@ variable "env" {
   type        = string
   description = "Deployment environment (prod, staging)"
 }
+
+variable "mongo_uri" {
+  type = string
+}
