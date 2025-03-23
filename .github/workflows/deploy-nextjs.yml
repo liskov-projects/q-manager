@@ -22,6 +22,7 @@ jobs:
     steps:
       - name: Debug Build Args
         run: |
+          echo "BUILD ARGS FROM SECRETS"
           echo "NEXT_PUBLIC_MONGO_URI=${{ secrets.MONGO_URI }}"
 
       - name: Checkout code
