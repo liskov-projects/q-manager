@@ -4,6 +4,7 @@ import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesCo
 // types
 import { TPlayer } from "@/types/Types";
 import { TQueue } from "@/types/Types";
+import { TTournament } from "@/types/Types.js";
 
 const useDragNDrop = () => {
   const { setCurrentTournament, draggedItem, setDraggedItem, currentTournamentRef } =
@@ -57,12 +58,23 @@ const useDragNDrop = () => {
       }
     }
 
-    setCurrentTournament((prev) => ({
-      ...prev,
-      unProcessedQItems: newUnprocessedItems,
-      processedQItems: newProcessedItems,
-      queues: newQueues,
-    }));
+    setCurrentTournament((prev: TTournament | null) => {
+      if (!prev) return prev; // return null if prev is null
+
+      // a reason to hate TS - already spreading on line 66 and putting it here again "in case" TS "thinks" something
+      return {
+        ...prev,
+        unProcessedQItems: newUnprocessedItems ?? prev.unProcessedQItems, // ensure fallback to prev values
+        processedQItems: newProcessedItems ?? prev.processedQItems, // same here for processed items
+        queues: newQueues ?? prev.queues, // fallback to existing queues if newQueues is undefined
+        name: prev.name ?? "Unnamed Tournament",
+        adminUser: prev.adminUser ?? "",
+        _id: prev._id, // Ensure other properties are not lost
+        image: prev.image ?? "",
+        description: prev.description ?? "",
+        categories: prev.categories ?? [],
+      };
+    });
   };
 
   // OLD: and used to work BEFORE WebSocket
