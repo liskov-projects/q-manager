@@ -37,7 +37,7 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
-          docker build --platform=linux/amd64 -t $IMAGE_NAME -f src/nextjs-app/Dockerfile .
+          docker build --platform=linux/amd64 -t $IMAGE_NAME -f Dockerfile .
           docker push $IMAGE_NAME
 
       # ✅ Step 5: Terraform Init
