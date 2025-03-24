@@ -33,6 +33,8 @@ WORKDIR /app
 # ✅ Copy pre-built app (no build needed at runtime)
 COPY --from=builder /app/.next/standalone ./ 
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/static ./.next/static 
+
 
 # ✅ Pass NODE_ENV to production
 ENV NODE_ENV="production"
