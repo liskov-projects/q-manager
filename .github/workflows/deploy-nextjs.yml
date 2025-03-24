@@ -91,5 +91,6 @@ jobs:
                           -var="region=australia-southeast2" \
                           -var="mongo_uri=${{ secrets.MONGO_URI }}" \
                           -var="clerk_publishable_key=${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
+                          -var="env=${{ env.ENVIRONMENT }}" \
                           -lock-timeout=90s \
                           -auto-approve
