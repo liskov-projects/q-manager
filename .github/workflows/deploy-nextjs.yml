@@ -25,6 +25,11 @@ jobs:
           echo "BUILD ARGS FROM SECRETS"
           echo "NEXT_PUBLIC_MONGO_URI=${{ secrets.MONGO_URI }}"
 
+      - name: Debug Clerk Build Args
+        run: |
+          echo "BUILD ARGS FROM SECRETS"
+          echo "CLERK_PUBLISHABLE_KEY=${{ secrets.CLERK_PUBLISHABLE_KEY }}_DEBUG"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -58,6 +63,7 @@ jobs:
           IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
           docker buildx build --platform=linux/amd64 \
             --build-arg NEXT_PUBLIC_MONGO_URI="${{ secrets.MONGO_URI }}" \
+            --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
             -t "$IMAGE_NAME" -f Dockerfile . --push
 
       - name: Setup Terraform
