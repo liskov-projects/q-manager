@@ -28,7 +28,7 @@ jobs:
       - name: Debug Clerk Build Args
         run: |
           echo "BUILD ARGS FROM SECRETS"
-          echo "CLERK_PUBLISHABLE_KEY=${{ secrets.CLERK_PUBLISHABLE_KEY }}_DEBUG"
+          echo "CLERK_PUBLISHABLE_KEY=${{ secrets.CLERK_PUBLISHABLE_KEY }}"
 
       - name: Checkout code
         uses: actions/checkout@v4
