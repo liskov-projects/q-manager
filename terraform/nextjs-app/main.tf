@@ -36,6 +36,11 @@ resource "google_cloud_run_service" "nextjs_app" {
           value = var.mongo_uri
         }
 
+        env {
+          name  = "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY"
+          value = var.clerk_publishable_key
+        }
+
         # ✅ Startup probe – waits for the container to start
         startup_probe {
             http_get {

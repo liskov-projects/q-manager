@@ -31,6 +31,8 @@ COPY --from=builder /app/public ./public
 
 # ✅ Pass NODE_ENV to production
 ENV NODE_ENV="production"
+ENV NEXT_PUBLIC_MONGO_URI=$NEXT_PUBLIC_MONGO_URI
+ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
 # ✅ Expose port and start
 EXPOSE 8080

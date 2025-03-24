@@ -22,3 +22,8 @@ variable "mongo_uri" {
   description = "MongoDB connection string"
   type        = string
 }
+
+variable "clerk_publishable_key" {
+  description = "Clerk publishable key"
+  type        = string
+}
