@@ -27,3 +27,8 @@ variable "clerk_publishable_key" {
   description = "Clerk publishable key"
   type        = string
 }
+
+variable "clerk_secret_key" {
+  description = "Clerk secret key"
+  type        = string
+}
