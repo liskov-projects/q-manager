@@ -13,6 +13,9 @@ on:
       - "!terraform/websocket-server/**"
       - "!.github/workflows/deploy-websocket-server.yml"
 
+env:
+  ENVIRONMENT: 'qa'
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
