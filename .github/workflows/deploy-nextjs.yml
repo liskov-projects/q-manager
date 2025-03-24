@@ -74,6 +74,7 @@ jobs:
             --build-arg NEXT_PUBLIC_MONGO_URI="${{ secrets.MONGO_URI }}" \
             --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
             --build-arg CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}" \
+            --build-arg TAILWIND_CONFIG="tailwind.config.ts" \
             -t "$IMAGE_NAME" -f Dockerfile . --push
 
       - name: Setup Terraform
