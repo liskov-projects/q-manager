@@ -14,7 +14,7 @@ on:
       - "!.github/workflows/deploy-websocket-server.yml"
 
 env:
-  ENVIRONMENT: 'qa'
+  ENVIRONMENT: "qa"
 
 jobs:
   deploy:
@@ -90,10 +90,11 @@ jobs:
         working-directory: terraform/nextjs-app
         run: |
           terraform apply -var="image_tag=australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}" \
-                          -var="project_id=q-manager-453001" \
-                          -var="region=australia-southeast2" \
-                          -var="mongo_uri=${{ secrets.MONGO_URI }}" \
-                          -var="clerk_publishable_key=${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
-                          -var="env=${{ env.ENVIRONMENT }}" \
-                          -lock-timeout=90s \
-                          -auto-approve
+            -var="project_id=q-manager-453001" \
+            -var="region=australia-southeast2" \
+            -var="mongo_uri=${{ secrets.MONGO_URI }}" \
+            -var="clerk_secret_key=${{ secrets.CLERK_SECRET_KEY }}" \
+            -var="clerk_publishable_key=${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
+            -var="env=${{ env.ENVIRONMENT }}" \
+            -lock-timeout=90s \
+            -auto-approve

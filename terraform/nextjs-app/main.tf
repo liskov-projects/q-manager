@@ -26,6 +26,11 @@ resource "google_cloud_run_service" "nextjs_app" {
         }
 
         env {
+          name  = "CLERK_SECRET_KEY"
+          value = var.clerk_secret_key
+        }
+
+        env {
           name  = "NEXT_PUBLIC_API_URL"
           value = "https://websocket-server-269155740970.australia-southeast2.run.app"
         }
