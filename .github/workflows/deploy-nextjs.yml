@@ -5,12 +5,10 @@ on:
     branches:
       - main
     paths:
-      - "/**" # ✅ Catch all changes
-      - "Dockerfile" # ✅ Ensure Dockerfile triggers it
-      - "terraform/nextjs/**" # ✅ Next.js-specific Terraform
-      - ".github/workflows/deploy-nextjs.yml" # ✅ Workflow changes
-
-      # 🚫 Exclude WebSocket files and config
+      - "/**"
+      - "Dockerfile"
+      - "terraform/nextjs/**"
+      - ".github/workflows/deploy-nextjs.yml"
       - "!src/websocket-server/**"
       - "!terraform/websocket-server/**"
       - "!.github/workflows/deploy-websocket-server.yml"
@@ -38,6 +36,11 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCLOUD_SERVICE_KEY }}
 
+      # ✅ FIX: Authorize Docker to push to Artifact Registry
+      - name: Configure Docker to Use Google Cloud Credentials
+        run: |
+          gcloud auth configure-docker australia-southeast2-docker.pkg.dev
+
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
@@ -47,13 +50,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # ✅ Create Buildx Builder (NEW STEP)
+      # ✅ Create Buildx Builder
       - name: Create Buildx Builder
         run: |
           docker buildx create --use
           docker buildx inspect --bootstrap
 
-      # ✅ Debug Buildx Context (Optional)
+      # ✅ Debug Buildx Context
       - name: Debug Buildx Context
         run: |
           docker buildx ls
