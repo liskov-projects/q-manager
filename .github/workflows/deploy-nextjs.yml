@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "/**"
+      - "**"
       - "Dockerfile"
       - "terraform/nextjs/**"
       - ".github/workflows/deploy-nextjs.yml"
