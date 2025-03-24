@@ -3,6 +3,15 @@ provider "google" {
   region      = var.region
 }
 
+resource "google_cloud_run_service_iam_binding" "public_access" {
+  service = google_cloud_run_service.nextjs_app.name
+  location = google_cloud_run_service.nextjs_app.location
+  role = "roles/run.invoker"
+  members = [
+    "allUsers" # <-- For public access
+  ]
+}
+
 resource "google_cloud_run_service" "nextjs_app" {
   name     = "nextjs-app-${var.env}"
   location = var.region

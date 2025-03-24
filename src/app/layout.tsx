@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import "@/app/globals.css";
 import Header from "@/Components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { TournamentsAndQueuesProvider } from "@/context/TournamentsAndQueuesContext";
