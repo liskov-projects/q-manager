@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = file("~/.gcp/q-manager-453001-52399e6ab034.json")
+  credentials = var.gcloud_service_key
   project     = var.project_id
   region      = var.region
 }
