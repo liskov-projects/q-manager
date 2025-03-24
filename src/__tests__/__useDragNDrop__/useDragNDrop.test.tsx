@@ -40,7 +40,7 @@ describe("testing useDragNDrop", () => {
   });
 
   //
-  test("adds dragged item to correect queue", async () => {
+  test("adds dragged item to correct queue", async () => {
     const { result } = renderHook(() => useDragNDrop());
 
     act(() => {

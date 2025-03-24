@@ -67,6 +67,7 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
       const response = await fetch(`/api/tournament/${tournamentId}`);
 
       if (!response.ok) {
+        setCurrentTournament(null);
         throw new Error(`Error fetching tournament: ${response.statusText}`);
       }
 
