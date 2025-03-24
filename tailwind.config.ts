@@ -5,6 +5,7 @@ import path from "path";
 console.log("🧵 Tailwind scanning:", path.resolve(__dirname));
 
 const config: Config = {
+  mode: "jit",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
