@@ -6,6 +6,13 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install --production
 
+# ✅ Accept the MONGO_URI as a build arg
+ARG NEXT_PUBLIC_MONGO_URI
+ENV NEXT_PUBLIC_MONGO_URI=$NEXT_PUBLIC_MONGO_URI
+
+# ✅ Debugging output
+RUN echo "NEXT_PUBLIC_MONGO_URI FROM DOCKERFILE: $NEXT_PUBLIC_MONGO_URI"
+
 # Copy source code and build locally
 COPY . .
 RUN npm run build
