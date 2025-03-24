@@ -3,11 +3,6 @@ variable "project_id" {
   description = "GCP Project ID"
 }
 
-variable "gcloud_service_key" {
-  description = "GCP service account key"
-  type        = string
-}
-
 variable "region" {
   type        = string
   description = "GCP Region"

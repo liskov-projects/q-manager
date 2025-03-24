@@ -92,6 +92,5 @@ jobs:
                           -var="mongo_uri=${{ secrets.MONGO_URI }}" \
                           -var="clerk_publishable_key=${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
                           -var="env=${{ env.ENVIRONMENT }}" \
-                          -var="gcloud_service_key=${{ secrets.GCLOUD_SERVICE_KEY }}" \
                           -lock-timeout=90s \
                           -auto-approve
