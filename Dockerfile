@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY package.json package-lock.json ./
-RUN npm install --production
+RUN npm install
 
 # ✅ Accept the MONGO_URI and Clerk keys as build args
 ARG NEXT_PUBLIC_MONGO_URI
