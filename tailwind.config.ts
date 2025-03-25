@@ -8,9 +8,8 @@ const config: Config = {
   mode: "jit",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx,css}", // ✅ Include CSS files
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx,css}", // ✅ Include CSS files
+    "./src/Components/**/*.{js,ts,jsx,tsx,mdx,css}", // ✅ Include CSS files
     "./src/app/**/*.{js,ts,jsx,tsx,mdx,css}", // ✅ Include CSS files
-    "./src/app/globals.css",
   ],
   theme: {
     extend: {
