@@ -5,6 +5,7 @@ import useDragNDrop from "@/hooks/useDragNDrop";
 import { TPlayer } from "@/types/Types";
 // components
 import TagsList from "../TagsList";
+import StarItem from "@/Components/Buttons/StarItem";
 
 export default function QueueListItem({
   item,
@@ -18,6 +19,7 @@ export default function QueueListItem({
   const { handleDragStart, handleDragOver } = useDragNDrop();
   const { tournamentOwner } = useTournamentsAndQueuesContext();
 
+  // NOTE: star background?
   return (
     <div
       key={item._id}
@@ -27,9 +29,12 @@ export default function QueueListItem({
       onDragStart={() => handleDragStart(item)}
       onDragOver={(e) => handleDragOver(e)}
     >
-      <div className="player-name">{item.names}</div>
+      <div className="player-name">
+        {item.names}
 
-      <TagsList item={item} />
+        <TagsList item={item} />
+      </div>
+      <StarItem />
     </div>
   );
 }
