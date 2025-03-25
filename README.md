@@ -454,13 +454,13 @@ To trigger the workflow:
 ### 🔎 View Cloud Run Logs:
 
 ```bash
-gcloud run services logs read nextjs-app-staging --region=australia-southeast2
+gcloud run services logs read nextjs-app-qa --region=australia-southeast2
 ```
 
 ### 🔎 Check Cloud Run Status:
 
 ```bash
-gcloud run services describe nextjs-app-staging --region=australia-southeast2
+gcloud run services describe nextjs-app-qa --region=australia-southeast2
 ```
 
 ### 🔎 List Terraform State:

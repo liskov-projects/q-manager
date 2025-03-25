@@ -15,7 +15,7 @@ variable "image_tag" {
 
 variable "env" {
   type        = string
-  description = "Deployment environment (prod, staging)"
+  description = "Deployment environment (prod, qa)"
 }
 
 variable "mongo_uri" {
@@ -30,5 +30,10 @@ variable "clerk_publishable_key" {
 
 variable "clerk_secret_key" {
   description = "Clerk secret key"
+  type        = string
+}
+
+variable "socket_url" {
+  description = "The WebSocket URL to expose to the client app"
   type        = string
 }

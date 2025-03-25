@@ -5,9 +5,11 @@ import { io, Socket } from "socket.io-client";
 import { useTournamentsAndQueuesContext } from "./TournamentsAndQueuesContext";
 import useDragNDrop from "@/hooks/useDragNDrop";
 
-// const SOCKET_URL: string = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000/";
-const SOCKET_URL: string =
-  `http://localhost:${process.env.NEXT_PUBLIC_PORT}` || "http://localhost:4000/";
+const SOCKET_URL =
+  process.env.NEXT_PUBLIC_SOCKET_URL ||
+  (process.env.NEXT_PUBLIC_PORT
+    ? `http://localhost:${process.env.NEXT_PUBLIC_PORT}`
+    : "http://localhost:4000");
 
 interface SocketContextType {
   socket: Socket | null;

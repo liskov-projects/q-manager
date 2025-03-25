@@ -40,8 +40,8 @@ resource "google_cloud_run_service" "nextjs_app" {
         }
 
         env {
-          name  = "NEXT_PUBLIC_API_URL"
-          value = "https://websocket-server-269155740970.australia-southeast2.run.app"
+          name  = "NEXT_PUBLIC_SOCKET_URL"
+          value = var.socket_url
         }
 
         env {
