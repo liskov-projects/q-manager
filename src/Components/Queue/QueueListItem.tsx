@@ -1,5 +1,6 @@
 // hooks
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
+import { useUser } from "@clerk/nextjs";
 import useDragNDrop from "@/hooks/useDragNDrop";
 // types
 import { TPlayer } from "@/types/Types";
@@ -18,6 +19,7 @@ export default function QueueListItem({
 }) {
   const { handleDragStart, handleDragOver } = useDragNDrop();
   const { tournamentOwner } = useTournamentsAndQueuesContext();
+  const { isSignedIn } = useUser();
 
   // NOTE: star background?
   return (
@@ -34,7 +36,7 @@ export default function QueueListItem({
 
         <TagsList item={item} />
       </div>
-      <StarItem playerId={item._id} />
+      {isSignedIn ? <StarItem playerId={item._id} /> : null}
     </div>
   );
 }

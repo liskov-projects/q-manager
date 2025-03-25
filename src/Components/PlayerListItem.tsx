@@ -1,6 +1,7 @@
 // hooks
 import { useState } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
+import { useUser } from "@clerk/nextjs";
 // import useAddToQueues from "@/hooks/useAddToQueues";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import { useSocket } from "@/context/SocketContext";
@@ -10,7 +11,6 @@ import { TPlayer } from "@/types/Types";
 import Button from "./Buttons/Button";
 import TagsList from "./TagsList";
 import EditListItem from "./EditListItem";
-// NEW:
 import StarItem from "./Buttons/StarItem";
 
 export default function PlayerListItem({ item }: { item: TPlayer }) {
@@ -19,6 +19,8 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
   const { handleDragStart, handleDragOver } = useDragNDrop();
   // const {handleAddToShortestQueue} = useAddToQueues();
   const [editMode, setEditMode] = useState(false);
+
+  const { isSignedIn } = useUser();
 
   const handleDelete = () => {
     // console.log("emitting deletePlayer");
@@ -57,7 +59,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
                 >
                   🗑️
                 </Button>
-                <StarItem playerId={item._id} />
+                {isSignedIn ? <StarItem playerId={item._id} /> : null}
               </div>
             )}
           </div>
