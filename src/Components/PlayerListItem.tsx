@@ -59,9 +59,9 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
                 >
                   🗑️
                 </Button>
-                {isSignedIn ? <StarItem playerId={item._id} /> : null}
               </div>
             )}
+            {isSignedIn ? <StarItem playerId={item._id} /> : null}
           </div>
 
           <TagsList item={item} />
