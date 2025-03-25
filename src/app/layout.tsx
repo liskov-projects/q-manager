@@ -3,9 +3,11 @@ import localFont from "next/font/local";
 // import "@/app/globals.css";
 import "./globals.css";
 import Header from "@/Components/Header";
+// contexts
 import { ClerkProvider } from "@clerk/nextjs";
 import { TournamentsAndQueuesProvider } from "@/context/TournamentsAndQueuesContext";
 import { SocketProvider } from "@/context/SocketContext";
+import { FavouritePlayersProvider } from "@/context/FavouritePlayersContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,8 +40,10 @@ export default function RootLayout({
         <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
           <TournamentsAndQueuesProvider>
             <SocketProvider>
-              <Header />
-              {children}
+              <FavouritePlayersProvider>
+                <Header />
+                {children}
+              </FavouritePlayersProvider>
             </SocketProvider>
           </TournamentsAndQueuesProvider>
         </ClerkProvider>
