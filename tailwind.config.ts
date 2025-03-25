@@ -7,9 +7,9 @@ console.log("🧵 Tailwind scanning:", path.resolve(__dirname));
 const config: Config = {
   mode: "jit",
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx,css}", // ✅ Include CSS files
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx,css}", // ✅ Include CSS files
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx,css}", // ✅ Include CSS files
   ],
   theme: {
     extend: {

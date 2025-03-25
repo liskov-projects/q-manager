@@ -19,8 +19,8 @@ dotenv.config({ path: envPath });
 
 const MONGO_URI = process.env.NEXT_PUBLIC_MONGO_URI;
 
-console.log("PROCESS.ENV");
-console.log(process.env);
+// console.log("PROCESS.ENV");
+// console.log(process.env);
 
 if (!MONGO_URI) {
   throw new Error(`Define NEXT_PUBLIC_MONGO_URI = ${MONGO_URI}`);
