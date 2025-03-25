@@ -66,6 +66,22 @@ jobs:
         run: |
           docker buildx ls
 
+      # ✅ Clean caches before build
+      - name: Clean Cache
+        run: |
+          rm -rf .next
+          rm -rf node_modules/.cache/tailwindcss
+
+      # ✅ Prune Docker cache
+      - name: Prune Docker Cache
+        run: |
+          docker builder prune --all --force
+
+      # ✅ Install Dependencies
+      - name: Install Dependencies
+        run: |
+          npm install --force
+
       # ✅ Build and Push Docker Image
       - name: Build and Push Docker Image
         run: |
