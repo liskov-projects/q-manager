@@ -57,7 +57,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
                 >
                   🗑️
                 </Button>
-                <StarItem />
+                <StarItem playerId={item._id} />
               </div>
             )}
           </div>

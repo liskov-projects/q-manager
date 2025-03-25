@@ -34,7 +34,7 @@ export default function QueueListItem({
 
         <TagsList item={item} />
       </div>
-      <StarItem />
+      <StarItem playerId={item._id} />
     </div>
   );
 }

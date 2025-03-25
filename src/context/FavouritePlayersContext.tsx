@@ -25,7 +25,7 @@ export function FavouritePlayersProvider({ children }: { children: React.ReactNo
       body: JSON.stringify({ playerId }),
     });
   };
-
+  console.log("FAV PLAYERS: ", favourites);
   return (
     <FavouritePlayersContext.Provider value={{ favourites, toggleFavourite }}>
       {children}
@@ -35,4 +35,8 @@ export function FavouritePlayersProvider({ children }: { children: React.ReactNo
 
 export function useFavourites() {
   const context = useContext(FavouritePlayersContext);
+  if (!context) {
+    throw new Error("useFavourites must be defined");
+  }
+  return context;
 }

@@ -1,8 +1,11 @@
+// hooks
 import { useState } from "react";
+import { useFavourites } from "@/context/FavouritePlayersContext";
 
-export default function StarItem() {
+export default function StarItem({ playerId }: { playerId: string }) {
   // TODO: move into the global context to be used elsewhere?
-  const [isStarred, setIsStarred] = useState(false);
+  const { favourites, toggleFavourite } = useFavourites();
+  const isStarred = favourites.includes(playerId);
 
   const notStarred = (
     <svg
@@ -26,7 +29,7 @@ export default function StarItem() {
     <span
       className="w-12 h-12 block cursor-pointer"
       role="button"
-      onClick={() => setIsStarred(!isStarred)}
+      onClick={() => toggleFavourite(playerId)}
     >
       {isStarred ? starred : notStarred}
     </span>
