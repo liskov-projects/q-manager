@@ -115,6 +115,6 @@ jobs:
             -var="clerk_secret_key=${{ secrets.CLERK_SECRET_KEY }}" \
             -var="clerk_publishable_key=${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
             -var="env=${{ env.ENVIRONMENT }}" \
-            -var="env=${{ secrets.SOCKET_URL }}"
+            -var="socket_url=${{ secrets.SOCKET_URL }}"
             -lock-timeout=90s \
             -auto-approve

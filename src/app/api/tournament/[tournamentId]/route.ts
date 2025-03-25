@@ -4,10 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 // GET - Fetch a single tournament
 export async function GET(req: NextRequest, { params }: { params: { tournamentId: string } }) {
-  console.log(" Fetching tournament from API...");
+  // console.log(" Fetching tournament from API...");
 
   const tournamentId = params.tournamentId; //  Extract from route parameters
-  console.log(" Extracted tournament ID:", tournamentId);
+  // console.log(" Extracted tournament ID:", tournamentId);
 
   if (!tournamentId) {
     return NextResponse.json({ error: "Tournament ID is required" }, { status: 400 });
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest, { params }: { params: { tournamentId
       return NextResponse.json({ error: "Tournament not found" }, { status: 404 });
     }
 
-    console.log(" Tournament fetched:", tournament);
+    // console.log(" Tournament fetched:", tournament);
     return NextResponse.json(tournament, { status: 200 });
   } catch (error) {
     console.error(" Error fetching tournament:", error);
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest, { params }: { params: { tournamentId
 //  PUT - Update a single tournament
 export async function PUT(req: NextRequest, { params }: { params: { tournamentId: string } }) {
   const tournamentId = params.tournamentId; //  Extract from route parameters
-  console.log("✏️ Updating tournament:", tournamentId);
+  // console.log("✏️ Updating tournament:", tournamentId);
 
   if (!tournamentId) {
     return NextResponse.json({ error: "Tournament ID is required" }, { status: 400 });
@@ -43,7 +43,7 @@ export async function PUT(req: NextRequest, { params }: { params: { tournamentId
 
   try {
     const body = await req.json();
-    console.log("🔄 Update body:", body);
+    // console.log("🔄 Update body:", body);
 
     //  Update tournament
     const updatedTournament = await TournamentModel.findByIdAndUpdate(tournamentId, body, {
@@ -60,7 +60,7 @@ export async function PUT(req: NextRequest, { params }: { params: { tournamentId
       model: "PlayerModel",
     });
 
-    console.log(" Updated Tournament:", savedTournament);
+    // console.log(" Updated Tournament:", savedTournament);
 
     return NextResponse.json(savedTournament, { status: 200 });
   } catch (error) {

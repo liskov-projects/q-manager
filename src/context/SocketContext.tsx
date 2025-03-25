@@ -11,6 +11,9 @@ const SOCKET_URL =
     ? `http://localhost:${process.env.NEXT_PUBLIC_PORT}`
     : "http://localhost:4000");
 
+console.log("SOCKET URL");
+console.log(SOCKET_URL);
+
 interface SocketContextType {
   socket: Socket | null;
 }
