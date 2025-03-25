@@ -14,17 +14,33 @@ export function FavouritePlayersProvider({ children }: { children: React.ReactNo
   const [favourites, setFavourites] = useState<string[]>([]);
 
   const toggleFavourite = async (playerId: string) => {
-    setFavourites((prev) =>
-      //   if (!prev) return;
-      prev.includes(playerId) ? prev.filter((id) => id !== playerId) : [...prev, playerId]
-    );
+    console.log("Toggling favourite for player:", playerId);
 
-    await fetch("api/user/favourites", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ playerId }),
+    setFavourites((prev) => {
+      console.log("Previous favourites:", prev);
+      const updatedFavourites = prev.includes(playerId)
+        ? prev.filter((id) => id !== playerId)
+        : [...prev, playerId];
+      console.log("Updated favourites (local state):", updatedFavourites);
+      return updatedFavourites;
     });
+
+    try {
+      console.log("Sending request to backend...");
+      const response = await fetch("/api/favouritePlayers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ playerId }),
+      });
+
+      console.log("Response status:", response.status);
+      const data = await response.json();
+      console.log("fetch POST result: ", data);
+    } catch (error) {
+      console.error("Error in toggleFavourite:", error);
+    }
   };
+
   console.log("FAV PLAYERS: ", favourites);
   return (
     <FavouritePlayersContext.Provider value={{ favourites, toggleFavourite }}>
