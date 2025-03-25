@@ -10,6 +10,8 @@ import { TPlayer } from "@/types/Types";
 import Button from "./Buttons/Button";
 import TagsList from "./TagsList";
 import EditListItem from "./EditListItem";
+// NEW:
+import StarItem from "./Buttons/StarItem";
 
 export default function PlayerListItem({ item }: { item: TPlayer }) {
   const { tournamentOwner, currentTournament } = useTournamentsAndQueuesContext();
@@ -55,6 +57,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
                 >
                   🗑️
                 </Button>
+                <StarItem />
               </div>
             )}
           </div>
