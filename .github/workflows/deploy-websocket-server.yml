@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "src/websocket-server/**"
+      - "src/terraform/websocket-server/**"
       - ".github/workflows/deploy-websocket-server.yml"
 
 jobs:
