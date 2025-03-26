@@ -16,14 +16,14 @@ export function FavouritePlayersProvider({ children }: { children: React.ReactNo
   useEffect(() => {
     const fetchFavouritePlayers = async () => {
       try {
-        const response = await fetch("api/favouritePlayers", {
+        const response = await fetch("/api/favouritePlayers", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
 
         const data = await response.json();
-        console.log(data);
-        // FIXME: remember to setFavouritePlayers
+        console.log("this is the data", data.favouritePlayers);
+        setFavouritePlayers(data.favouritePlayers);
       } catch (err) {
         console.error("error fetching favourite players");
       }
