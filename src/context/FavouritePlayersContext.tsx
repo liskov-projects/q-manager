@@ -22,8 +22,8 @@ export function FavouritePlayersProvider({ children }: { children: React.ReactNo
         });
 
         const data = await response.json();
-        console.log(data);
-        setFavouritePlayers(data);
+        console.log("this is the data", data.favouritePlayers);
+        setFavouritePlayers(data.favouritePlayers);
       } catch (err) {
         console.error("error fetching favourite players");
       }
