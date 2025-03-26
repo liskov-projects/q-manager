@@ -11,7 +11,7 @@ export default async function UserSettingsPage() {
     <div>
       <h1>Hello {username}</h1>
       <h2>Manage Favourites</h2>
-      <span>{username}'s Favourites</span>
+      <span>{`${username}\'s Favourites`}</span>
       <Favourites />
       <h2>Manage Notifications</h2>
     </div>
