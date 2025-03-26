@@ -24,7 +24,7 @@ resource "google_cloud_run_service" "websocket_server" {
         }
         env {
           name  = "ENV"
-          value = var.env // "qa", "prod", etc.
+          value = var.env // "qa", "prod", etc..
         }
       }
     }
