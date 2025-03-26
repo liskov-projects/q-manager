@@ -18,7 +18,7 @@ const ENV = process.env.ENV || "development";
 
 // ✅ Look for .env.local in the root directory
 const envPath =
-  ENV === "production"
+  ENV === "qa"
     ? path.resolve(__dirname, "../../.env.production") // Go two levels up for root
     : path.resolve(__dirname, "../../.env.local");
 
@@ -27,9 +27,7 @@ dotenv.config({ path: envPath });
 const PORT = process.env.NEXT_PUBLIC_PORT || 4000;
 
 const allowedOrigins =
-  ENV === "production"
-    ? ["https://nextjs-app-qa-5flfrae4oq-km.a.run.app"]
-    : ["http://localhost:3000"];
+  ENV === "qa" ? ["https://nextjs-app-qa-5flfrae4oq-km.a.run.app"] : ["http://localhost:3000"];
 
 console.log("Running in:", ENV);
 console.log("Allowed origins:", allowedOrigins);
