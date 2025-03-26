@@ -4,7 +4,7 @@ export const userSchema = new mongoose.Schema(
   {
     _id: { type: String, required: true },
     // clerkId: { type: String },
-    // userName: { type: String, required: true },
+    userName: { type: String, required: true },
     // password: { type: String, required: true },
     // maybe playerSchema?
     favouritePlayers: [{ type: mongoose.Schema.Types.ObjectId, ref: "PlayerModel" }],
