@@ -54,4 +54,5 @@ jobs:
           terraform apply -var="image_tag=australia-southeast2-docker.pkg.dev/q-manager-453001/websocket-server:${{ github.sha }}" \
                           -var="mongo_uri=${{ secrets.MONGO_URI }}" \
                           -var="env=qa" \
+                          -var-file="values.tfvars"
                           -auto-approve
