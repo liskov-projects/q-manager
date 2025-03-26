@@ -4,8 +4,8 @@ import { useFavourites } from "@/context/FavouritePlayersContext";
 
 export default function StarItem({ playerId }: { playerId: string }) {
   // TODO: move into the global context to be used elsewhere?
-  const { favourites, toggleFavourite } = useFavourites();
-  const isStarred = favourites.includes(playerId);
+  const { favouritePlayers, toggleFavouritePlayers } = useFavourites();
+  const isStarred = favouritePlayers.includes(playerId);
 
   const notStarred = (
     <svg
@@ -29,7 +29,7 @@ export default function StarItem({ playerId }: { playerId: string }) {
     <span
       className="w-12 h-12 block cursor-pointer"
       role="button"
-      onClick={() => toggleFavourite(playerId)}
+      onClick={() => toggleFavouritePlayers(playerId)}
     >
       {isStarred ? starred : notStarred}
     </span>

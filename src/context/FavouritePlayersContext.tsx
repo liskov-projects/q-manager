@@ -1,28 +1,47 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 // TODO: move into types
 type TFavouritePlayersContext = {
-  favourites: string[];
-  toggleFavourite: (playerId: string) => void;
+  favouritePlayers: string[];
+  toggleFavouritePlayers: (playerId: string) => void;
 };
 
 const FavouritePlayersContext = createContext<TFavouritePlayersContext | null>(null);
 
 export function FavouritePlayersProvider({ children }: { children: React.ReactNode }) {
-  const [favourites, setFavourites] = useState<string[]>([]);
+  const [favouritePlayers, setFavouritePlayers] = useState<string[]>([]);
 
-  const toggleFavourite = async (playerId: string) => {
+  useEffect(() => {
+    const fetchFavouritePlayers = async () => {
+      try {
+        const response = await fetch("api/favouritePlayers", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await response.json();
+        console.log(data);
+        // FIXME: remember to setFavouritePlayers
+      } catch (err) {
+        console.error("error fetching favourite players");
+      }
+    };
+
+    fetchFavouritePlayers();
+  }, []);
+
+  const toggleFavouritePlayers = async (playerId: string) => {
     console.log("Toggling favourite for player:", playerId);
 
-    setFavourites((prev) => {
-      console.log("Previous favourites:", prev);
-      const updatedFavourites = prev.includes(playerId)
+    setFavouritePlayers((prev) => {
+      console.log("Previous favouritePlayers:", prev);
+      const updatedFavouritePlayers = prev.includes(playerId)
         ? prev.filter((id) => id !== playerId)
         : [...prev, playerId];
-      console.log("Updated favourites (local state):", updatedFavourites);
-      return updatedFavourites;
+      console.log("Updated favouritePlayers (local state):", updatedFavouritePlayers);
+      return updatedFavouritePlayers;
     });
 
     try {
@@ -37,13 +56,13 @@ export function FavouritePlayersProvider({ children }: { children: React.ReactNo
       const data = await response.json();
       console.log("fetch POST result: ", data);
     } catch (error) {
-      console.error("Error in toggleFavourite:", error);
+      console.error("Error in toggleFavouritePlayers:", error);
     }
   };
 
-  console.log("FAV PLAYERS: ", favourites);
+  console.log("FAV PLAYERS: ", favouritePlayers);
   return (
-    <FavouritePlayersContext.Provider value={{ favourites, toggleFavourite }}>
+    <FavouritePlayersContext.Provider value={{ favouritePlayers, toggleFavouritePlayers }}>
       {children}
     </FavouritePlayersContext.Provider>
   );
