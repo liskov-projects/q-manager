@@ -18,6 +18,11 @@ variable "mongo_uri" {
   type        = string
 }
 
+variable "env" {
+  description = "environment"
+  type        = string
+}
+
 variable "port" {
   description = "Port the WebSocket server will listen on"
   type        = number
