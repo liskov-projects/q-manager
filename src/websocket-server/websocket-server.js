@@ -14,15 +14,25 @@ import dotenv from "dotenv";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const NODE_ENV = process.env.NODE_ENV || "development";
+
 // ✅ Look for .env.local in the root directory
 const envPath =
-  process.env.NODE_ENV === "production"
+  NODE_ENV === "production"
     ? path.resolve(__dirname, "../../.env.production") // Go two levels up for root
     : path.resolve(__dirname, "../../.env.local");
 
 dotenv.config({ path: envPath });
 
 const PORT = process.env.NEXT_PUBLIC_PORT || 4000;
+
+const allowedOrigins =
+  NODE_ENV === "production"
+    ? ["https://nextjs-app-qa-5flfrae4oq-km.a.run.app"]
+    : ["http://localhost:3000"];
+
+console.log("Running in:", NODE_ENV);
+console.log("Allowed origins:", allowedOrigins);
 
 const app = express();
 const server = http.createServer(app);
@@ -31,7 +41,7 @@ console.log(`Starting WebSocket server on PORT=${process.env.NEXT_PUBLIC_PORT}`)
 
 app.use(
   cors({
-    origin: "*", // Temporarily allow all origins (can restrict later)
+    origin: allowedOrigins, // Temporarily allow all origins (can restrict later)
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
   })
@@ -40,10 +50,7 @@ app.use(
 const io = new Server(server, {
   cors: {
     path: "/socket.io",
-    origin: [
-      "http://localhost:3000", // Local dev
-      "https://your-nextjs-app-url.run.app", // Cloud Run frontend URL
-    ],
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
     credentials: true,
   },
