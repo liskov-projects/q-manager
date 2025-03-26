@@ -1,5 +1,4 @@
 provider "google" {
-  credentials = var.gcloud_service_key
   project     = var.project_id
   region      = var.region
 }
@@ -22,6 +21,10 @@ resource "google_cloud_run_service" "websocket_server" {
         env {
           name  = "NEXT_PUBLIC_MONGO_URI"
           value = var.mongo_uri
+        }
+        env {
+          name  = "ENV"
+          value = var.env // "qa", "prod", etc.
         }
       }
     }

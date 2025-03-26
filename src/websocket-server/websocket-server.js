@@ -14,11 +14,11 @@ import dotenv from "dotenv";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const NODE_ENV = process.env.NODE_ENV || "development";
+const ENV = process.env.ENV || "development";
 
 // ✅ Look for .env.local in the root directory
 const envPath =
-  NODE_ENV === "production"
+  ENV === "production"
     ? path.resolve(__dirname, "../../.env.production") // Go two levels up for root
     : path.resolve(__dirname, "../../.env.local");
 
@@ -27,11 +27,11 @@ dotenv.config({ path: envPath });
 const PORT = process.env.NEXT_PUBLIC_PORT || 4000;
 
 const allowedOrigins =
-  NODE_ENV === "production"
+  ENV === "production"
     ? ["https://nextjs-app-qa-5flfrae4oq-km.a.run.app"]
     : ["http://localhost:3000"];
 
-console.log("Running in:", NODE_ENV);
+console.log("Running in:", ENV);
 console.log("Allowed origins:", allowedOrigins);
 
 const app = express();
