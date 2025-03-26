@@ -7,7 +7,7 @@ export const userSchema = new mongoose.Schema(
     userName: { type: String, required: true },
     // password: { type: String, required: true },
     // maybe playerSchema?
-    favouritePlayers: [{ type: mongoose.Schema.Types.ObjectId, ref: "PlayerModel" }],
+    favouritePlayers: [{ type: mongoose.Types.ObjectId, ref: "PlayerModel" }],
   },
   { collection: "users" }
 );
