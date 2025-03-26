@@ -1,5 +1,5 @@
-import React from "react";
+import UserSettingsPage from "@/Components/Pages/UserSettingsPage./UserSettingsPage";
 
 export default function UserSettings() {
-  return <div>USER SETTINGS</div>;
+  return <UserSettingsPage />;
 }
