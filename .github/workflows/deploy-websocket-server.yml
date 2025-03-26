@@ -34,9 +34,22 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-websocket-server/websocket-server:${{ github.sha }}"
+          echo "Building image: $IMAGE_NAME"
+
+          # Ensure Docker is authenticated
           gcloud auth configure-docker australia-southeast2-docker.pkg.dev
-          docker build --platform=linux/amd64 -t $IMAGE_NAME -f src/websocket-server/Dockerfile .
-          docker push $IMAGE_NAME
+
+          # Set up Buildx
+          docker buildx create --use || true
+          docker buildx inspect --bootstrap
+
+          # Build and push
+          docker buildx build \
+            --platform=linux/amd64 \
+            --file src/websocket-server/Dockerfile \
+            --tag "$IMAGE_NAME" \
+            --push \
+            .
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
