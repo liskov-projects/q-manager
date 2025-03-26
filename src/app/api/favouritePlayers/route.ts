@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
 import dbConnect from "@/lib/db";
 import { UserModel } from "@/models/UserModel";
+import { currentUser } from "@clerk/nextjs/server";
 
 export async function GET(req: NextRequest) {
   await dbConnect();
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
   await dbConnect();
 
   const { userId } = getAuth(req); //gets auth-ed clerk user
-
+  const userData = await currentUser();
   if (!userId) return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
 
   const { playerId } = await req.json();
@@ -33,7 +34,11 @@ export async function POST(req: NextRequest) {
   const user = await UserModel.findById(userId);
 
   if (!user) {
-    await UserModel.create({ _id: userId, favouritePlayers: [playerId] });
+    await UserModel.create({
+      _id: userId,
+      userName: userData?.firstName,
+      favouritePlayers: [playerId],
+    });
     return NextResponse.json({ message: "Player added to favourites" });
   }
 
