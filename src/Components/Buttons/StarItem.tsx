@@ -1,11 +1,20 @@
 // hooks
 import { useFavourites } from "@/context/FavouritePlayersContext";
-import { useState } from "react";
+import { usePathname } from "next/navigation.js";
+import { useState, useEffect } from "react";
 
 export default function StarItem({ playerId }: { playerId: string }) {
   const { favouritePlayers, toggleFavouritePlayers } = useFavourites();
   // const isStarred = favouritePlayers.includes(playerId);
   const [isStarred, setIsStarred] = useState(false);
+  const pathname = usePathname();
+  console.log("pathname", pathname);
+
+  useEffect(() => {
+    if (pathname.includes("/user-settings")) {
+      setIsStarred(true);
+    }
+  }, [pathname]);
 
   const handleClick = () => {
     toggleFavouritePlayers(playerId);
