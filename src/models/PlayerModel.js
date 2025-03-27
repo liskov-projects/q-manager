@@ -7,16 +7,16 @@ export const playerSchema = new mongoose.Schema(
     names: { type: String, required: true },
     categories: [{ type: String, required: true }],
     phoneNumbers: [{ type: String, required: true }],
-    // tournamentId: {
-    //   // used to refer this field to tournament._id
-    //   type: String,
-    //   required: true,
-    // },
     tournamentId: {
-      type: mongoose.Types.ObjectId,
-      ref: "TournamentModel", // Reference to the Tournament model
+      // used to refer this field to tournament._id
+      type: String,
       required: true,
     },
+    // tournamentId: {
+    //   type: mongoose.Types.ObjectId,
+    //   ref: "TournamentModel", // Reference to the Tournament model
+    //   required: true,
+    // },
   },
   { collection: "players" }
 );
