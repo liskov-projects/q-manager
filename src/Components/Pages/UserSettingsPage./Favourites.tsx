@@ -1,20 +1,23 @@
 "use client";
 // hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFavourites } from "@/context/FavouritePlayersContext";
-// import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
+import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // types
 import { TPlayer } from "@/types/Types";
 import StarItem from "@/Components/Buttons/StarItem";
 
 export default function Favourites() {
-  const { favouritePlayers } = useFavourites();
+  const { favouritePlayers, setFavouritePlayers } = useFavourites();
+  const { tournaments } = useTournamentsAndQueuesContext();
+
+  //   console.log("favs in Favourites", favouritePlayers);
 
   return (
     <div>
       <h3>Favourite Players</h3>
-      {!favouritePlayers ? (
-        <span>No favourite players</span>
+      {favouritePlayers.length === 0 ? (
+        <span className="text-lg text-red-500">No favourite players</span>
       ) : (
         <ul>
           {favouritePlayers.map((player: TPlayer) => (
