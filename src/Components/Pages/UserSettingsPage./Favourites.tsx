@@ -15,7 +15,6 @@ export default function Favourites() {
 
   return (
     <div>
-      <h3>Favourite Players</h3>
       {favouritePlayers.length === 0 ? (
         <span className="text-lg text-red-500">No favourite players</span>
       ) : (
@@ -23,7 +22,7 @@ export default function Favourites() {
           {favouritePlayers.map((player: TPlayer) => (
             <li
               key={player._id}
-              className="h-30 w-[35%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
+              className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
             >
               {player.names} {player.tournamentName}
               <StarItem />
