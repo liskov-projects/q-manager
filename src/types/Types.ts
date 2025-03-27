@@ -49,8 +49,15 @@ export type TTournamentsAndQueuesContextProps = {
   addPlayerToTournament: (playerData: TPlayer, tournamentId: string) => void;
 };
 
-// Route Context Props
-export type TRouteContextProps = {
-  isGuest: boolean; // Whether the user is a guest
-  setIsGuest: (isGuest: boolean) => void; // Update guest status
+export type TFavouriteItemsContext = {
+  favouritePlayers: TPlayer[];
+  setFavouritePlayers: React.Dispatch<React.SetStateAction<TPlayer[]>>;
+  toggleFavouritePlayers: (playerId: string) => void;
 };
+
+// NOTE: not used anywhere
+// // Route Context Props
+// export type TRouteContextProps = {
+//   isGuest: boolean; // Whether the user is a guest
+//   setIsGuest: (isGuest: boolean) => void; // Update guest status
+// };

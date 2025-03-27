@@ -1,18 +1,18 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { TPlayer, TTournament } from "@/types/Types";
+import { TPlayer, TTournament, TFavouriteItemsContext } from "@/types/Types";
 import { useTournamentsAndQueuesContext } from "./TournamentsAndQueuesContext";
 // TODO: move into types
-type TFavouritePlayersContext = {
-  favouritePlayers: TPlayer[];
-  setFavouritePlayers: React.Dispatch<React.SetStateAction<TPlayer[]>>;
-  toggleFavouritePlayers: (playerId: string) => void;
-};
+// type TFavouritePlayersContext = {
+//   favouritePlayers: TPlayer[];
+//   setFavouritePlayers: React.Dispatch<React.SetStateAction<TPlayer[]>>;
+//   toggleFavouritePlayers: (playerId: string) => void;
+// };
 
-const FavouritePlayersContext = createContext<TFavouritePlayersContext | null>(null);
+const FavouriteItemsContext = createContext<TFavouriteItemsContext | null>(null);
 
-export function FavouritePlayersProvider({ children }: { children: React.ReactNode }) {
+export function FavouriteItemsProvider({ children }: { children: React.ReactNode }) {
   const [favouritePlayers, setFavouritePlayers] = useState<TPlayer[]>([]);
   const { tournaments } = useTournamentsAndQueuesContext();
 
@@ -27,29 +27,7 @@ export function FavouritePlayersProvider({ children }: { children: React.ReactNo
         const data = await response.json();
         //  as expected
         // console.log("this is data:", data);
-
-        // const updatedPlayers = data.map((favPlayer: TPlayer) => {
-        //   console.log("tournamentS", tournaments);
-        // as expected
-        //   console.log("inside map for updated player");
-        //   console.log("player", favPlayer);
-        //   const foundTournament = tournaments.find((tournament: TTournament) => {
-        //     console.log("tournament", tournament);
-        //     console.log("favPlayer: ", favPlayer);
-        //     tournament._id === favPlayer.tournamentId;
-        //   });
-
-        //   tournaments.find((tournament: TTournament) =>
-        //     [tournament.queue.queueItems, tournament.unProcessedQItems, tournament.processedQItems]
-        //       .flat()
-        //       .some((item: TPlayer) => String(item._id) === favPlayer._id)
-        //   );
-        //   //   not coming through
-        //   console.log("found tournament", foundTournament);
-        //   return { ...favPlayer, tournamentName: foundTournament.name };
         setFavouritePlayers(data);
-
-        // setFavouritePlayers(data);
       } catch (err) {
         console.error("error fetching favourite players");
       }
@@ -58,7 +36,7 @@ export function FavouritePlayersProvider({ children }: { children: React.ReactNo
     fetchFavouritePlayers();
   }, [tournaments]);
 
-  console.log("FAVOURITE PLAYERS", favouritePlayers);
+  //   console.log("FAVOURITE PLAYERS", favouritePlayers);
 
   const toggleFavouritePlayers = async (playerId: string) => {
     try {
@@ -83,16 +61,16 @@ export function FavouritePlayersProvider({ children }: { children: React.ReactNo
 
   //   console.log("fav players: ", favouritePlayers);
   return (
-    <FavouritePlayersContext.Provider
+    <FavouriteItemsContext.Provider
       value={{ favouritePlayers, setFavouritePlayers, toggleFavouritePlayers }}
     >
       {children}
-    </FavouritePlayersContext.Provider>
+    </FavouriteItemsContext.Provider>
   );
 }
 
 export function useFavourites() {
-  const context = useContext(FavouritePlayersContext);
+  const context = useContext(FavouriteItemsContext);
   if (!context) {
     throw new Error("useFavourites must be defined");
   }
