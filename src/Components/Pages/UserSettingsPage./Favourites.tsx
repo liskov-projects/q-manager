@@ -21,7 +21,10 @@ export default function Favourites() {
       ) : (
         <ul>
           {favouritePlayers.map((player: TPlayer) => (
-            <li key={player._id}>
+            <li
+              key={player._id}
+              className="h-30 w-[35%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
+            >
               {player.names} {player.tournamentName}
               <StarItem />
             </li>
