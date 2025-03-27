@@ -91,7 +91,7 @@ export default function NewPlayerForm() {
   return (
     <>
       <div className="flex flex-col items-center justify-center my-4">
-        <SectionHeader>Add new Players</SectionHeader>
+        <SectionHeader>Player ➕</SectionHeader>
 
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
