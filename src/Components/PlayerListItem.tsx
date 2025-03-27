@@ -79,7 +79,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
                 // NOTE: optimistic UI
                 // handleAddToShortestQueue(item);
               }}
-              className="px-10 py-5 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
+              className="px-2 py-2 text-[1rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[auto] w-[70px] flex items-center justify-center"
             >
               ⬆️ Q
             </Button>
