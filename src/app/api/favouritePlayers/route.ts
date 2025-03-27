@@ -16,34 +16,40 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Find user and get their favouritePlayers array (just the ObjectIds)
-  const user = await UserModel.findById(userId).lean();
+  // finds the user and gets favouritePlayers arr as ObjectId[]
+  const user = await UserModel.findById(userId)
+    .populate({
+      path: "favouritePlayers",
+      select: "_id names categories phoneNumbers tournamentId",
+      populate: { path: "tournamentId", select: "_id name" }, //FIXME: "_id name" why?
+    })
+    .lean();
+
   if (!user || !user.favouritePlayers.length) {
     return NextResponse.json([], { status: 200 });
   }
+  const tournaments = await TournamentModel.find({});
 
-  // Find players using the _id array stored in user.favouritePlayers
-  const favouritePlayers = await PlayerModel.find({
-    _id: { $in: user.favouritePlayers },
-  })
-    .select("_id names categories phoneNumbers tournamentId") // Only fetch relevant fields
-    .lean();
+  const result = user.favouritePlayers.map((player: TPlayer) => {
+    const playerTournament = tournaments.find((tournament: TTournament) => {
+      return (
+        tournament.queues.some((queue: TQueue) =>
+          queue.queueItems.some((item: TPlayer) => item._id.toString() === player._id.toString())
+        ) ||
+        tournament.unProcessedQItems.some(
+          (item: TPlayer) => item._id.toString() === player._id.toString()
+        ) ||
+        tournament.processedQItems.some(
+          (item: TPlayer) => item._id.toString() === player._id.toString()
+        )
+      );
+    });
 
-  if (!favouritePlayers.length) {
-    return NextResponse.json([], { status: 200 });
-  }
-
-  // Fetch all tournaments (to map _id → name)
-  const tournaments = await TournamentModel.find({}, "_id name").lean();
-  const tournamentNamesMap = new Map(
-    tournaments.map((t: TTournament) => [t._id.toString(), t.name])
-  );
-
-  // Attach tournament names to each player
-  const result = favouritePlayers.map((player: TPlayer) => ({
-    ...player,
-    // tournamentName: tournamentNamesMap.get(player.tournamentId?.toString()) || "Unknown",
-  }));
+    return {
+      ...player,
+      tournamentName: playerTournament ? playerTournament.name : "Unknown",
+    };
+  });
 
   return NextResponse.json(result);
 }
