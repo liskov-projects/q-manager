@@ -1,0 +1,10 @@
+{
+  "appId": "com.qmanager.app",
+  "appName": "q-manager",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}
