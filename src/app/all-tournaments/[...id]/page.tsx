@@ -12,12 +12,14 @@ export default function TournamentPage({ params }: { params: { id: string[] } })
 
   return (
     <div>
-      <h1 className="text-center text-4xl font-black">
-        <span>{name}</span>
+      <div className="flex justify-center items-center">
+        <h1 className="text-center text-4xl font-black mr-3">
+          <span>{name}</span>
+        </h1>
         <div className="flex flex-row justify-center items-center mt-1">
           <TournamentCategories categories={categories} tournamentId={currentTournament?._id} />
         </div>
-      </h1>
+      </div>
       <TournamentQueuesPage tournamentId={currentTournament?._id} />
     </div>
   );

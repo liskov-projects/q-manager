@@ -12,7 +12,7 @@ export default function Header() {
   const notHome = path !== "/all-tournaments";
 
   return (
-    <div className="flex justify-between items-center py-2">
+    <div className="flex justify-between items-center">
       <div className="flex items-center">
         <div className="w-20 flex-shrink-0">
           <LiskovLogo />
