@@ -7,6 +7,7 @@ import { TPlayer } from "@/types/Types";
 // components
 import TagsList from "../TagsList";
 import StarItem from "@/Components/Buttons/StarItem";
+import { useState } from "react";
 
 export default function QueueListItem({
   item,
@@ -31,12 +32,11 @@ export default function QueueListItem({
       onDragStart={() => handleDragStart(item)}
       onDragOver={(e) => handleDragOver(e)}
     >
-      <div className="player-name">
-        {item.names}
-
-        <TagsList item={item} />
+      <div className="flex">
+        <div className="player-name font-bold w-[70%]">{item.names}</div>
+        {isSignedIn ? <StarItem playerId={item._id} /> : null}
       </div>
-      {isSignedIn ? <StarItem playerId={item._id} /> : null}
+      <TagsList item={item} />
     </div>
   );
 }

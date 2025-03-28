@@ -25,10 +25,10 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       onDragOver={(event) => event.preventDefault()}
     >
       <div className="flex flex-row justify-around">
-        <h3 className="text-xl font-semibold text-bluestone-200 mb-4">Queue {queue.queueName}</h3>
+        <h3 className="text-xl font-semibold text-bluestone-200 mb-2">Queue {queue.queueName}</h3>
         {!tournamentOwner ? null : (
           <Button
-            className="mx-2 px-5 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
+            className="mx-2 px-3 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out flex items-center justify-center"
             onClick={() => {
               if (socket) {
                 socket.emit("deleteQueue", {
