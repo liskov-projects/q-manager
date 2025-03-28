@@ -7,8 +7,14 @@ import { TQueue } from "@/types/Types";
 import { TTournament } from "@/types/Types.js";
 
 const useDragNDrop = () => {
-  const { setCurrentTournament, draggedItem, setDraggedItem, currentTournamentRef } =
-    useTournamentsAndQueuesContext();
+  const {
+    setCurrentTournament,
+    draggedItem,
+    setDraggedItem,
+    currentTournamentRef,
+    justDropped,
+    setJustDropped,
+  } = useTournamentsAndQueuesContext();
 
   const handleDragStart = (draggedItem: TPlayer) => {
     setDraggedItem(draggedItem);
@@ -75,6 +81,10 @@ const useDragNDrop = () => {
         categories: prev.categories ?? [],
       };
     });
+    // setJustDropped(draggedItem);
+    // setTimeout(() => setJustDropped(null), 500);
+    // console.log("JUST DROPPED");
+    // console.log(justDropped);
   };
 
   // OLD: and used to work BEFORE WebSocket

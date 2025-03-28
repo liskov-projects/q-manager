@@ -19,7 +19,7 @@ export default function QueueListItem({
   index: number;
 }) {
   const { handleDragStart, handleDragOver } = useDragNDrop();
-  const { tournamentOwner } = useTournamentsAndQueuesContext();
+  const { tournamentOwner, justDropped } = useTournamentsAndQueuesContext();
   const { isSignedIn } = useUser();
 
   // NOTE: star background?
@@ -27,7 +27,7 @@ export default function QueueListItem({
     <div
       key={item._id}
       id={item._id}
-      className={`p-2 shadow-left-bottom-lg w-[95%] left-bottom-lg rounded-lg mb-2 text-center ${className}`}
+      className={`p-2 shadow-left-bottom-lg w-[95%] left-bottom-lg rounded-lg mb-2 text-center ${className} ${justDropped?._id === item._id ? "animate-shake bg-yellow-200" : className}`}
       draggable={`${!tournamentOwner ? false : true}`}
       onDragStart={() => handleDragStart(item)}
       onDragOver={(e) => handleDragOver(e)}

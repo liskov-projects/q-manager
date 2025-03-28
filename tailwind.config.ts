@@ -13,6 +13,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        shake: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "20%": { transform: "translateX(-4px)" },
+          "40%": { transform: "translateX(4px)" },
+          "60%": { transform: "translateX(-4px)" },
+          "80%": { transform: "translateX(4px)" },
+        },
+      },
+      animation: {
+        shake: "shake 0.5s ease-in-out",
+      },
       boxShadow: {
         "left-bottom-lg": "-4px 4px 10px rgba(0, 0, 0, 0.5)",
       },
