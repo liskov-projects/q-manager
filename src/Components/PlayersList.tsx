@@ -30,7 +30,7 @@ export default function PlayersList({
     // REVIEW: viewport height
     <div id="modal-root">
       <SectionHeader>{title}</SectionHeader>
-      <div className="flex flex-col shadow-left-bottom-lg items-center h-[70vh] overflow-hidden hover:overflow-y-auto">
+      <div className="flex flex-col shadow-left-bottom-lg items-center h-auto overflow-hidden hover:overflow-y-auto w-full">
         {/* TODO: extract into a separate comp? */}
         <input
           className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-4"
@@ -53,7 +53,7 @@ export default function PlayersList({
             ))}
           </select>
         </div>
-        <ul className="flex flex-col items-center">
+        <ul className="flex flex-col items-center w-full p-2">
           {players.map((player: TPlayer, index: number) => (
             <Fragment key={player._id}>
               <PlayerListItem item={player} />
