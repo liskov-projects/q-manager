@@ -90,7 +90,7 @@ export default function NewPlayerForm() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center my-4">
+      <div className="flex flex-col h-auto items-center justify-center my-2">
         <SectionHeader>Player ➕</SectionHeader>
 
         <Button
@@ -103,7 +103,7 @@ export default function NewPlayerForm() {
 
       {isExpanded && (
         <form
-          className="flex flex-row items-center my-10 justify-around px-4 mx-4"
+          className="bg-slate-300 flex flex-row items-center justify-around px-4 py-3 my-4 rounded-sm"
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col">
@@ -140,11 +140,11 @@ export default function NewPlayerForm() {
                 </option>
               ))}
             </select>
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="mt-2 mb-2 flex flex-wrap gap-1">
               {selectedCategories.map((category) => (
                 <span
                   key={category}
-                  className=" my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
+                  className=" my-1 px-2 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
                 >
                   {category}
                   <button
@@ -156,11 +156,10 @@ export default function NewPlayerForm() {
                 </span>
               ))}
             </div>
+            <Button className=" ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
+              Add player
+            </Button>
           </div>
-
-          <Button className=" ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
-            Add player
-          </Button>
         </form>
       )}
     </>

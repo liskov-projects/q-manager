@@ -18,9 +18,9 @@ export default function ButtonGroup({ tournamentId }) {
   if (!tournamentOwner) return null;
 
   return (
-    <div className="my-4">
+    <div className="my-1">
       <SectionHeader>Button Group</SectionHeader>
-      <div className="flex flex-col justify-around h-50 my-12">
+      <div className="flex flex-col justify-around h-auto my-3">
         <div className="flex">
           <Button
             className="bg-bluestone-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[800px] px-4 rounded my-2 mx-2 min-w-30 text-nowrap"

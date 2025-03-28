@@ -38,7 +38,7 @@ const QueueStatus = ({ queue }: { queue: TQueue }) => {
     );
 
   return (
-    <div className={`p-4 rounded text-black font-bold ${backgroundColor}`}>{displayMessage}</div>
+    <div className={`p-2 rounded text-black font-bold ${backgroundColor}`}>{displayMessage}</div>
   );
 };
 
