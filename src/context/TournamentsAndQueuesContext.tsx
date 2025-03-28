@@ -26,7 +26,7 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
   const [tournaments, setTournaments] = useState<TTournament[]>([]);
   const [currentTournament, setCurrentTournament] = useState<TTournament | null>(null);
   const currentTournamentRef = useRef<TTournament | null>(null);
-  const [justDropped, setJustDropped] = useState(false);
+  const [justDropped, setJustDropped] = useState(null);
 
   const params = useParams();
 
