@@ -214,6 +214,8 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
         saveTournament,
         fetchNewPlayers,
         addPlayerToTournament,
+        justDropped,
+        setJustDropped,
       }}
     >
       {children}

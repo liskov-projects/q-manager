@@ -55,14 +55,13 @@ export default function PlayersList({
         </div>
         <ul className="flex flex-col items-center w-full p-2">
           {players.map((player: TPlayer, index: number) => (
-            <Fragment key={player._id}>
+            <div key={player._id}>
               <PlayerListItem item={player} />
               <DropZone
-                height={60}
                 index={index}
                 dropTarget={zone} // zone specifies which field we're dropping into
               />
-            </Fragment>
+            </div>
           ))}
         </ul>
       </div>
