@@ -39,7 +39,6 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
     <>
       {!editMode ? (
         <li
-          // key={item._id}
           className="cursor-pointer h-auto w-[100%] px-3 py-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-col justify-between items-center my-1"
           draggable={`${!tournamentOwner ? false : true}`}
           onDragStart={() => handleDragStart(item)}

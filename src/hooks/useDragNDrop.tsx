@@ -62,6 +62,11 @@ const useDragNDrop = () => {
           ...queueToSplice.queueItems.slice(index + 1),
         ];
       }
+
+      setJustDropped(draggedItem);
+      setTimeout(() => setJustDropped(null), 500);
+      console.log("JUST DROPPED");
+      console.log(justDropped);
     }
 
     setCurrentTournament((prev: TTournament | null) => {
@@ -81,10 +86,6 @@ const useDragNDrop = () => {
         categories: prev.categories ?? [],
       };
     });
-    // setJustDropped(draggedItem);
-    // setTimeout(() => setJustDropped(null), 500);
-    // console.log("JUST DROPPED");
-    // console.log(justDropped);
   };
 
   // OLD: and used to work BEFORE WebSocket
