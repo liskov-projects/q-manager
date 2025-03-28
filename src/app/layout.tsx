@@ -7,7 +7,7 @@ import Header from "@/Components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { TournamentsAndQueuesProvider } from "@/context/TournamentsAndQueuesContext";
 import { SocketProvider } from "@/context/SocketContext";
-import { FavouriteItemsProvider } from "@/context/FavouritePlayersContext";
+import { FavouriteItemsProvider } from "@/context/FavouriteItemsContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

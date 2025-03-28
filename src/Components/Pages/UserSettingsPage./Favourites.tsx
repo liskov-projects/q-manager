@@ -1,11 +1,13 @@
 "use client";
 // hooks
 import { useState, useEffect } from "react";
-import { useFavourites } from "@/context/FavouritePlayersContext";
+import { useFavourites } from "@/context/FavouriteItemsContext";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // types
 import { TPlayer } from "@/types/Types";
 import StarItem from "@/Components/Buttons/StarItem";
+// components
+import SectionHeader from "@/Components/SectionHeader";
 
 export default function Favourites() {
   const { favouritePlayers, setFavouritePlayers } = useFavourites();
@@ -15,6 +17,7 @@ export default function Favourites() {
 
   return (
     <div>
+      <SectionHeader>Favourite Players</SectionHeader>
       {favouritePlayers.length === 0 ? (
         <span className="text-lg text-red-500">No favourite players</span>
       ) : (
@@ -30,6 +33,7 @@ export default function Favourites() {
           ))}
         </ul>
       )}
+      <SectionHeader>Favourite Tournaments</SectionHeader>
     </div>
   );
 }

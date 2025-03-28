@@ -1,15 +1,21 @@
 // hooks
-import { useFavourites } from "@/context/FavouritePlayersContext";
+import { useFavourites } from "@/context/FavouriteItemsContext";
 import { usePathname } from "next/navigation.js";
 import { useState, useEffect } from "react";
 
-export default function StarItem({ playerId }: { playerId: string }) {
-  const { favouritePlayers, toggleFavouritePlayers } = useFavourites();
-  // const isStarred = favouritePlayers.includes(playerId);
+export default function StarItem({
+  playerId,
+  tournamentId,
+}: {
+  playerId?: string;
+  tournamentId?: string;
+}) {
+  const { toggleFavouritePlayers } = useFavourites();
   const [isStarred, setIsStarred] = useState(false);
   const pathname = usePathname();
-  console.log("pathname", pathname);
+  // console.log("pathname", pathname);
 
+  // FIXME: add a function returning a bool making descision how to show the star (compare item to favPlayers on the user object)
   useEffect(() => {
     if (pathname.includes("/user-settings")) {
       setIsStarred(true);
@@ -17,7 +23,8 @@ export default function StarItem({ playerId }: { playerId: string }) {
   }, [pathname]);
 
   const handleClick = () => {
-    toggleFavouritePlayers(playerId);
+    if (playerId) toggleFavouritePlayers(playerId);
+    if (tournamentId) toggleFavouriteTournaments(tournamentId);
     setIsStarred(!isStarred);
   };
   return (
