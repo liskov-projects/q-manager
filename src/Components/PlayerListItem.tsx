@@ -32,58 +32,57 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
     }
   };
 
+  const editAndDeleteStyles =
+    "h-[40px] w-[42px] px-[2px] py-[2px] text-[1rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out flex items-center justify-center";
+
   return (
     <>
       {!editMode ? (
         <li
           // key={item._id}
-          className="h-30 w-[92%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
+          className="h-auto w-[100%] px-3 py-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-col justify-between items-center my-2"
           draggable={`${!tournamentOwner ? false : true}`}
           onDragStart={() => handleDragStart(item)}
           onDragOver={(e) => handleDragOver(e)}
         >
           {/* Player Name */}
-          <div className="player-name font-semibold text-lg">
-            {item.names}
+          <div className="w-full flex justify-between">
+            <div className="player-name font-bold text-lg w-[65%]">{item.names}</div>
+            {!tournamentOwner ? null : (
+              <Button
+                onClick={() => {
+                  console.log("clicked the button to see the item ", item);
+                  if (socket)
+                    socket.emit("addPlayerToShortestQ", {
+                      message: "emitting add to shortes",
+                      playerData: item,
+                      tournamentId: currentTournament?._id,
+                    });
+                  // NOTE: optimistic UI
+                  // handleAddToShortestQueue(item);
+                }}
+                className="px-1 py-1 text-[1rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[auto] w-[45px] flex items-center justify-center"
+              >
+                ⬆️ Q
+              </Button>
+            )}
+          </div>
+
+          <TagsList item={item} />
+
+          <div className="w-full flex justify-between">
             {!tournamentOwner ? null : (
               <div className="flex flex-row">
-                <Button
-                  className="mx-2 px-3 py-1 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
-                  onClick={() => setEditMode(true)}
-                >
+                <Button className={editAndDeleteStyles} onClick={() => setEditMode(true)}>
                   ✏️
                 </Button>
-                <Button
-                  className="mx-2 px-5 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[70%] w-[30%] flex items-center justify-center"
-                  onClick={handleDelete}
-                >
+                <Button className={editAndDeleteStyles} onClick={handleDelete}>
                   🗑️
                 </Button>
               </div>
             )}
             {isSignedIn ? <StarItem playerId={item._id} /> : null}
           </div>
-
-          <TagsList item={item} />
-
-          {!tournamentOwner ? null : (
-            <Button
-              onClick={() => {
-                console.log("clicked the button to see the item ", item);
-                if (socket)
-                  socket.emit("addPlayerToShortestQ", {
-                    message: "emitting add to shortes",
-                    playerData: item,
-                    tournamentId: currentTournament?._id,
-                  });
-                // NOTE: optimistic UI
-                // handleAddToShortestQueue(item);
-              }}
-              className="px-2 py-2 text-[1rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[auto] w-[70px] flex items-center justify-center"
-            >
-              ⬆️ Q
-            </Button>
-          )}
         </li>
       ) : (
         <EditListItem item={item} setEditMode={setEditMode} />
