@@ -29,6 +29,10 @@ export default function AllTournamentsPage() {
     <div className="flex flex-row items-start justify-around p-8">
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
+          {/* FIXME: layout should be */}
+          {/* MANAGED TOURNAMENTS */}
+          {/* FAVED TOURNAMENTS */}
+          {/* ALL TOURN  */}
           <SectionHeader>Tournaments</SectionHeader>
           <Button
             onClick={() => fetchTournaments()}

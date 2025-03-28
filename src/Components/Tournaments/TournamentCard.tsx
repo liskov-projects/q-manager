@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import SectionHeader from "../SectionHeader";
 import TournamentCategories from "./TournamentCategories";
+import StarItem from "../Buttons/StarItem";
 
 export default function TournamentCard({ tournament }: { tournament: TTournament }) {
   const { name, _id, description, categories } = tournament;
@@ -32,6 +33,7 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
 
         <TournamentCategories categories={categories} tournamentId={_id} />
       </Link>
+      <StarItem />
     </div>
   );
 }

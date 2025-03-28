@@ -56,6 +56,8 @@ export default function TournamentQueuesPage({ tournamentId }) {
             visibleSection === "queues" ? "block" : "hidden lg:block"
           }`}
         >
+          {/* FIXME: buttons for users that don't manage tourn where they toggle show only their fav players */}
+
           <QueuesContainer />
         </div>
 

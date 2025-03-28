@@ -39,7 +39,7 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
   }, [currentTournament]);
 
   useEffect(() => {
-    console.log("RUNNING HERE IN CONTEXT ALL TOURNAMENTS??");
+    // console.log("RUNNING HERE IN CONTEXT ALL TOURNAMENTS??");
     // fetchPlayers();
     fetchTournaments();
   }, []);

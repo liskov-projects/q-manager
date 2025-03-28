@@ -21,13 +21,20 @@ export async function GET(req: NextRequest) {
     .populate({
       path: "favouritePlayers",
       select: "_id names categories phoneNumbers tournamentId",
-      populate: { path: "tournamentId", select: "_id name" }, //FIXME: "_id name" why?
+      populate: { path: "tournamentId", select: "_id name" },
     })
     .lean();
 
-  if (!user || !user.favouritePlayers.length) {
-    return NextResponse.json([], { status: 200 });
+  if (!user) {
+    const newUser = new UserModel({
+      _id: userId,
+      // userName: ,
+      favouritePlayers: [],
+      favouriteTournaments: [], // Ensure correct field name
+    });
+    await newUser.save();
   }
+
   const tournaments = await TournamentModel.find({});
 
   const result = user.favouritePlayers.map((player: TPlayer) => {
@@ -57,15 +64,27 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   await dbConnect();
 
+  // console.log("this is req in POST", req);
+
+  //  automatically gets userID so we don't need the forlder [...id]
   const { userId } = getAuth(req);
+
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { playerId } = await req.json();
+  const { playerId, username } = await req.json();
+  console.log("req", playerId, username);
   const user = await UserModel.findById(userId).populate("favouritePlayers"); //.lean();
+
   if (!user) {
-    return NextResponse.json([], { status: 404 });
+    const newUser = new UserModel({
+      _id: userId,
+      userName: username,
+      favouritePlayers: [],
+      favouriteTournaments: [],
+    });
+    await newUser.save();
   }
 
   // ensures the reference is read ok

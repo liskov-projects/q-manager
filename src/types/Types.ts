@@ -53,6 +53,9 @@ export type TFavouriteItemsContext = {
   favouritePlayers: TPlayer[];
   setFavouritePlayers: React.Dispatch<React.SetStateAction<TPlayer[]>>;
   toggleFavouritePlayers: (playerId: string) => void;
+  favouriteTournaments: TTournament[];
+  setFavouriteTournaments: React.Dispatch<React.SetStateAction<TTournament[]>>;
+  toggleFavouriteTournaments: (tournamentId: string) => void;
 };
 
 // NOTE: not used anywhere
