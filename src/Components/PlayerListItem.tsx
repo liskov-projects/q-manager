@@ -72,7 +72,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
 
           <div className="w-full flex justify-between">
             {!tournamentOwner ? null : (
-              <div className="flex flex-row">
+              <div className="flex w-[40%] flex-row justify-between">
                 <Button className={editAndDeleteStyles} onClick={() => setEditMode(true)}>
                   ✏️
                 </Button>
