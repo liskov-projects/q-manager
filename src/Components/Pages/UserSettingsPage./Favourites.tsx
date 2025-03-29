@@ -13,7 +13,7 @@ export default function Favourites() {
   const { favouritePlayers, setFavouritePlayers, favouriteTournaments } = useFavourites();
 
   //   console.log("favsPl in Favourites", favouritePlayers);
-  console.log("favsTourn in Favourites", favouriteTournaments);
+  //   console.log("favsTourn in Favourites", favouriteTournaments);
 
   return (
     <div>

@@ -10,8 +10,8 @@ export default function StarItem({
   playerId?: string;
   tournamentId?: string;
 }) {
-  const { toggleFavouritePlayers } = useFavourites();
   const [isStarred, setIsStarred] = useState(false);
+  const { toggleFavouritePlayers, toggleFavouriteTournaments } = useFavourites();
   const pathname = usePathname();
   // console.log("pathname", pathname);
 
@@ -22,9 +22,11 @@ export default function StarItem({
     }
   }, [pathname]);
 
+  const action = isStarred ? "remove" : "add";
+
   const handleClick = () => {
-    if (playerId) toggleFavouritePlayers(playerId);
-    if (tournamentId) toggleFavouriteTournaments(tournamentId);
+    if (playerId) toggleFavouritePlayers(playerId, action);
+    if (tournamentId) toggleFavouriteTournaments(tournamentId, action);
     setIsStarred(!isStarred);
   };
   return (
