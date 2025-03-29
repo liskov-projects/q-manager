@@ -21,6 +21,9 @@ async function seedTournaments() {
     console.log("Connected to db");
 
     const db = client.db("qManager");
+
+    // NEW: clears up the collection if it exists to avoid duplication
+    await db.collection("tournaments").deleteMany({});
     const tournamentCollection = db.collection("tournaments");
 
     // Ensure each queue gets an ObjectId before insertion
