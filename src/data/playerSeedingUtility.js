@@ -24,6 +24,8 @@ const seedPlayers = async () => {
 
     console.log("Connected to MongoDB");
 
+    // NEW: clears up the collection if it exists to avoid duplication
+    await db.collection("players").deleteMany({});
     // Fetch or create the players collection
     const playerCollection = db.collection("players");
     const tournamentCollection = db.collection("tournaments");
