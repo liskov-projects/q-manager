@@ -66,21 +66,13 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   await dbConnect();
-
-  // console.log("this is req in POST", req);
-
-  //  automatically gets userID so we don't need the forlder [...id]
   const { userId } = getAuth(req);
-
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { playerId, username } = await req.json();
-
-  // console.log("req", playerId, username);
-
-  let user = await UserModel.findById(userId).populate("favouritePlayers"); //.lean();
+  const { playerId, username, action } = await req.json();
+  let user = await UserModel.findById(userId).populate("favouritePlayers");
 
   if (!user) {
     user = new UserModel({
@@ -90,47 +82,20 @@ export async function POST(req: NextRequest) {
       favouriteTournaments: [],
     });
     await user.save();
-    // return earlier as we don't need the rest of the function in this case
-    return NextResponse.json(user.favouritePlayers);
+    return NextResponse.json(user.favouritePlayers); // Return updated favoritePlayers
   }
 
-  // ensures the reference is read ok
-  const playerObjectId = new mongoose.Types.ObjectId(playerId);
+  // Toggle logic - check the action type
+  if (action === "remove") {
+    // If the player is in the favouritePlayers array, remove them using $pull
+    if (user.favouritePlayers.some((id) => id.equals(playerId))) {
+      user.favouritePlayers.pull(playerId); // This removes the playerId from the array
+      await user.save();
+      return NextResponse.json({ message: "Player removed from favourites", user });
+    } else {
+      return NextResponse.json({ message: "Player not found in favourites" }, { status: 404 });
+    }
+  }
 
-  // gets all tournaments
-  const tournaments = await TournamentModel.find({});
-  // console.log("TOURNAments", tournaments);
-  // looks up the player and gives them a tournament name
-  const playerTournament = tournaments.find((tournament: TTournament) => {
-    return (
-      tournament.queues.forEach((queue: TQueue) =>
-        queue.queueItems.some((item: TPlayer) => item._id.toString() === playerId)
-      ) ||
-      tournament.unProcessedQItems.some((item: TPlayer) => item._id.toString() === playerId) ||
-      tournament.processedQItems.some((item: TPlayer) => item._id.toString() === playerId)
-    );
-  });
-
-  // Ensure the player has a tournamentId (if found)
-  const tournamentId = playerTournament ? playerTournament._id.toString() : null;
-
-  // Toggle logic
-  const updatedUser = await UserModel.findByIdAndUpdate(
-    userId,
-    [
-      {
-        $set: {
-          favouritePlayers: {
-            $cond: {
-              if: { $in: [playerObjectId, "$favouritePlayers"] },
-              then: { $setDifference: ["$favouritePlayers", [playerObjectId]] },
-              else: { $concatArrays: ["$favouritePlayers", [playerObjectId]] },
-            },
-          },
-        },
-      },
-    ],
-    { new: true }
-  );
-  return NextResponse.json(updatedUser.favouritePlayers);
+  return NextResponse.json({ error: "Invalid action" }, { status: 400 });
 }

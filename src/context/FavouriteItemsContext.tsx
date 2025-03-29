@@ -36,14 +36,13 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   }, [tournaments]);
 
   //   console.log("FAVOURITE PLAYERS", favouritePlayers);
-
-  const toggleFavouritePlayers = async (playerId: string) => {
+  const toggleFavouritePlayers = async (playerId: string, action: string) => {
     try {
       console.log("Sending request to backend...");
       const response = await fetch("/api/favouritePlayers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ playerId, username }),
+        body: JSON.stringify({ playerId, username, action }),
       });
 
       console.log("Response status:", response.status);
