@@ -90,7 +90,7 @@ export default function NewPlayerForm() {
 
   return (
     <>
-      <div className="flex flex-col h-auto items-center justify-center my-2">
+      <div className="flex h-auto items-center justify-between my-2">
         <SectionHeader>Player ➕</SectionHeader>
 
         <Button
