@@ -25,15 +25,18 @@ export async function GET(req: NextRequest) {
     })
     .lean();
 
-  if (!user) {
-    const newUser = new UserModel({
-      _id: userId,
-      // userName: ,
-      favouritePlayers: [],
-      favouriteTournaments: [], // Ensure correct field name
-    });
-    await newUser.save();
+  if (!user || !user.favouritePlayers.length) {
+    return NextResponse.json([], { status: 200 });
   }
+  // if (!user) {
+  //   const newUser = new UserModel({
+  //     _id: userId,
+  //     // userName: ,
+  //     favouritePlayers: [],
+  //     favouriteTournaments: [], // Ensure correct field name
+  //   });
+  //   await newUser.save();
+  // }
 
   const tournaments = await TournamentModel.find({});
 
@@ -74,17 +77,21 @@ export async function POST(req: NextRequest) {
   }
 
   const { playerId, username } = await req.json();
-  console.log("req", playerId, username);
-  const user = await UserModel.findById(userId).populate("favouritePlayers"); //.lean();
+
+  // console.log("req", playerId, username);
+
+  let user = await UserModel.findById(userId).populate("favouritePlayers"); //.lean();
 
   if (!user) {
-    const newUser = new UserModel({
+    user = new UserModel({
       _id: userId,
       userName: username,
-      favouritePlayers: [],
+      favouritePlayers: [playerId],
       favouriteTournaments: [],
     });
-    await newUser.save();
+    await user.save();
+    // return earlier as we don't need the rest of the function in this case
+    return NextResponse.json(user.favouritePlayers);
   }
 
   // ensures the reference is read ok
@@ -93,7 +100,7 @@ export async function POST(req: NextRequest) {
   // gets all tournaments
   const tournaments = await TournamentModel.find({});
   // console.log("TOURNAments", tournaments);
-  // Find the player in tournaments (if applicable) and assign a tournamentId
+  // looks up the player and gives them a tournament name
   const playerTournament = tournaments.find((tournament: TTournament) => {
     return (
       tournament.queues.forEach((queue: TQueue) =>
@@ -108,22 +115,22 @@ export async function POST(req: NextRequest) {
   const tournamentId = playerTournament ? playerTournament._id.toString() : null;
 
   // Toggle logic
-  const isFav = user.favouritePlayers.some((player: TPlayer) => player._id.toString() === playerId);
-
-  if (isFav) {
-    user.favouritePlayers = user.favouritePlayers.filter(
-      (player: TPlayer) => player._id.toString() !== playerId
-    );
-  } else {
-    const updatedPlayer = {
-      _id: playerObjectId,
-      tournamentId,
-    };
-    user.favouritePlayers.push(updatedPlayer);
-  }
-
-  await user.save();
-  // await UserModel.findByIdAndUpdate(userId, { favouritePlayers: user.favouritePlayers });
-
-  return NextResponse.json(user.favouritePlayers);
+  const updatedUser = await UserModel.findByIdAndUpdate(
+    userId,
+    [
+      {
+        $set: {
+          favouritePlayers: {
+            $cond: {
+              if: { $in: [playerObjectId, "$favouritePlayers"] },
+              then: { $setDifference: ["$favouritePlayers", [playerObjectId]] },
+              else: { $concatArrays: ["$favouritePlayers", [playerObjectId]] },
+            },
+          },
+        },
+      },
+    ],
+    { new: true }
+  );
+  return NextResponse.json(updatedUser.favouritePlayers);
 }
