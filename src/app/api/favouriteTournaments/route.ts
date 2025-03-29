@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
     })
     .lean();
 
-  if (!user || !user.favouritePlayers.length) {
+  if (!user || !user.favouriteTournaments.length) {
     return NextResponse.json([], { status: 200 });
   }
   const tournaments = await TournamentModel.find({});
@@ -63,15 +63,18 @@ export async function POST(req: NextRequest) {
   }
 
   const { tournamentId, username } = await req.json();
+  console.log("username", username);
 
-  let user = await UserModel.findById(userId);
+  const user = await UserModel.findById(userId).populate("favouriteTournaments");
   if (!user) {
-    user = new UserModel({
+    const newUser = new UserModel({
       _id: userId,
-      userName: userName, // Save the username from auth
+      userName: username,
       favouritePlayers: [],
-      favouriteTournaments: [], // Ensure this matches schema
+      favouriteTournaments: [tournamentId],
     });
+    console.log("new user", newUser);
+    await newUser.save();
   }
 
   const tournament = await TournamentModel.findById(tournamentId);

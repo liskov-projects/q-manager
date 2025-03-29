@@ -4,16 +4,16 @@ import { useState, useEffect } from "react";
 import { useFavourites } from "@/context/FavouriteItemsContext";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // types
-import { TPlayer } from "@/types/Types";
+import { TPlayer, TTournament } from "@/types/Types";
 import StarItem from "@/Components/Buttons/StarItem";
 // components
 import SectionHeader from "@/Components/SectionHeader";
 
 export default function Favourites() {
-  const { favouritePlayers, setFavouritePlayers } = useFavourites();
-  const { tournaments } = useTournamentsAndQueuesContext();
+  const { favouritePlayers, setFavouritePlayers, favouriteTournaments } = useFavourites();
 
-  //   console.log("favs in Favourites", favouritePlayers);
+  //   console.log("favsPl in Favourites", favouritePlayers);
+  console.log("favsTourn in Favourites", favouriteTournaments);
 
   return (
     <div>
@@ -34,6 +34,21 @@ export default function Favourites() {
         </ul>
       )}
       <SectionHeader>Favourite Tournaments</SectionHeader>
+      {favouriteTournaments.length === 0 ? (
+        <span className="text-lg text-bluestone-200">No favourite tournaments</span>
+      ) : (
+        <ul>
+          {favouriteTournaments.map((tournament: TTournament) => (
+            <li
+              key={tournament._id}
+              className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
+            >
+              {tournament.name}
+              <StarItem />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
