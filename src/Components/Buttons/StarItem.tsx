@@ -25,6 +25,7 @@ export default function StarItem({
   const action = isStarred ? "remove" : "add";
 
   const handleClick = () => {
+    console.log(action);
     if (playerId) toggleFavouritePlayers(playerId, action);
     if (tournamentId) toggleFavouriteTournaments(tournamentId, action);
     setIsStarred(!isStarred);
