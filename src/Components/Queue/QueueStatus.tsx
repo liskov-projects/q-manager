@@ -15,12 +15,15 @@ const QueueStatus = ({ queue }: { queue: TQueue }) => {
             ? "bg-red-400" // Most urgent color for 1 item
             : queueLength === 0
               ? "bg-red-500"
-              : "bg-green-200"; // Neutral color for empty queue
+              : "bg-blue-900"; // Neutral color for empty queue
 
   // Determine the display message based on queue status
   const displayMessage =
     queue.queueItems.length === 0 ? (
-      "No one on court"
+      <div className="flex flex-col items-center text-white">
+        <div> No one on court </div>
+        <img src="/snoopy-sleeping.gif" alt="No one on court" className="w-32 h-auto mx-auto" />
+      </div>
     ) : queueLength > 0 ? (
       <div className="flex items-center justify-between">
         <span>Number in queue:</span>

@@ -15,25 +15,25 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   const username = user?.username;
   // console.log(user);
 
-  useEffect(() => {
-    const fetchFavouritePlayers = async () => {
-      try {
-        const response = await fetch("/api/favouritePlayers", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
+  // useEffect(() => {
+  //   const fetchFavouritePlayers = async () => {
+  //     try {
+  //       const response = await fetch("/api/favouritePlayers", {
+  //         method: "GET",
+  //         headers: { "Content-Type": "application/json" },
+  //       });
 
-        const data = await response.json();
-        //  as expected
-        // console.log("this is data:", data);
-        setFavouritePlayers(data);
-      } catch (err) {
-        console.error("error fetching favourite players");
-      }
-    };
+  //       const data = await response.json();
+  //       //  as expected
+  //       // console.log("this is data:", data);
+  //       setFavouritePlayers(data);
+  //     } catch (err) {
+  //       console.error("error fetching favourite players");
+  //     }
+  //   };
 
-    fetchFavouritePlayers();
-  }, [tournaments]);
+  //   fetchFavouritePlayers();
+  // }, [tournaments]);
 
   //   console.log("FAVOURITE PLAYERS", favouritePlayers);
   const toggleFavouritePlayers = async (playerId: string, action: string) => {

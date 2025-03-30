@@ -7,11 +7,12 @@ import { TPlayer } from "@/types/Types";
 // components
 import TagsList from "../TagsList";
 import StarItem from "@/Components/Buttons/StarItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function QueueListItem({
   item,
   className,
+  index,
 }: {
   item: TPlayer;
   className: string;
@@ -21,6 +22,22 @@ export default function QueueListItem({
   const { handleDragStart, handleDragOver } = useDragNDrop();
   const { tournamentOwner, justDropped } = useTournamentsAndQueuesContext();
   const { isSignedIn } = useUser();
+
+  const [showGif, setShowGif] = useState(false);
+
+  useEffect(() => {
+    if (justDropped?._id === item._id) {
+      setShowGif(true);
+      const durationOfOneLoop = 1000; // adjust based on gif duration (ms)
+      const totalDuration = durationOfOneLoop * 3;
+
+      const timer = setTimeout(() => {
+        setShowGif(false);
+      }, totalDuration);
+
+      return () => clearTimeout(timer);
+    }
+  }, [justDropped, item._id]);
 
   // NOTE: star background?
   return (
@@ -36,7 +53,16 @@ export default function QueueListItem({
         <div className="player-name font-bold w-[70%]">{item.names}</div>
         {isSignedIn ? <StarItem playerId={item._id} /> : null}
       </div>
-      <TagsList item={item} />
+      <div className="flex justify-between">
+        <TagsList item={item} />
+        {index === 0 ? (
+          <img
+            src="/snoopy-tennis-funny.gif"
+            alt="snoopy-tennis.gif"
+            className="w-16 h-12 inline-block ml-2 align-middle"
+          />
+        ) : null}
+      </div>
     </div>
   );
 }
