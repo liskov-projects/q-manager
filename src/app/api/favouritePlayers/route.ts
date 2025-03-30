@@ -106,7 +106,7 @@ export async function DELETE(req: NextRequest) {
 
   const { playerId } = await req.json();
   console.log(playerId);
-  let user = await UserModel.findById(userId).populate("favouritePlayers");
+  const user = await UserModel.findById(userId).populate("favouritePlayers");
 
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
