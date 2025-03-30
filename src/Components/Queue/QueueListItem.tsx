@@ -6,7 +6,7 @@ import useDragNDrop from "@/hooks/useDragNDrop";
 import { TPlayer } from "@/types/Types";
 // components
 import TagsList from "../TagsList";
-import StarItem from "@/Components/Buttons/StarItem";
+import StarItem from "@/Components/Buttons/StarItem.tsx";
 import { useState, useEffect } from "react";
 
 export default function QueueListItem({
@@ -44,7 +44,7 @@ export default function QueueListItem({
     <div
       key={item._id}
       id={item._id}
-      className={`cursor-pointer p-2 shadow-left-bottom-lg w-[95%] left-bottom-lg rounded-lg mb-2 text-center ${className} ${justDropped?._id === item._id ? "animate-shake bg-yellow-200" : className}`}
+      className={`cursor-pointer ${index === 0 ? "bg-green-600 text-shell-50 border-4 border-black" : "border-2 border-gray-300"} p-2 shadow-left-bottom-lg w-[95%] left-bottom-lg rounded-lg text-center ${className} ${justDropped?._id === item._id ? "animate-shake bg-yellow-200" : className}`}
       draggable={`${!tournamentOwner ? false : true}`}
       onDragStart={() => handleDragStart(item)}
       onDragOver={(e) => handleDragOver(e)}

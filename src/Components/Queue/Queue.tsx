@@ -21,7 +21,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
 
   return (
     <div
-      className="rounded-lg shadow-left-bottom-lg p-2 flex flex-col border-3 border-grey-300"
+      className="rounded-lg shadow-left-bottom-lg p-2 flex flex-col border-3 border-grey-300 overflow-visible"
       onDragOver={(event) => event.preventDefault()}
     >
       <div className="flex flex-row justify-around items-center">
@@ -75,17 +75,12 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       {isExpanded && (
         <>
           {queue.queueItems.length > 0 ? (
-            <ul className="mb-4 h-[auto] overflow-hidden hover:overflow-y-auto">
+            <ul className="mb-4 h-[auto] overflow-visible hover:overflow-y-auto">
               {queue.queueItems.map((item, index) => (
                 <li key={item._id} className="flex flex-col items-center w-[100%]">
                   <QueuePositionLabel index={index} />
                   <QueueListItem
                     item={item}
-                    className={
-                      index === 0
-                        ? "bg-green-600 text-shell-50 border-4 border-black"
-                        : "bg-shell-100"
-                    }
                     queueId={queue._id}
                     index={index} // Pass index to handle drop events
                   />
