@@ -30,6 +30,7 @@ export default function StarItem({
     if (tournamentId) toggleFavouriteTournaments(tournamentId, action);
     setIsStarred(!isStarred);
   };
+
   return (
     <span className="w-12 h-12 block cursor-pointer" role="button" onClick={handleClick}>
       <svg
