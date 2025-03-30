@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { playerId, username, action } = await req.json();
+  const { playerId, username } = await req.json();
   let user = await UserModel.findById(userId).populate("favouritePlayers");
 
   if (!user) {
@@ -82,20 +82,37 @@ export async function POST(req: NextRequest) {
       favouriteTournaments: [],
     });
     await user.save();
-    return NextResponse.json(user.favouritePlayers); // Return updated favoritePlayers
+    return NextResponse.json(user.favouritePlayers);
+  }
+  return NextResponse.json(user.favouritePlayers);
+}
+
+export async function DELETE(req: NextRequest) {
+  await dbConnect();
+
+  // gets the userId from the authentication
+  const { userId } = getAuth(req);
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // Toggle logic - check the action type
-  if (action === "remove") {
-    // If the player is in the favouritePlayers array, remove them using $pull
-    if (user.favouritePlayers.some((id) => id.equals(playerId))) {
-      user.favouritePlayers.pull(playerId); // This removes the playerId from the array
-      await user.save();
-      return NextResponse.json({ message: "Player removed from favourites", user });
-    } else {
-      return NextResponse.json({ message: "Player not found in favourites" }, { status: 404 });
-    }
+  const { playerId } = await req.json();
+  console.log(playerId);
+  let user = await UserModel.findById(userId).populate("favouritePlayers");
+
+  if (!user) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
 
-  return NextResponse.json({ error: "Invalid action" }, { status: 400 });
+  if (!user.favouritePlayers.some((id) => id.equals(playerId))) {
+    return NextResponse.json({ message: "Player not found in favourites" }, { status: 404 });
+  }
+
+  // Remove the playerId from the favouritePlayers array
+  user.favouritePlayers.pull(playerId);
+
+  // Save the updated user object
+  await user.save();
+
+  return NextResponse.json({ message: "Player removed from favourites", user });
 }

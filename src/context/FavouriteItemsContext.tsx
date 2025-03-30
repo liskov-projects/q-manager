@@ -37,23 +37,45 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
   //   console.log("FAVOURITE PLAYERS", favouritePlayers);
   const toggleFavouritePlayers = async (playerId: string, action: string) => {
-    try {
-      console.log("Sending request to backend...");
-      const response = await fetch("/api/favouritePlayers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ playerId, username, action }),
-      });
+    if (action === "add") {
+      try {
+        console.log("Sending request to backend...");
+        const response = await fetch("/api/favouritePlayers", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ playerId, username, action }),
+        });
 
-      console.log("Response status:", response.status);
-      const data = await response.json();
-      console.log("fetch POST result: ", data);
+        console.log("Response status:", response.status);
+        const data = await response.json();
+        console.log("fetch POST result: ", data);
 
-      if (response.ok) {
-        setFavouritePlayers(data);
+        if (response.ok) {
+          setFavouritePlayers(data);
+        }
+      } catch (error) {
+        console.error("Error in toggleFavouritePlayers:", error);
       }
-    } catch (error) {
-      console.error("Error in toggleFavouritePlayers:", error);
+    }
+    if (action === "remove") {
+      try {
+        console.log("Sending request to backend...");
+        const response = await fetch("/api/favouritePlayers", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ playerId, username, action }),
+        });
+
+        console.log("Response status:", response.status);
+        const data = await response.json();
+        console.log("fetch POST result: ", data);
+
+        if (response.ok) {
+          setFavouritePlayers(data);
+        }
+      } catch (error) {
+        console.error("Error in toggleFavouritePlayers:", error);
+      }
     }
   };
 
