@@ -66,14 +66,17 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   await dbConnect();
+  //FIXME: create a new user when they log in
   const { userId } = getAuth(req);
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const { playerId, username } = await req.json();
-  let user = await UserModel.findById(userId).populate("favouritePlayers");
-
+  console.log("playerID", playerId);
+  console.log("userId", userId);
+  // let user = await UserModel.findById(userId).populate("favouritePlayers");
+  let user = await UserModel.findById(userId);
   if (!user) {
     user = new UserModel({
       _id: userId,
@@ -81,9 +84,14 @@ export async function POST(req: NextRequest) {
       favouritePlayers: [playerId],
       favouriteTournaments: [],
     });
+
     await user.save();
     return NextResponse.json(user.favouritePlayers);
   }
+  user.favouritePlayers.push(playerId);
+  user.markModified("favouritePlayers");
+  console.log("USER", user);
+  await user.save();
   return NextResponse.json(user.favouritePlayers);
 }
 
