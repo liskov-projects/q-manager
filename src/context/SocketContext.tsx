@@ -71,6 +71,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     });
     //
     socketInstance.on("playerDropped", ({ draggedItem, index, dropTarget }) => {
+      console.log("PLAYER DROPPED");
+      console.log(draggedItem);
+      console.log(index);
+      console.log(dropTarget);
+
       try {
         handleDropRef.current(draggedItem, index, dropTarget);
         // setCurrentTournament(updatedTournament);

@@ -1,5 +1,5 @@
 // hooks
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { useSocket } from "@/context/SocketContext";
 
@@ -14,7 +14,26 @@ import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "./QueueListItem";
 
 export default function Queue({ queue, index }: { queue: TQueue; index: number }) {
-  const { tournamentOwner, currentTournament } = useTournamentsAndQueuesContext();
+  const { tournamentOwner, draggedItem, currentTournament } = useTournamentsAndQueuesContext();
+
+  const [isDraggedOver, setIsDraggedOver] = useState(false);
+  const [hoveredDropZoneIndex, setHoveredDropZoneIndex] = useState<number | null>(null);
+
+  const dragCounter = useRef(0);
+
+  const handleDragEnter = (itemIndex) => {
+    dragCounter.current++;
+    setIsDraggedOver(true);
+    setHoveredDropZoneIndex(itemIndex);
+  };
+
+  const handleDragLeave = () => {
+    dragCounter.current--;
+    if (dragCounter.current === 0) {
+      setIsDraggedOver(false);
+      setHoveredDropZoneIndex(null);
+    }
+  };
   const { socket } = useSocket();
 
   const [isExpanded, setIsExpanded] = useState(true);
@@ -76,26 +95,68 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
         <>
           {queue.queueItems.length > 0 ? (
             <ul className="mb-4 h-[auto] overflow-visible hover:overflow-y-auto">
-              {queue.queueItems.map((item, index) => (
-                <li key={item._id} className="flex flex-col items-center w-[100%]">
-                  <QueuePositionLabel index={index} />
+              {queue.queueItems.map((item, itemIndex) => (
+                <li
+                  key={item._id}
+                  className="flex flex-col items-center w-[100%]"
+                  onDragEnter={() => handleDragEnter(itemIndex)}
+                  onDragLeave={() => handleDragLeave()}
+                  onDrop={() => {
+                    console.log("DROP IN FRONT END");
+                    setIsDraggedOver(false);
+                    socket?.emit("playerDropped", {
+                      message: "playerDropped from DropZone",
+                      draggedItem,
+                      dropTarget: queue._id,
+                      queue,
+                      index: itemIndex,
+                      tournamentId: currentTournament?._id,
+                    });
+                  }}
+                  onDragOver={(event) => {
+                    event.preventDefault();
+                  }}
+                >
+                  <DropZone
+                    hoveredDropZoneIndex={hoveredDropZoneIndex}
+                    isDraggedOver={isDraggedOver}
+                    index={itemIndex}
+                  />
+                  <QueuePositionLabel index={itemIndex} />
                   <QueueListItem
                     item={item}
                     queueId={queue._id}
-                    index={index} // Pass index to handle drop events
-                  />
-                  <DropZone
-                    height={60}
-                    index={index}
-                    dropTarget={queue._id} // Pass queue as drop target
+                    index={itemIndex} // Pass index to handle drop events
                   />
                 </li>
               ))}
             </ul>
           ) : (
-            <div>
-              <span>No items</span>
-              <DropZone height={60} dropTarget={queue._id} />
+            <div
+              onDragEnter={() => handleDragEnter(0)}
+              onDragLeave={() => handleDragLeave()}
+              onDrop={() => {
+                console.log("DROP IN FRONT END");
+                setIsDraggedOver(false);
+                socket?.emit("playerDropped", {
+                  message: "playerDropped from DropZone",
+                  draggedItem,
+                  dropTarget: queue._id,
+                  queue,
+                  index: queue.queueItems.length,
+                  tournamentId: currentTournament?._id,
+                });
+              }}
+              onDragOver={(event) => {
+                event.preventDefault();
+              }}
+            >
+              {/* <span>No items</span> */}
+              <DropZone
+                hoveredDropZoneIndex={hoveredDropZoneIndex}
+                index={0}
+                isDraggedOver={isDraggedOver}
+              />
             </div>
           )}
         </>

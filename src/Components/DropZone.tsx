@@ -1,54 +1,25 @@
 "use client";
-// hooks
-import { useState } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
-import { useSocket } from "@/context/SocketContext";
-// types
-import { TQueue } from "@/types/Types";
 
-export default function DropZone({
-  index,
-  queue,
-  dropTarget,
-  height,
-}: {
-  index?: number;
-  queue?: TQueue;
-  dropTarget?: TQueue | string;
-  height: number;
-}) {
-  const { tournamentOwner, draggedItem, currentTournament } = useTournamentsAndQueuesContext();
-  const { socket } = useSocket();
+type DropZoneProps = {
+  isDraggedOver: boolean;
+  hoveredDropZoneIndex: number | null;
+  index: number;
+};
 
-  const [isDraggedOver, setIsDraggedOver] = useState(false);
-
-  const handleDragEnter = () => setIsDraggedOver(true);
-  const handleDragLeave = () => setIsDraggedOver(false);
-
-  // console.log("dropTarget in DropZone", dropTarget);
+export default function DropZone({ isDraggedOver, hoveredDropZoneIndex, index }: DropZoneProps) {
+  const { tournamentOwner } = useTournamentsAndQueuesContext();
 
   if (!tournamentOwner) return null;
+
+  const isActive = isDraggedOver && hoveredDropZoneIndex === index;
+
   return (
     <div
       className="drop-zone w-[95%] transition-all duration-200 bg-gray-300 my-2 rounded"
       style={{
-        height: isDraggedOver ? "90px" : "20px",
-        minHeight: "20px",
+        height: isActive ? "50px" : "0px",
       }}
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      onDrop={() => {
-        setIsDraggedOver(false);
-        socket?.emit("playerDropped", {
-          message: "playerDropped from DropZone",
-          draggedItem,
-          dropTarget,
-          queue,
-          index,
-          tournamentId: currentTournament?._id,
-        });
-      }}
-      onDragOver={(event) => event.preventDefault()}
     />
   );
 }

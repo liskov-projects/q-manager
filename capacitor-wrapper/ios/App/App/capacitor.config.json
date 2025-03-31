@@ -1,0 +1,11 @@
+{
+  "appId": "com.qmanager.app",
+  "appName": "q-manager",
+  "webDir": "src",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  },
+  "packageClassList": ["CAPCameraPlugin", "SplashScreenPlugin"]
+}
