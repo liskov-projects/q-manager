@@ -9,7 +9,8 @@ import { TPlayer } from "@/types/Types";
 // components
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPersonCirclePlus } from "@fortawesome/free-solid-svg-icons";
 export default function NewPlayerForm() {
   // just check if logged in as the dropdown list is restricted to only the tournaments created by the logged in user
   const { isSignedIn } = useUser();
@@ -91,7 +92,11 @@ export default function NewPlayerForm() {
   return (
     <>
       <div className="flex h-auto items-center justify-between my-2">
-        <SectionHeader>Player ➕</SectionHeader>
+        <SectionHeader className="flex items-center justify-center gap-x-2">
+          <span>Player</span>
+          {/* ➕ */}
+          <FontAwesomeIcon icon={faPersonCirclePlus} />
+        </SectionHeader>
 
         <Button
           onClick={() => setIsExpanded(!isExpanded)}

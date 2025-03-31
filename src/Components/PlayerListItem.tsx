@@ -12,6 +12,13 @@ import Button from "./Buttons/Button";
 import TagsList from "./TagsList";
 import EditListItem from "./EditListItem";
 import StarItem from "./Buttons/StarItem";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrash,
+  faPen,
+  faArrowUp,
+  faArrowAltCircleRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function PlayerListItem({ item }: { item: TPlayer }) {
   const { tournamentOwner, currentTournament } = useTournamentsAndQueuesContext();
@@ -62,7 +69,9 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
                 }}
                 className="px-1 py-1 text-[1rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[auto] w-[45px] flex items-center justify-center"
               >
-                ⬆️ Q
+                {/* ⬆️ Q */}
+                {/* <FontAwesomeIcon icon={faArrowUp} /> */}
+                <FontAwesomeIcon icon={faArrowAltCircleRight} />
               </Button>
             )}
           </div>
@@ -73,10 +82,10 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
             {!tournamentOwner ? null : (
               <div className="flex w-[45%] flex-row justify-between items-center h-full">
                 <Button className={editAndDeleteStyles} onClick={() => setEditMode(true)}>
-                  ✏️
+                  <FontAwesomeIcon icon={faPen} />
                 </Button>
                 <Button className={editAndDeleteStyles} onClick={handleDelete}>
-                  🗑️
+                  <FontAwesomeIcon icon={faTrash} />
                 </Button>
               </div>
             )}

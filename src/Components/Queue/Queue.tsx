@@ -12,6 +12,8 @@ import QueueStatus from "./QueueStatus";
 import QueuePositionLabel from "./QueuePositionLabel";
 import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "./QueueListItem";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function Queue({ queue, index }: { queue: TQueue; index: number }) {
   const { tournamentOwner, draggedItem, currentTournament } = useTournamentsAndQueuesContext();
@@ -21,7 +23,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
 
   const dragCounter = useRef(0);
 
-  const handleDragEnter = (itemIndex) => {
+  const handleDragEnter = (itemIndex: number) => {
     dragCounter.current++;
     setIsDraggedOver(true);
     setHoveredDropZoneIndex(itemIndex);
@@ -46,7 +48,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       <div className="flex flex-row justify-around items-center">
         <h3 className="text-xl font-semibold text-bluestone-200">Queue {queue.queueName}</h3>
         {!tournamentOwner ? null : (
-          // FIXME: players intp the unprocessed
+          // FIXME: players into the unprocessed
           <Button
             className="mx-2 px-3 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out flex items-center justify-center"
             onClick={() => {
@@ -58,7 +60,8 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
               }
             }}
           >
-            🗑️
+            {/* 🗑️ */}
+            <FontAwesomeIcon icon={faTrash} />
           </Button>
         )}
       </div>
@@ -84,7 +87,11 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
             }}
             disabled={queue.queueItems.length === 0}
           >
-            PROGRESS QUEUE ⬆️
+            <div className="flex items-center justify-center gap-x-2">
+              <span>PROGRESS QUEUE</span>
+              {/* ⬆️ */}
+              <FontAwesomeIcon icon={faArrowUpFromBracket} />
+            </div>
           </Button>
           <QueueStatus queue={queue} />
           <ButtonExpand isExpanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)} />
