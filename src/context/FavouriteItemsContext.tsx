@@ -1,91 +1,41 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { TPlayer, TTournament, TFavouriteItemsContext } from "@/types/Types";
-import { useTournamentsAndQueuesContext } from "./TournamentsAndQueuesContext";
-import { useUser } from "@clerk/nextjs";
+import { createContext, useContext, useState } from "react";
+import { TPlayer, TFavouriteItemsContext } from "@/types/Types";
 
 const FavouriteItemsContext = createContext<TFavouriteItemsContext | null>(null);
 
 export function FavouriteItemsProvider({ children }: { children: React.ReactNode }) {
   const [favouritePlayers, setFavouritePlayers] = useState<TPlayer[]>([]);
   const [favouriteTournaments, setFavouriteTournaments] = useState<TPlayer[]>([]);
-  const { tournaments } = useTournamentsAndQueuesContext();
-  const { user } = useUser();
-  const username = user?.username;
-  // console.log(user);
 
-  // useEffect(() => {
-  //   const fetchFavouritePlayers = async () => {
-  //     try {
-  //       const response = await fetch("/api/favouritePlayers", {
-  //         method: "GET",
-  //         headers: { "Content-Type": "application/json" },
-  //       });
+  const getFavouritePlayers = async () => {
+    try {
+      console.log("Sending request to backend...");
+      const response = await fetch("/api/favouritePlayers", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
 
-  //       const data = await response.json();
-  //       //  as expected
-  //       // console.log("this is data:", data);
-  //       setFavouritePlayers(data);
-  //     } catch (err) {
-  //       console.error("error fetching favourite players");
-  //     }
-  //   };
+      console.log("Response status:", response.status);
+      const data = await response.json();
+      console.log("fetch GET result: ", data);
 
-  //   fetchFavouritePlayers();
-  // }, [tournaments]);
-
-  //   console.log("FAVOURITE PLAYERS", favouritePlayers);
-  const toggleFavouritePlayers = async (playerId: string, action: string) => {
-    if (action === "add") {
-      try {
-        console.log("Sending request to backend...");
-        const response = await fetch("/api/favouritePlayers", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ playerId, username, action }),
-        });
-
-        console.log("Response status:", response.status);
-        const data = await response.json();
-        console.log("fetch POST result: ", data);
-
-        if (response.ok) {
-          setFavouritePlayers(data);
-        }
-      } catch (error) {
-        console.error("Error in toggleFavouritePlayers:", error);
+      if (response.ok) {
+        setFavouritePlayers(data);
       }
-    }
-    if (action === "remove") {
-      try {
-        console.log("Sending request to backend...");
-        const response = await fetch("/api/favouritePlayers", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ playerId, username, action }),
-        });
-
-        console.log("Response status:", response.status);
-        const data = await response.json();
-        console.log("fetch POST result: ", data);
-
-        if (response.ok) {
-          setFavouritePlayers(data);
-        }
-      } catch (error) {
-        console.error("Error in toggleFavouritePlayers:", error);
-      }
+    } catch (error) {
+      console.error("Error in toggleFavouritePlayers:", error);
     }
   };
 
-  const toggleFavouriteTournaments = async (tournamentId: string) => {
+  const addPlayerToFavourites = async (playerId: string) => {
     try {
       console.log("Sending request to backend...");
-      const response = await fetch("/api/favouriteTournaments", {
+      const response = await fetch("/api/favouritePlayers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tournamentId, username }),
+        body: JSON.stringify({ playerId }),
       });
 
       console.log("Response status:", response.status);
@@ -93,12 +43,35 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
       console.log("fetch POST result: ", data);
 
       if (response.ok) {
-        setFavouriteTournaments(data);
+        getFavouritePlayers();
       }
     } catch (error) {
-      console.error("Error in toggleFavouriteTournaments:", error);
+      console.error("Error in toggleFavouritePlayers:", error);
     }
   };
+
+  const removeFavouritePlayer = async (playerId: string) => {
+    console.log(playerId, "in remove fav player");
+    try {
+      console.log("Sending request to backend...");
+      const response = await fetch("/api/favouritePlayers", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ playerId }),
+      });
+
+      console.log("Response status:", response.status);
+      const data = await response.json();
+      console.log("fetch DELETE result: ", data);
+
+      if (response.ok) {
+        getFavouritePlayers();
+      }
+    } catch (error) {
+      console.error("Error in toggleFavouritePlayers:", error);
+    }
+  };
+
   //   console.log("fav players: ", favouritePlayers);
   // console.log("fav TOURNAMENTS: ", favouriteTournaments);
 
@@ -107,10 +80,11 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
       value={{
         favouritePlayers,
         setFavouritePlayers,
-        toggleFavouritePlayers,
+        addPlayerToFavourites,
+        removeFavouritePlayer,
+        getFavouritePlayers,
         favouriteTournaments,
         setFavouriteTournaments,
-        toggleFavouriteTournaments,
       }}
     >
       {children}

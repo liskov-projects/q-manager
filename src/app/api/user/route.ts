@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { UserModel } from "@/models/UserModel";
-import { getAuth } from "@clerk/nextjs/server";
+// import { getAuth } from "@clerk/nextjs/server";
 
 export async function POST(req: NextRequest) {
   await dbConnect();
