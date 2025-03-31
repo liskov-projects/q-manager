@@ -17,15 +17,21 @@ export default function LoginPage() {
     }
   }, [isSignedIn, router]);
 
+  useEffect(() => {
+    console.log("isSignedIn:", isSignedIn);
+    console.log("user:", user);
+    if (isSignedIn) addNewUser(user);
+  }, [isSignedIn]);
+
   const addNewUser = async (user: ClerkUser) => {
-    const { userId, username } = user;
+    const { id, username } = user;
 
     try {
       console.log("Sending request to backend...");
       const response = await fetch("/api/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, username }),
+        body: JSON.stringify({ id, username }),
       });
 
       console.log("Response status:", response.status);
@@ -39,10 +45,6 @@ export default function LoginPage() {
       throw new Error("error adding a new user", err);
     }
   };
-
-  useEffect(() => {
-    if (isSignedIn) addNewUser(user);
-  }, [isSignedIn]);
 
   return (
     <div className="flex items-center justify-center">

@@ -7,24 +7,24 @@ export async function POST(req: NextRequest) {
   await dbConnect();
 
   try {
-    const { userName } = await req.json();
-    const userId = getAuth(req);
+    const { username, id } = await req.json();
+    // const userId = getAuth(req);
 
-    console.log("userID", userId);
-    console.log("userName", userName);
+    console.log("userID", id);
+    console.log("userName", username);
 
-    if (!userId || !userName) {
-      return NextResponse.json({ error: "Missing userId or userName" }, { status: 400 });
+    if (!id || !username) {
+      return NextResponse.json({ error: "Missing id or username" }, { status: 400 });
     }
 
     // Check if user already exists
-    const existingUser = await UserModel.findById(userId);
+    const existingUser = await UserModel.findById(id);
 
     if (!existingUser) {
       // Create new user
       const newUser = new UserModel({
-        _id: userId,
-        userName,
+        _id: id,
+        userName: username,
         favouritePlayers: [],
         favouriteTournaments: [],
       });
