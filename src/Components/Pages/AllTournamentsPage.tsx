@@ -2,6 +2,8 @@
 // hooks
 import { useState } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
+// types
+import { TTournament } from "@/types/Types";
 // components
 import SectionHeader from "@/Components/SectionHeader";
 import Button from "@/Components/Buttons/Button";
@@ -15,14 +17,22 @@ export default function AllTournamentsPage() {
   const { tournaments, fetchTournaments } = useTournamentsAndQueuesContext();
   const [search, setSearch] = useState("");
 
-  const tournamentsToShow = tournaments.filter((tournament) => {
-    return (
-      search.length === 0 ||
-      tournament.name.toLowerCase().includes(search) ||
-      tournament.categories.toLowerCase().includes(search) ||
-      tournament.description.toLowerCase().includes(search)
+  const tournamentsToShow = tournaments
+    .filter((tournament: TTournament) => {
+      const searchLower = search.toLowerCase();
+
+      return (
+        search.length === 0 ||
+        tournament.name.toLowerCase().includes(searchLower) ||
+        tournament.description.toLowerCase().includes(searchLower) ||
+        tournament.categories.some((category: string) =>
+          category.toLowerCase().includes(searchLower)
+        )
+      );
+    })
+    .sort((tournamentA: TTournament, tournamentB: TTournament) =>
+      tournamentA.name.localeCompare(tournamentB.name)
     );
-  });
 
   return (
     // FIXME: the grid for both sections
