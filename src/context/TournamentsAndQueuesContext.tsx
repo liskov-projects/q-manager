@@ -157,7 +157,7 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
   const fetchTournaments = async () => {
     const response = await fetch(`/api/tournament/`);
     const tournamentsData = await response.json();
-    console.log("response: ", tournamentsData);
+    // console.log("response: ", tournamentsData);
     setTournaments(tournamentsData);
   };
 

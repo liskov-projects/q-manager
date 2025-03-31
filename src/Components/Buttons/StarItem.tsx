@@ -41,6 +41,7 @@ export default function StarItem({
   // works based off the parameter passed into the component player/tournamentId
   const handleClick = () => {
     if (playerId) {
+      console.log("playerId in Star", playerId);
       if (!isStarred) addPlayerToFavourites(playerId);
       if (isStarred) removeFavouritePlayer(playerId);
       setIsStarred(!isStarred);

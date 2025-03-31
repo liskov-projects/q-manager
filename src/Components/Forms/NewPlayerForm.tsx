@@ -83,7 +83,7 @@ export default function NewPlayerForm() {
       phoneNumbers: "",
     });
 
-    // console.log(newPlayers);
+    console.log("newItem", newItem);
   }
 
   // hides the components from guests

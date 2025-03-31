@@ -11,15 +11,15 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
   const getFavouritePlayers = async () => {
     try {
-      console.log("Sending request to backend...");
+      // console.log("Sending request to backend...");
       const response = await fetch("/api/favouritePlayers", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
 
-      console.log("Response status:", response.status);
+      // console.log("Response status:", response.status);
       const data = await response.json();
-      console.log("fetch GET result: ", data);
+      // console.log("fetch GET result: ", data);
 
       if (response.ok) {
         setFavouritePlayers(data);
@@ -31,7 +31,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
   const addPlayerToFavourites = async (playerId: string) => {
     try {
-      console.log("Sending request to backend...");
+      // console.log("Sending request to backend...");
       const response = await fetch("/api/favouritePlayers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -51,9 +51,9 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   };
 
   const removeFavouritePlayer = async (playerId: string) => {
-    console.log(playerId, "in remove fav player");
+    // console.log(playerId, "in remove fav player");
     try {
-      console.log("Sending request to backend...");
+      // console.log("Sending request to backend...");
       const response = await fetch("/api/favouritePlayers", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -74,15 +74,15 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
   const getFavouriteTournaments = async () => {
     try {
-      console.log("Sending request to backend...");
+      // console.log("Sending request to backend...");
       const response = await fetch("/api/favouriteTournaments", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
 
-      console.log("Response status:", response.status);
+      // console.log("Response status:", response.status);
       const data = await response.json();
-      console.log("fetch GET result: ", data);
+      // console.log("fetch GET result: ", data);
 
       if (response.ok) {
         setFavouriteTournaments(data);
@@ -94,7 +94,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
   const addTournamentToFavourites = async (tournamentId: string) => {
     try {
-      console.log("Sending request to backend...");
+      // console.log("Sending request to backend...");
       const response = await fetch("/api/favouriteTournaments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -126,7 +126,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
       console.log("Response status:", response.status);
       const data = await response.json();
-      console.log("fetch DELETE result: ", data);
+      // console.log("fetch DELETE result: ", data);
 
       if (response.ok) {
         getFavouriteTournaments();

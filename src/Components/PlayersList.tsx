@@ -23,8 +23,17 @@ export default function PlayersList({
   const [filter, setFilter] = useState("");
 
   const { currentTournament } = useTournamentsAndQueuesContext();
-  // NEW:
+
   const { handleDrop } = useDragNDrop();
+
+  // decides how to filter the players list
+  const filteredPlayers = players.filter((player: TPlayer) => {
+    if (search !== "" || filter !== "") {
+      const matchesSearch = player.names.toLowerCase().includes(search.toLowerCase());
+      const matchesCategory = filter === "show all" || player.categories.includes(filter);
+      return matchesSearch && matchesCategory;
+    } else return players;
+  });
 
   return (
     // REVIEW: viewport height
@@ -54,15 +63,27 @@ export default function PlayersList({
           </select>
         </div>
         <ul className="flex flex-col items-center w-full p-2">
-          {players.map((player: TPlayer, index: number) => (
-            <div key={player._id}>
-              <PlayerListItem item={player} />
-              <DropZone
-                index={index}
-                dropTarget={zone} // zone specifies which field we're dropping into
-              />
-            </div>
-          ))}
+          <DropZone />
+          {players.length < 0 ? (
+            <DropZone />
+          ) : (
+            // players
+            //   .filter((player: TPlayer) => {
+            //     // FIXME: waut to refactor?
+            //     const matchesSearch = player.names.toLowerCase().includes(search.toLowerCase());
+            //     const matchesCategory = filter === "show all" || player.categories.includes(filter);
+            //     return matchesSearch && matchesCategory;
+            //   })
+            filteredPlayers.map((player: TPlayer, index: number) => (
+              <div key={player._id}>
+                <PlayerListItem item={player} />
+                <DropZone
+                  index={index}
+                  dropTarget={zone} // zone specifies which field we're dropping into
+                />
+              </div>
+            ))
+          )}
         </ul>
       </div>
     </div>
