@@ -22,9 +22,7 @@ export default function StarItem({
     getFavouriteTournaments,
     removeFavouriteTournament,
   } = useFavourites();
-  const pathname = usePathname();
 
-  // console.log(pathname);
   // makes sure we have yellow stars when a page loads
   useEffect(() => {
     getFavouritePlayers();
@@ -40,8 +38,8 @@ export default function StarItem({
       );
   }, [favouritePlayers, favouriteTournaments]);
 
+  // works based off the parameter passed into the component player/tournamentId
   const handleClick = () => {
-    console.log("playerID", playerId);
     if (playerId) {
       if (!isStarred) addPlayerToFavourites(playerId);
       if (isStarred) removeFavouritePlayer(playerId);
