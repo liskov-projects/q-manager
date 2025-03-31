@@ -72,6 +72,26 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
     }
   };
 
+  const addTournamentToFavourites = async (tournamentId: string) => {
+    try {
+      console.log("Sending request to backend...");
+      const response = await fetch("/api/favouriteTournaments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tournamentId }),
+      });
+
+      console.log("Response status:", response.status);
+      const data = await response.json();
+      console.log("fetch POST result: ", data);
+
+      if (response.ok) {
+        console.log("response ok remember to call getFavTourn here!!");
+      }
+    } catch (error) {
+      console.error("Error in addTournamentToFavourites:", error);
+    }
+  };
   //   console.log("fav players: ", favouritePlayers);
   // console.log("fav TOURNAMENTS: ", favouriteTournaments);
 
@@ -85,6 +105,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
         getFavouritePlayers,
         favouriteTournaments,
         setFavouriteTournaments,
+        addTournamentToFavourites,
       }}
     >
       {children}

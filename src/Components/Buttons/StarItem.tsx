@@ -2,6 +2,7 @@
 import { useFavourites } from "@/context/FavouriteItemsContext";
 import { TPlayer } from "@/types/Types.js";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation.js";
 
 export default function StarItem({
   playerId,
@@ -11,9 +12,16 @@ export default function StarItem({
   tournamentId?: string;
 }) {
   const [isStarred, setIsStarred] = useState(false);
-  const { addPlayerToFavourites, removeFavouritePlayer, favouritePlayers, getFavouritePlayers } =
-    useFavourites();
+  const {
+    addPlayerToFavourites,
+    removeFavouritePlayer,
+    favouritePlayers,
+    getFavouritePlayers,
+    addTournamentToFavourites,
+  } = useFavourites();
+  const pathname = usePathname();
 
+  // console.log(pathname);
   // makes sure we have yellow stars when a page loads
   useEffect(() => {
     getFavouritePlayers();
@@ -26,9 +34,15 @@ export default function StarItem({
 
   const handleClick = () => {
     console.log("playerID", playerId);
-    if (!isStarred) addPlayerToFavourites(playerId);
-    if (isStarred) removeFavouritePlayer(playerId);
-    setIsStarred(!isStarred);
+    if (pathname !== "/all-tournaments") {
+      if (!isStarred) addPlayerToFavourites(playerId);
+      if (isStarred) removeFavouritePlayer(playerId);
+      setIsStarred(!isStarred);
+    } else {
+      console.log("got into the else in click");
+      console.log("tournament id", tournamentId);
+      if (!isStarred) addTournamentToFavourites(tournamentId);
+    }
   };
 
   return (

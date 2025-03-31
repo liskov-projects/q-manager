@@ -66,15 +66,9 @@ export async function POST(req: NextRequest) {
   console.log("username", username);
 
   const user = await UserModel.findById(userId).populate("favouriteTournaments");
+
   if (!user) {
-    const newUser = new UserModel({
-      _id: userId,
-      userName: username,
-      favouritePlayers: [],
-      favouriteTournaments: [tournamentId],
-    });
-    console.log("new user", newUser);
-    await newUser.save();
+    return NextResponse.json({ error: "user not found" }, { status: 404 });
   }
 
   const tournament = await TournamentModel.findById(tournamentId);
@@ -82,17 +76,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Tournament not found" }, { status: 404 });
   }
 
-  // Toggle logic (store only tournamentId)
-  const index = user.favouriteTournaments.findIndex(
-    (t: TTournament) => t.toString() === tournamentId
-  );
-  if (index === -1) {
-    user.favouriteTournaments.push(tournament._id); // Store ObjectId, not full object
-  } else {
-    user.favouriteTournaments.splice(index, 1); // Remove if already in favorites
-  }
-
+  user.favouriteTournaments.push(tournamentId);
   await user.save();
-
   return NextResponse.json(user.favouriteTournaments);
 }

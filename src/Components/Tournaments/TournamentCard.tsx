@@ -35,7 +35,7 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
 
         <TournamentCategories categories={categories} tournamentId={_id} />
       </Link>
-      <StarItem />
+      <StarItem tournamentId={tournament._id} />
     </div>
   );
 }
