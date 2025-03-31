@@ -1,8 +1,7 @@
 // hooks
 import { useFavourites } from "@/context/FavouriteItemsContext";
 import { TPlayer } from "@/types/Types.js";
-import { usePathname } from "next/navigation.js";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 
 export default function StarItem({
   playerId,
@@ -15,10 +14,12 @@ export default function StarItem({
   const { addPlayerToFavourites, removeFavouritePlayer, favouritePlayers, getFavouritePlayers } =
     useFavourites();
 
+  // makes sure we have yellow stars when a page loads
   useEffect(() => {
     getFavouritePlayers();
   }, []);
 
+  // responsible for setting stars yellow on the favs page
   useEffect(() => {
     setIsStarred(favouritePlayers.some((player: TPlayer) => player._id === playerId));
   }, [favouritePlayers]);
