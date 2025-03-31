@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuth, currentUser } from "@clerk/nextjs/server";
+import { getAuth } from "@clerk/nextjs/server";
 import dbConnect from "@/lib/db";
 import { UserModel } from "@/models/UserModel";
 import { TPlayer, TTournament, TQueue } from "@/types/Types";
 import { TournamentModel } from "@/models/TournamentModel";
-import { PlayerModel } from "@/models/PlayerModel";
-import mongoose from "mongoose";
 
 export async function GET(req: NextRequest) {
   await dbConnect();
@@ -28,15 +26,6 @@ export async function GET(req: NextRequest) {
   if (!user || !user.favouritePlayers.length) {
     return NextResponse.json([], { status: 200 });
   }
-  // if (!user) {
-  //   const newUser = new UserModel({
-  //     _id: userId,
-  //     // userName: ,
-  //     favouritePlayers: [],
-  //     favouriteTournaments: [], // Ensure correct field name
-  //   });
-  //   await newUser.save();
-  // }
 
   const tournaments = await TournamentModel.find({});
 
@@ -66,28 +55,20 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   await dbConnect();
-  //FIXME: create a new user when they log in
+
   const { userId } = getAuth(req);
+
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { playerId, username } = await req.json();
-  console.log("playerID", playerId);
-  console.log("userId", userId);
-  // let user = await UserModel.findById(userId).populate("favouritePlayers");
-  let user = await UserModel.findById(userId);
-  if (!user) {
-    user = new UserModel({
-      _id: userId,
-      userName: username,
-      favouritePlayers: [playerId],
-      favouriteTournaments: [],
-    });
+  const { playerId } = await req.json();
 
-    await user.save();
-    return NextResponse.json(user.favouritePlayers);
+  const user = await UserModel.findById(userId);
+  if (!user) {
+    return NextResponse.json({ error: "No user" }, { status: 500 });
   }
+
   user.favouritePlayers.push(playerId);
   user.markModified("favouritePlayers");
   console.log("USER", user);
@@ -112,14 +93,18 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
 
-  if (!user.favouritePlayers.some((id) => id.equals(playerId))) {
+  // checks for the player
+  const index = user.favouritePlayers.findIndex((item: TPlayer) => {
+    console.log("id", item);
+    return item._id.toString() === playerId;
+  });
+
+  if (index === -1) {
     return NextResponse.json({ message: "Player not found in favourites" }, { status: 404 });
   }
 
-  // Remove the playerId from the favouritePlayers array
+  // removes playerId from the array
   user.favouritePlayers.pull(playerId);
-
-  // Save the updated user object
   await user.save();
 
   return NextResponse.json({ message: "Player removed from favourites", user });
