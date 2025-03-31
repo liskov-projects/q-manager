@@ -181,19 +181,19 @@ io.on("connection", async (socket) => {
       ),
     }));
 
-    // adds items to the correesponding group
+    // adds items to the corresponding group
     if (dropTarget === "unprocessed") {
-      newUnprocessedItems.splice(index + 1, 0, draggedItem);
+      newUnprocessedItems.splice(index, 0, draggedItem);
     } else if (dropTarget === "processed") {
-      newProcessedItems.splice(index + 1, 0, draggedItem);
+      newProcessedItems.splice(index, 0, draggedItem);
     } else {
       const queueToSplice = newQueues.find((queue) => queue._id.toString() === dropTarget);
 
       if (queueToSplice) {
         queueToSplice.queueItems = [
-          ...queueToSplice.queueItems.slice(0, index + 1),
+          ...queueToSplice.queueItems.slice(0, index),
           draggedItem,
-          ...queueToSplice.queueItems.slice(index + 1),
+          ...queueToSplice.queueItems.slice(index),
         ];
       }
     }
@@ -210,6 +210,9 @@ io.on("connection", async (socket) => {
       },
       { new: true }
     );
+
+    // console.log("UPDATED TOURNAMENT");
+    // console.log(updatedTournament);
 
     io.emit("playerDropped", {
       message: "roundtrip made for the playerDropped",

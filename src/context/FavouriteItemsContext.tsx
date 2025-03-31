@@ -100,7 +100,8 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
     }
   };
   //   console.log("fav players: ", favouritePlayers);
-  console.log("fav TOURNAMENTS: ", favouriteTournaments);
+  // console.log("fav TOURNAMENTS: ", favouriteTournaments);
+
   return (
     <FavouriteItemsContext.Provider
       value={{

@@ -27,9 +27,10 @@ const useDragNDrop = () => {
 
   // WORKS: this is exported & used in SocketContext
   const handleDrop = (draggedItem: TPlayer, index: number, dropTarget: string) => {
-    // console.log("player dropped", draggedItem);
-    // console.log("player dropped message", message);
-    // console.log("curTourn", currentTournamentRef);
+    console.log("HANDLE DROP TRIGGERED");
+    console.log("player dropped:", draggedItem);
+    console.log("index:", index);
+    console.log("dropTarget", dropTarget);
 
     //removes item from their source arrays
     const newUnprocessedItems: TPlayer[] | undefined =
@@ -47,19 +48,21 @@ const useDragNDrop = () => {
       queueItems: queue.queueItems.filter((item) => item._id !== draggedItem._id),
     }));
 
-    // adds items to the correesponding group
+    // adds items to the corresponding group
     if (dropTarget === "unprocessed") {
-      newUnprocessedItems?.splice(index + 1, 0, draggedItem);
+      newUnprocessedItems?.splice(index, 0, draggedItem);
     } else if (dropTarget === "processed") {
-      newProcessedItems?.splice(index + 1, 0, draggedItem);
+      newProcessedItems?.splice(index, 0, draggedItem);
     } else {
+      console.log("GETTING TO QUEUE SPLICE");
       const queueToSplice = newQueues?.find((queue: TQueue) => queue._id === dropTarget);
+      console.log(queueToSplice);
 
       if (queueToSplice) {
         queueToSplice.queueItems = [
-          ...queueToSplice.queueItems.slice(0, index + 1),
+          ...queueToSplice.queueItems.slice(0, index),
           draggedItem,
-          ...queueToSplice.queueItems.slice(index + 1),
+          ...queueToSplice.queueItems.slice(index),
         ];
       }
 
