@@ -17,9 +17,11 @@ import { faTrash, faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons
 
 export default function Queue({ queue, index }: { queue: TQueue; index: number }) {
   const { tournamentOwner, draggedItem, currentTournament } = useTournamentsAndQueuesContext();
+  const { socket } = useSocket();
 
   const [isDraggedOver, setIsDraggedOver] = useState(false);
   const [hoveredDropZoneIndex, setHoveredDropZoneIndex] = useState<number | null>(null);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const dragCounter = useRef(0);
 
@@ -36,13 +38,10 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       setHoveredDropZoneIndex(null);
     }
   };
-  const { socket } = useSocket();
-
-  const [isExpanded, setIsExpanded] = useState(true);
 
   return (
     <div
-      className="rounded-lg shadow-left-bottom-lg p-2 flex flex-col border-3 border-grey-300 overflow-visible"
+      className="rounded-lg shadow-left-bottom-lg p-2 flex flex-col border-3 border-grey-300 !overflow-visible"
       onDragOver={(event) => event.preventDefault()}
     >
       <div className="flex flex-row justify-around items-center">
@@ -101,7 +100,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       {isExpanded && (
         <>
           {queue.queueItems.length > 0 ? (
-            <ul className="mb-4 h-[auto] overflow-visible hover:overflow-y-auto">
+            <ul className="mb-4 h-[auto] overflow-visible">
               {queue.queueItems.map((item, itemIndex) => (
                 <li
                   key={item._id}
