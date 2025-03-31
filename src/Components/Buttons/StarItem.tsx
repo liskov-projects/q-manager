@@ -1,6 +1,6 @@
 // hooks
 import { useFavourites } from "@/context/FavouriteItemsContext";
-import { TPlayer } from "@/types/Types.js";
+import { TPlayer, TTournament } from "@/types/Types.js";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation.js";
 
@@ -18,6 +18,9 @@ export default function StarItem({
     favouritePlayers,
     getFavouritePlayers,
     addTournamentToFavourites,
+    favouriteTournaments,
+    getFavouriteTournaments,
+    removeFavouriteTournament,
   } = useFavourites();
   const pathname = usePathname();
 
@@ -25,23 +28,28 @@ export default function StarItem({
   // makes sure we have yellow stars when a page loads
   useEffect(() => {
     getFavouritePlayers();
+    getFavouriteTournaments();
   }, []);
 
   // responsible for setting stars yellow on the favs page
   useEffect(() => {
-    setIsStarred(favouritePlayers.some((player: TPlayer) => player._id === playerId));
-  }, [favouritePlayers]);
+    if (playerId) setIsStarred(favouritePlayers.some((player: TPlayer) => player._id === playerId));
+    if (tournamentId)
+      setIsStarred(
+        favouriteTournaments.some((tournament: TTournament) => tournament._id === tournamentId)
+      );
+  }, [favouritePlayers, favouriteTournaments]);
 
   const handleClick = () => {
     console.log("playerID", playerId);
-    if (pathname !== "/all-tournaments") {
+    if (playerId) {
       if (!isStarred) addPlayerToFavourites(playerId);
       if (isStarred) removeFavouritePlayer(playerId);
       setIsStarred(!isStarred);
-    } else {
-      console.log("got into the else in click");
-      console.log("tournament id", tournamentId);
+    } else if (tournamentId) {
       if (!isStarred) addTournamentToFavourites(tournamentId);
+      if (isStarred) removeFavouriteTournament(tournamentId);
+      setIsStarred(!isStarred);
     }
   };
 

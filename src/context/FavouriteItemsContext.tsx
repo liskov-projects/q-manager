@@ -72,6 +72,26 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
     }
   };
 
+  const getFavouriteTournaments = async () => {
+    try {
+      console.log("Sending request to backend...");
+      const response = await fetch("/api/favouriteTournaments", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      console.log("Response status:", response.status);
+      const data = await response.json();
+      console.log("fetch GET result: ", data);
+
+      if (response.ok) {
+        setFavouriteTournaments(data);
+      }
+    } catch (error) {
+      console.error("Error in getFavouriteTournaments:", error);
+    }
+  };
+
   const addTournamentToFavourites = async (tournamentId: string) => {
     try {
       console.log("Sending request to backend...");
@@ -87,11 +107,35 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
       if (response.ok) {
         console.log("response ok remember to call getFavTourn here!!");
+        getFavouriteTournaments();
       }
     } catch (error) {
       console.error("Error in addTournamentToFavourites:", error);
     }
   };
+
+  const removeFavouriteTournament = async (tournamentId: string) => {
+    console.log(tournamentId, "in remove fav player");
+    try {
+      console.log("Sending request to backend...");
+      const response = await fetch("/api/favouriteTournaments", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tournamentId }),
+      });
+
+      console.log("Response status:", response.status);
+      const data = await response.json();
+      console.log("fetch DELETE result: ", data);
+
+      if (response.ok) {
+        getFavouriteTournaments();
+      }
+    } catch (error) {
+      console.error("Error in removeFavouriteTournament:", error);
+    }
+  };
+
   //   console.log("fav players: ", favouritePlayers);
   // console.log("fav TOURNAMENTS: ", favouriteTournaments);
 
@@ -106,6 +150,8 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
         favouriteTournaments,
         setFavouriteTournaments,
         addTournamentToFavourites,
+        getFavouriteTournaments,
+        removeFavouriteTournament,
       }}
     >
       {children}

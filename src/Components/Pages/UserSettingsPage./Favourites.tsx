@@ -9,12 +9,15 @@ import StarItem from "@/Components/Buttons/StarItem";
 import SectionHeader from "@/Components/SectionHeader";
 
 export default function Favourites() {
-  const { favouritePlayers, getFavouritePlayers, favouriteTournaments } = useFavourites();
+  const { favouritePlayers, getFavouritePlayers, favouriteTournaments, getFavouriteTournaments } =
+    useFavourites();
 
   useEffect(() => {
     getFavouritePlayers();
+    getFavouriteTournaments();
   }, []);
 
+  console.log("favouriteTournaments", favouriteTournaments);
   return (
     <div>
       <SectionHeader>Favourite Players</SectionHeader>
@@ -44,7 +47,7 @@ export default function Favourites() {
               className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
             >
               {tournament.name}
-              <StarItem />
+              <StarItem tournamentId={tournament._id} />
             </li>
           ))}
         </ul>
