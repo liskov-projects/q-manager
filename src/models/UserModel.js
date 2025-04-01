@@ -7,6 +7,7 @@ export const userSchema = new mongoose.Schema(
     userName: { type: String, required: true },
     // password: { type: String, required: true },
     // maybe playerSchema?
+    phoneNumber: { type: String, required: true },
     favouritePlayers: [{ type: mongoose.Types.ObjectId, ref: "PlayerModel" }],
     favouriteTournaments: [{ type: mongoose.Types.ObjectId, ref: "TournamentModel" }],
   },
