@@ -25,7 +25,7 @@ export default function LoginPage() {
 
   const addNewUser = async (user: ClerkUser) => {
     const { id, username } = user;
-    const phoneNumber = "can be changed";
+    const phoneNumber = "add the number to recieve notifications";
     try {
       console.log("Sending request to backend...");
       const response = await fetch("/api/user", {

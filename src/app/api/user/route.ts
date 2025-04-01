@@ -7,11 +7,12 @@ export async function POST(req: NextRequest) {
   await dbConnect();
 
   try {
-    const { username, id } = await req.json();
-    // const userId = getAuth(req);
+    const { username, id, phoneNumber } = await req.json();
+    //FIXME: const userId = getAuth(req);
 
-    console.log("userID", id);
-    console.log("userName", username);
+    // console.log("userID", id);
+    // console.log("userName", username);
+    // console.log("user phonenumber", phoneNumber);
 
     if (!id || !username) {
       return NextResponse.json({ error: "Missing id or username" }, { status: 400 });
@@ -25,6 +26,7 @@ export async function POST(req: NextRequest) {
       const newUser = new UserModel({
         _id: id,
         userName: username,
+        phoneNumber: phoneNumber,
         favouritePlayers: [],
         favouriteTournaments: [],
       });

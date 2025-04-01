@@ -23,7 +23,9 @@ export default function Favourites() {
     <div>
       <SectionHeader>Favourite Players</SectionHeader>
       {favouritePlayers.length === 0 ? (
-        <span className="text-lg text-red-500">No favourite players</span>
+        <span className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
+          No favourite players
+        </span>
       ) : (
         <ul>
           {favouritePlayers.map((player: TPlayer) => (
@@ -40,7 +42,9 @@ export default function Favourites() {
       )}
       <SectionHeader className="mt-8">Favourite Tournaments</SectionHeader>
       {favouriteTournaments.length === 0 ? (
-        <span className="text-lg text-brick-200">No favourite tournaments</span>
+        <span className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
+          No favourite tournaments
+        </span>
       ) : (
         <ul>
           {favouriteTournaments.map((tournament: TTournament) => (

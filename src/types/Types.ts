@@ -29,6 +29,15 @@ export type TTournament = {
   categories: string[];
 };
 
+// User Type
+export type TUser = {
+  _id?: string;
+  userName: string;
+  phoneNumber?: string;
+  favouritePlayers: string[];
+  favouriteTournaments: string[];
+};
+
 // Tournament and Queues Context Props
 export type TTournamentsAndQueuesContextProps = {
   addMoreQueues: () => void; // Add a new queue
