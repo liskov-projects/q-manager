@@ -24,7 +24,7 @@ export default function Header() {
         {notHome && (
           <Link
             href="/all-tournaments"
-            className="py-1 px-2 self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] hover:bg-bluestone-200 hover:text-shell-100"
+            className="py-1 px-2 self-center ml-2 text-l text-brick-200 border-2 border-brick-200 rounded-[5px] hover:bg-brick-200 hover:text-shell-100"
           >
             {/* Back to all tournaments */}
             {/* <FontAwesomeIcon icon={faTable} /> */}

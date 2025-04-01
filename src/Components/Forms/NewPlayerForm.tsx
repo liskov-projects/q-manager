@@ -24,6 +24,8 @@ export default function NewPlayerForm() {
     phoneNumbers: "",
   });
 
+  const inputStyles = "rounded focus:outline-blue focus:ring-2 focus:ring-brick-200 py-2 px-2";
+
   // console.log("within the form ", currentTournament);
   // console.log("tournamentID: ", currentTournament?._id);
 
@@ -91,8 +93,8 @@ export default function NewPlayerForm() {
 
   return (
     <>
-      <div className="flex h-auto items-center justify-between my-2">
-        <SectionHeader className="flex items-center justify-center gap-x-2">
+      <div className="flex items-center justify-between">
+        <SectionHeader className="flex items-center justify-center gap-x-2 h-full">
           <span>Player</span>
           {/* ➕ */}
           <FontAwesomeIcon icon={faPersonCirclePlus} />
@@ -108,7 +110,7 @@ export default function NewPlayerForm() {
 
       {isExpanded && (
         <form
-          className="bg-slate-300 flex flex-row items-center justify-around px-4 py-3 my-4 rounded-sm"
+          className="flex flex-row items-center justify-around px-4 py-3 my-4 rounded-sm shadow-left-bottom-lg"
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col">
@@ -118,7 +120,7 @@ export default function NewPlayerForm() {
               name="names"
               value={newPlayers.names}
               onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+              className={inputStyles}
             />
 
             <label htmlFor="phoneNumbers">Phone Number</label>
@@ -127,7 +129,7 @@ export default function NewPlayerForm() {
               name="phoneNumbers"
               value={newPlayers.phoneNumbers}
               onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+              className={inputStyles}
             />
 
             <label htmlFor="categories">Categories</label>
@@ -136,7 +138,7 @@ export default function NewPlayerForm() {
               name="categories"
               value={newPlayers.categories}
               onChange={handleCategoryChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+              className={inputStyles}
             >
               <option value="">Select categories</option>
               {currentTournament?.categories.map((category, idx) => (

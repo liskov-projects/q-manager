@@ -67,7 +67,7 @@ export default function EditListItem({
         </Button>
         <label htmlFor="names">Name</label>
         <input
-          className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+          className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200 py-3"
           type="text"
           name="names"
           id="names"

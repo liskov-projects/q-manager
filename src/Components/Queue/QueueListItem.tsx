@@ -49,7 +49,7 @@ export default function QueueListItem({
       onDragStart={() => handleDragStart(item)}
       onDragOver={(e) => handleDragOver(e)}
     >
-      <div className="flex">
+      <div className="flex justify-between">
         <div className="player-name font-bold w-[70%]">{item.names}</div>
         {isSignedIn ? <StarItem playerId={item._id} /> : null}
       </div>

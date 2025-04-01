@@ -32,7 +32,7 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         // NEW:
-        bluestone: {
+        brick: {
           50: "#ABDBE3",
           100: "#76B5C5",
           200: "#197A98",

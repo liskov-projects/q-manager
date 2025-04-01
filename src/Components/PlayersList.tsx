@@ -43,9 +43,9 @@ export default function PlayersList({
       <div className="flex flex-col shadow-left-bottom-lg items-center h-auto overflow-hidden hover:overflow-y-auto w-full">
         {/* TODO: extract into a separate comp? */}
         <input
-          className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-4"
+          className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-2 py-2 px-2 rounded-sm"
           type="text"
-          placeholder="search player..."
+          placeholder="Search matches"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />

@@ -53,14 +53,14 @@ export default function LoginPage() {
           <UserButton />
         </SignedIn>
         <SignedOut>
-          <h2 className="text-3xl font-bold text-center text-bluestone-300 mb-6">Sign In</h2>
-          <div className="flex items-center justify-center cursor-pointer bg-tennis-200 text-bluestone-300 px-6 py-3 rounded-lg shadow-lg hover:bg-tennis-100 transition duration-300 ease-in-out transform hover:scale-105">
+          <h2 className="text-3xl font-bold text-center text-brick-300 mb-6">Sign In</h2>
+          <div className="flex items-center justify-center cursor-pointer bg-tennis-200 text-brick-300 px-6 py-3 rounded-lg shadow-lg hover:bg-tennis-100 transition duration-300 ease-in-out transform hover:scale-105">
             <SignInButton>Click to Sign In</SignInButton>
           </div>
         </SignedOut>
         <Link
           href="/"
-          className="flex my-6 text-bluestone-300 no-underline hover:text-bluestone-100 hover:underline"
+          className="flex my-6 text-brick-300 no-underline hover:text-brick-100 hover:underline"
         >
           Continue as a Guest
         </Link>

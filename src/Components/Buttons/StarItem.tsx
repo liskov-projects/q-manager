@@ -53,7 +53,7 @@ export default function StarItem({
   };
 
   return (
-    <span className="w-12 h-12 block cursor-pointer" role="button" onClick={handleClick}>
+    <span className="w-8 h-8 block cursor-pointer" role="button" onClick={handleClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"

@@ -46,7 +46,7 @@ export default function AllTournamentsPage() {
           <SectionHeader>Tournaments</SectionHeader>
           {/* <Button
             onClick={() => fetchTournaments()}
-            className="self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100"
+            className="self-center ml-2 text-l text-brick-200 border-2 border-brick-200 rounded-[5px] p-2 hover:bg-brick-200 hover:text-shell-100"
           >
             Refresh
           </Button> */}

@@ -23,18 +23,18 @@ export default function User() {
           />
           <Link
             href="/all-tournaments/user-settings"
-            className="text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100"
+            className="text-l text-brick-200 border-2 border-brick-200 rounded-[5px] p-2 hover:bg-brick-200 hover:text-shell-100"
           >
             <FontAwesomeIcon icon={faCog} />
           </Link>
-          <div className="text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100">
+          <div className="text-l text-brick-200 border-2 border-brick-200 rounded-[5px] p-2 hover:bg-brick-200 hover:text-shell-100">
             <SignOutButton>Sign out</SignOutButton>
           </div>
         </div>
       ) : (
         <Link
           href="/login"
-          className="text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] p-2 hover:bg-bluestone-200 hover:text-shell-100"
+          className="text-l text-brick-200 border-2 border-brick-200 rounded-[5px] p-2 hover:bg-brick-200 hover:text-shell-100"
         >
           Sign In
         </Link>
