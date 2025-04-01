@@ -76,13 +76,13 @@ export default function PlayersList({
             //     return matchesSearch && matchesCategory;
             //   })
             filteredPlayers.map((player: TPlayer, index: number) => (
-              <div key={player._id}>
+              <li className="w-full" key={player._id}>
                 <PlayerListItem item={player} />
                 <DropZone
                   index={index}
                   dropTarget={zone} // zone specifies which field we're dropping into
                 />
-              </div>
+              </li>
             ))
           )}
         </ul>
