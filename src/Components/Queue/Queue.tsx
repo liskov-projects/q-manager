@@ -70,7 +70,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
             className={`my-2 py-2 text-[0.75rem] font-bold px-4 rounded transition-colors duration-200 
           ${
             queue.queueItems.length > 0
-              ? "bg-brick-200 text-shell-100 hover:bg-tennis-50 hover:text-shell-300"
+              ? "bg-bluestone-200 text-shell-50 hover:bg-tennis-50 hover:text-shell-300"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
             onClick={() => {

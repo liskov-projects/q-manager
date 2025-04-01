@@ -52,7 +52,7 @@ export default function PlayersList({
         {/* TODO: dropdown categories list | extract*/}
         <div className="flex justify-center">
           <select
-            className="bg-brick-200 my-2 rounded text-shell-100 p-2"
+            className="bg-bluestone-200 hover:bg-tennis-100 text-shell-50 my-2 rounded p-2"
             onChange={(e) => setFilter(e.target.value)}
           >
             <option value="show all">show all...</option>

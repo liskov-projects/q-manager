@@ -134,7 +134,7 @@ export default function NewTournamentForm() {
 
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="ml-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center"
+          className="ml-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center"
         >
           {`${isExpanded ? "hide " : "show"} the form`}
         </Button>
@@ -168,7 +168,7 @@ export default function NewTournamentForm() {
               <Button
                 type="button"
                 onClick={(e) => addCustomCategory(e)}
-                className="bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
+                className="bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
               >
                 Add
               </Button>
@@ -222,7 +222,7 @@ export default function NewTournamentForm() {
               onChange={handleChange}
               className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
             />
-            <Button className="self-center my-6 bg-brick-200 text-shell-100 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
+            <Button className="self-center my-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
               Add the Tournament!
             </Button>
           </div>
