@@ -49,10 +49,9 @@ export default function AllTournamentsPage() {
       </div>
       <div className="flex flex-col p-2">
         <SectionHeader>Tournament functions</SectionHeader>
-        <div className="shadow-left-bottom-lg flex flex-col items-start justify-start p-4 mt-2">
+        <div className="shadow-left-bottom-lg flex flex-col items-start justify-start p-4 mt-2 rounded-md">
           <div className="px-3 py-2 rounded-sm">
             <SectionHeader>Search tournaments:</SectionHeader>
-            {/* this should be a search field */}
             <input
               className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-4"
               type="text"
