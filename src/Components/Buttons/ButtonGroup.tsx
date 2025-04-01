@@ -23,7 +23,7 @@ export default function ButtonGroup({ tournamentId }) {
       <div className="flex flex-col justify-around h-auto my-3">
         <div className="flex">
           <Button
-            className="bg-brick-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[800px] px-4 rounded my-2 mx-2 min-w-30 text-nowrap"
+            className="bg-bluestone-200 hover:bg-tennis-100 text-shell-50 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
             onClick={() => {
               if (socket) {
                 socket.emit("addAllPlayersToQueues", {
@@ -62,7 +62,7 @@ export default function ButtonGroup({ tournamentId }) {
             Unprocess all
           </Button>
           <Button
-            className="bg-brick-200 hover:bg-tennis-100 text-shell-100 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
+            className="bg-bluestone-200 hover:bg-tennis-100 text-shell-50 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
             onClick={() => {
               if (socket) {
                 console.log("emitting PROCESSAllPlayers from the button");

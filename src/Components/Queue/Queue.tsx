@@ -45,7 +45,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       onDragOver={(event) => event.preventDefault()}
     >
       <div className="flex flex-row justify-around items-center">
-        <h3 className="text-xl font-semibold text-brick-200">Queue {queue.queueName}</h3>
+        <h3 className="text-xl font-semibold text-bluestone-200">Queue {queue.queueName}</h3>
         {!tournamentOwner ? null : (
           // FIXME: players into the unprocessed
           <Button

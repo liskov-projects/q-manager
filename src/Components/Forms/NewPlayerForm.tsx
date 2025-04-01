@@ -163,7 +163,7 @@ export default function NewPlayerForm() {
                 </span>
               ))}
             </div>
-            <Button className=" ml-6 bg-bluestone-200 hover:bg-tennis-100 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
+            <Button className=" ml-6 bg-bluestone-200 text-shell-50 hover:bg-tennis-100  hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
               Add player
             </Button>
           </div>
