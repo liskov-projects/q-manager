@@ -45,7 +45,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
   return (
     <>
       {!editMode ? (
-        <li
+        <div
           className="cursor-pointer h-auto w-full px-3 py-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-col justify-between items-center my-1"
           draggable={`${!tournamentOwner ? false : true}`}
           onDragStart={() => handleDragStart(item)}
@@ -91,7 +91,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
             )}
             {isSignedIn ? <StarItem playerId={item._id} /> : null}
           </div>
-        </li>
+        </div>
       ) : (
         <EditListItem item={item} setEditMode={setEditMode} />
       )}
