@@ -43,7 +43,7 @@ export default function TournamentQueuesPage({ tournamentId }) {
             visibleSection === "unprocessed" ? "block" : "hidden lg:block"
           }`}
         >
-          <NewPlayerForm />
+          {tournamentOwner && <NewPlayerForm />}
           <PlayersList
             title={"Unprocessed Players"}
             players={currentTournament.unProcessedQItems}
