@@ -7,6 +7,7 @@ import { TTournament } from "@/types/Types";
 // components
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
+import { error } from "console";
 
 // allows for partial form from existing Type
 type TTournamentForm = Partial<TTournament> & {
@@ -15,6 +16,7 @@ type TTournamentForm = Partial<TTournament> & {
 
 export default function NewTournamentForm() {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [newTournament, setNewTournament] = useState<TTournamentForm>({
     name: "",
     categories: [],
@@ -103,6 +105,8 @@ export default function NewTournamentForm() {
         const data = await res.json();
         console.log("Added: ", data);
         fetchTournaments();
+      } else if (res.status === 409) {
+        setErrorMessage("Tournament with this name already exists");
       } else {
         console.error("Error response:", res);
         throw new Error("Error adding item, status: " + res.status);
@@ -110,6 +114,7 @@ export default function NewTournamentForm() {
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error("Error adding item: ", err.message);
+        setErrorMessage("Error adding tournament");
       } else {
         console.error("Unknown error: ", err);
       }
@@ -225,6 +230,9 @@ export default function NewTournamentForm() {
             <Button className="self-center my-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
               Add the Tournament!
             </Button>
+            {errorMessage && (
+              <span className="text-brick-200 text-center text-xl">{errorMessage}</span>
+            )}
           </div>
         </form>
       )}
