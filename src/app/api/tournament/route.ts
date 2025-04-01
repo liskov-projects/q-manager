@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/db";
 import { TournamentModel } from "@/models/TournamentModel";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import QueueModel from "@/models/QueueModel";
 
 export async function GET(req: NextRequest) {
@@ -17,6 +17,12 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
   const { name, categories, adminUser, image, description, numberOfQueues } = body;
+
+  // makes sure we don't have name duplicates
+  const existingName = await TournamentModel.findOne({ name });
+
+  if (existingName)
+    return NextResponse.json({ error: "This tournament name already exists" }, { status: 409 }); //returns conflict status
 
   // console.log("Recieved at backend: ", body);
   // console.log("numberOfQueues", numberOfQueues);
