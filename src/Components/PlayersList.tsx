@@ -28,11 +28,12 @@ export default function PlayersList({
 
   // decides how to filter the players list
   const filteredPlayers = players.filter((player: TPlayer) => {
-    if (search !== "" || filter !== "") {
-      const matchesSearch = player.names.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = filter === "show all" || player.categories.includes(filter);
-      return matchesSearch && matchesCategory;
-    } else return players;
+    const matchesSearch =
+      search.length === 0 || player.names.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory =
+      filter === "show all" || filter.length === 0 || player.categories.includes(filter);
+
+    return matchesSearch && matchesCategory;
   });
 
   return (

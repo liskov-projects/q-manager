@@ -44,11 +44,11 @@ export default function StarItem({
       console.log("playerId in Star", playerId);
       if (!isStarred) addPlayerToFavourites(playerId);
       if (isStarred) removeFavouritePlayer(playerId);
-      setIsStarred(!isStarred);
+      // setIsStarred(!isStarred);
     } else if (tournamentId) {
       if (!isStarred) addTournamentToFavourites(tournamentId);
       if (isStarred) removeFavouriteTournament(tournamentId);
-      setIsStarred(!isStarred);
+      // setIsStarred(!isStarred);
     }
   };
 
