@@ -1,13 +1,56 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
-import { TPlayer, TFavouriteItemsContext } from "@/types/Types";
+import { createContext, useContext, useEffect, useState } from "react";
+import { TPlayer, TUser, TFavouriteItemsContext } from "@/types/Types";
+import { useUser } from "@clerk/nextjs";
 
 const FavouriteItemsContext = createContext<TFavouriteItemsContext | null>(null);
 
 export function FavouriteItemsProvider({ children }: { children: React.ReactNode }) {
+  const [appUser, setAppUser] = useState<TUser>(null);
+
   const [favouritePlayers, setFavouritePlayers] = useState<TPlayer[]>([]);
   const [favouriteTournaments, setFavouriteTournaments] = useState<TPlayer[]>([]);
+
+  const { user, isSignedIn, isLoaded } = useUser();
+
+  // console.log("User is", user);
+
+  useEffect(() => {
+    if (user?.id && isSignedIn && isLoaded) getAppUserFromDB(user.id);
+  }, [isSignedIn, isLoaded, user]);
+
+  useEffect(() => {
+    if (appUser) {
+      setFavouritePlayers(appUser.favouritePlayers || []);
+      setFavouriteTournaments(appUser.favouriteTournaments || []);
+    }
+  }, [appUser]);
+
+  //FIXME: as expected at /all-tounaments | resets when user-settings refreshed
+  console.log("appUser in CONTEXT", appUser);
+  console.log("fav tourn", favouriteTournaments);
+
+  const getAppUserFromDB = async (userId: string) => {
+    try {
+      const response = await fetch(`api/user/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log("coming from the back user", data);
+        // console.log("APP USER", appUser);
+        setAppUser(data);
+        getFavouritePlayers();
+        getFavouriteTournaments();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const getFavouritePlayers = async () => {
     try {
@@ -81,8 +124,8 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
       });
 
       // console.log("Response status:", response.status);
-      console.log("RESPONSE");
-      console.log(response);
+      // console.log("RESPONSE");
+      // console.log(response);
       const data = await response.json();
       // console.log("fetch GET result: ", data);
 
@@ -154,6 +197,9 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
         addTournamentToFavourites,
         getFavouriteTournaments,
         removeFavouriteTournament,
+        getAppUserFromDB,
+        appUser,
+        setAppUser,
       }}
     >
       {children}

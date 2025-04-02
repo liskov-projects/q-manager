@@ -23,11 +23,11 @@ export default function StarItem({
     removeFavouriteTournament,
   } = useFavourites();
 
-  // makes sure we have yellow stars when a page loads
-  useEffect(() => {
-    getFavouritePlayers();
-    getFavouriteTournaments();
-  }, []);
+  // // makes sure we have yellow stars when a page loads
+  // useEffect(() => {
+  //   getFavouritePlayers();
+  //   getFavouriteTournaments();
+  // }, []);
 
   // responsible for setting stars yellow on the favs page
   useEffect(() => {

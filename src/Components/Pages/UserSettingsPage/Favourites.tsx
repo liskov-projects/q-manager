@@ -10,25 +10,25 @@ import Link from "next/link";
 import SectionHeader from "@/Components/SectionHeader";
 
 export default function Favourites() {
-  const { favouritePlayers, getFavouritePlayers, favouriteTournaments, getFavouriteTournaments } =
-    useFavourites();
+  const {
+    favouritePlayers,
+    getFavouritePlayers,
+    favouriteTournaments,
+    getFavouriteTournaments,
+    appUser,
+  } = useFavourites();
 
-  useEffect(() => {
-    getFavouritePlayers();
-    getFavouriteTournaments();
-  }, []);
-
-  console.log("favouriteTournaments", favouriteTournaments);
+  // console.log("favouriteTournaments", favouriteTournaments);
   return (
     <div>
       <SectionHeader>Favourite Players</SectionHeader>
-      {favouritePlayers.length === 0 ? (
+      {appUser.favouritePlayers.length === 0 ? (
         <span className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
           No favourite players
         </span>
       ) : (
         <ul>
-          {favouritePlayers.map((player: TPlayer) => (
+          {appUser.favouritePlayers.map((player: TPlayer) => (
             <li
               key={player._id}
               className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
@@ -41,13 +41,13 @@ export default function Favourites() {
         </ul>
       )}
       <SectionHeader className="mt-8">Favourite Tournaments</SectionHeader>
-      {favouriteTournaments.length === 0 ? (
+      {appUser.favouriteTournaments.length === 0 ? (
         <span className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
           No favourite tournaments
         </span>
       ) : (
         <ul>
-          {favouriteTournaments.map((tournament: TTournament) => (
+          {appUser.favouriteTournaments.map((tournament: TTournament) => (
             <li
               key={tournament._id}
               className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"

@@ -7,23 +7,20 @@ export async function GET(req: NextRequest) {
   await dbConnect();
 
   try {
-    const auth = getAuth(req);
-    const userId = auth?.userId;
+    const { userId } = getAuth(req);
 
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findOne({ _id: userId });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
+    } else {
+      // const result = user.toObject({ getters: true });
+      return NextResponse.json(user, { status: 200 }); //returns accepted status
     }
-
-    // converts Mongoose document to plain object
-    const plainUser = user.toObject({ getters: true });
-
-    return NextResponse.json({ user: plainUser }, { status: 200 });
   } catch (error) {
     console.error("Error fetching user:", error);
     return NextResponse.json({ error: "Failed to fetch user" }, { status: 500 });

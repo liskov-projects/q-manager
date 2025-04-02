@@ -5,21 +5,24 @@ import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/n
 import { ClerkUser } from "@clerk/types";
 // to redirect the user to a specific route after logginin
 import { useRouter } from "next/navigation";
+import { useFavourites } from "@/context/FavouriteItemsContext";
 import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
   const { isSignedIn, user } = useUser();
+  const { getAppUserFromDB, setAppUser, appUser } = useFavourites();
 
   useEffect(() => {
     if (isSignedIn) {
       router.push("/"); // Redirect to home page after sign-in
+      console.log("APP USER", appUser);
     }
   }, [isSignedIn, router]);
 
   useEffect(() => {
-    console.log("isSignedIn:", isSignedIn);
-    console.log("user:", user);
+    // console.log("isSignedIn:", isSignedIn);
+    // console.log("user:", user);
     if (isSignedIn) addNewUser(user);
   }, [isSignedIn]);
 
@@ -40,6 +43,7 @@ export default function LoginPage() {
 
       if (response.ok) {
         console.log("user added");
+        setAppUser(data?.user);
       }
     } catch (err) {
       throw new Error("error adding a new user", err);

@@ -1,29 +1,35 @@
-// server-related
-import { UserModel } from "@/models/UserModel";
-import dbConnect from "@/lib/db";
+"use client";
 // hooks
-import { currentUser } from "@clerk/nextjs/server";
+import { useEffect } from "react";
+import { useFavourites } from "@/context/FavouriteItemsContext";
+import { useUser } from "@clerk/nextjs";
 // components
 import Favourites from "./Favourites";
 import SectionHeader from "@/Components/SectionHeader";
 import UserData from "./UserData";
 
-export default async function UserSettingsPage() {
-  const user = await currentUser();
+export default function UserSettingsPage() {
+  const { user, isSignedIn, isLoaded } = useUser();
+  const { appUser, getAppUserFromDB } = useFavourites();
 
-  if (!user) return <div>Not signed in</div>;
+  console.log("userID", user?.id);
+  console.log("appUser in USER_SETTINGS_PAGE", appUser);
 
-  // server component - can do this here
-  const userData = await UserModel.findById(user?.id).lean();
+  // console.log("User is", user);
 
-  const username = user?.firstName;
+  useEffect(() => {
+    getAppUserFromDB();
+  }, [isSignedIn, isLoaded]);
+
+  if (!isSignedIn) return <div>Not signed in</div>;
+
   // console.log("userData", userData);
   return (
     // page container
     <div className="m-4">
       {/* header section */}
-      <SectionHeader>{`${username}\'s Dashboard`}</SectionHeader>
-      <span className="text-center">Hello {username} You can manage your favourites here</span>
+      <SectionHeader>{`${appUser?.name}\'s Dashboard`}</SectionHeader>
+      <span className="text-center">Hello {appUser?.name} You can manage your favourites here</span>
       <div className="grid grid-cols-2 gap-4 p-4">
         <div className="flex flex-col gap-2">
           <SectionHeader>Manage Favourites</SectionHeader>
@@ -33,7 +39,7 @@ export default async function UserSettingsPage() {
         <div className="flex flex-col gap-2">
           <SectionHeader>Manage Notifications</SectionHeader>
           <span>notification features will be here with a radio button to enable them</span>
-          <UserData userData={userData} />
+          {appUser ? <UserData userData={appUser} /> : <span>getting data</span>}
         </div>
       </div>
     </div>
