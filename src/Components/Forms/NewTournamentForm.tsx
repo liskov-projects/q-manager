@@ -136,13 +136,12 @@ export default function NewTournamentForm() {
     <>
       <div className="flex flex-col justify-center items-center my-4">
         <SectionHeader>Add new Tournament</SectionHeader>
-
-        <Button
+        {/* <Button
           onClick={() => setIsExpanded(!isExpanded)}
           className="ml-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center"
         >
           {`${isExpanded ? "hide " : "show"} the form`}
-        </Button>
+        </Button> */}
       </div>
 
       {isExpanded && (
