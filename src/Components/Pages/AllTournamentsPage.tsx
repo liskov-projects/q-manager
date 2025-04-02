@@ -53,9 +53,9 @@ export default function AllTournamentsPage() {
           <div className="px-3 py-2 rounded-sm">
             <SectionHeader>Search tournaments:</SectionHeader>
             <input
-              className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-4"
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
               type="text"
-              placeholder="player, tournament..."
+              placeholder="Search for players, tournaments"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
