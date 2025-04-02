@@ -16,51 +16,66 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
   const { user, isSignedIn, isLoaded } = useUser();
 
-  // console.log("User is", user);
-
   useEffect(() => {
-    if (user?.id && isSignedIn && isLoaded) getAppUserFromDB(user.id);
-  }, [isSignedIn, isLoaded, user]);
+    const syncAppUser = async () => {
+      console.log("IN THE USER SYNC");
+      if (user?.id && isSignedIn && isLoaded) {
+        try {
+          console.log("ATTEMPTING DB PULL");
+          const response = await getAppUserFromDB(user.id);
 
-  // useEffect(() => {
-  //   if (appUser) {
-  //     setFavouritePlayers(appUser.favouritePlayers || []);
-  //     setFavouriteTournaments(appUser.favouriteTournaments || []);
-  //   }
-  // }, [appUser]);
+          if (response.status === 404) {
+            // Not found, try to create
+            const newUser = await addUser(user);
+            console.log("GOT NEW USER?");
+            console.log(newUser);
+            if (newUser) {
+              setAppUser(newUser);
+            }
+          } else if (response.ok) {
+            const existingUser = await response.json();
+            console.log("GOT EXISTING USER?");
+            console.log(existingUser);
+            setAppUser(existingUser);
+          } else {
+            console.error("Unexpected error fetching user:", response.status);
+          }
+        } catch (err) {
+          console.error("Error syncing app user:", err);
+        }
+      }
+    };
 
-  //FIXME: as expected at /all-tounaments | resets when user-settings refreshed
-  // console.log("appUser in CONTEXT", appUser);
-  // console.log("fav tourn", favouriteTournaments);
+    syncAppUser();
+  }, [user?.id, isSignedIn, isLoaded]);
 
-  const addUser = async (user: ClerkUser) => {
+  const addUser = async (user: ClerkUser): Promise<TUser | null> => {
+    if (!user) return;
     const { id, username } = user;
-    const phoneNumber = "add the number to recieve notifications";
+    const phoneNumber = "add the number to receive notifications";
+
     try {
-      console.log("Sending request to backend...");
       const response = await fetch(`/api/user/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, username, phoneNumber }),
       });
 
-      console.log("Response status:", response.status);
       const data = await response.json();
-      console.log("fetch POST result: ", data);
 
       if (response.ok) {
-        console.info("user added");
-      } else if (response.status === 409) {
-        const data = getAppUserFromDB(id);
-        setAppUser(data);
+        return data;
+      } else {
+        console.warn("Failed to create user:", data);
+        return null;
       }
     } catch (err) {
-      throw new Error("error adding a new user", err);
+      console.error("Error adding new user:", err);
+      return null;
     }
   };
 
-  const getAppUserFromDB = async (userId: string) => {
-    console.log("getAppUserFromDB triggered in USERSETPAGE");
+  const getAppUserFromDB = async (userId: string): Promise<Response> => {
     try {
       const response = await fetch(`/api/user/${userId}`, {
         method: "GET",
@@ -69,26 +84,12 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
         },
       });
 
-      if (!response.ok) {
-        throw new Error(`Failed to fetch user: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log("Data from backend:", data);
-
-      setAppUser(data); // Update state
+      return response; // leave it to caller to handle response.ok etc
     } catch (err) {
       console.error("Error fetching user:", err);
+      throw err;
     }
   };
-
-  //FIXME: Log when appUser updates \ DELETE:
-  useEffect(() => {
-    if (appUser) {
-      console.log("APP USER updated in context:", appUser);
-    }
-  }, [appUser]);
-//
 
   const getFavouritePlayers = async () => {
     try {
@@ -235,7 +236,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
         addTournamentToFavourites,
         getFavouriteTournaments,
         removeFavouriteTournament,
-        // getAppUserFromDB,
+        getAppUserFromDB,
         appUser,
         setAppUser,
         addUser,

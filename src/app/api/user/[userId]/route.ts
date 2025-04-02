@@ -8,61 +8,52 @@ export async function GET(req: NextRequest) {
 
   try {
     const { userId } = getAuth(req);
-
     if (!userId) {
-      return NextResponse.json({ error: "Needs user userId" }, { status: 401 });
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const user = await UserModel.findOne({ _id: userId });
-
+    const user = await UserModel.findById(userId);
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
-    } else {
-      // const result = user.toObject({ getters: true });
-      return NextResponse.json(user, { status: 200 }); //returns accepted status
     }
+
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
     console.error("Error fetching user:", error);
     return NextResponse.json({ error: "Failed to fetch user" }, { status: 500 });
   }
 }
 
-// WORKS: as expected
 export async function POST(req: NextRequest) {
   await dbConnect();
 
   try {
     const { username, phoneNumber } = await req.json();
     const { userId } = getAuth(req);
+    if (!userId) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
 
-    // checks existing user
-    const existingUser = await UserModel.findById(userId);
+    let user = await UserModel.findById(userId);
 
-    if (!existingUser) {
-      // creates a new one
-      const newUser = new UserModel({
+    if (!user) {
+      user = new UserModel({
         _id: userId,
-        userName: username,
-        phoneNumber: phoneNumber,
+        username,
+        phoneNumber,
         favouritePlayers: [],
         favouriteTournaments: [],
       });
-      await newUser.save();
-      console.log("NEW USER");
-      return NextResponse.json(
-        { message: "User created successfully", user: newUser },
-        { status: 201 }
-      );
+      await user.save();
+      return NextResponse.json(user, { status: 201 });
     } else {
-      console.log("EXISTING USER");
-      // updates the user info
-      existingUser.username = username;
-      existingUser.phoneNumber = phoneNumber;
-      existingUser.save();
-      return NextResponse.json({ message: "User updated", user: existingUser }, { status: 200 });
+      user.username = username;
+      user.phoneNumber = phoneNumber;
+      await user.save();
+      return NextResponse.json(user, { status: 200 });
     }
   } catch (error) {
-    console.error("Error creating user:", error);
-    return NextResponse.json({ error: "Failed to create user" }, { status: 500 });
+    console.error("Error creating/updating user:", error);
+    return NextResponse.json({ error: "Failed to save user" }, { status: 500 });
   }
 }

@@ -20,10 +20,6 @@ export default function Favourites() {
     getAppUserFromDB,
   } = useFavourites();
 
-  // useEffect(() => {
-  //   getAppUserFromDB();
-  // }, []);
-  // console.log("favouriteTournaments", favouriteTournaments);
   return (
     <div>
       <SectionHeader>Favourite Players</SectionHeader>
@@ -52,14 +48,14 @@ export default function Favourites() {
         </span>
       ) : (
         <ul>
-          {appUser.favouriteTournaments.map((tournament: TTournament) => (
+          {appUser?.favouriteTournaments.map((tournamentId: string) => (
             <li
-              key={tournament._id}
+              key={tournamentId}
               className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
             >
-              <span className="ml-8 font-bold text-bluestone-200">{tournament.name}</span>
-              <Link href={`/all-tournaments/${tournament._id}`}>Visit</Link>
-              <StarItem tournamentId={tournament._id} />
+              {/* <span className="ml-8 font-bold text-bluestone-200">{tournament.name}</span> */}
+              {/* <Link href={`/all-tournaments/${tournament._id}`}>Visit</Link> */}
+              {/* <StarItem tournamentId={tournament._id} /> */}
             </li>
           ))}
         </ul>
