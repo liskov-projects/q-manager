@@ -59,7 +59,7 @@ export default function UserData({ userData }: { userData: TUser }) {
   return (
     <>
       <div className="flex flex-row">
-        <label>Edit {userName}'s info'</label>
+        <label>Edit {userName}&apos;s info</label>
         <ToggleSwitch canEdit={canEdit} setCanEdit={setCanEdit} />
       </div>
       <fieldset disabled={!canEdit}>
