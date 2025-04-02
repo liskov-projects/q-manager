@@ -7,13 +7,13 @@ export async function GET(req: NextRequest) {
   await dbConnect();
 
   try {
-    const { id } = req;
+    const { userId } = getAuth(req);
 
-    if (!id) {
-      return NextResponse.json({ error: "Needs user ID" }, { status: 401 });
+    if (!userId) {
+      return NextResponse.json({ error: "Needs user userId" }, { status: 401 });
     }
 
-    const user = await UserModel.findOne({ _id: id });
+    const user = await UserModel.findOne({ _id: userId });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

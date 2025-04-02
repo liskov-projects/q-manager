@@ -14,11 +14,14 @@ export default function UserSettingsPage() {
 
   // console.log("userID", user?.id);
   // console.log("appUser in USER_SETTINGS_PAGE", appUser);
-
-  useEffect(() => {
-    if (user && isSignedIn && isLoaded) {
-    }
-  }, [user, isSignedIn, isLoaded]);
+  // useEffect(() => {
+  //   getAppUserFromDB();
+  // }, []);
+  console.log("APP USER IN USER SETTINGS PAGE", appUser);
+  // useEffect(() => {
+  //   if (user && isSignedIn && isLoaded) {
+  //   }
+  // }, [user, isSignedIn, isLoaded]);
   // console.log("User is", user);
 
   if (!isSignedIn) return <div>Not signed in</div>;

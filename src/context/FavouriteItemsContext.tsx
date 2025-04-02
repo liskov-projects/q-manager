@@ -19,8 +19,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   // console.log("User is", user);
 
   useEffect(() => {
-    // FIXME: should fetch the user on the first render
-    // if (user?.id && isSignedIn && isLoaded) addUser(user);
+    if (user?.id && isSignedIn && isLoaded) getAppUserFromDB(user.id);
   }, [isSignedIn, isLoaded, user]);
 
   // useEffect(() => {
@@ -52,7 +51,8 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
       if (response.ok) {
         console.info("user added");
       } else if (response.status === 409) {
-        getAppUserFromDB(id);
+        const data = getAppUserFromDB(id);
+        setAppUser(data);
       }
     } catch (err) {
       throw new Error("error adding a new user", err);
@@ -60,24 +60,35 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   };
 
   const getAppUserFromDB = async (userId: string) => {
-    console.log(" getAppUserFromDB triggered in USERSETPAGE");
+    console.log("getAppUserFromDB triggered in USERSETPAGE");
     try {
-      const response = await fetch(`api/user/${userId}`, {
+      const response = await fetch(`/api/user/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
-      if (response.ok) {
-        console.log("coming from the back user", data);
-        // console.log("APP USER", appUser);
-        setAppUser(data);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch user: ${response.statusText}`);
       }
+
+      const data = await response.json();
+      console.log("Data from backend:", data);
+
+      setAppUser(data); // Update state
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching user:", err);
     }
   };
+
+  //FIXME: Log when appUser updates \ DELETE:
+  useEffect(() => {
+    if (appUser) {
+      console.log("APP USER updated in context:", appUser);
+    }
+  }, [appUser]);
+//
 
   const getFavouritePlayers = async () => {
     try {
