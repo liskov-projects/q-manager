@@ -2,6 +2,7 @@
 // hooks
 import { useEffect } from "react";
 import { useFavourites } from "@/context/FavouriteItemsContext";
+import { useUser } from "@clerk/nextjs";
 // types
 import { TPlayer, TTournament } from "@/types/Types";
 import StarItem from "@/Components/Buttons/StarItem";
@@ -16,6 +17,7 @@ export default function Favourites() {
     favouriteTournaments,
     getFavouriteTournaments,
     appUser,
+    getAppUserFromDB,
   } = useFavourites();
 
   // console.log("favouriteTournaments", favouriteTournaments);

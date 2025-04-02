@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
-import { ClerkUser } from "@clerk/types";
 // to redirect the user to a specific route after logginin
 import { useRouter } from "next/navigation";
 import { useFavourites } from "@/context/FavouriteItemsContext";
@@ -11,44 +10,18 @@ import Link from "next/link";
 export default function LoginPage() {
   const router = useRouter();
   const { isSignedIn, user } = useUser();
-  const { getAppUserFromDB, setAppUser, appUser } = useFavourites();
+  const { getAppUserFromDB, setAppUser, appUser, addUser } = useFavourites();
 
   useEffect(() => {
     if (isSignedIn) {
       router.push("/"); // Redirect to home page after sign-in
-      console.log("APP USER", appUser);
     }
   }, [isSignedIn, router]);
 
   useEffect(() => {
-    // console.log("isSignedIn:", isSignedIn);
-    // console.log("user:", user);
-    if (isSignedIn) addNewUser(user);
-  }, [isSignedIn]);
-
-  const addNewUser = async (user: ClerkUser) => {
-    const { id, username } = user;
-    const phoneNumber = "add the number to recieve notifications";
-    try {
-      console.log("Sending request to backend...");
-      const response = await fetch("/api/user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, username, phoneNumber }),
-      });
-
-      console.log("Response status:", response.status);
-      const data = await response.json();
-      console.log("fetch POST result: ", data);
-
-      if (response.ok) {
-        console.log("user added");
-        setAppUser(data?.user);
-      }
-    } catch (err) {
-      throw new Error("error adding a new user", err);
-    }
-  };
+    // only adds the user when we're signed in
+    addUser(user?.id);
+  }, [isSignedIn, user]);
 
   return (
     <div className="flex items-center justify-center">

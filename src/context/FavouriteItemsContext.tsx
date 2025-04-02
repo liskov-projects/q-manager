@@ -1,8 +1,10 @@
 "use client";
-
+// hooks
 import { createContext, useContext, useEffect, useState } from "react";
-import { TPlayer, TUser, TFavouriteItemsContext } from "@/types/Types";
 import { useUser } from "@clerk/nextjs";
+// types
+import { TPlayer, TUser, TFavouriteItemsContext } from "@/types/Types";
+import { ClerkUser } from "@clerk/types";
 
 const FavouriteItemsContext = createContext<TFavouriteItemsContext | null>(null);
 
@@ -17,21 +19,48 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   // console.log("User is", user);
 
   useEffect(() => {
-    if (user?.id && isSignedIn && isLoaded) getAppUserFromDB(user.id);
+    // FIXME: should fetch the user on the first render
+    // if (user?.id && isSignedIn && isLoaded) addUser(user);
   }, [isSignedIn, isLoaded, user]);
 
-  useEffect(() => {
-    if (appUser) {
-      setFavouritePlayers(appUser.favouritePlayers || []);
-      setFavouriteTournaments(appUser.favouriteTournaments || []);
-    }
-  }, [appUser]);
+  // useEffect(() => {
+  //   if (appUser) {
+  //     setFavouritePlayers(appUser.favouritePlayers || []);
+  //     setFavouriteTournaments(appUser.favouriteTournaments || []);
+  //   }
+  // }, [appUser]);
 
   //FIXME: as expected at /all-tounaments | resets when user-settings refreshed
-  console.log("appUser in CONTEXT", appUser);
-  console.log("fav tourn", favouriteTournaments);
+  // console.log("appUser in CONTEXT", appUser);
+  // console.log("fav tourn", favouriteTournaments);
+
+  const addUser = async (user: ClerkUser) => {
+    const { id, username } = user;
+    const phoneNumber = "add the number to recieve notifications";
+    try {
+      console.log("Sending request to backend...");
+      const response = await fetch(`/api/user/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, username, phoneNumber }),
+      });
+
+      console.log("Response status:", response.status);
+      const data = await response.json();
+      console.log("fetch POST result: ", data);
+
+      if (response.ok) {
+        console.info("user added");
+      } else if (response.status === 409) {
+        getAppUserFromDB(id);
+      }
+    } catch (err) {
+      throw new Error("error adding a new user", err);
+    }
+  };
 
   const getAppUserFromDB = async (userId: string) => {
+    console.log(" getAppUserFromDB triggered in USERSETPAGE");
     try {
       const response = await fetch(`api/user/${userId}`, {
         method: "GET",
@@ -44,8 +73,6 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
         console.log("coming from the back user", data);
         // console.log("APP USER", appUser);
         setAppUser(data);
-        getFavouritePlayers();
-        getFavouriteTournaments();
       }
     } catch (err) {
       console.error(err);
@@ -197,9 +224,10 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
         addTournamentToFavourites,
         getFavouriteTournaments,
         removeFavouriteTournament,
-        getAppUserFromDB,
+        // getAppUserFromDB,
         appUser,
         setAppUser,
+        addUser,
       }}
     >
       {children}

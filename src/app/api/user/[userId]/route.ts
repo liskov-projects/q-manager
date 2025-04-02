@@ -7,13 +7,13 @@ export async function GET(req: NextRequest) {
   await dbConnect();
 
   try {
-    const { userId } = getAuth(req);
+    const { id } = req;
 
-    if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!id) {
+      return NextResponse.json({ error: "Needs user ID" }, { status: 401 });
     }
 
-    const user = await UserModel.findOne({ _id: userId });
+    const user = await UserModel.findOne({ _id: id });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -27,37 +27,34 @@ export async function GET(req: NextRequest) {
   }
 }
 
+// WORKS: as expected
 export async function POST(req: NextRequest) {
   await dbConnect();
 
   try {
     const { username, phoneNumber } = await req.json();
-    const auth = getAuth(req);
-    const id = auth.userId;
+    const { userId } = getAuth(req);
 
-    // if (!id || !username) {
-    //   return NextResponse.json({ error: "Missing id or username" }, { status: 400 });
-    // }
-
-    // Check if user already exists
-    const existingUser = await UserModel.findById(id);
+    // checks existing user
+    const existingUser = await UserModel.findById(userId);
 
     if (!existingUser) {
-      // Create new user
+      // creates a new one
       const newUser = new UserModel({
-        _id: id,
+        _id: userId,
         userName: username,
         phoneNumber: phoneNumber,
         favouritePlayers: [],
         favouriteTournaments: [],
       });
       await newUser.save();
-
+      console.log("NEW USER");
       return NextResponse.json(
         { message: "User created successfully", user: newUser },
         { status: 201 }
       );
     } else {
+      console.log("EXISTING USER");
       // updates the user info
       existingUser.username = username;
       existingUser.phoneNumber = phoneNumber;

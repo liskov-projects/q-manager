@@ -10,16 +10,16 @@ import UserData from "./UserData";
 
 export default function UserSettingsPage() {
   const { user, isSignedIn, isLoaded } = useUser();
-  const { appUser, getAppUserFromDB } = useFavourites();
+  const { appUser } = useFavourites();
 
-  console.log("userID", user?.id);
-  console.log("appUser in USER_SETTINGS_PAGE", appUser);
-
-  // console.log("User is", user);
+  // console.log("userID", user?.id);
+  // console.log("appUser in USER_SETTINGS_PAGE", appUser);
 
   useEffect(() => {
-    getAppUserFromDB();
-  }, [isSignedIn, isLoaded]);
+    if (user && isSignedIn && isLoaded) {
+    }
+  }, [user, isSignedIn, isLoaded]);
+  // console.log("User is", user);
 
   if (!isSignedIn) return <div>Not signed in</div>;
 
@@ -28,8 +28,10 @@ export default function UserSettingsPage() {
     // page container
     <div className="m-4">
       {/* header section */}
-      <SectionHeader>{`${appUser?.name}\'s Dashboard`}</SectionHeader>
-      <span className="text-center">Hello {appUser?.name} You can manage your favourites here</span>
+      <SectionHeader>{`${appUser?.userName}\'s Dashboard`}</SectionHeader>
+      <span className="text-center">
+        Hello {appUser?.userName} You can manage your favourites here
+      </span>
       <div className="grid grid-cols-2 gap-4 p-4">
         <div className="flex flex-col gap-2">
           <SectionHeader>Manage Favourites</SectionHeader>
