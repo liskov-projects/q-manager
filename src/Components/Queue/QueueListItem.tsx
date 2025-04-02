@@ -44,7 +44,7 @@ export default function QueueListItem({
     <div
       key={item._id}
       id={item._id}
-      className={`cursor-pointer ${index === 0 ? "bg-green-600 hover:bg-green-700 text-shell-50 border-4 border-black" : "border-2 border-gray-300 hover:bg-gray-200"} p-2 shadow-left-bottom-lg w-[95%] left-bottom-lg rounded-lg text-center ${className} ${justDropped?._id === item._id ? "animate-shake bg-yellow-200" : className}`}
+      className={`mb-2 ${tournamentOwner && "cursor-pointer"}  ${index === 0 ? "bg-green-600 hover:bg-green-700 text-shell-50 border-4 border-black" : "border-2 border-gray-300 hover:bg-gray-200"} p-2 shadow-left-bottom-lg w-[95%] left-bottom-lg rounded-lg text-center ${className} ${justDropped?._id === item._id ? "animate-shake bg-yellow-200" : className}`}
       draggable={`${!tournamentOwner ? false : true}`}
       onDragStart={() => handleDragStart(item)}
       onDragOver={(e) => handleDragOver(e)}

@@ -39,13 +39,15 @@ export default function StarItem({
   }, [favouritePlayers, favouriteTournaments]);
 
   // works based off the parameter passed into the component player/tournamentId
-  const handleClick = () => {
+  const handleClick = (e) => {
+    // e.stopPropagation();
     if (playerId) {
       console.log("playerId in Star", playerId);
       if (!isStarred) addPlayerToFavourites(playerId);
       if (isStarred) removeFavouritePlayer(playerId);
       // setIsStarred(!isStarred);
     } else if (tournamentId) {
+      e.stopPropagation();
       if (!isStarred) addTournamentToFavourites(tournamentId);
       if (isStarred) removeFavouriteTournament(tournamentId);
       // setIsStarred(!isStarred);
@@ -53,7 +55,7 @@ export default function StarItem({
   };
 
   return (
-    <span className="w-8 h-8 block cursor-pointer" role="button" onClick={handleClick}>
+    <span className="w-8 h-8 block cursor-pointer" role="button" onClick={(e) => handleClick(e)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
