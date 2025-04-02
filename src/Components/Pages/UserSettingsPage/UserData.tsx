@@ -9,7 +9,7 @@ import ToggleSwitch from "@/Components/Buttons/ToggleSwitch";
 
 export default function UserData({ userData }: { userData: TUser }) {
   const [canEdit, setCanEdit] = useState<boolean>(false);
-
+  console.log(userData);
   const [updatedData, setUpdatedData] = useState<Partial<TUser>>({
     name: userData.userName,
     phoneNumber: userData.phoneNumber,
@@ -22,9 +22,38 @@ export default function UserData({ userData }: { userData: TUser }) {
     setUpdatedData((prev: Partial<TUser>) => ({ ...prev, [name]: value }));
   };
 
-  const handleUpdatedData = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdatedData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("did it update?", updatedData);
+
+    const updatedUser = {
+      ...updatedData,
+      name: updatedData.name,
+      phoneNumber: updatedData.phoneNumber,
+    };
+
+    try {
+      const res = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedUser),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log("Added: ", data);
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Error changing data: ", err.message);
+        // setErrorMessage("Error adding tournament");
+      } else {
+        console.error("Unknown error: ", err);
+      }
+    }
+
+    setCanEdit(false);
   };
 
   return (

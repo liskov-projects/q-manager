@@ -1,22 +1,46 @@
 import dbConnect from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { UserModel } from "@/models/UserModel";
-// import { getAuth } from "@clerk/nextjs/server";
+import { getAuth } from "@clerk/nextjs/server";
+
+export async function GET(req: NextRequest) {
+  await dbConnect();
+
+  try {
+    const auth = getAuth(req);
+    const userId = auth?.userId;
+
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // converts Mongoose document to plain object
+    const plainUser = user.toObject({ getters: true });
+
+    return NextResponse.json({ user: plainUser }, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return NextResponse.json({ error: "Failed to fetch user" }, { status: 500 });
+  }
+}
 
 export async function POST(req: NextRequest) {
   await dbConnect();
 
   try {
-    const { username, id, phoneNumber } = await req.json();
-    //FIXME: const userId = getAuth(req);
+    const { username, phoneNumber } = await req.json();
+    const auth = getAuth(req);
+    const id = auth.userId;
 
-    // console.log("userID", id);
-    // console.log("userName", username);
-    // console.log("user phonenumber", phoneNumber);
-
-    if (!id || !username) {
-      return NextResponse.json({ error: "Missing id or username" }, { status: 400 });
-    }
+    // if (!id || !username) {
+    //   return NextResponse.json({ error: "Missing id or username" }, { status: 400 });
+    // }
 
     // Check if user already exists
     const existingUser = await UserModel.findById(id);
@@ -37,10 +61,11 @@ export async function POST(req: NextRequest) {
         { status: 201 }
       );
     } else {
-      return NextResponse.json(
-        { message: "User already exists", user: existingUser },
-        { status: 200 }
-      );
+      // updates the user info
+      existingUser.username = username;
+      existingUser.phoneNumber = phoneNumber;
+      existingUser.save();
+      return NextResponse.json({ message: "User updated", user: existingUser }, { status: 200 });
     }
   } catch (error) {
     console.error("Error creating user:", error);
