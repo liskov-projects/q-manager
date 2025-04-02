@@ -81,6 +81,8 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
       });
 
       // console.log("Response status:", response.status);
+      console.log("RESPONSE");
+      console.log(response);
       const data = await response.json();
       // console.log("fetch GET result: ", data);
 

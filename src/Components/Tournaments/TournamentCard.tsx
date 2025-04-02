@@ -17,18 +17,21 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
   // console.log(userId);
 
   return (
-    <div className="w-full min-h-[450px] flex flex-col items-center border border-gray-300 rounded-md p-4 bg-shell-75 transition-all duration-300 hover:shadow-lg hover:-translate-y-2 shadow-left-bottom-lg">
+    <div className="w-full flex flex-col items-center border border-gray-300 rounded-md p-4 bg-shell-75 transition-all duration-300 hover:shadow-lg hover:-translate-y-2 shadow-left-bottom-lg">
       <Link
         href={`/all-tournaments/${_id}`}
         className="flex flex-col items-center w-full h-full cursor-pointer"
       >
-        <SectionHeader className="flex items-center justify-center gap-x-2">
-          {name}
-          {adminUser === userId ? <FontAwesomeIcon icon={faWrench} /> : null}
-        </SectionHeader>
+        <div className="flex w-full justify-between mb-2">
+          <SectionHeader className="flex items-center justify-center gap-x-2">
+            {name}
+            {adminUser === userId ? <FontAwesomeIcon icon={faWrench} /> : null}
+          </SectionHeader>
+          <StarItem tournamentId={tournament._id} />
+        </div>
 
         {/* Image Container */}
-        <div className="w-full h-[250px] relative">
+        <div className="w-full h-[125px] relative">
           <Image
             src="/tennis.jpg"
             alt={`Tournament ${name} Image`}
@@ -44,7 +47,6 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
 
         <TournamentCategories categories={categories} tournamentId={_id} />
       </Link>
-      <StarItem tournamentId={tournament._id} />
     </div>
   );
 }
