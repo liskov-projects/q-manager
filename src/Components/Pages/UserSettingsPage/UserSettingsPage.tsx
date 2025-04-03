@@ -1,6 +1,5 @@
 "use client";
 // hooks
-import { useEffect } from "react";
 import { useFavourites } from "@/context/FavouriteItemsContext";
 import { useUser } from "@clerk/nextjs";
 // components
@@ -10,24 +9,13 @@ import UserData from "./UserData";
 import UserNotifications from "./UserNotifications";
 
 export default function UserSettingsPage() {
-  const { user, isSignedIn, isLoaded } = useUser();
+  const { isSignedIn } = useUser();
   const { appUser } = useFavourites();
 
-  // console.log("userID", user?.id);
-  // console.log("appUser in USER_SETTINGS_PAGE", appUser);
-  // useEffect(() => {
-  //   getAppUserFromDB();
-  // }, []);
-  console.log("APP USER IN USER SETTINGS PAGE", appUser);
-  // useEffect(() => {
-  //   if (user && isSignedIn && isLoaded) {
-  //   }
-  // }, [user, isSignedIn, isLoaded]);
-  // console.log("User is", user);
+  // console.log("APP USER IN USER SETTINGS PAGE", appUser);
 
   if (!isSignedIn) return <div>Not signed in</div>;
 
-  // console.log("userData", userData);
   return (
     // page container
     <div className="m-4">
