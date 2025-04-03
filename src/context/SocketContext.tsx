@@ -118,6 +118,16 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
+    // NEW:
+    socketInstance.on("redistributePlayers", ({ updatedTournament }) => {
+      try {
+        setCurrentTournamentRef.current(updatedTournament);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+
+    //
     socketInstance.on("processQueueOneStep", ({ updatedTournament }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);

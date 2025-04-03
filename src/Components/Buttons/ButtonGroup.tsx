@@ -7,7 +7,7 @@ import { useSocket } from "@/context/SocketContext";
 import Button from "./Button";
 import SectionHeader from "../SectionHeader";
 
-export default function ButtonGroup({ tournamentId }) {
+export default function ButtonGroup({}) {
   const { currentTournament, tournamentOwner, saveTournament } = useTournamentsAndQueuesContext();
   const { socket } = useSocket();
 
@@ -39,7 +39,12 @@ export default function ButtonGroup({ tournamentId }) {
           <Button
             className="bg-bluestone-200 hover:bg-tennis-100 text-shell-50 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
             onClick={() => {
-              handleRedistributeQueues();
+              if (socket) {
+                socket.emit("redistributePlayers", {
+                  tournament: currentTournament,
+                });
+              }
+              // handleRedistributeQueues();
             }}
           >
             Redestribute
@@ -77,12 +82,6 @@ export default function ButtonGroup({ tournamentId }) {
             Process all
           </Button>
         </div>
-        {/* <Button
-          onClick={() => saveTournament(tournamentId)}
-          className="flex-grow bg-tennis-200 hover:bg-tennis-100 text-shell-300 hover:text-shell-200 py-2 h-[45px] px-4 rounded my-2 mx-2"
-        >
-          SAVE tournament
-        </Button> */}
       </div>
     </div>
   );

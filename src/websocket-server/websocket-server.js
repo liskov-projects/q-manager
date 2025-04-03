@@ -377,6 +377,59 @@ io.on("connection", async (socket) => {
     });
   });
 
+  // NEW:
+  socket.on("redistributePlayers", async ({ tournament }) => {
+    // db call to get the data
+    const foundTournament = await TournamentModel.findById(tournament._id);
+    if (!foundTournament) socket.emit("tournament not found in redistributePlayers");
+
+    // processes the data
+    const poolOfPlayers = foundTournament.queues
+      .map((queue) => queue.queueItems)
+      .flat()
+      .concat(foundTournament.unProcessedQItems);
+
+    // hepler
+    const findShortestQueue = (queues) => {
+      return queues.reduce((shortest, queue) =>
+        queue.queueItems.length < shortest.queueItems.length ? queue : shortest
+      );
+    };
+
+    const shortestQueueLength = findShortestQueue(tournament.queues).queueItems.length;
+
+    const balancedQueues = tournament.queues.map((queue) => {
+      return {
+        ...queue,
+        queueItems: queue.queueItems.slice(0, shortestQueueLength),
+      };
+    });
+
+    poolOfPlayers.forEach((item, index) => {
+      const targetQueueIndex = index % balancedQueues.length;
+      balancedQueues[targetQueueIndex].queueItems.push(item);
+    });
+
+    // db call to update
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournament._id,
+      {
+        $set: {
+          // updates every queue's queueItems
+          queues: balancedQueues,
+        },
+      },
+      { new: true }
+    );
+
+    // emits the event to the front
+    io.emit("redistributePlayers", {
+      message: "Players redistributed between the queues",
+      updatedTournament,
+    });
+  });
+  //
+
   socket.on("processQueueOneStep", async ({ tournamentId, queueIndex }) => {
     try {
       // Fetch the tournament from DB
