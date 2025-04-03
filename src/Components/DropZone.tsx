@@ -5,14 +5,20 @@ type DropZoneProps = {
   isDraggedOver: boolean;
   hoveredDropZoneIndex: number | null;
   index: number;
+  inEmptyList: boolean;
 };
 
-export default function DropZone({ isDraggedOver, hoveredDropZoneIndex, index }: DropZoneProps) {
+export default function DropZone({
+  isDraggedOver,
+  hoveredDropZoneIndex,
+  index,
+  inEmptyList,
+}: DropZoneProps) {
   const { tournamentOwner } = useTournamentsAndQueuesContext();
 
   if (!tournamentOwner) return null;
 
-  const isActive = isDraggedOver && hoveredDropZoneIndex === index;
+  const isActive = (isDraggedOver && hoveredDropZoneIndex === index) || inEmptyList;
 
   return (
     <div

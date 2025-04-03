@@ -64,9 +64,9 @@ export default function PlayersList({
           </select>
         </div>
         <ul className="flex flex-col items-center w-full p-2">
-          <DropZone />
+          <DropZone inEmptyList={true} />
           {players.length < 0 ? (
-            <DropZone />
+            <DropZone inEmptyList={true} />
           ) : (
             // players
             //   .filter((player: TPlayer) => {

@@ -162,11 +162,39 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
                 hoveredDropZoneIndex={hoveredDropZoneIndex}
                 index={0}
                 isDraggedOver={isDraggedOver}
+                inEmptyList={true}
               />
             </div>
           )}
         </>
       )}
+      <div
+        onDragEnter={() => handleDragEnter(0)}
+        onDragLeave={() => handleDragLeave()}
+        onDrop={() => {
+          console.log("DROP IN FRONT END");
+          setIsDraggedOver(false);
+          socket?.emit("playerDropped", {
+            message: "playerDropped from DropZone",
+            draggedItem,
+            dropTarget: queue._id,
+            queue,
+            index: queue.queueItems.length,
+            tournamentId: currentTournament?._id,
+          });
+        }}
+        onDragOver={(event) => {
+          event.preventDefault();
+        }}
+      >
+        {/* <span>No items</span> */}
+        <DropZone
+          hoveredDropZoneIndex={hoveredDropZoneIndex}
+          index={0}
+          isDraggedOver={isDraggedOver}
+          // inEmptyList={true}
+        />
+      </div>
     </div>
   );
 }
