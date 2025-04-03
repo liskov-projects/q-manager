@@ -192,7 +192,6 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
           hoveredDropZoneIndex={hoveredDropZoneIndex}
           index={0}
           isDraggedOver={isDraggedOver}
-          // inEmptyList={true}
         />
       </div>
     </div>

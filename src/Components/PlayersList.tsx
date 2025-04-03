@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import useDragNDrop from "@/hooks/useDragNDrop";
+import { useSocket } from "@/context/SocketContext";
 // components
 import DropZone from "./DropZone";
 import SectionHeader from "./SectionHeader";
@@ -22,12 +23,13 @@ export default function PlayersList({
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
 
-  const { currentTournament } = useTournamentsAndQueuesContext();
+  const { currentTournament, draggedItem } = useTournamentsAndQueuesContext();
   // NEW:
   const [hoveredDropZoneIndex, setHoveredDropZoneIndex] = useState<number | null>(null);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
+  const { socket } = useSocket();
 
-  const { handleDrop } = useDragNDrop();
+  // const { handleDrop } = useDragNDrop();
   // NEW:
   const dragCounter = useRef(0);
 
@@ -83,9 +85,32 @@ export default function PlayersList({
           </select>
         </div>
         <ul className="flex flex-col items-center w-full p-2">
-          <DropZone inEmptyList={true} />
-          {players.length < 0 ? (
-            <DropZone inEmptyList={true} />
+          {players.length === 0 ? (
+            <div
+              onDragEnter={() => handleDragEnter(0)}
+              onDragLeave={() => handleDragLeave()}
+              onDrop={() => {
+                console.log("DROP IN FRONT END");
+                setIsDraggedOver(false);
+                socket?.emit("playerDropped", {
+                  message: "playerDropped from DropZone",
+                  draggedItem,
+                  dropTarget: zone,
+                  index: 0,
+                  tournamentId: currentTournament?._id,
+                });
+              }}
+              onDragOver={(event) => {
+                event.preventDefault();
+              }}
+            >
+              <DropZone
+                hoveredDropZoneIndex={hoveredDropZoneIndex}
+                index={0}
+                isDraggedOver={isDraggedOver}
+                inEmptyList={true}
+              />
+            </div>
           ) : (
             filteredPlayers.map((player: TPlayer, index: number) => (
               <li
@@ -93,6 +118,20 @@ export default function PlayersList({
                 key={player._id}
                 onDragEnter={() => handleDragEnter(index)}
                 onDragLeave={() => handleDragLeave()}
+                onDrop={() => {
+                  console.log("DROP IN FRONT END");
+                  setIsDraggedOver(false);
+                  socket?.emit("playerDropped", {
+                    message: "playerDropped from DropZone",
+                    draggedItem,
+                    dropTarget: zone,
+                    index: index,
+                    tournamentId: currentTournament?._id,
+                  });
+                }}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                }}
               >
                 <PlayerListItem item={player} />
                 <DropZone
