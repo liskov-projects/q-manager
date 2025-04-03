@@ -20,6 +20,7 @@ export default function LiskovLogo() {
           style={{ fill: "rgb(107, 142, 35)" }}
         />
       </svg>
+      Made by Liskov.Dev&copy;
     </Link>
   );
 }

@@ -20,9 +20,9 @@ export default function Header() {
     <header className="w-full flex flex-wrap items-center justify-between gap-4 p-4 sm:flex-nowrap sm:gap-0">
       {/* Left Section: Logo + Buttons */}
       <div className="flex items-center gap-2 flex-shrink-0">
-        <div className="w-16 sm:w-20">
+        {/* <div className="w-16 sm:w-20">
           <LiskovLogo />
-        </div>
+        </div> */}
 
         {notHome && (
           <Link

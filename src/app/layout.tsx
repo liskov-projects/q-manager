@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 // import "@/app/globals.css";
 import "./globals.css";
 import Header from "@/Components/Header";
+import Footer from "@/Components/Svgs/Footer";
 // contexts
 import { ClerkProvider } from "@clerk/nextjs";
 import { TournamentsAndQueuesProvider } from "@/context/TournamentsAndQueuesContext";
@@ -41,8 +42,11 @@ export default function RootLayout({
           <TournamentsAndQueuesProvider>
             <SocketProvider>
               <FavouriteItemsProvider>
-                <Header />
-                {children}
+                <div className="flex flex-col min-h-screen">
+                  <Header />
+                  <main className="flex-1">{children}</main>
+                  <Footer />
+                </div>
               </FavouriteItemsProvider>
             </SocketProvider>
           </TournamentsAndQueuesProvider>
