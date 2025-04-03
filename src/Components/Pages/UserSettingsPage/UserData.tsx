@@ -59,17 +59,16 @@ export default function UserData({ userData }: { userData: TUser }) {
 
   return (
     <>
-      <div className="flex flex-row">
-        <label>Edit {userName}&apos;s info</label>
-        <ToggleSwitch canEdit={canEdit} setCanEdit={setCanEdit} />
-      </div>
+      <ToggleSwitch isOn={canEdit} setIsOn={setCanEdit}>
+        Edit {userName}&apos;s info
+      </ToggleSwitch>
       <fieldset disabled={!canEdit}>
         <form className="flex flex-col" onSubmit={handleUpdatedData}>
-          <label className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
+          <label className="h-30 w-[85%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
             Name:
             <input type="text" value={updatedData.name} onChange={handleChange} name="name" />
           </label>
-          <label className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
+          <label className="h-30 w-[85%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
             Phone Number:
             <input
               type="text"
@@ -78,12 +77,14 @@ export default function UserData({ userData }: { userData: TUser }) {
               name="phoneNumber"
             />
           </label>
-          <Button
-            type="submit"
-            className="py-1 px-2 self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] hover:bg-bluestone-200 hover:text-shell-100"
-          >
-            Save changes
-          </Button>
+          {canEdit && (
+            <Button
+              type="submit"
+              className="py-1 px-2 self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] hover:bg-bluestone-200 hover:text-shell-100"
+            >
+              Save changes
+            </Button>
+          )}
         </form>
       </fieldset>
     </>

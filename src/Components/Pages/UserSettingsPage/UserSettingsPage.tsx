@@ -7,6 +7,7 @@ import { useUser } from "@clerk/nextjs";
 import Favourites from "./Favourites";
 import SectionHeader from "@/Components/SectionHeader";
 import UserData from "./UserData";
+import UserNotifications from "./UserNotifications";
 
 export default function UserSettingsPage() {
   const { user, isSignedIn, isLoaded } = useUser();
@@ -43,8 +44,14 @@ export default function UserSettingsPage() {
         {/* content section */}
         <div className="flex flex-col gap-2">
           <SectionHeader>Manage Notifications</SectionHeader>
-          <span>notification features will be here with a radio button to enable them</span>
-          {appUser ? <UserData userData={appUser} /> : <span>getting data</span>}
+          {appUser ? (
+            <div>
+              <UserData userData={appUser} />
+              <UserNotifications />
+            </div>
+          ) : (
+            <span>getting data</span>
+          )}
         </div>
       </div>
     </div>
