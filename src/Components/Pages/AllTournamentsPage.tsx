@@ -1,8 +1,10 @@
 "use client";
-
+// hooks
 import { useState } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
+// types
 import { TTournament } from "@/types/Types";
+// components
 import SectionHeader from "@/Components/SectionHeader";
 import Button from "@/Components/Buttons/Button";
 import TournamentCard from "@/Components/Tournaments/TournamentCard";
@@ -21,7 +23,7 @@ export default function AllTournamentsPage() {
       const foundDescription = tournament.description.includes(search.toLowerCase());
       return foundName || foundDescription;
     })
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a: TTournament, b: TTournament) => a.name.localeCompare(b.name));
 
   return (
     <div className="p-4 w-full flex flex-col lg:flex-row gap-4">
@@ -64,7 +66,7 @@ export default function AllTournamentsPage() {
           <SectionHeader>Tournaments</SectionHeader>
         </div>
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {tournamentsToShow.map((tournament, index) => (
+          {tournamentsToShow.map((tournament: TTournament, index: number) => (
             <TournamentCard key={index} tournament={tournament} />
           ))}
         </ul>
