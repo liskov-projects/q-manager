@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     if (!user) {
       user = new UserModel({
         _id: userId,
-        username,
+        userName: username,
         phoneNumber,
         favouritePlayers: [],
         favouriteTournaments: [],

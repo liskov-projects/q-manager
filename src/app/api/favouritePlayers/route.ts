@@ -30,6 +30,8 @@ export async function GET(req: NextRequest) {
   const tournaments = await TournamentModel.find({});
 
   const result = user.favouritePlayers.map((player: TPlayer) => {
+    console.log("PLAYER before populating", player);
+
     const playerTournament = tournaments.find((tournament: TTournament) => {
       return (
         tournament.queues.some((queue: TQueue) =>
@@ -43,7 +45,6 @@ export async function GET(req: NextRequest) {
         )
       );
     });
-
     return {
       ...player,
       tournamentName: playerTournament ? playerTournament.name : "Unknown",
