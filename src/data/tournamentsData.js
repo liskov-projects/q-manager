@@ -2,7 +2,7 @@ const tournamentsData = [
   {
     name: "Echuca Regional",
     adminUser: "user_2oy9dZf23XA9qCAPeqGCrKhD315",
-    categories: ["teens", "male", "female"],
+    categories: ["doubles", "male", "female"],
     image: "",
     queues: [
       {
@@ -37,7 +37,7 @@ const tournamentsData = [
   {
     name: "Ballarat Open",
     adminUser: "user_2p5sjnRM7YZC0wAI3WnTIFJVAW2",
-    categories: ["teens", "male", "female"],
+    categories: ["doubles", "male", "female"],
     image: "",
     queues: [
       {
@@ -72,7 +72,7 @@ const tournamentsData = [
   {
     name: "Melbourne Championship",
     adminUser: "",
-    categories: ["teens", "male", "female"],
+    categories: ["doubles", "male", "female"],
     image: "",
     queues: [
       {
@@ -107,7 +107,7 @@ const tournamentsData = [
   {
     name: "Geelong Invitational",
     adminUser: "",
-    categories: ["teens", "male", "female"],
+    categories: ["doubles", "male", "female"],
     image: "",
     queues: [
       {
@@ -142,7 +142,7 @@ const tournamentsData = [
   {
     name: "Bendigo Cup",
     adminUser: "",
-    categories: ["teens", "male", "female"],
+    categories: ["doubles", "male", "female"],
     image: "",
     queues: [
       {
@@ -177,7 +177,7 @@ const tournamentsData = [
   {
     name: "Shepparton Classic",
     adminUser: "",
-    categories: ["teens", "male", "female"],
+    categories: ["doubles", "male", "female"],
     image: "",
     queues: [
       {
@@ -212,7 +212,7 @@ const tournamentsData = [
   {
     name: "Warrnambool Series",
     adminUser: "",
-    categories: ["teens", "male", "female"],
+    categories: ["doubles", "male", "female"],
     image: "",
     queues: [
       {

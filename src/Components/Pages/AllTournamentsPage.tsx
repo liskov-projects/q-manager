@@ -16,6 +16,8 @@ import NewTournamentForm from "@/Components/Forms/NewTournamentForm";
 export default function AllTournamentsPage() {
   const { tournaments, fetchTournaments } = useTournamentsAndQueuesContext();
   const [search, setSearch] = useState("");
+  const [showSearch, setShowSearch] = useState(true);
+  const [showForm, setShowForm] = useState(false);
 
   const tournamentsToShow = tournaments
     .filter((tournament: TTournament) => {
@@ -36,21 +38,29 @@ export default function AllTournamentsPage() {
 
   return (
     // FIXME: the grid for both sections
-    <div className="p-4 w-full flex flex-row items-start justify-around">
-      <div className="flex flex-col p-2">
+    <div className="p-4 w-full flex flex-row items-start justify-between">
+      <div className="flex flex-col p-2 w-[75%]">
         <div className="flex items-center justify-between mb-2">
           <SectionHeader>Tournaments</SectionHeader>
         </div>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {tournamentsToShow.map((tournament, index) => (
             <TournamentCard key={index} tournament={tournament} />
           ))}
         </ul>
       </div>
-      <div className="flex flex-col p-2">
+      <div className="flex flex-col p-2 w-[25%]">
         <SectionHeader>Tournament functions</SectionHeader>
+        <div className="md:hidden flex gap-2 mb-4">
+          <Button onClick={() => setShowSearch((prev) => !prev)}>
+            {showSearch ? "Hide Search" : "Show Search"}
+          </Button>
+          <Button onClick={() => setShowForm((prev) => !prev)}>
+            {showForm ? "Hide Form" : "New Tournament"}
+          </Button>
+        </div>
         <div className="shadow-left-bottom-lg flex flex-col items-start justify-start p-4 mt-2 rounded-md">
-          <div className="px-3 py-2 rounded-sm">
+          <div className="rounded-sm">
             <SectionHeader>Search tournaments:</SectionHeader>
             <input
               className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
@@ -60,6 +70,8 @@ export default function AllTournamentsPage() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
+        </div>
+        <div className="shadow-left-bottom-lg p-4 mt-2 rounded-md">
           <NewTournamentForm />
         </div>
       </div>
