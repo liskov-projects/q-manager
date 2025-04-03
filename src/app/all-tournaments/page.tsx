@@ -1,3 +1,4 @@
+"use client";
 import AllTournamentsPage from "@/Components/Pages/AllTournamentsPage";
 
 // FIXME: dev purposes

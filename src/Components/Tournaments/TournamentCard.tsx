@@ -1,3 +1,4 @@
+"use client";
 // hooks
 import { useAuth } from "@clerk/nextjs";
 // types

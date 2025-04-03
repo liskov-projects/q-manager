@@ -16,15 +16,10 @@ export default function AllTournamentsPage() {
 
   const tournamentsToShow = tournaments
     .filter((tournament: TTournament) => {
-      const searchLower = search.toLowerCase();
-      return (
-        search.length === 0 ||
-        tournament.name.toLowerCase().includes(searchLower) ||
-        tournament.description.toLowerCase().includes(searchLower) ||
-        tournament.categories.some((category: string) =>
-          category.toLowerCase().includes(searchLower)
-        )
-      );
+      const foundName = tournament.name.toLowerCase().startsWith(search.toLowerCase());
+      if (!tournament.description) return false;
+      const foundDescription = tournament.description.includes(search.toLowerCase());
+      return foundName || foundDescription;
     })
     .sort((a, b) => a.name.localeCompare(b.name));
 
