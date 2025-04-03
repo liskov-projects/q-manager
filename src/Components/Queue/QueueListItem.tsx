@@ -1,6 +1,5 @@
 // hooks
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
-import { useUser } from "@clerk/nextjs";
 import useDragNDrop from "@/hooks/useDragNDrop";
 // types
 import { TPlayer } from "@/types/Types";
@@ -21,7 +20,6 @@ export default function QueueListItem({
 }) {
   const { handleDragStart, handleDragOver } = useDragNDrop();
   const { tournamentOwner, justDropped } = useTournamentsAndQueuesContext();
-  const { isSignedIn } = useUser();
 
   const [showGif, setShowGif] = useState(false);
 
@@ -51,7 +49,7 @@ export default function QueueListItem({
     >
       <div className="flex justify-between">
         <div className="player-name font-bold w-[70%]">{item.names}</div>
-        {isSignedIn ? <StarItem playerId={item._id} /> : null}
+        <StarItem playerId={item._id} />
       </div>
       <div className="flex justify-between">
         <TagsList item={item} />

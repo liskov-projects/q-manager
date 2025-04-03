@@ -3,6 +3,7 @@ import { useFavourites } from "@/context/FavouriteItemsContext";
 import { TPlayer, TTournament } from "@/types/Types.js";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation.js";
+import { useUser } from "@clerk/nextjs";
 
 export default function StarItem({
   playerId,
@@ -22,7 +23,7 @@ export default function StarItem({
     getFavouriteTournaments,
     removeFavouriteTournament,
   } = useFavourites();
-
+  const { isSignedIn } = useUser();
   // // makes sure we have yellow stars when a page loads
   // useEffect(() => {
   //   getFavouritePlayers();
@@ -55,6 +56,8 @@ export default function StarItem({
     }
   };
 
+  // not showing the star if the user is not signed in
+  if (!isSignedIn) return null;
   return (
     <span className="w-8 h-8 block cursor-pointer" role="button" onClick={(e) => handleClick(e)}>
       <svg
