@@ -133,19 +133,13 @@ export default function NewTournamentForm() {
   if (!isSignedIn) return null;
 
   return (
-    <>
-      <div className="flex flex-col justify-center items-center my-4">
+    <div>
+      <div className="flex flex-col justify-center items-center">
         <SectionHeader>Add new Tournament</SectionHeader>
-        {/* <Button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="ml-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded position-center"
-        >
-          {`${isExpanded ? "hide " : "show"} the form`}
-        </Button> */}
       </div>
 
       {isExpanded && (
-        <form className="flex flex-row items-center my-10 justify-around" onSubmit={handleSubmit}>
+        <form className="flex flex-row items-center justify-around" onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label htmlFor="name">Tournament Name</label>
             <input
@@ -153,7 +147,7 @@ export default function NewTournamentForm() {
               name="name"
               value={newTournament.name}
               onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
             />
 
             <label htmlFor="categories" className="text-xl">
@@ -167,7 +161,7 @@ export default function NewTournamentForm() {
                 name="customCategory"
                 value={customCategory}
                 onChange={handleCustomCategoryChange}
-                className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+                className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
               />
               <Button
                 type="button"
@@ -182,7 +176,7 @@ export default function NewTournamentForm() {
               name="categories"
               value=""
               onChange={handleCategoryChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
             >
               <option value="">Select categories (doubles, teens)</option>
               {uniqueCategories.map((category, idx) => (
@@ -214,7 +208,7 @@ export default function NewTournamentForm() {
               name="description"
               value={newTournament.description}
               onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
             />
 
             <label htmlFor="numberOfQueues">Number of Queues</label>
@@ -224,7 +218,7 @@ export default function NewTournamentForm() {
               name="numberOfQueues"
               value={newTournament.numberOfQueues}
               onChange={handleChange}
-              className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
             />
             <Button className="self-center my-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
               Add the Tournament!
@@ -235,6 +229,6 @@ export default function NewTournamentForm() {
           </div>
         </form>
       )}
-    </>
+    </div>
   );
 }
