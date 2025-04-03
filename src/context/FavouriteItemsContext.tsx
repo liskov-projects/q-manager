@@ -16,6 +16,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
   const { user, isSignedIn, isLoaded } = useUser();
 
+  //  waits for the user from Clerk to do a db request
   useEffect(() => {
     const syncAppUser = async () => {
       console.log("IN THE USER SYNC");

@@ -27,13 +27,14 @@ export default function UserData({ userData }: { userData: TUser }) {
 
     const updatedUser = {
       ...updatedData,
-      name: updatedData.name,
+
+      username: updatedData.name,
       phoneNumber: updatedData.phoneNumber,
     };
 
     try {
-      const res = await fetch("/api/user", {
-        method: "POST",
+      const res = await fetch(`/api/user/${userData._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
