@@ -1,40 +1,39 @@
 "use client";
-// hooks
 import { SignOutButton, useUser } from "@clerk/nextjs";
-// components
 import Link from "next/link";
 import Image from "next/image";
-import Button from "./Buttons/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 export default function User() {
   const { isSignedIn, user } = useUser();
+
   return (
-    <div className="flex items-center w-[20%]">
+    <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
       {isSignedIn ? (
-        <div className="flex flex-row items-center justify-around w-full">
+        <div className="flex items-center gap-2 sm:gap-3">
           <Image
-            src={user.imageUrl} // Clerk's profile image URL
+            src={user.imageUrl}
             alt="User Profile"
-            className="w-16 h-16 rounded-full object-cover" //Max rounding & proper sizing
-            width={64} // Matches Tailwind w-16 (64px)
-            height={64} // Matches Tailwind h-16 (64px)
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
+            width={48}
+            height={48}
           />
           <Link
             href="/all-tournaments/user-settings"
-            className="py-1 px-2 self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] hover:bg-bluestone-200 hover:text-shell-100"
+            className="p-1 sm:px-2 text-sm sm:text-base text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100"
+            title="Settings"
           >
             <FontAwesomeIcon icon={faCog} />
           </Link>
-          <div className="py-1 px-2 self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] hover:bg-bluestone-200 hover:text-shell-100">
+          <div className="p-1 sm:px-2 text-sm sm:text-base text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100">
             <SignOutButton>Sign out</SignOutButton>
           </div>
         </div>
       ) : (
         <Link
           href="/login"
-          className="py-1 px-2 self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] hover:bg-bluestone-200 hover:text-shell-100"
+          className="p-1 sm:px-2 text-sm sm:text-base text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100"
         >
           Sign In
         </Link>
