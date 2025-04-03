@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function LiskovLogo() {
+export default function LiskovLogo({ className }) {
   return (
     <Link href="https://www.liskov.dev/" target="_blank">
       <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
@@ -20,7 +20,7 @@ export default function LiskovLogo() {
           style={{ fill: "rgb(107, 142, 35)" }}
         />
       </svg>
-      Made by Liskov.Dev&copy;
+      <p className={`${className}`}>Made by Liskov.Dev&copy;</p>
     </Link>
   );
 }
