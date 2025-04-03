@@ -19,35 +19,39 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
 
   return (
     <div className="w-full flex flex-col items-center border border-gray-300 rounded-md p-4 bg-shell-75 transition-all duration-300 hover:shadow-lg hover:-translate-y-2 shadow-left-bottom-lg">
-      <Link
+      {/* <Link
         href={`/all-tournaments/${_id}`}
         className="flex flex-col items-center w-full h-full cursor-pointer"
-      >
-        <div className="flex w-full justify-between mb-2">
+      > */}
+      <div className="flex w-full cursor-pointer justify-between mb-2">
+        <Link href={`/all-tournaments/${_id}`}>
           <SectionHeader className="flex items-center justify-center gap-x-2">
             {name}
             {adminUser === userId ? <FontAwesomeIcon icon={faWrench} /> : null}
           </SectionHeader>
-          <StarItem tournamentId={tournament._id} />
-        </div>
+        </Link>
+        <StarItem tournamentId={tournament._id} />
+      </div>
 
-        {/* Image Container */}
-        <div className="w-full h-[125px] relative">
+      {/* Image Container */}
+      <div className="w-full h-[125px] relative">
+        <Link href={`/all-tournaments/${_id}`}>
           <Image
             src="/tennis.jpg"
             alt={`Tournament ${name} Image`}
             fill
             className="object-cover rounded-md"
           />
-        </div>
+        </Link>
+      </div>
 
-        {/* Description & Categories */}
-        <div className="flex-grow text-lg m-2 text-gray-600 font-semibold text-center">
-          {description}
-        </div>
+      {/* Description & Categories */}
+      <div className="flex-grow text-lg m-2 text-gray-600 font-semibold text-center">
+        {description}
+      </div>
 
-        <TournamentCategories categories={categories} tournamentId={_id} />
-      </Link>
+      <TournamentCategories categories={categories} tournamentId={_id} />
+      {/* </Link> */}
     </div>
   );
 }
