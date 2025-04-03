@@ -73,7 +73,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    let user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId);
 
     if (!user) {
       return NextResponse.json({ error: "User doesn't exist" }, { status: 404 });
