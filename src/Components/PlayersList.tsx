@@ -1,6 +1,6 @@
 "use client";
 // hooks
-import { useState, Fragment } from "react";
+import { useState, useRef } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import useDragNDrop from "@/hooks/useDragNDrop";
 // components
@@ -23,9 +23,28 @@ export default function PlayersList({
   const [filter, setFilter] = useState("");
 
   const { currentTournament } = useTournamentsAndQueuesContext();
+  // NEW:
+  const [hoveredDropZoneIndex, setHoveredDropZoneIndex] = useState<number | null>(null);
+  const [isDraggedOver, setIsDraggedOver] = useState(false);
 
   const { handleDrop } = useDragNDrop();
+  // NEW:
+  const dragCounter = useRef(0);
 
+  const handleDragEnter = (itemIndex: number) => {
+    dragCounter.current++;
+    setIsDraggedOver(true);
+    setHoveredDropZoneIndex(itemIndex);
+  };
+
+  const handleDragLeave = () => {
+    dragCounter.current--;
+    if (dragCounter.current === 0) {
+      setIsDraggedOver(false);
+      setHoveredDropZoneIndex(null);
+    }
+  };
+  //
   // decides how to filter the players list
   const filteredPlayers = players.filter((player: TPlayer) => {
     const matchesSearch =
@@ -68,19 +87,19 @@ export default function PlayersList({
           {players.length < 0 ? (
             <DropZone inEmptyList={true} />
           ) : (
-            // players
-            //   .filter((player: TPlayer) => {
-            //     // FIXME: waut to refactor?
-            //     const matchesSearch = player.names.toLowerCase().includes(search.toLowerCase());
-            //     const matchesCategory = filter === "show all" || player.categories.includes(filter);
-            //     return matchesSearch && matchesCategory;
-            //   })
             filteredPlayers.map((player: TPlayer, index: number) => (
-              <li className="w-full" key={player._id}>
+              <li
+                className="w-full"
+                key={player._id}
+                onDragEnter={() => handleDragEnter(index)}
+                onDragLeave={() => handleDragLeave()}
+              >
                 <PlayerListItem item={player} />
                 <DropZone
                   index={index}
                   dropTarget={zone} // zone specifies which field we're dropping into
+                  hoveredDropZoneIndex={hoveredDropZoneIndex}
+                  isDraggedOver={isDraggedOver}
                 />
               </li>
             ))
