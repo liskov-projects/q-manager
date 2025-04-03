@@ -23,13 +23,13 @@ export default function Favourites() {
   return (
     <div>
       <SectionHeader>Favourite Players</SectionHeader>
-      {appUser?.favouritePlayers.length === 0 ? (
+      {favouritePlayers.length === 0 ? (
         <span className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
           No favourite players
         </span>
       ) : (
         <ul>
-          {appUser?.favouritePlayers.map((player: TPlayer) => (
+          {favouritePlayers.map((player: TPlayer, idx: number) => (
             <li
               key={player._id}
               className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
@@ -42,20 +42,20 @@ export default function Favourites() {
         </ul>
       )}
       <SectionHeader className="mt-8">Favourite Tournaments</SectionHeader>
-      {appUser?.favouriteTournaments.length === 0 ? (
+      {favouriteTournaments.length === 0 ? (
         <span className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
           No favourite tournaments
         </span>
       ) : (
         <ul>
-          {appUser?.favouriteTournaments.map((tournamentId: string) => (
+          {favouriteTournaments.map((tournament: TTournament, idx: number) => (
             <li
-              key={tournamentId}
+              key={tournament._id}
               className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
             >
-              {/* <span className="ml-8 font-bold text-bluestone-200">{tournament.name}</span> */}
-              {/* <Link href={`/all-tournaments/${tournament._id}`}>Visit</Link> */}
-              {/* <StarItem tournamentId={tournament._id} /> */}
+              <span className="ml-8 font-bold text-bluestone-200">{tournament.name}</span>
+              <Link href={`/all-tournaments/${tournament._id}`}>Visit</Link>
+              <StarItem tournamentId={tournament._id} />
             </li>
           ))}
         </ul>

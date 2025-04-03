@@ -19,24 +19,24 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   //  waits for the user from Clerk to do a db request
   useEffect(() => {
     const syncAppUser = async () => {
-      console.log("IN THE USER SYNC");
+      // console.log("IN THE USER SYNC");
       if (user?.id && isSignedIn && isLoaded) {
         try {
-          console.log("ATTEMPTING DB PULL");
+          // console.log("ATTEMPTING DB PULL");
           const response = await getAppUserFromDB(user.id);
 
           if (response.status === 404) {
             // Not found, try to create
             const newUser = await addUser(user);
-            console.log("GOT NEW USER?");
-            console.log(newUser);
+            // console.log("GOT NEW USER?");
+            // console.log(newUser);
             if (newUser) {
               setAppUser(newUser);
             }
           } else if (response.ok) {
             const existingUser = await response.json();
-            console.log("GOT EXISTING USER?");
-            console.log(existingUser);
+            // console.log("GOT EXISTING USER?");
+            // console.log(existingUser);
             setAppUser(existingUser);
           } else {
             console.error("Unexpected error fetching user:", response.status);
@@ -49,6 +49,11 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
     syncAppUser();
   }, [user?.id, isSignedIn, isLoaded]);
+
+  useEffect(() => {
+    getFavouritePlayers();
+    getFavouriteTournaments();
+  }, [appUser]);
 
   const addUser = async (user: ClerkUser): Promise<TUser | null> => {
     if (!user) return;
@@ -102,7 +107,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
       // console.log("Response status:", response.status);
       const data = await response.json();
-      // console.log("fetch GET result: ", data);
+      console.log("fetch GET fav players result: ", data);
 
       if (response.ok) {
         setFavouritePlayers(data);
