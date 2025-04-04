@@ -3,7 +3,7 @@ import { SignOutButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 export default function User() {
   const { isSignedIn, user } = useUser();
@@ -24,7 +24,7 @@ export default function User() {
             className="p-1 sm:px-2 text-sm sm:text-base text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100"
             title="Settings"
           >
-            <FontAwesomeIcon icon={faCog} />
+            <FontAwesomeIcon icon={faStar} />
           </Link>
           <div className="p-1 sm:px-2 text-sm sm:text-base text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100">
             <SignOutButton>Sign out</SignOutButton>
