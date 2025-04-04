@@ -19,7 +19,7 @@ export default function ButtonGroup({}) {
 
   return (
     <div className="my-1">
-      <SectionHeader>Button Group</SectionHeader>
+      <SectionHeader>Bulk Actions</SectionHeader>
       <div className="flex flex-col justify-around h-auto my-3">
         <div className="flex">
           <Button

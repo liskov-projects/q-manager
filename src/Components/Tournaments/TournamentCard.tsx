@@ -50,7 +50,7 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
         {description}
       </div>
 
-      <TournamentCategories categories={categories} tournamentId={_id} />
+      {/* <TournamentCategories categories={categories} tournamentId={_id} /> */}
       {/* </Link> */}
     </div>
   );

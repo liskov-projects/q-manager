@@ -112,7 +112,7 @@ export default function NewQueueForm() {
           onClick={() => setCanEdit(!canEdit)}
           className=" flex flex-col text-2xl font-semibold text-gray-400 hover:text-gray-300 shadow-lg shadow-gray-500/50 px-6 py-3 w-full text-center"
         >
-          Add more Queues
+          Add a queue
         </Button>
       )}
     </div>

@@ -44,7 +44,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
           onDragOver={(e) => handleDragOver(e)}
         >
           {/* Player Name */}
-          <div className="w-full flex justify-between">
+          <div className="w-full flex justify-between mb-2">
             <div className="player-name font-bold text-lg w-[65%]">{item.names}</div>
             {!tournamentOwner ? null : (
               <Button
@@ -70,9 +70,9 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
 
           <TagsList item={item} />
 
-          <div className="w-full flex justify-between">
+          <div className="w-full flex justify-between items-center">
             {!tournamentOwner ? null : (
-              <div className="flex flex-row justify-between items-center h-full gap-1">
+              <div className="flex flex-row justify-between items-center h-full gap-1 mt-2">
                 <Button className={editAndDeleteStyles} onClick={() => setEditMode(true)}>
                   <FontAwesomeIcon icon={faPen} />
                 </Button>
