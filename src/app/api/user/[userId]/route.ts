@@ -47,13 +47,13 @@ export async function POST(req: NextRequest) {
       await user.save();
       return NextResponse.json(user, { status: 201 });
     } else {
-      console.log("CHANGING USER DATA");
+      // console.log("CHANGING USER DATA");
       const updatedUser = await UserModel.findByIdAndUpdate(
         userId,
         { username, phoneNumber },
         { new: true } // Return updated doc
       );
-      console.log("Updated user:", updatedUser);
+      // console.log("Updated user:", updatedUser);
       return NextResponse.json(updatedUser, { status: 200 });
     }
   } catch (error) {
@@ -78,7 +78,7 @@ export async function PUT(req: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: "User doesn't exist" }, { status: 404 });
     } else {
-      console.log("CHANGING USER DATA");
+      // console.log("CHANGING USER DATA");
       const updatedUser = await UserModel.findByIdAndUpdate(
         userId,
         { userName: username, phoneNumber: phoneNumber },

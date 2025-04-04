@@ -139,7 +139,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   };
 
   const removeFavouritePlayer = async (playerId: string) => {
-    // console.log(playerId, "in remove fav player");
+    console.log(playerId, "in remove fav player");
     try {
       // console.log("Sending request to backend...");
       const response = await fetch("/api/favouritePlayers", {
