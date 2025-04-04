@@ -51,6 +51,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
           <Button
             className="mx-2 px-3 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out flex items-center justify-center"
             onClick={() => {
+              console.log("current tournament after q is deleted", currentTournament);
               if (socket) {
                 socket.emit("deleteQueue", {
                   tournamentId: currentTournament?._id,

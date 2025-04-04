@@ -107,7 +107,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
       // console.log("Response status:", response.status);
       const data = await response.json();
-      console.log("fetch GET fav players result: ", data);
+      // console.log("fetch GET fav players result: ", data);
 
       if (response.ok) {
         setFavouritePlayers(data);
@@ -139,7 +139,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   };
 
   const removeFavouritePlayer = async (playerId: string) => {
-    console.log(playerId, "in remove fav player");
+    // console.log(playerId, "in remove fav player");
     try {
       // console.log("Sending request to backend...");
       const response = await fetch("/api/favouritePlayers", {

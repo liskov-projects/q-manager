@@ -516,7 +516,10 @@ io.on("connection", async (socket) => {
 
     const updatedTournament = await TournamentModel.findByIdAndUpdate(
       tournamentId,
-      { $pull: { queues: queueToDelete } },
+      {
+        $pull: { queues: { _id: queueToDelete._id } },
+        $push: { unProcessedQItems: { $each: queueToDelete.queueItems } },
+      },
       { new: true }
     );
 
