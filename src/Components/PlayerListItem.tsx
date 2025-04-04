@@ -59,7 +59,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
                   // NOTE: optimistic UI
                   // handleAddToShortestQueue(item);
                 }}
-                className="px-2 py-1 text-[1rem] font-bold rounded text-shell-50 bg-bluestone-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out h-[auto] w-[45px] flex items-center justify-center"
+                className="w-[45px] h-[45px] flex items-center justify-center text-[1rem] font-bold rounded text-shell-50 bg-bluestone-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out"
               >
                 {/* ⬆️ Q */}
                 {/* <FontAwesomeIcon icon={faArrowUp} /> */}
@@ -72,7 +72,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
 
           <div className="w-full flex justify-between">
             {!tournamentOwner ? null : (
-              <div className="flex w-[41%] flex-row justify-between items-center h-full">
+              <div className="flex flex-row justify-between items-center h-full gap-1">
                 <Button className={editAndDeleteStyles} onClick={() => setEditMode(true)}>
                   <FontAwesomeIcon icon={faPen} />
                 </Button>
