@@ -7,6 +7,7 @@ import SectionHeader from "@/Components/SectionHeader";
 import Button from "@/Components/Buttons/Button";
 import TournamentCard from "@/Components/Tournaments/TournamentCard";
 import NewTournamentForm from "@/Components/Forms/NewTournamentForm";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function AllTournamentsPage() {
   const { tournaments } = useTournamentsAndQueuesContext();
@@ -29,9 +30,9 @@ export default function AllTournamentsPage() {
 
   return (
     <div className="p-4 w-full flex flex-col lg:flex-row gap-4">
-      {/* Medium screen: controls above tournament list */}
+      {/* Small/medium: search and toggle button above list */}
       <div className="block lg:hidden order-1 mb-4">
-        <div className="hidden sm:flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-2">
           <input
             className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 w-full sm:w-[60%]"
             type="text"
@@ -43,27 +44,37 @@ export default function AllTournamentsPage() {
             {showForm ? "Hide Form" : "New Tournament"}
           </Button>
         </div>
-        {showForm && (
-          <div className="mt-4 shadow-left-bottom-lg p-4 rounded-md">
-            <NewTournamentForm />
-          </div>
-        )}
+
+        <AnimatePresence mode="wait">
+          {showForm && (
+            <motion.div
+              key="form"
+              initial={{ scale: 0.8, opacity: 0, rotate: -3 }}
+              animate={{ scale: 1, opacity: 1, rotate: 0 }}
+              exit={{ scale: 0.8, opacity: 0, rotate: 3 }}
+              transition={{ type: "spring", stiffness: 250, damping: 20 }}
+              className="shadow-left-bottom-lg p-4 rounded-md max-w-md mx-auto"
+            >
+              <NewTournamentForm />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Tournaments Section */}
+      {/* Tournaments section */}
       <div className="flex-1 order-2 lg:order-1">
         <div className="flex items-center justify-between mb-2">
           <SectionHeader>Tournaments</SectionHeader>
         </div>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {tournamentsToShow.map((tournament, index) => (
             <TournamentCard key={index} tournament={tournament} />
           ))}
         </ul>
       </div>
 
-      {/* Sidebar on large screens */}
+      {/* Sidebar for large screens only */}
       <div className="hidden lg:flex w-full lg:w-[25%] flex-col gap-4 order-3">
         <SectionHeader>Tournament functions</SectionHeader>
 

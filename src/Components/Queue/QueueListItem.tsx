@@ -57,7 +57,7 @@ export default function QueueListItem({
           <img
             src="/snoopy-tennis-funny.gif"
             alt="snoopy-tennis.gif"
-            className="w-16 h-12 inline-block ml-2 align-middle"
+            className="w-20 h-15 inline-block mx-2 align-middle"
           />
         ) : null}
       </div>

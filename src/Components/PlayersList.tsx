@@ -61,7 +61,7 @@ export default function PlayersList({
     // REVIEW: viewport height
     <div id="modal-root">
       <SectionHeader>{title}</SectionHeader>
-      <div className="flex flex-col shadow-left-bottom-lg items-center h-auto overflow-hidden hover:overflow-y-auto w-full">
+      <div className="flex flex-col shadow-left-bottom-lg items-center h-auto overflow-hidden hover:overflow-y-auto w-full mt-3 p-4">
         {/* TODO: extract into a separate comp? */}
         <input
           className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-2 py-2 px-2 rounded-sm"
@@ -73,10 +73,10 @@ export default function PlayersList({
         {/* TODO: dropdown categories list | extract*/}
         <div className="flex justify-center">
           <select
-            className="bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-1 px-2 rounded position-center"
+            className="bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-3 my-2 rounded position-center"
             onChange={(e) => setFilter(e.target.value)}
           >
-            <option value="show all">show all...</option>
+            <option value="show all">Show all...</option>
             {currentTournament?.categories.map((category: string, index: number) => (
               <option key={index} value={category}>
                 {category}
@@ -84,7 +84,7 @@ export default function PlayersList({
             ))}
           </select>
         </div>
-        <ul className="flex flex-col items-center w-full p-2">
+        <ul className="flex flex-col items-center w-full">
           {players.length === 0 ? (
             <div
               onDragEnter={() => handleDragEnter(0)}
