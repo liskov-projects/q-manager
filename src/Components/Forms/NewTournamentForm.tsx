@@ -171,7 +171,6 @@ export default function NewTournamentForm() {
                   : "focus:ring-brick-200"
               }`}
             />
-
             {previewUrl && (
               <div className="my-3">
                 <p className="text-sm text-gray-600">Image Preview:</p>
@@ -182,8 +181,14 @@ export default function NewTournamentForm() {
                 />
               </div>
             )}
+          </div>
+        </form>
+      )}
+    </div>
+  );
+}
 
-            {/* <label htmlFor="categories" className="text-xl">
+/* <label htmlFor="categories" className="text-xl">
               Categories
             </label>
 
@@ -234,4 +239,3 @@ export default function NewTournamentForm() {
                 </span>
               ))}
             </div> */
-}
