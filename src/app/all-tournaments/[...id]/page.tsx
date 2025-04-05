@@ -3,8 +3,8 @@ import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesCo
 import TournamentQueuesPage from "@/Components/Pages/TournamentQueuesPage";
 import TournamentCategories from "@/Components/Tournaments/TournamentCategories";
 
-export default function TournamentPage({ params }: { params: { id: string[] } }) {
-  const { tournamentOwner, currentTournament } = useTournamentsAndQueuesContext();
+export default function TournamentPage() {
+  const { currentTournament } = useTournamentsAndQueuesContext();
 
   // console.log("CURRENT TOURNAMENT", currentTournament);
 

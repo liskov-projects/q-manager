@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function LiskovLogo({ className }) {
+export default function LiskovLogo({ className }: { className: string }) {
   return (
     <Link href="https://www.liskov.dev/" target="_blank">
       <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">

@@ -24,13 +24,11 @@ export default function PlayersList({
   const [filter, setFilter] = useState("");
 
   const { currentTournament, draggedItem } = useTournamentsAndQueuesContext();
-  // NEW:
+
   const [hoveredDropZoneIndex, setHoveredDropZoneIndex] = useState<number | null>(null);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
   const { socket } = useSocket();
 
-  // const { handleDrop } = useDragNDrop();
-  // NEW:
   const dragCounter = useRef(0);
 
   const handleDragEnter = (itemIndex: number) => {
@@ -58,11 +56,9 @@ export default function PlayersList({
   });
 
   return (
-    // REVIEW: viewport height
     <div id="modal-root">
       <SectionHeader>{title}</SectionHeader>
       <div className="flex flex-col shadow-left-bottom-lg items-center h-auto overflow-hidden hover:overflow-y-auto w-full mt-3 p-4">
-        {/* TODO: extract into a separate comp? */}
         <input
           className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-2 py-2 px-2 rounded-sm"
           type="text"
@@ -70,7 +66,6 @@ export default function PlayersList({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        {/* TODO: dropdown categories list | extract*/}
         <div className="flex justify-center">
           <select
             className="bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-3 my-2 rounded position-center"

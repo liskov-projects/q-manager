@@ -7,7 +7,7 @@ import { TTournament } from "@/types/Types";
 import Image from "next/image";
 import Link from "next/link";
 import SectionHeader from "../SectionHeader";
-import TournamentCategories from "./TournamentCategories";
+// import TournamentCategories from "./TournamentCategories";
 import StarItem from "../Buttons/StarItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWrench } from "@fortawesome/free-solid-svg-icons";

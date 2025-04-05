@@ -10,7 +10,7 @@ import Link from "next/link";
 export default function LoginPage() {
   const router = useRouter();
   const { isSignedIn, user } = useUser();
-  const { getAppUserFromDB, setAppUser, appUser, addUser } = useFavourites();
+  const { addUser } = useFavourites();
 
   useEffect(() => {
     if (isSignedIn) {

@@ -7,6 +7,9 @@ export default function CategoryList({
   setEditedCategories,
   // editMode,
   // setEditMode
+}: {
+  editedCategories: string[];
+  setEditedCategories: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
   const [newCategory, setNewCategory] = useState("");
 

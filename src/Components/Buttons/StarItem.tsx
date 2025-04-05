@@ -40,8 +40,8 @@ export default function StarItem({
   }, [favouritePlayers, favouriteTournaments]);
 
   // works based off the parameter passed into the component player/tournamentId
-  const handleClick = (e) => {
-    e.stopPropagation();
+  const handleClick = () => {
+    // e.stopPropagation();
 
     if (playerId) {
       console.log("playerId in Star", playerId);
@@ -49,7 +49,7 @@ export default function StarItem({
       if (isStarred) removeFavouritePlayer(playerId);
       // setIsStarred(!isStarred);
     } else if (tournamentId) {
-      e.stopPropagation();
+      // e.stopPropagation();
       if (!isStarred) addTournamentToFavourites(tournamentId);
       if (isStarred) removeFavouriteTournament(tournamentId);
       // setIsStarred(!isStarred);

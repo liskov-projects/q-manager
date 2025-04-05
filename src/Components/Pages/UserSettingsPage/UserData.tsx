@@ -1,6 +1,6 @@
 "use client";
 // hooks
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // types
 import { TUser } from "@/types/Types";
 //  components

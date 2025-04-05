@@ -1,18 +1,14 @@
 "use client";
 // hooks
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
-import useAddToQueues from "@/hooks/useAddToQueues";
 import { useSocket } from "@/context/SocketContext";
 // components
 import Button from "./Button";
 import SectionHeader from "../SectionHeader";
 
 export default function ButtonGroup({}) {
-  const { currentTournament, tournamentOwner, saveTournament } = useTournamentsAndQueuesContext();
+  const { currentTournament, tournamentOwner } = useTournamentsAndQueuesContext();
   const { socket } = useSocket();
-
-  const { handleAddAllToQueues, handleRedistributeQueues, handleProcessAll, handleUnprocessAll } =
-    useAddToQueues();
 
   // hides the components from guests
   if (!tournamentOwner) return null;

@@ -1,11 +1,29 @@
 // hooks
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // components
 import CategoryList from "./CategoryList";
 
 export default function TournamentCategories({
+  categories = [],
+}: {
+  categories: string[];
+  tournamentId: string | undefined;
+}) {
+  const [editedCategories, setEditedCategories] = useState([...categories]);
+
+  useEffect(() => {
+    setEditedCategories(categories);
+  }, [categories]);
+
+  return (
+    <div className="flex flex-col">
+      <CategoryList editedCategories={editedCategories} setEditedCategories={setEditedCategories} />
+    </div>
+  );
+}
+
+// OLD:
+/*export default function TournamentCategories({
   categories = [],
   tournamentId,
 }: {
@@ -50,3 +68,4 @@ export default function TournamentCategories({
     </div>
   );
 }
+*/
