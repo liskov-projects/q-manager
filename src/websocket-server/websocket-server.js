@@ -318,11 +318,15 @@ io.on("connection", async (socket) => {
     const foundTournament = await TournamentModel.findById(tournament._id);
     if (!foundTournament) socket.emit("tournament not found in uprocessAllPlayers");
 
-    // processes the data
-    const poolOfPlayers = foundTournament.queues
-      .map((queue) => queue.queueItems)
-      .flat()
-      .concat(foundTournament.processedQItems);
+    // processes the data | need to flatten everything to the same level
+    const poolOfPlayers = [
+      ...foundTournament.queues.flatMap((queue) => queue.queueItems),
+      ...foundTournament.unProcessedQItems,
+      ...foundTournament.processedQItems,
+    ];
+
+    // console.log("Pool of players", poolOfPlayers);
+    // console.log(poolOfPlayers.length);
 
     // db call to update
     const updatedTournament = await TournamentModel.findByIdAndUpdate(
