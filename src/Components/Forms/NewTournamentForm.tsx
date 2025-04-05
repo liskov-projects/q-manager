@@ -1,5 +1,5 @@
 // hooks
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { useUser } from "@clerk/nextjs";
 // types
@@ -7,7 +7,6 @@ import { TTournament } from "@/types/Types";
 // components
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
-import { error } from "console";
 
 // allows for partial form from existing Type
 type TTournamentForm = Partial<TTournament> & {
@@ -28,28 +27,7 @@ export default function NewTournamentForm() {
 
   // any signed in user can create a new tournamnet
   const { isSignedIn, user } = useUser();
-  const { fetchTournaments, uniqueCategories } = useTournamentsAndQueuesContext();
-
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
-  const [customCategory, setCustomCategory] = useState("");
-
-  useEffect(() => {
-    setSelectedCategories(newTournament?.categories || []);
-  }, [newTournament?.categories]);
-
-  // console.log(uniqueCategories);
-
-  function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    const category = e.target.value;
-    if (category && !selectedCategories.includes(category)) {
-      setSelectedCategories([...selectedCategories, category]);
-    }
-  }
-
-  function removeCategory(categoryToRemove: string) {
-    setSelectedCategories(selectedCategories.filter((cat) => cat !== categoryToRemove));
-  }
+  const { fetchTournaments } = useTournamentsAndQueuesContext();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type, files } = e.target;
@@ -60,22 +38,6 @@ export default function NewTournamentForm() {
     });
   }
 
-  function handleCustomCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setCustomCategory(e.target.value);
-  }
-  function addCustomCategory(e) {
-    e.preventDefault();
-    if (
-      customCategory &&
-      !uniqueCategories.includes(customCategory) &&
-      !selectedCategories.includes(customCategory)
-    ) {
-      uniqueCategories.push(customCategory);
-      setSelectedCategories([...selectedCategories, customCategory]);
-    }
-    setCustomCategory(""); // Clear input field
-  }
-  //
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     // console.log("handle submit tournament");
@@ -83,7 +45,7 @@ export default function NewTournamentForm() {
     // data to send to backend
     const newItem = {
       name: newTournament.name,
-      categories: selectedCategories,
+      // categories: selectedCategories,
       adminUser: user?.id,
       image: newTournament.image,
       description: newTournament.description,
@@ -150,8 +112,74 @@ export default function NewTournamentForm() {
               className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
             />
 
-            {/* <label htmlFor="categories" className="text-xl">
-              Categories
+            <label htmlFor="description">Description</label>
+            <input
+              type="text"
+              name="description"
+              value={newTournament.description}
+              onChange={handleChange}
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+            />
+
+            <label htmlFor="numberOfQueues">Number of Queues</label>
+            <input
+              placeholder="3"
+              type="number"
+              name="numberOfQueues"
+              value={newTournament.numberOfQueues}
+              onChange={handleChange}
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+            />
+            <Button className="self-center my-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
+              Add the Tournament!
+            </Button>
+            {errorMessage && (
+              <span className="text-brick-200 text-center text-xl">{errorMessage}</span>
+            )}
+          </div>
+        </form>
+      )}
+    </div>
+  );
+}
+
+// WORKS: categories-related | uniqueCategories coming from the context
+// console.log(uniqueCategories);
+// const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+// const [customCategory, setCustomCategory] = useState("");
+
+// useEffect(() => {
+//   setSelectedCategories(newTournament?.categories || []);
+// }, [newTournament?.categories]);
+
+// function handleCustomCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
+//   setCustomCategory(e.target.value);
+// }
+// function addCustomCategory(e) {
+//   e.preventDefault();
+//   if (
+//     customCategory &&
+//     !uniqueCategories.includes(customCategory) &&
+//     !selectedCategories.includes(customCategory)
+//   ) {
+//     uniqueCategories.push(customCategory);
+//     setSelectedCategories([...selectedCategories, customCategory]);
+//   }
+//   setCustomCategory(""); // Clear input field
+// }
+// function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
+//   const category = e.target.value;
+//   if (category && !selectedCategories.includes(category)) {
+//     setSelectedCategories([...selectedCategories, category]);
+//   }
+// }
+// function removeCategory(categoryToRemove: string) {
+//   setSelectedCategories(selectedCategories.filter((cat) => cat !== categoryToRemove));
+// }
+//
+{
+  /* <label htmlFor="categories" className="text-xl">
+             WORKS: Categories | 
             </label>
 
             <label htmlFor="customCategory">Add Custom Category</label>
@@ -200,35 +228,5 @@ export default function NewTournamentForm() {
                   </button>
                 </span>
               ))}
-            </div> */}
-
-            <label htmlFor="description">Description</label>
-            <input
-              type="text"
-              name="description"
-              value={newTournament.description}
-              onChange={handleChange}
-              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
-            />
-
-            <label htmlFor="numberOfQueues">Number of Queues</label>
-            <input
-              placeholder="3"
-              type="number"
-              name="numberOfQueues"
-              value={newTournament.numberOfQueues}
-              onChange={handleChange}
-              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
-            />
-            <Button className="self-center my-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
-              Add the Tournament!
-            </Button>
-            {errorMessage && (
-              <span className="text-brick-200 text-center text-xl">{errorMessage}</span>
-            )}
-          </div>
-        </form>
-      )}
-    </div>
-  );
+            </div> */
 }
