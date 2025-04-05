@@ -58,7 +58,7 @@ export default function NewPlayerForm() {
 
     const incomingPhoneNumbers =
       typeof newPlayers.phoneNumbers === "string"
-        ? newPlayers.phoneNumbers.split(",").map((number) => number.trim())
+        ? newPlayers.phoneNumbers.split(",").map((number: string) => number.trim())
         : newPlayers.phoneNumbers;
 
     // data to send to backend
@@ -141,7 +141,7 @@ export default function NewPlayerForm() {
               className={inputStyles}
             >
               <option value="">Select categories</option>
-              {currentTournament?.categories.map((category, idx) => (
+              {currentTournament?.categories.map((category: string, idx: number) => (
                 <option key={idx} value={category}>
                   {category}
                 </option>
