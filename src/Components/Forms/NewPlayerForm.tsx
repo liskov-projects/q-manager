@@ -95,7 +95,7 @@ export default function NewPlayerForm() {
     <>
       <div className="flex items-center justify-between">
         <SectionHeader className="flex items-center justify-center gap-x-2 h-full">
-          <span>Player</span>
+          <span>Match</span>
           {/* ➕ */}
           <FontAwesomeIcon icon={faPersonCirclePlus} />
         </SectionHeader>
@@ -114,7 +114,7 @@ export default function NewPlayerForm() {
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Players</label>
             <input
               type="text"
               name="names"
@@ -123,7 +123,7 @@ export default function NewPlayerForm() {
               className={inputStyles}
             />
 
-            <label htmlFor="phoneNumbers">Phone Number</label>
+            <label htmlFor="phoneNumbers">Phone Number(s)</label>
             <input
               type="text"
               name="phoneNumbers"
@@ -164,7 +164,7 @@ export default function NewPlayerForm() {
               ))}
             </div>
             <Button className=" ml-6 bg-bluestone-200 text-shell-50 hover:bg-tennis-100  hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
-              Add player
+              Add match
             </Button>
           </div>
         </form>

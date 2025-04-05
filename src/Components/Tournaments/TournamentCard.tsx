@@ -18,7 +18,7 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
   // console.log(userId);
 
   return (
-    <div className="w-full flex flex-col items-center border border-gray-300 rounded-md p-4 bg-shell-75 transition-all duration-300 hover:shadow-lg hover:-translate-y-2 shadow-left-bottom-lg">
+    <div className="w-full flex flex-col items-center border border-gray-300 rounded-md p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-2 shadow-left-bottom-lg">
       {/* <Link
         href={`/all-tournaments/${_id}`}
         className="flex flex-col items-center w-full h-full cursor-pointer"

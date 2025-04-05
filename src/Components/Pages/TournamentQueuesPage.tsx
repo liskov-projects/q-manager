@@ -45,7 +45,7 @@ export default function TournamentQueuesPage({ tournamentId }) {
         >
           {tournamentOwner && <NewPlayerForm />}
           <PlayersList
-            title={"Unprocessed Players"}
+            title={"Unprocessed Matches"}
             players={currentTournament.unProcessedQItems}
             zone={"unprocessed"}
           />
@@ -70,7 +70,7 @@ export default function TournamentQueuesPage({ tournamentId }) {
           {/* <SectionHeader>Button Group</SectionHeader> */}
           <ButtonGroup tournamentId={tournamentId} />
           <PlayersList
-            title={"Processed Players"}
+            title={"Processed Matches"}
             players={currentTournament.processedQItems}
             zone={"processed"}
           />

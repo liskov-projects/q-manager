@@ -150,7 +150,7 @@ export default function NewTournamentForm() {
               className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
             />
 
-            <label htmlFor="categories" className="text-xl">
+            {/* <label htmlFor="categories" className="text-xl">
               Categories
             </label>
 
@@ -200,7 +200,7 @@ export default function NewTournamentForm() {
                   </button>
                 </span>
               ))}
-            </div>
+            </div> */}
 
             <label htmlFor="description">Description</label>
             <input

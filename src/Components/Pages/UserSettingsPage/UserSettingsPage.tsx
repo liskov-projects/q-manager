@@ -10,35 +10,55 @@ import UserNotifications from "./UserNotifications";
 
 export default function UserSettingsPage() {
   const { isSignedIn } = useUser();
-  const { appUser } = useFavourites();
+  const { appUser, favouritePlayers, favouriteTournaments } = useFavourites();
 
-  // console.log("APP USER IN USER SETTINGS PAGE", appUser);
+  if (!isSignedIn) return <div className="text-center text-lg mt-8">Not signed in</div>;
 
-  if (!isSignedIn) return <div>Not signed in</div>;
+  const hasFavourites = favouritePlayers?.length > 0 || favouriteTournaments?.length > 0;
 
   return (
-    // page container
-    <div className="m-4">
+    <div className="m-4 max-w-[1200px] mx-auto">
       {/* header section */}
-      <SectionHeader>{`${appUser?.userName}\'s Dashboard`}</SectionHeader>
-      <span className="text-center">
-        Hello {appUser?.userName} You can manage your favourites here
+      <SectionHeader>
+        <span className="truncate max-w-full text-2xl font-bold block">
+          {appUser?.userName}&rsquo;s Dashboard
+        </span>
+      </SectionHeader>
+      <span className="text-center text-lg sm:text-xl font-medium block mb-4">
+        Hello <span title={appUser?.userName}>{appUser?.userName}</span>, you can manage your
+        favourites and settings here.
       </span>
-      <div className="grid grid-cols-2 gap-4 p-4">
-        <div className="flex flex-col gap-2">
+
+      {/* grid layout that stacks on smaller screens */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+        {/* Left: Favourites */}
+        <div className="flex flex-col gap-4">
           <SectionHeader>Manage Favourites</SectionHeader>
-          <Favourites />
-        </div>
-        {/* content section */}
-        <div className="flex flex-col gap-2">
-          <SectionHeader>Manage Notifications</SectionHeader>
-          {appUser ? (
-            <div>
-              <UserData userData={appUser} />
-              <UserNotifications />
+          {!hasFavourites ? (
+            <div className="text-center">
+              <img src="/snoopy-tennis-funny.gif" alt="no favourites" className="w-32 mx-auto" />
+              <p className="text-gray-600 mt-2">No favourites yet — go add some!</p>
             </div>
           ) : (
-            <span>getting data</span>
+            <Favourites />
+          )}
+        </div>
+
+        {/* Right: User Info and Notifications */}
+        <div className="flex flex-col gap-6">
+          {appUser ? (
+            <>
+              <div className="flex flex-col gap-4">
+                <SectionHeader>Edit Your Info</SectionHeader>
+                <UserData userData={appUser} />
+              </div>
+              <div className="flex flex-col gap-4">
+                <SectionHeader>Notification Preferences</SectionHeader>
+                <UserNotifications />
+              </div>
+            </>
+          ) : (
+            <span className="text-center text-gray-500">Getting user data...</span>
           )}
         </div>
       </div>
