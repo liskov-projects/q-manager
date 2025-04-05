@@ -17,15 +17,14 @@ export default function DropZone({
   const { tournamentOwner } = useTournamentsAndQueuesContext();
 
   if (!tournamentOwner) return null;
-
-  const isActive = (isDraggedOver && hoveredDropZoneIndex === index) || inEmptyList;
+  const isActive = isDraggedOver && hoveredDropZoneIndex === index;
 
   return (
     <div
-      className="drop-zone w-[95%] transition-all duration-200 bg-gray-300 my-2 rounded"
-      style={{
-        height: isActive ? "50px" : "0px",
-      }}
+      className={`drop-zone w-[95%] transition-all duration-200 bg-gray-300 my-2 rounded ${isActive || inEmptyList ? "h-[50px]" : "h-[0px]"}`}
+      // style={{
+      //   height: isActive || inEmptyList ? "50px" : "0px",
+      // }}
     />
   );
 }

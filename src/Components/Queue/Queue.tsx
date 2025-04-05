@@ -137,6 +137,32 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
                   />
                 </li>
               ))}
+              <li
+                onDragEnter={() => handleDragEnter(0)}
+                onDragLeave={() => handleDragLeave()}
+                onDrop={() => {
+                  console.log("DROP IN FRONT END");
+                  setIsDraggedOver(false);
+                  socket?.emit("playerDropped", {
+                    message: "playerDropped from DropZone",
+                    draggedItem,
+                    dropTarget: queue._id,
+                    queue,
+                    index: queue.queueItems.length - 1,
+                    tournamentId: currentTournament?._id,
+                  });
+                }}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                }}
+              >
+                {/* <span>No items</span> */}
+                <DropZone
+                  hoveredDropZoneIndex={hoveredDropZoneIndex}
+                  index={queue.queueItems.length - 1}
+                  isDraggedOver={isDraggedOver}
+                />
+              </li>
             </ul>
           ) : (
             <div
@@ -169,32 +195,6 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
           )}
         </>
       )}
-      <div
-        onDragEnter={() => handleDragEnter(0)}
-        onDragLeave={() => handleDragLeave()}
-        onDrop={() => {
-          console.log("DROP IN FRONT END");
-          setIsDraggedOver(false);
-          socket?.emit("playerDropped", {
-            message: "playerDropped from DropZone",
-            draggedItem,
-            dropTarget: queue._id,
-            queue,
-            index: queue.queueItems.length,
-            tournamentId: currentTournament?._id,
-          });
-        }}
-        onDragOver={(event) => {
-          event.preventDefault();
-        }}
-      >
-        {/* <span>No items</span> */}
-        <DropZone
-          hoveredDropZoneIndex={hoveredDropZoneIndex}
-          index={0}
-          isDraggedOver={isDraggedOver}
-        />
-      </div>
     </div>
   );
 }

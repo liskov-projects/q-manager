@@ -84,9 +84,10 @@ export default function PlayersList({
             ))}
           </select>
         </div>
-        <ul className="flex flex-col items-center w-full">
-          {players.length === 0 ? (
-            <div
+        <ul className="flex flex-col items-center w-full ">
+          {filteredPlayers.length === 0 ? (
+            <li
+              className="w-full"
               onDragEnter={() => handleDragEnter(0)}
               onDragLeave={() => handleDragLeave()}
               onDrop={() => {
@@ -110,7 +111,7 @@ export default function PlayersList({
                 isDraggedOver={isDraggedOver}
                 inEmptyList={true}
               />
-            </div>
+            </li>
           ) : (
             filteredPlayers.map((player: TPlayer, index: number) => (
               <li
@@ -133,16 +134,17 @@ export default function PlayersList({
                   event.preventDefault();
                 }}
               >
-                <PlayerListItem item={player} />
                 <DropZone
                   index={index}
                   dropTarget={zone} // zone specifies which field we're dropping into
                   hoveredDropZoneIndex={hoveredDropZoneIndex}
                   isDraggedOver={isDraggedOver}
                 />
+                <PlayerListItem item={player} />
               </li>
             ))
           )}
+          
         </ul>
       </div>
     </div>
