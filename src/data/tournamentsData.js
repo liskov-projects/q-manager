@@ -3,7 +3,7 @@ const tournamentsData = [
     name: "Echuca Regional",
     adminUser: "user_2oy9dZf23XA9qCAPeqGCrKhD315",
     categories: ["doubles", "male", "female"],
-    image: "",
+    image: "https://storage.googleapis.com/tournament-images-q-manager-453001/mod-grass-court.jpeg",
     queues: [
       {
         queueName: "Location 1",
@@ -38,7 +38,7 @@ const tournamentsData = [
     name: "Ballarat Open",
     adminUser: "user_2p5sjnRM7YZC0wAI3WnTIFJVAW2",
     categories: ["doubles", "male", "female"],
-    image: "",
+    image: "https://storage.googleapis.com/tournament-images-q-manager-453001/clay-high-angle.jpeg",
     queues: [
       {
         queueName: "Location 1",
@@ -73,7 +73,7 @@ const tournamentsData = [
     name: "Melbourne Championship",
     adminUser: "",
     categories: ["doubles", "male", "female"],
-    image: "",
+    image: "https://storage.googleapis.com/tournament-images-q-manager-453001/aus-open-night.jpeg",
     queues: [
       {
         queueName: "Location 1",
@@ -108,7 +108,7 @@ const tournamentsData = [
     name: "Geelong Invitational",
     adminUser: "",
     categories: ["doubles", "male", "female"],
-    image: "",
+    image: "https://storage.googleapis.com/tournament-images-q-manager-453001/clay-country.jpeg",
     queues: [
       {
         queueName: "Location 1",
@@ -143,7 +143,8 @@ const tournamentsData = [
     name: "Bendigo Cup",
     adminUser: "",
     categories: ["doubles", "male", "female"],
-    image: "",
+    image:
+      "https://storage.googleapis.com/tournament-images-q-manager-453001/grass-tennis-players.jpeg",
     queues: [
       {
         queueName: "Location 1",
@@ -178,7 +179,8 @@ const tournamentsData = [
     name: "Shepparton Classic",
     adminUser: "",
     categories: ["doubles", "male", "female"],
-    image: "",
+    image:
+      "https://storage.googleapis.com/tournament-images-q-manager-453001/hardcourt-tennis.jpeg",
     queues: [
       {
         queueName: "Location 1",
@@ -213,7 +215,8 @@ const tournamentsData = [
     name: "Warrnambool Series",
     adminUser: "",
     categories: ["doubles", "male", "female"],
-    image: "",
+    image:
+      "https://storage.googleapis.com/tournament-images-q-manager-453001/country-grass-tournament.jpeg",
     queues: [
       {
         queueName: "Location 1",

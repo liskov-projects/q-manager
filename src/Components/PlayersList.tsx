@@ -144,7 +144,6 @@ export default function PlayersList({
               </li>
             ))
           )}
-          
         </ul>
       </div>
     </div>

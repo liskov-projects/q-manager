@@ -37,7 +37,7 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
       <div className="w-full h-[125px] relative">
         <Link href={`/all-tournaments/${_id}`}>
           <Image
-            src="/tennis.jpg"
+            src={tournament.image}
             alt={`Tournament ${name} Image`}
             fill
             className="object-cover rounded-md"

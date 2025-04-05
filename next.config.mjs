@@ -24,6 +24,11 @@ const nextConfig = {
         port: "",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+        pathname: "/tournament-images-q-manager-453001/**", // match your bucket
+      },
     ],
   },
 };
