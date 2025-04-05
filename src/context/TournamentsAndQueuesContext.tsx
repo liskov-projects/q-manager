@@ -39,18 +39,13 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
     currentTournamentRef.current = currentTournament;
   }, [currentTournament]);
 
+  // gets+sets all tournaments
   useEffect(() => {
-    // console.log("RUNNING HERE IN CONTEXT ALL TOURNAMENTS??");
-    // fetchPlayers();
     fetchTournaments();
   }, []);
 
-  // WORKS: sets both the tournamnet and its players | Sync Current Tournament with URL Pathname
+  // gets+sets both the tournament and its players | Sync Current Tournament with URL Pathname
   useEffect(() => {
-    // console.log("CURRENT TOURNAMENT SETTING USEEFFECT");
-
-    // console.log("PARAMS ID", params);
-
     const tournamentId = Array.isArray(params.id) ? params.id[0] : null;
 
     if (!tournamentId) {
@@ -59,9 +54,9 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
     }
 
     fetchTournament(tournamentId);
-  }, [params?.id]); // ✅ Runs when `pathname` changes
+  }, [params?.id]); // runs when `pathname` changes
 
-  // Fetch the single tournament directly from the API
+  // gets a single tournament directly from the API
   const fetchTournament = async (tournamentId: string) => {
     try {
       // console.log("Fetching tournament:", tournamentId);
@@ -80,30 +75,59 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
     }
   };
 
-  // WORKS: socket-related
-  const addPlayerToTournament = (playerData: TPlayer, tournamentId: string): void => {
-    // console.log("addPlayerToTournament RAN");
-    // console.log("CURRENT TOURNAMENT IN ADDPLAYERFROMSOCKET", currentTournament);
-    // console.log("currentTournamentREF.current:", currentTournamentRef.current);
-
-    if (currentTournamentRef.current) {
-      setCurrentTournament((prevTournament: TTournament | null) => {
-        // console.log("PREV TOURNAMENT")
-        // console.log(prevTournament)
-        if (!prevTournament) return prevTournament; // Ensure prevTournament exists
-        // console.log("SETTING THE TOURNAMENT");
-        return {
-          ...prevTournament, // Create a new tournament object
-          unProcessedQItems: [...prevTournament.unProcessedQItems, playerData], // Create a new array
-        };
-      });
-    }
-  };
-
-  // Filtered Tournaments
   const filteredTournaments = tournaments.filter((tournament) => tournament.adminUser === user?.id);
 
-  // to get the newest players after one is added
+  //WORKS: as expected gets ALL tournaments
+  const fetchTournaments = async () => {
+    const response = await fetch(`/api/tournament/`);
+    const tournamentsData = await response.json();
+    // console.log("response: ", tournamentsData);
+    setTournaments(tournamentsData);
+  };
+
+  //WORKS: Derived Categories from Players for one tournament
+  const uniqueCategories = useMemo(() => {
+    const categories = tournaments.flatMap((tournament) => tournament.categories || []);
+    return Array.from(new Set(categories));
+  }, [tournaments]);
+
+  // console.log("in the context ", uniqueCategories);
+
+  return (
+    <TournamentsAndQueuesContext.Provider
+      value={{
+        draggedItem,
+        setDraggedItem,
+        uniqueCategories,
+        currentTournament,
+        setCurrentTournament,
+        currentTournamentRef,
+        tournamentOwner,
+        tournaments,
+        setTournaments,
+        filteredTournaments,
+        fetchTournaments,
+        justDropped,
+        setJustDropped,
+      }}
+    >
+      {children}
+    </TournamentsAndQueuesContext.Provider>
+  );
+};
+
+export const useTournamentsAndQueuesContext = (): TTournamentsAndQueuesContextProps => {
+  const context = useContext(TournamentsAndQueuesContext);
+  if (!context) {
+    throw new Error(
+      "useTournamentsAndQueuesContext must be used within a TournamentsAndQueuesProvider"
+    );
+  }
+  return context;
+};
+
+// OLD: functions group that WORKS: but we don't use them anymore
+/* to get the newest players after one is added
   const fetchNewPlayers = async (tournamentId: string) => {
     try {
       const response = await fetch(`/api/tournament/${tournamentId}`);
@@ -125,7 +149,52 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
     }
   };
 
-  //WORKS: Adds Queues
+    // Doesn't work: planned to use it | swapped to socket
+  const saveTournament = async (tournamentId: string) => {
+    // comes through OK
+    // console.log(tournamentId);
+    console.log("BEFORE TRY: ", currentTournament);
+
+    try {
+      const res = await fetch(`/api/tournaments/${tournamentId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(currentTournament),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Error saving tournaments: ${res.statusText}`);
+      }
+
+      const dataToPost = await res.json();
+      console.log("Tournament saved!", dataToPost);
+    } catch (err) {
+      console.error("Failed to save tournament: ", err);
+    }
+  };
+  //IMPORTANT: WORKS: & now exists as socket
+  const addPlayerToTournament = (playerData: TPlayer): void => {
+    // console.log("addPlayerToTournament RAN");
+    // console.log("CURRENT TOURNAMENT IN ADDPLAYERFROMSOCKET", currentTournament);
+    // console.log("currentTournamentREF.current:", currentTournamentRef.current);
+
+    if (currentTournamentRef.current) {
+      setCurrentTournament((prevTournament: TTournament | null) => {
+        // console.log("PREV TOURNAMENT")
+        // console.log(prevTournament)
+        if (!prevTournament) return prevTournament;
+        // console.log("SETTING THE TOURNAMENT");
+        return {
+          ...prevTournament, //spreads the tournament
+          unProcessedQItems: [...prevTournament.unProcessedQItems, playerData], // appends the arr with playerData
+        };
+      });
+    }
+  };
+
+    //WORKS: Adds Queues
   const addMoreQueues = () => {
     const newQueue = {
       queueName: (currentTournament?.queues.length + 1).toString(),
@@ -152,83 +221,4 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
       };
     });
   };
-
-  //WORKS: as expected gets ALL tournaments
-  const fetchTournaments = async () => {
-    const response = await fetch(`/api/tournament/`);
-    const tournamentsData = await response.json();
-    // console.log("response: ", tournamentsData);
-    setTournaments(tournamentsData);
-  };
-
-  //WORKS: Derived Categories from Players for one tournament
-  const uniqueCategories = useMemo(() => {
-    const categories = tournaments.flatMap((tournament) => tournament.categories || []);
-    return Array.from(new Set(categories));
-  }, [tournaments]);
-
-  // console.log("in the context ", uniqueCategories);
-
-  // "FIXME:"
-  const saveTournament = async (tournamentId: string) => {
-    // comes through OK
-    // console.log(tournamentId);
-    console.log("BEFORE TRY: ", currentTournament);
-
-    try {
-      const res = await fetch(`/api/tournaments/${tournamentId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(currentTournament),
-      });
-
-      if (!res.ok) {
-        throw new Error(`Error saving tournaments: ${res.statusText}`);
-      }
-
-      const dataToPost = await res.json();
-      console.log("Tournament saved!", dataToPost);
-    } catch (err) {
-      console.error("Failed to save tournament: ", err);
-    }
-  };
-
-  return (
-    <TournamentsAndQueuesContext.Provider
-      value={{
-        addMoreQueues,
-        removeQueues,
-        draggedItem,
-        setDraggedItem,
-        uniqueCategories,
-        currentTournament,
-        setCurrentTournament,
-        currentTournamentRef,
-        tournamentOwner,
-        tournaments,
-        setTournaments,
-        filteredTournaments,
-        fetchTournaments,
-        saveTournament,
-        fetchNewPlayers,
-        addPlayerToTournament,
-        justDropped,
-        setJustDropped,
-      }}
-    >
-      {children}
-    </TournamentsAndQueuesContext.Provider>
-  );
-};
-
-export const useTournamentsAndQueuesContext = (): TTournamentsAndQueuesContextProps => {
-  const context = useContext(TournamentsAndQueuesContext);
-  if (!context) {
-    throw new Error(
-      "useTournamentsAndQueuesContext must be used within a TournamentsAndQueuesProvider"
-    );
-  }
-  return context;
-};
+ */
