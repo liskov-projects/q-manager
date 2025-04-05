@@ -50,7 +50,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
-        console.error("addPlayer failed in context", error.message);
+        if (error instanceof Error) {
+          console.error("addPlayer failed in context", error.message);
+        } else {
+          console.error("addPlayer failed in context", error);
+        }
       }
     });
 
@@ -58,7 +62,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
-        console.error(error.message);
+        if (error instanceof Error) {
+          console.error("deletePlayer failed in context", error.message);
+        } else {
+          console.error("deletePlayer failed in context", error);
+        }
       }
     });
 
@@ -66,7 +74,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
-        console.error(error.message);
+        if (error instanceof Error) {
+          console.error("editPlayer failed in context", error.message);
+        } else {
+          console.error("editPlayer failed in context", error);
+        }
       }
     });
     //
@@ -80,7 +92,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         handleDropRef.current(draggedItem, index, dropTarget);
         // setCurrentTournament(updatedTournament);
       } catch (error) {
-        console.error("handleDrop failed in context: ", error.message);
+        if (error instanceof Error) {
+          console.error("playerDropped failed in context", error.message);
+        } else {
+          console.error("playerDropped failed in context", error);
+        }
       }
     });
 
@@ -90,7 +106,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         setCurrentTournamentRef.current(updatedTournament);
         // handleAddToShortestQueue(playerData, updatedTournament);
       } catch (error) {
-        console.error("Failed to update tournament data", error.message);
+        if (error instanceof Error) {
+          console.error("addPlayerToShortestQ failed in context", error.message);
+        } else {
+          console.error("addPlayerToShortestQ failed in context", error);
+        }
       }
     });
 
@@ -98,7 +118,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
-        console.error("failed to add all players to queues", error.message);
+        if (error instanceof Error) {
+          console.error("addAllPlayersToQueues failed in context", error.message);
+        } else {
+          console.error("addAllPlayersToQueues failed in context", error);
+        }
       }
     });
 
@@ -106,7 +130,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
-        console.error(error.message);
+        if (error instanceof Error) {
+          console.error("uprocessAllPlayers failed in context", error.message);
+        } else {
+          console.error("uprocessAllPlayers failed in context", error);
+        }
       }
     });
 
@@ -114,25 +142,35 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
-        console.error(error.message);
+        if (error instanceof Error) {
+          console.error("processAllPlayers failed in context", error.message);
+        } else {
+          console.error("processAllPlayers failed in context", error);
+        }
       }
     });
 
-    // NEW:
     socketInstance.on("redistributePlayers", ({ updatedTournament }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
-        console.error(error.message);
+        if (error instanceof Error) {
+          console.error("redistributePlayers failed in context", error.message);
+        } else {
+          console.error("redistributePlayers failed in context", error);
+        }
       }
     });
 
-    //
     socketInstance.on("processQueueOneStep", ({ updatedTournament }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
-        console.error(error.message);
+        if (error instanceof Error) {
+          console.error("processQueueOneStep failed in context", error.message);
+        } else {
+          console.error("processQueueOneStep failed in context", error);
+        }
       }
     });
 
@@ -140,7 +178,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
-        console.error(error.message);
+        if (error instanceof Error) {
+          console.error("addQueue failed in context", error.message);
+        } else {
+          console.error("addQueue failed in context", error);
+        }
       }
     });
 
@@ -148,7 +190,11 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
-        console.error(error.message);
+        if (error instanceof Error) {
+          console.error("deleteQueue failed in context", error.message);
+        } else {
+          console.error("deleteQueue failed in context", error);
+        }
       }
     });
 
