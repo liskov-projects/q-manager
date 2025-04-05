@@ -2,18 +2,18 @@
 
 import { useState } from "react";
 
-export default function BulkImport({ tournamentId }) {
-  const [file, setFile] = useState(null);
+export default function BulkImport({ tournamentId }: { tournamentId: string }) {
+  const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) return;
 
     const formData = new FormData();
     formData.append("file", file);
     formData.append("tournamentId", tournamentId);
-    console.log("FORMDATA", formData);
+
     const res = await fetch("/api/player-import", {
       method: "POST",
       body: formData,
@@ -29,7 +29,16 @@ export default function BulkImport({ tournamentId }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="file" accept=".csv" onChange={(e) => setFile(e.target.files[0])} />
+      <input
+        type="file"
+        accept=".csv"
+        // ugly, but guards against TS errors
+        onChange={(e) => {
+          if (e.target.files && e.target.files.length > 0) {
+            setFile(e.target.files[0]);
+          }
+        }}
+      />
       <button type="submit">Import Players</button>
       <p>{message}</p>
     </form>

@@ -1,4 +1,14 @@
-export default function ToggleSwitch({ isOn, setIsOn, children }) {
+import { ReactNode } from "react";
+
+export default function ToggleSwitch({
+  isOn,
+  setIsOn,
+  children,
+}: {
+  isOn: boolean;
+  setIsOn: (value: boolean) => void;
+  children: ReactNode;
+}) {
   return (
     <label className="h-30 w-[85%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
       {children}

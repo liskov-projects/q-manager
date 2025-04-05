@@ -14,6 +14,7 @@ import ButtonExpand from "../Buttons/ButtonExpand";
 import QueueListItem from "./QueueListItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { TPlayer } from "@/types/Types.js";
 
 export default function Queue({ queue, index }: { queue: TQueue; index: number }) {
   const { tournamentOwner, draggedItem, currentTournament } = useTournamentsAndQueuesContext();
@@ -102,7 +103,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
         <>
           {queue.queueItems.length > 0 ? (
             <ul className="mb-4 h-[auto] overflow-visible">
-              {queue.queueItems.map((item, itemIndex) => (
+              {queue.queueItems.map((item: TPlayer, itemIndex: number) => (
                 <li
                   key={item._id}
                   className="flex flex-col items-center w-[100%]"

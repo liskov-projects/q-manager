@@ -19,7 +19,7 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
   const { socket } = useSocket();
   const { handleDragStart, handleDragOver } = useDragNDrop();
   // const {handleAddToShortestQueue} = useAddToQueues();
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
 
   const handleDelete = () => {
     // console.log("emitting deletePlayer");

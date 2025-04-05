@@ -13,9 +13,9 @@ export default function EditListItem({
   setEditMode,
 }: {
   item: TPlayer;
-  setEditMode: () => void;
+  setEditMode: (value: boolean) => void; //fixes: setEditMode(false) - Expected 0 arguments, but got 1.ts
 }) {
-  console.log("inside the edit card ", item);
+  // console.log("inside the edit card ", item);
   const { currentTournament } = useTournamentsAndQueuesContext();
   const { socket } = useSocket();
   const [updatedData, setUpdatedData] = useState({
@@ -41,7 +41,7 @@ export default function EditListItem({
       tournamentID: tournamentID,
       names: updatedData.names,
       categories: updatedData.categories,
-      phoneNumbers: updatedData.phoneNumbers.split(",").map((num) => num.trim()),
+      phoneNumbers: updatedData.phoneNumbers.split(",").map((num: string) => num.trim()),
     };
 
     if (socket) {

@@ -10,7 +10,7 @@ import ButtonGroup from "@/Components/Buttons/ButtonGroup";
 import NewPlayerForm from "../Forms/NewPlayerForm";
 import BulkImport from "./UserSettingsPage/BulkImport";
 
-export default function TournamentQueuesPage({ tournamentId }) {
+export default function TournamentQueuesPage({ tournamentId }: { tournamentId: string }) {
   const [visibleSection, setVisibleSection] = useState("queues");
 
   const { currentTournament, tournamentOwner } = useTournamentsAndQueuesContext();

@@ -26,7 +26,7 @@ export default function AllTournamentsPage() {
         )
       );
     })
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a: TTournament, b: TTournament) => a.name.localeCompare(b.name));
 
   return (
     <div className="p-4 w-full flex flex-col lg:flex-row gap-4">
@@ -68,7 +68,7 @@ export default function AllTournamentsPage() {
         </div>
 
         <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {tournamentsToShow.map((tournament, index) => (
+          {tournamentsToShow.map((tournament: TTournament, index: number) => (
             <TournamentCard key={index} tournament={tournament} />
           ))}
         </ul>

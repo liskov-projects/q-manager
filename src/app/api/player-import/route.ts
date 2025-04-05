@@ -1,9 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import Papa from "papaparse";
 import { TournamentModel } from "@/models/TournamentModel";
 import dbConnect from "@/lib/db";
 
-export async function POST(req) {
+type DocumentRow = {
+  first_name: string;
+  phone: string;
+  categories: string;
+};
+
+export async function POST(req: NextRequest) {
   await dbConnect();
 
   const formData = await req.formData();
@@ -44,8 +50,8 @@ export async function POST(req) {
 
   // Sanitize & validate rows
   const players = data
-    .filter((row) => row.first_name && row.phone && row.categories)
-    .map((row) => ({
+    .filter((row: DocumentRow) => row.first_name && row.phone && row.categories)
+    .map((row: DocumentRow) => ({
       names: row.first_name.trim(),
       phoneNumbers: row.phone.split(",").map((num) => num.trim()),
       categories: row.categories.split(",").map((cat) => cat.trim()),
