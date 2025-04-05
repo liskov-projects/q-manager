@@ -54,6 +54,11 @@ resource "google_cloud_run_service" "nextjs_app" {
           value = var.clerk_publishable_key
         }
 
+        env {
+          name  = "GOOGLE_BUCKET_CREDENTIALS"
+          value = var.google_bucket_credentials
+        }
+
         # ✅ Startup probe – waits for the container to start
         startup_probe {
             http_get {

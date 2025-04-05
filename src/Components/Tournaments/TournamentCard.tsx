@@ -40,6 +40,7 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
             src={tournament.image}
             alt={`Tournament ${name} Image`}
             fill
+            sizes="(max-width: 768px) 100vw, 400px"
             className="object-cover rounded-md"
           />
         </Link>

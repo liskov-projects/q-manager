@@ -37,3 +37,7 @@ variable "socket_url" {
   description = "The WebSocket URL to expose to the client app"
   type        = string
 }
+
+variable "google_bucket_credentials" {
+  type = string
+}
