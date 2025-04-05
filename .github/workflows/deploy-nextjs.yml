@@ -92,6 +92,8 @@ jobs:
             --build-arg CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}" \
             --build-arg NEXT_PUBLIC_SOCKET_URL="${{ secrets.SOCKET_URL }}" \
             --build-arg TAILWIND_CONFIG="tailwind.config.ts" \
+            --build-arg GOOGLE_BUCKET_CREDENTIALS="${{ secrets.GOOGLE_BUCKET_CREDENTIALS }}" \
+            --build-arg GCP_PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}" \
             -t "$IMAGE_NAME" -f Dockerfile . --push
 
       - name: Setup Terraform
@@ -116,5 +118,7 @@ jobs:
             -var="clerk_publishable_key=${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
             -var="env=${{ env.ENVIRONMENT }}" \
             -var="socket_url=${{ secrets.SOCKET_URL }}" \
+            -var="google_bucket_credentials=${{ secrets.GOOGLE_BUCKET_CREDENTIALS }}" \
+            -var="gcp_project_id"=${{ secrets.GCP_PROJECT_ID }}
             -lock-timeout=90s \
             -auto-approve
