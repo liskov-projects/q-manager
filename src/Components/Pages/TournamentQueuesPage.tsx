@@ -8,6 +8,7 @@ import QueuesContainer from "@/Components/Queue/QueuesContainer";
 import ButtonGroup from "@/Components/Buttons/ButtonGroup";
 // import NewQueueForm from "../Forms/NewQueueForm";
 import NewPlayerForm from "../Forms/NewPlayerForm";
+import BulkImport from "./UserSettingsPage/BulkImport";
 
 export default function TournamentQueuesPage({ tournamentId }) {
   const [visibleSection, setVisibleSection] = useState("queues");
@@ -44,6 +45,7 @@ export default function TournamentQueuesPage({ tournamentId }) {
           }`}
         >
           {tournamentOwner && <NewPlayerForm />}
+          {tournamentOwner && <BulkImport tournamentId={tournamentId} />}
           <PlayersList
             title={"Unprocessed Matches"}
             players={currentTournament.unProcessedQItems}

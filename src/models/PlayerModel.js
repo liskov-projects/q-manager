@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 export const playerSchema = new mongoose.Schema(
-  //   FIXME: singular/plural
   {
     _id: { type: mongoose.Types.ObjectId, auto: true, required: true },
     names: { type: String, required: true },
@@ -12,11 +11,6 @@ export const playerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // tournamentId: {
-    //   type: mongoose.Types.ObjectId,
-    //   ref: "TournamentModel", // Reference to the Tournament model
-    //   required: true,
-    // },
   },
   { collection: "players" }
 );
