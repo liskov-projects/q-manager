@@ -12,11 +12,13 @@ import { error } from "console";
 // allows for partial form from existing Type
 type TTournamentForm = Partial<TTournament> & {
   numberOfQueues: number | string;
+  image?: string | File;
 };
 
 export default function NewTournamentForm() {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [newTournament, setNewTournament] = useState<TTournamentForm>({
     name: "",
     categories: [],
@@ -54,10 +56,24 @@ export default function NewTournamentForm() {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type, files } = e.target;
 
-    setNewTournament({
-      ...newTournament,
-      [name]: type === "file" && files ? files[0] : type === "number" ? Number(value) : value,
-    });
+    if (type === "file" && files && files[0]) {
+      setErrorMessage("");
+
+      const file = files[0];
+
+      setNewTournament({
+        ...newTournament,
+        [name]: file,
+      });
+
+      const objectUrl = URL.createObjectURL(file);
+      setPreviewUrl(objectUrl);
+    } else {
+      setNewTournament({
+        ...newTournament,
+        [name]: type === "number" ? Number(value) : value,
+      });
+    }
   }
 
   function handleCustomCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -80,12 +96,41 @@ export default function NewTournamentForm() {
     e.preventDefault();
     // console.log("handle submit tournament");
 
+    let imageUrl = "";
+
+    if (!newTournament.image || !(newTournament.image instanceof File)) {
+      setErrorMessage("Please upload a tournament image.");
+      return;
+    }
+
+    if (newTournament.image && newTournament.image instanceof File) {
+      const file = newTournament.image;
+
+      const res = await fetch(
+        `/api/gcs-uploads?fileName=${encodeURIComponent(file.name)}&fileType=${encodeURIComponent(file.type)}`
+      );
+
+      const { uploadUrl, publicUrl } = await res.json();
+
+      await fetch(uploadUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": file.type,
+        },
+        body: file,
+      });
+
+      imageUrl = publicUrl;
+      URL.revokeObjectURL(previewUrl || "");
+      setPreviewUrl(null);
+    }
+
     // data to send to backend
     const newItem = {
       name: newTournament.name,
       categories: selectedCategories,
       adminUser: user?.id,
-      image: newTournament.image,
+      image: imageUrl,
       description: newTournament.description,
       numberOfQueues: newTournament.numberOfQueues,
     };
@@ -149,6 +194,32 @@ export default function NewTournamentForm() {
               onChange={handleChange}
               className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
             />
+
+            <label htmlFor="image">
+              Tournament Image <span className="text-brick-200">*</span>
+            </label>
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleChange}
+              className={`focus:outline rounded-md px-3 py-2 focus:ring-2 my-3 w-full ${
+                !newTournament.image && errorMessage
+                  ? "border-2 border-brick-200"
+                  : "focus:ring-brick-200"
+              }`}
+            />
+
+            {previewUrl && (
+              <div className="my-3">
+                <p className="text-sm text-gray-600">Image Preview:</p>
+                <img
+                  src={previewUrl}
+                  alt="Tournament Preview"
+                  className="rounded-md w-48 h-32 object-cover border border-gray-300"
+                />
+              </div>
+            )}
 
             {/* <label htmlFor="categories" className="text-xl">
               Categories
