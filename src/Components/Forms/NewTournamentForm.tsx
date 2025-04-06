@@ -146,7 +146,7 @@ export default function NewTournamentForm() {
       </div>
 
       {isExpanded && (
-        <form className="flex flex-row items-center justify-around" onSubmit={handleSubmit}>
+        <form className="flex flex-col items-center justify-around" onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label htmlFor="name">Tournament Name</label>
             <input
@@ -182,6 +182,30 @@ export default function NewTournamentForm() {
               </div>
             )}
           </div>
+          <label htmlFor="description">Description</label>
+          <input
+            type="text"
+            name="description"
+            value={newTournament.description}
+            onChange={handleChange}
+            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+          />
+
+          <label htmlFor="numberOfQueues">Number of Queues</label>
+          <input
+            placeholder="3"
+            type="number"
+            name="numberOfQueues"
+            value={newTournament.numberOfQueues}
+            onChange={handleChange}
+            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+          />
+          <Button className="self-center my-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
+            Add the Tournament!
+          </Button>
+          {errorMessage && (
+            <span className="text-brick-200 text-center text-xl">{errorMessage}</span>
+          )}
         </form>
       )}
     </div>
