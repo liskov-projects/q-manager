@@ -1,12 +1,16 @@
 import React from "react";
 
+type TennisLogoProps = {
+  className: string;
+};
+
 export default function TennisLogo({ className = "w-8 h-8" }: TennisLogoProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 500 500"
-      className={`${className} hover:scale-105 transition-transform duration-300`}
+      className={`${className} hover:scale-105 hover:rotate-180 transition-transform duration-300`}
       xmlSpace="preserve"
     >
       <path
