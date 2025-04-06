@@ -77,6 +77,9 @@ jobs:
 
           IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
 
+          # 🔍 Print each command before executing it
+          set -x
+
           docker buildx build --no-cache --platform=linux/amd64 -t "$IMAGE_NAME" --push -f Dockerfile . \
             --build-arg NEXT_PUBLIC_MONGO_URI="${{ secrets.MONGO_URI }}" \
             --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
