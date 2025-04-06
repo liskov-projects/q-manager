@@ -15,7 +15,6 @@ on:
 
 env:
   ENVIRONMENT: "qa"
-  IMAGE_NAME: "australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
 
 jobs:
   deploy:
@@ -48,16 +47,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Optional: Clean and prune cache
-      - name: Clean Cache
+      - name: Create Buildx Builder
         run: |
-          rm -rf .next
-          rm -rf node_modules/.cache/tailwindcss
-          docker builder prune --all --force
-
-      - name: Install Dependencies
-        run: |
-          npm install --force
+          docker buildx create --use
+          docker buildx inspect --bootstrap
 
       - name: Debug Docker Context
         run: |
@@ -65,14 +58,21 @@ jobs:
           pwd
           echo "Directory contents:"
           ls -al
-          echo "Docker version:"
           docker --version
-          echo "Docker Buildx version:"
           docker buildx version
+
+      - name: Clean Cache
+        run: |
+          rm -rf .next
+          rm -rf node_modules/.cache/tailwindcss
+          docker builder prune --all --force
+
+      - name: Install Dependencies
+        run: npm install --force
 
       - name: Build and Push Docker Image
         run: |
-          echo "Listing files in context:"
+          echo "Listing files in current context:"
           ls -al
 
           IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
@@ -104,8 +104,10 @@ jobs:
       - name: Terraform Apply
         working-directory: terraform/nextjs-app
         run: |
+          IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
+
           terraform apply \
-            -var="image_tag=${{ env.IMAGE_NAME }}" \
+            -var="image_tag=$IMAGE_NAME" \
             -var="project_id=q-manager-453001" \
             -var="region=australia-southeast2" \
             -var="mongo_uri=${{ secrets.MONGO_URI }}" \
