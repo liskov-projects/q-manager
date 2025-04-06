@@ -94,7 +94,7 @@ jobs:
             --build-arg TAILWIND_CONFIG="tailwind.config.ts" \
             --build-arg GOOGLE_BUCKET_CREDENTIALS="${{ secrets.GOOGLE_BUCKET_CREDENTIALS }}" \
             --build-arg GCP_PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}" \
-            -t "$IMAGE_NAME" -f Dockerfile . --push
+            -t "$IMAGE_NAME" --push -f Dockerfile .
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
