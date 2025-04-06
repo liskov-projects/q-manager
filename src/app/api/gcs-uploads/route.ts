@@ -1,12 +1,12 @@
 import { Storage } from "@google-cloud/storage";
 import { NextRequest } from "next/server";
 
-// Load credentials from ~/.gcp/gcs-signer-key.json
+// Decode base64 string into JSON
 const gcsCredentials = process.env.GOOGLE_BUCKET_CREDENTIALS
-  ? JSON.parse(process.env.GOOGLE_BUCKET_CREDENTIALS)
+  ? JSON.parse(Buffer.from(process.env.GOOGLE_BUCKET_CREDENTIALS, "base64").toString("utf8"))
   : undefined;
 
-const storage = new Storage({ gcsCredentials });
+const storage = new Storage({ credentials: gcsCredentials });
 const bucketName = `tournament-images-${process.env.GCP_PROJECT_ID}`;
 
 export async function GET(req: NextRequest) {

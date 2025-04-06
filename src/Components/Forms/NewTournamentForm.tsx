@@ -1,5 +1,5 @@
 // hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { useUser } from "@clerk/nextjs";
 // types
@@ -7,6 +7,7 @@ import { TTournament } from "@/types/Types";
 // components
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
+import { error } from "console";
 
 // allows for partial form from existing Type
 type TTournamentForm = Partial<TTournament> & {
@@ -29,7 +30,28 @@ export default function NewTournamentForm() {
 
   // any signed in user can create a new tournamnet
   const { isSignedIn, user } = useUser();
-  const { fetchTournaments } = useTournamentsAndQueuesContext();
+  const { fetchTournaments, uniqueCategories } = useTournamentsAndQueuesContext();
+
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  const [customCategory, setCustomCategory] = useState("");
+
+  useEffect(() => {
+    setSelectedCategories(newTournament?.categories || []);
+  }, [newTournament?.categories]);
+
+  // console.log(uniqueCategories);
+
+  function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const category = e.target.value;
+    if (category && !selectedCategories.includes(category)) {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  }
+
+  function removeCategory(categoryToRemove: string) {
+    setSelectedCategories(selectedCategories.filter((cat) => cat !== categoryToRemove));
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type, files } = e.target;
@@ -54,6 +76,22 @@ export default function NewTournamentForm() {
     }
   }
 
+  function handleCustomCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setCustomCategory(e.target.value);
+  }
+  function addCustomCategory(e) {
+    e.preventDefault();
+    if (
+      customCategory &&
+      !uniqueCategories.includes(customCategory) &&
+      !selectedCategories.includes(customCategory)
+    ) {
+      uniqueCategories.push(customCategory);
+      setSelectedCategories([...selectedCategories, customCategory]);
+    }
+    setCustomCategory(""); // Clear input field
+  }
+  //
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     // console.log("handle submit tournament");
@@ -90,7 +128,7 @@ export default function NewTournamentForm() {
     // data to send to backend
     const newItem = {
       name: newTournament.name,
-      // categories: selectedCategories,
+      categories: selectedCategories,
       adminUser: user?.id,
       image: imageUrl,
       description: newTournament.description,
@@ -171,6 +209,7 @@ export default function NewTournamentForm() {
                   : "focus:ring-brick-200"
               }`}
             />
+
             {previewUrl && (
               <div className="my-3">
                 <p className="text-sm text-gray-600">Image Preview:</p>
@@ -182,6 +221,7 @@ export default function NewTournamentForm() {
               </div>
             )}
           </div>
+
           <label htmlFor="description">Description</label>
           <input
             type="text"
@@ -212,7 +252,8 @@ export default function NewTournamentForm() {
   );
 }
 
-/* <label htmlFor="categories" className="text-xl">
+{
+  /* <label htmlFor="categories" className="text-xl">
               Categories
             </label>
 
@@ -263,3 +304,4 @@ export default function NewTournamentForm() {
                 </span>
               ))}
             </div> */
+}
