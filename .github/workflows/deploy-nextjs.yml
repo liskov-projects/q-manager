@@ -61,6 +61,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
+          IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
           docker buildx build --no-cache --platform=linux/amd64 \
             --build-arg NEXT_PUBLIC_MONGO_URI="${{ secrets.MONGO_URI }}" \
             --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
@@ -69,8 +70,7 @@ jobs:
             --build-arg GOOGLE_BUCKET_CREDENTIALS="${{ secrets.GOOGLE_BUCKET_CREDENTIALS }}" \
             --build-arg GCP_PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}" \
             --build-arg TAILWIND_CONFIG="tailwind.config.ts" \
-            -t "${{ env.IMAGE_NAME }}" \
-            --push -f Dockerfile .
+            -t "$IMAGE_NAME" -f Dockerfile . --push
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
