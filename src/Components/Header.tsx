@@ -20,10 +20,10 @@ export default function Header() {
       <div className="flex items-center gap-2 flex-shrink-0">
         <Link
           href="/all-tournaments"
-          className={`p-2 text-sm text-bluestone-200 border-2 border-bluestone-200 rounded  ${home ? "" : "hover:bg-bluestone-200"}`}
+          className={`p-2 text-sm text-bluestone-200 border-2 border-bluestone-200 rounded ${home ? "" : "hover:bg-bluestone-200"}`}
           aria-disabled={home}
         >
-          <TennisLogo />
+          <TennisLogo className="w-[40px] h-[40px]" />
         </Link>
 
         {userSettingsPath && (
