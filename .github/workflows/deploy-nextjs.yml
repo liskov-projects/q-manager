@@ -119,6 +119,6 @@ jobs:
             -var="env=${{ env.ENVIRONMENT }}" \
             -var="socket_url=${{ secrets.SOCKET_URL }}" \
             -var="google_bucket_credentials=${{ secrets.GOOGLE_BUCKET_CREDENTIALS }}" \
-            -var="gcp_project_id"=${{ secrets.GCP_PROJECT_ID }}
+            -var="gcp_project_id"=${{ secrets.GCP_PROJECT_ID }} \
             -lock-timeout=90s \
             -auto-approve
