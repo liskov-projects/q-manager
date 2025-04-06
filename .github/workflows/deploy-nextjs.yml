@@ -59,6 +59,17 @@ jobs:
         run: |
           npm install --force
 
+      - name: Debug Docker Context
+        run: |
+          echo "Current working directory:"
+          pwd
+          echo "Directory contents:"
+          ls -al
+          echo "Docker version:"
+          docker --version
+          echo "Docker Buildx version:"
+          docker buildx version
+
       - name: Build and Push Docker Image
         run: |
           echo "Listing files in context:"
