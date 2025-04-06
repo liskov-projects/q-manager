@@ -26,6 +26,7 @@ const seedPlayers = async () => {
 
     // NEW: clears up the collection if it exists to avoid duplication
     await db.collection("players").deleteMany({});
+    await db.collection("users").deleteMany({});
     // Fetch or create the players collection
     const playerCollection = db.collection("players");
     const tournamentCollection = db.collection("tournaments");
