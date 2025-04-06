@@ -14,7 +14,7 @@ export default function DropZone({
   index,
   inEmptyList,
 }: DropZoneProps) {
-  const { tournamentOwner } = useTournamentsAndQueuesContext();
+  const { tournamentOwner, draggedItem } = useTournamentsAndQueuesContext();
 
   if (!tournamentOwner) return null;
   const isActive = isDraggedOver && hoveredDropZoneIndex === index;
@@ -22,9 +22,6 @@ export default function DropZone({
   return (
     <div
       className={`drop-zone w-[95%] transition-all duration-200 bg-gray-300 my-2 rounded ${isActive || inEmptyList ? "h-[50px]" : "h-[0px]"}`}
-      // style={{
-      //   height: isActive || inEmptyList ? "50px" : "0px",
-      // }}
     />
   );
 }
