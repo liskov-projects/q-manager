@@ -5,28 +5,26 @@ import { usePathname, useRouter } from "next/navigation";
 import User from "@/Components/User";
 import Link from "next/link";
 import Button from "./Buttons/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTableCells } from "@fortawesome/free-solid-svg-icons";
+import TennisLogo from "./TennisLogo";
 
 export default function Header() {
   const path = usePathname();
   const router = useRouter();
 
-  const notHome = path !== "/all-tournaments";
+  const home = path == "/all-tournaments";
   const userSettingsPath = path === "/all-tournaments/user-settings";
 
   return (
     <header className="w-full flex flex-wrap items-center justify-between gap-4 p-4 sm:flex-nowrap sm:gap-0">
       {/* Buttons section */}
       <div className="flex items-center gap-2 flex-shrink-0">
-        {notHome && (
-          <Link
-            href="/all-tournaments"
-            className="py-1 px-2 text-sm text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100"
-          >
-            <FontAwesomeIcon icon={faTableCells} />
-          </Link>
-        )}
+        <Link
+          href="/all-tournaments"
+          className={`p-2 text-sm text-bluestone-200 border-2 border-bluestone-200 rounded  ${home ? "" : "hover:bg-bluestone-200"}`}
+          aria-disabled={home}
+        >
+          <TennisLogo />
+        </Link>
 
         {userSettingsPath && (
           <Button
