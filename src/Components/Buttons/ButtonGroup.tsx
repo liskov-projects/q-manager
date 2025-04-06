@@ -2,6 +2,7 @@
 // hooks
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { useSocket } from "@/context/SocketContext";
+import useAddToQueues from "@/hooks/useAddToQueues";
 // components
 import Button from "./Button";
 import SectionHeader from "../SectionHeader";
@@ -9,6 +10,7 @@ import SectionHeader from "../SectionHeader";
 export default function ButtonGroup({}) {
   const { currentTournament, tournamentOwner } = useTournamentsAndQueuesContext();
   const { socket } = useSocket();
+  const { handleRedistributeQueues } = useAddToQueues();
 
   // hides the components from guests
   if (!tournamentOwner) return null;
@@ -35,12 +37,11 @@ export default function ButtonGroup({}) {
           <Button
             className="bg-bluestone-200 hover:bg-tennis-100 text-shell-50 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
             onClick={() => {
-              if (socket) {
-                socket.emit("redistributePlayers", {
-                  tournament: currentTournament,
-                });
-              }
-              // handleRedistributeQueues();
+              // if (socket) {
+              //   socket.emit("redistributePlayers", {
+              //     tournament: currentTournament,
+              //   });
+              handleRedistributeQueues();
             }}
           >
             Redestribute

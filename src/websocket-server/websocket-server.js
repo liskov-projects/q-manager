@@ -382,51 +382,27 @@ io.on("connection", async (socket) => {
   });
 
   // NEW:
-  socket.on("redistributePlayers", async ({ tournament }) => {
-    // db call to get the data
-    const foundTournament = await TournamentModel.findById(tournament._id);
-    if (!foundTournament) socket.emit("tournament not found in redistributePlayers");
+  socket.on("redistributePlayers", async ({ tournamentId, balancedQueues }) => {
+    // Find the tournament from the database
+    const foundTournament = await TournamentModel.findById(tournamentId);
+    if (!foundTournament) {
+      socket.emit("tournament not found in redistributePlayers");
+      return;
+    }
 
-    // processes the data
-    const poolOfPlayers = foundTournament.queues
-      .map((queue) => queue.queueItems)
-      .flat()
-      .concat(foundTournament.unProcessedQItems);
-
-    // hepler
-    const findShortestQueue = (queues) => {
-      return queues.reduce((shortest, queue) =>
-        queue.queueItems.length < shortest.queueItems.length ? queue : shortest
-      );
-    };
-
-    const shortestQueueLength = findShortestQueue(tournament.queues).queueItems.length;
-
-    const balancedQueues = tournament.queues.map((queue) => {
-      return {
-        ...queue,
-        queueItems: queue.queueItems.slice(0, shortestQueueLength),
-      };
-    });
-
-    poolOfPlayers.forEach((item, index) => {
-      const targetQueueIndex = index % balancedQueues.length;
-      balancedQueues[targetQueueIndex].queueItems.push(item);
-    });
-
-    // db call to update
+    // Update the queues in the database with the new balancedQueues
     const updatedTournament = await TournamentModel.findByIdAndUpdate(
-      tournament._id,
+      tournamentId,
       {
         $set: {
-          // updates every queue's queueItems
+          // updates every queue's queueItems with the new balancedQueues
           queues: balancedQueues,
         },
       },
       { new: true }
     );
 
-    // emits the event to the front
+    // Emit the updated tournament data to all clients
     io.emit("redistributePlayers", {
       message: "Players redistributed between the queues",
       updatedTournament,
