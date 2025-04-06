@@ -15,13 +15,27 @@ export default function DropZone({
   inEmptyList,
 }: DropZoneProps) {
   const { tournamentOwner, draggedItem } = useTournamentsAndQueuesContext();
+  const isActive = isDraggedOver && hoveredDropZoneIndex === index;
+
+  // let for working out the value
+  let zoneHeight = "h-[0px]";
+  if (inEmptyList) {
+    zoneHeight = "h-[50px]";
+  } else if (draggedItem === null) {
+    zoneHeight = "h-[0px]";
+  } else if (index === -1) {
+    // end of the list
+    zoneHeight = isActive ? "h-[50px]" : "h-[25px]";
+  } else {
+    //between the ListItems
+    zoneHeight = isActive ? "h-[50px]" : "h-[0px]";
+  }
 
   if (!tournamentOwner) return null;
-  const isActive = isDraggedOver && hoveredDropZoneIndex === index;
 
   return (
     <div
-      className={`drop-zone w-[95%] transition-all duration-200 bg-gray-300 my-2 rounded ${isActive || inEmptyList ? "h-[50px]" : "h-[0px]"}`}
+      className={`drop-zone w-[95%] transition-all duration-200 bg-gray-300 my-2 rounded oveflow-hidden ${zoneHeight}`}
     />
   );
 }
