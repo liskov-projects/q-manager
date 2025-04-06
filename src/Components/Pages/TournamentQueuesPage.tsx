@@ -45,7 +45,8 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
           }`}
         >
           {tournamentOwner && <NewPlayerForm />}
-          {tournamentOwner && <BulkImport tournamentId={tournamentId} />}
+          {/* IMPORTANT: where to put? WORKS: */}
+          {/* {tournamentOwner && <BulkImport tournamentId={tournamentId} />} */}
           <PlayersList
             title={"Unprocessed Matches"}
             players={currentTournament.unProcessedQItems}

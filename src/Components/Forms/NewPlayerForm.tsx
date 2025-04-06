@@ -11,10 +11,11 @@ import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonCirclePlus } from "@fortawesome/free-solid-svg-icons";
+
 export default function NewPlayerForm() {
   // just check if logged in as the dropdown list is restricted to only the tournaments created by the logged in user
   const { isSignedIn } = useUser();
-  const { currentTournament } = useTournamentsAndQueuesContext();
+  const { currentTournament, uniqueCategories } = useTournamentsAndQueuesContext();
   const { socket } = useSocket();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
@@ -28,6 +29,7 @@ export default function NewPlayerForm() {
 
   // console.log("within the form ", currentTournament);
   // console.log("tournamentID: ", currentTournament?._id);
+  const [customCategory, setCustomCategory] = useState<string>("");
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -87,6 +89,22 @@ export default function NewPlayerForm() {
 
     console.log("newItem", newItem);
   }
+  function handleCustomCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setCustomCategory(e.target.value);
+  }
+
+  function addCustomCategory(e) {
+    e.preventDefault();
+    if (
+      customCategory &&
+      !uniqueCategories.includes(customCategory) &&
+      !selectedCategories.includes(customCategory)
+    ) {
+      uniqueCategories.push(customCategory);
+      setSelectedCategories([...selectedCategories, customCategory]);
+    }
+    setCustomCategory(""); // Clear input field
+  }
 
   // hides the components from guests
   if (!isSignedIn) return null;
@@ -132,7 +150,7 @@ export default function NewPlayerForm() {
               className={inputStyles}
             />
 
-            <label htmlFor="categories">Categories</label>
+            {/* <label htmlFor="categories">Categories</label>
 
             <select
               name="categories"
@@ -162,7 +180,60 @@ export default function NewPlayerForm() {
                   </button>
                 </span>
               ))}
+            </div> */}
+
+            <label htmlFor="categories" className="text-xl">
+              Categories
+            </label>
+
+            <label htmlFor="customCategory">Add Custom Category</label>
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                name="customCategory"
+                value={customCategory}
+                onChange={handleCustomCategoryChange}
+                className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+              />
+              <Button
+                type="button"
+                onClick={(e) => addCustomCategory(e)}
+                className="bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
+              >
+                Add
+              </Button>
             </div>
+
+            <select
+              name="categories"
+              value=""
+              onChange={handleCategoryChange}
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+            >
+              <option value="">Select categories (doubles, teens)</option>
+              {uniqueCategories.map((category: string, idx: number) => (
+                <option key={idx} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {selectedCategories.map((category) => (
+                <span
+                  key={category}
+                  className=" my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
+                >
+                  {category}
+                  <button
+                    onClick={() => removeCategory(category)}
+                    className="ml-2 text-sm text-white-500"
+                  >
+                    ✕
+                  </button>
+                </span>
+              ))}
+            </div>
+
             <Button className=" ml-6 bg-bluestone-200 text-shell-50 hover:bg-tennis-100  hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
               Add match
             </Button>
