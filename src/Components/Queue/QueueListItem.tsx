@@ -37,6 +37,9 @@ export default function QueueListItem({
     }
   }, [justDropped, item._id]);
 
+  if (item.isHidden) {
+    return null;
+  }
   // NOTE: star background?
   return (
     <div
