@@ -15,6 +15,7 @@ export const tournamentSchema = new mongoose.Schema(
     processedQItems: [playerSchema],
     // queues: [{type: queueSchema, required: true, default: []}]
     queues: { type: [queueSchema], default: [] },
+    eventDate: { type: Date },
   },
   { collection: "tournaments" }
 );

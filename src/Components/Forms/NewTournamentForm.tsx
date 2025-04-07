@@ -26,6 +26,7 @@ export default function NewTournamentForm() {
     image: "",
     description: "",
     numberOfQueues: "",
+    eventDate: "",
   });
 
   // any signed in user can create a new tournamnet
@@ -126,6 +127,8 @@ export default function NewTournamentForm() {
     }
 
     // data to send to backend
+    const eventDate = newTournament.eventDate ? newTournament.eventDate : null;
+
     const newItem = {
       name: newTournament.name,
       categories: selectedCategories,
@@ -133,6 +136,7 @@ export default function NewTournamentForm() {
       image: imageUrl,
       description: newTournament.description,
       numberOfQueues: newTournament.numberOfQueues,
+      eventDate: eventDate,
     };
 
     // console.log("Data sent to backend: ", newItem);
@@ -150,6 +154,7 @@ export default function NewTournamentForm() {
         const data = await res.json();
         console.log("Added: ", data);
         fetchTournaments();
+        setErrorMessage("Tournament added");
       } else if (res.status === 409) {
         setErrorMessage("Tournament with this name already exists");
       } else {
@@ -172,6 +177,7 @@ export default function NewTournamentForm() {
       image: "",
       description: "",
       numberOfQueues: "",
+      eventDate: "",
     });
     // console.log(newTournament);
   }
@@ -240,6 +246,16 @@ export default function NewTournamentForm() {
             onChange={handleChange}
             className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
           />
+          {/* NEW: */}
+          <label htmlFor="numberOfQueues">Date</label>
+          <input
+            type="date"
+            name="eventDate"
+            value={newTournament.eventDate}
+            onChange={handleChange}
+            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+          />
+
           <Button className="self-center my-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
             Add the Tournament!
           </Button>
@@ -252,8 +268,7 @@ export default function NewTournamentForm() {
   );
 }
 
-{
-  /* <label htmlFor="categories" className="text-xl">
+/* <label htmlFor="categories" className="text-xl">
               Categories
             </label>
 
@@ -304,4 +319,3 @@ export default function NewTournamentForm() {
                 </span>
               ))}
             </div> */
-}

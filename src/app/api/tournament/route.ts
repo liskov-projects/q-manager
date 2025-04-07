@@ -16,10 +16,11 @@ export async function POST(req: NextRequest) {
   await dbConnect();
 
   const body = await req.json();
-  const { name, categories, adminUser, image, description, numberOfQueues } = body;
+  const { name, categories, adminUser, image, description, numberOfQueues, eventDate } = body;
 
   // makes sure we don't have name duplicates
   const existingName = await TournamentModel.findOne({ name });
+  console.log("Received eventDate:", eventDate);
 
   if (existingName)
     return NextResponse.json({ error: "This tournament name already exists" }, { status: 409 }); //returns conflict status
@@ -44,6 +45,7 @@ export async function POST(req: NextRequest) {
     image,
     description,
     queues,
+    eventDate: new Date(eventDate),
   });
 
   await newTournament.save();

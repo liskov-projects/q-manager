@@ -17,6 +17,12 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
   const { userId } = useAuth(); //gets hold of the current user id to do the ckeck agai
   // console.log(userId);
 
+  const formattedDate = new Date(tournament.eventDate).toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <div className="w-full flex flex-col items-center border border-gray-300 rounded-md p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-2 shadow-left-bottom-lg">
       {/* <Link
@@ -32,7 +38,6 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
         </Link>
         <StarItem tournamentId={tournament._id} />
       </div>
-
       {/* Image Container */}
       <div className="w-full h-[125px] relative">
         <Link href={`/all-tournaments/${_id}`}>
@@ -45,12 +50,15 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
           />
         </Link>
       </div>
-
       {/* Description & Categories */}
       <div className="flex-grow text-lg m-2 text-gray-600 font-semibold text-center">
         {description}
       </div>
-
+      {tournament.eventDate ? (
+        <div className="flex-grow text-lg m-2 text-gray-600 font-semibold text-center">
+          {formattedDate}
+        </div>
+      ) : null}
       {/* <TournamentCategories categories={categories} tournamentId={_id} /> */}
       {/* </Link> */}
     </div>
