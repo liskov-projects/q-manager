@@ -59,8 +59,8 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
     >
       <div className="flex flex-row justify-around items-center">
         <h3 className="text-xl font-semibold text-bluestone-200">Queue {queue.queueName}</h3>
+
         {!tournamentOwner ? null : (
-          // FIXME: players into the unprocessed
           <Button
             className="mx-2 px-3 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out flex items-center justify-center"
             onClick={() => {
@@ -73,7 +73,6 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
               }
             }}
           >
-            {/* 🗑️ */}
             <FontAwesomeIcon icon={faTrash} />
           </Button>
         )}

@@ -18,6 +18,7 @@ type TTournamentForm = Partial<TTournament> & {
 export default function NewTournamentForm() {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [newTournament, setNewTournament] = useState<TTournamentForm>({
     name: "",
@@ -154,7 +155,7 @@ export default function NewTournamentForm() {
         const data = await res.json();
         console.log("Added: ", data);
         fetchTournaments();
-        setErrorMessage("Tournament added");
+        setSuccessMessage("Tournament added");
       } else if (res.status === 409) {
         setErrorMessage("Tournament with this name already exists");
       } else {
@@ -261,6 +262,9 @@ export default function NewTournamentForm() {
           </Button>
           {errorMessage && (
             <span className="text-brick-200 text-center text-xl">{errorMessage}</span>
+          )}
+          {successMessage && (
+            <span className="text-bluestone-200 text-center text-xl">{successMessage}</span>
           )}
         </form>
       )}
