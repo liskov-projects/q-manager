@@ -145,7 +145,7 @@ export default function PlayersList({
                   hoveredDropZoneIndex={hoveredDropZoneIndex}
                   isDraggedOver={isDraggedOver}
                 />
-                <PlayerListItem item={player} />
+                <PlayerListItem item={player} zone={zone} />
               </li>
             ))
           )}

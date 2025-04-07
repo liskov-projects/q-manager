@@ -12,9 +12,14 @@ import TagsList from "./TagsList";
 import EditListItem from "./EditListItem";
 import StarItem from "./Buttons/StarItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPen, faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrash,
+  faPen,
+  faArrowAltCircleRight,
+  faArrowAltCircleLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
-export default function PlayerListItem({ item }: { item: TPlayer }) {
+export default function PlayerListItem({ item, zone }: { item: TPlayer; zone: string }) {
   const { tournamentOwner, currentTournament } = useTournamentsAndQueuesContext();
   const { socket } = useSocket();
   const { handleDragStart, handleDragOver } = useDragNDrop();
@@ -63,7 +68,11 @@ export default function PlayerListItem({ item }: { item: TPlayer }) {
               >
                 {/* ⬆️ Q */}
                 {/* <FontAwesomeIcon icon={faArrowUp} /> */}
-                <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                {zone === "unprocessed" ? (
+                  <FontAwesomeIcon icon={faArrowAltCircleRight} />
+                ) : (
+                  <FontAwesomeIcon icon={faArrowAltCircleLeft} />
+                )}
               </Button>
             )}
           </div>
