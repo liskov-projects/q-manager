@@ -9,7 +9,7 @@ export default function SectionHeader({
 }) {
   return (
     <header className={`flex justify-center`}>
-      <h2 className={`text-2xl text-heading ${className}`}>{children}</h2>
+      <h2 className={`text-xl text-heading ${className}`}>{children}</h2>
     </header>
   );
 }

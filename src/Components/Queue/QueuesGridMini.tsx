@@ -23,7 +23,7 @@ export default function QueuesGridAlternate() {
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-5 md:grid-cols-6 lg:grid-cols-6 gap-3">
       {currentTournament?.queues.map((queue: TQueue) => (
         <div
           key={queue._id}

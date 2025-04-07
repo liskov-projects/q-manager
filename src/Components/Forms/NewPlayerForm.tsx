@@ -25,7 +25,8 @@ export default function NewPlayerForm() {
     phoneNumbers: "",
   });
 
-  const inputStyles = "rounded focus:outline-blue focus:ring-2 focus:ring-brick-200 py-2 px-2";
+  const inputStyles =
+    "w-full rounded focus:outline-blue focus:ring-2 focus:ring-brick-200 py-2 px-2";
 
   // console.log("within the form ", currentTournament);
   // console.log("tournamentID: ", currentTournament?._id);
@@ -127,7 +128,7 @@ export default function NewPlayerForm() {
 
       {isExpanded && (
         <form
-          className="flex flex-row items-center justify-around px-4 py-3 my-4 rounded-sm shadow-left-bottom-lg"
+          className="flex flex-row items-center justify-around px-3 py-2 my-2 rounded-sm shadow-left-bottom-lg"
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col">
