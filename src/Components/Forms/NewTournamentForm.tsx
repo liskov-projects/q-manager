@@ -182,12 +182,18 @@ export default function NewTournamentForm() {
     });
     // console.log(newTournament);
   }
-  if (!isSignedIn) return null;
+  if (!isSignedIn) {
+    return (
+      <div className="text-center mt-8 text-lg font-extrabold text-bluestone-200 mt-0">
+        You need to sign in to create a tournament.
+      </div>
+    );
+  }
 
   return (
     <div>
       <div className="flex flex-col justify-center items-center">
-        <SectionHeader>Add new Tournament</SectionHeader>
+        <SectionHeader>Add New Tournament</SectionHeader>
       </div>
 
       {isExpanded && (

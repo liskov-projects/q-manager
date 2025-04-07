@@ -29,10 +29,10 @@ export default function AllTournamentsPage() {
     .sort((a: TTournament, b: TTournament) => a.name.localeCompare(b.name));
 
   return (
-    <div className="p-4 w-full flex flex-col lg:flex-row gap-4">
+    <div className="p-4 w-full flex flex-col lg:flex-row gap-3">
       {/* Small/medium: search and toggle button above list */}
-      <div className="block lg:hidden order-1 mb-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-2">
+      <div className="block lg:hidden order-1 mb-0">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-4">
           <input
             className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 w-full sm:w-[60%]"
             type="text"
@@ -40,8 +40,11 @@ export default function AllTournamentsPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Button onClick={() => setShowForm((prev) => !prev)}>
-            {showForm ? "Hide Form" : "New Tournament"}
+          <Button
+            className="border-bluestone-200 border-2 py-2 px-3 rounded-sm text-bluestone-300"
+            onClick={() => setShowForm((prev) => !prev)}
+          >
+            {showForm ? "Hide Form" : "Add New Tournament"}
           </Button>
         </div>
 
