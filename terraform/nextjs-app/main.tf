@@ -59,6 +59,11 @@ resource "google_cloud_run_service" "nextjs_app" {
           value = var.google_bucket_credentials
         }
 
+        env {
+          name  = "GCP_PROJECT_ID"
+          value = var.project_id
+        }
+
         # ✅ Startup probe – waits for the container to start
         startup_probe {
             http_get {
