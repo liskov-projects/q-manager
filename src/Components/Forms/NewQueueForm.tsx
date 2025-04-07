@@ -1,6 +1,6 @@
 "use client";
 // hooks
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { useSocket } from "@/context/SocketContext";
@@ -19,6 +19,13 @@ export default function NewQueueForm() {
     tournamentId: "",
   });
   const { socket } = useSocket();
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (canEdit) {
+      inputRef.current?.focus();
+    }
+  }, [canEdit]);
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
@@ -70,11 +77,12 @@ export default function NewQueueForm() {
             <div className="flex flex-col">
               <label htmlFor="name">Name</label>
               <input
+                ref={inputRef}
                 type="text"
                 name="queueName"
                 value={newQueue.queueName}
                 onChange={handleChange}
-                className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+                className="w-full rounded focus:outline-none focus:ring-2 focus:ring-brick-200 py-1 px-2"
               />
             </div>
 

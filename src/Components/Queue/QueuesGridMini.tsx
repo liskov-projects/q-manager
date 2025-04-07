@@ -1,5 +1,5 @@
 "use client";
-//hooks
+// hooks
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 // types
 import { TQueue } from "@/types/Types";
@@ -7,32 +7,32 @@ import { TQueue } from "@/types/Types";
 export default function QueuesGridAlternate() {
   const { currentTournament } = useTournamentsAndQueuesContext();
 
-  // Function to get background color based on queue length
   const getBackgroundColor = (queueLength: number) => {
     return queueLength >= 4
-      ? "bg-sky-400" // Friendly sky-blue for 4+ items
+      ? "bg-sky-400"
       : queueLength === 3
-        ? "bg-yellow-300" // Slightly urgent color for 3 items
+        ? "bg-yellow-300"
         : queueLength === 2
-          ? "bg-orange-400" // More alarming color for 2 items
+          ? "bg-orange-400"
           : queueLength === 1
-            ? "bg-red-400" // Most urgent color for 1 item
+            ? "bg-red-400"
             : queueLength === 0
               ? "bg-red-500"
-              : "bg-green-200"; // Neutral color for empty queue
+              : "bg-green-200";
   };
 
   return (
-    <div className="grid grid-cols-5 md:grid-cols-6 lg:grid-cols-6 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
       {currentTournament?.queues.map((queue: TQueue) => (
-        <div
-          key={queue._id}
-          className={`flex flex-col items-center justify-center h-24 w-24 border-8 border-black ${getBackgroundColor(
-            queue.queueItems.length
-          )}`}
-        >
-          <h3 className="text-center text-lg font-bold">{queue.queueName}</h3>
-          <span className="text-xl font-bold">{queue.queueItems.length}</span>
+        <div key={queue._id} className="aspect-square relative">
+          <div
+            className={`absolute inset-0 flex flex-col items-center justify-center border-8 border-black text-center p-2 ${getBackgroundColor(
+              queue.queueItems.length - 1
+            )}`}
+          >
+            <h3 className="text-lg font-bold">{queue.queueName}</h3>
+            <span className="text-xl font-bold">Q: {queue.queueItems.length}</span>
+          </div>
         </div>
       ))}
     </div>

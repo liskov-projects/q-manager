@@ -70,7 +70,7 @@ export default function PlayersList({
       <SectionHeader>{title}</SectionHeader>
       <div className="flex flex-col shadow-left-bottom-lg items-center h-auto overflow-hidden hover:overflow-y-auto w-full mt-3 p-4">
         <input
-          className="focus:outline-none focus:ring-2 focus:ring-brick-200 my-2 py-2 px-2 rounded-sm"
+          className="w-full focus:outline-none focus:ring-2 focus:ring-brick-200 my-2 py-2 px-2 rounded-sm border-2 border-gray-300"
           type="text"
           placeholder="Search matches"
           value={search}
@@ -110,6 +110,7 @@ export default function PlayersList({
                 event.preventDefault();
               }}
             >
+              <SectionHeader>No players here</SectionHeader>
               <DropZone
                 hoveredDropZoneIndex={hoveredDropZoneIndex}
                 index={0}

@@ -26,7 +26,7 @@ export default function NewPlayerForm() {
   });
 
   const inputStyles =
-    "w-full rounded focus:outline-blue focus:ring-2 focus:ring-brick-200 py-2 px-2";
+    "w-full rounded focus:outline-blue focus:ring-2 focus:ring-brick-200 py-1 px-2 border-2 border-gray-300";
 
   // console.log("within the form ", currentTournament);
   // console.log("tournamentID: ", currentTournament?._id);
@@ -128,7 +128,7 @@ export default function NewPlayerForm() {
 
       {isExpanded && (
         <form
-          className="flex flex-row items-center justify-around px-3 py-2 my-2 rounded-sm shadow-left-bottom-lg"
+          className="flex flex-row items-center justify-around px-3 py-2 mt-2 mb-4 rounded-sm shadow-left-bottom-lg"
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col">
@@ -193,7 +193,7 @@ export default function NewPlayerForm() {
                 name="customCategory"
                 value={customCategory}
                 onChange={handleCustomCategoryChange}
-                className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+                className="focus:outline rounded-md px-3 py-1 focus:ring-2 focus:ring-brick-200 w-full border-2 border-gray-300"
               />
               <Button
                 type="button"
@@ -208,7 +208,7 @@ export default function NewPlayerForm() {
               name="categories"
               value=""
               onChange={handleCategoryChange}
-              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full border-2 border-gray-300"
             >
               <option value="">Select categories (doubles, teens)</option>
               {uniqueCategories.map((category: string, idx: number) => (
@@ -221,7 +221,7 @@ export default function NewPlayerForm() {
               {selectedCategories.map((category) => (
                 <span
                   key={category}
-                  className="px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
+                  className="px-2 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
                 >
                   {category}
                   <button
@@ -234,7 +234,10 @@ export default function NewPlayerForm() {
               ))}
             </div>
 
-            <Button className="mt-2 bg-bluestone-200 text-shell-50 hover:bg-tennis-100  hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
+            <Button
+              type="submit"
+              className="mt-2 bg-bluestone-200 text-shell-50 hover:bg-tennis-100  hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
+            >
               Add match
             </Button>
           </div>

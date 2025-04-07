@@ -197,7 +197,7 @@ export default function NewTournamentForm() {
       </div>
 
       {isExpanded && (
-        <form className="flex flex-col items-center justify-around" onSubmit={handleSubmit}>
+        <form className="flex flex-col items-start justify-around" onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label htmlFor="name">Tournament Name</label>
             <input
@@ -205,7 +205,7 @@ export default function NewTournamentForm() {
               name="name"
               value={newTournament.name}
               onChange={handleChange}
-              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
             />
 
             <label htmlFor="image">
@@ -216,7 +216,7 @@ export default function NewTournamentForm() {
               name="image"
               accept="image/*"
               onChange={handleChange}
-              className={`focus:outline rounded-md px-3 py-2 focus:ring-2 my-3 w-full ${
+              className={`focus:outline rounded-md px-3 py-2 focus:ring-2 mb-2 w-full ${
                 !newTournament.image && errorMessage
                   ? "border-2 border-brick-200"
                   : "focus:ring-brick-200"
@@ -224,7 +224,7 @@ export default function NewTournamentForm() {
             />
 
             {previewUrl && (
-              <div className="my-3">
+              <div>
                 <p className="text-sm text-gray-600">Image Preview:</p>
                 <img
                   src={previewUrl}
@@ -241,7 +241,7 @@ export default function NewTournamentForm() {
             name="description"
             value={newTournament.description}
             onChange={handleChange}
-            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
           />
 
           <label htmlFor="numberOfQueues">Number of Queues</label>
@@ -251,7 +251,7 @@ export default function NewTournamentForm() {
             name="numberOfQueues"
             value={newTournament.numberOfQueues}
             onChange={handleChange}
-            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
           />
           {/* NEW: */}
           <label htmlFor="numberOfQueues">Date</label>
@@ -260,7 +260,7 @@ export default function NewTournamentForm() {
             name="eventDate"
             value={newTournament.eventDate}
             onChange={handleChange}
-            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
+            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
           />
 
           <Button className="self-center my-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">

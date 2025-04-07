@@ -57,8 +57,8 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       className="rounded-lg shadow-left-bottom-lg p-2 flex flex-col border-3 border-grey-300 !overflow-visible"
       onDragOver={(event) => event.preventDefault()}
     >
-      <div className="flex flex-row justify-around items-center">
-        <h3 className="text-xl font-semibold text-bluestone-200">Queue {queue.queueName}</h3>
+      <div className="flex flex-row justify-between items-center">
+        <h3 className="text-xl font-semibold text-bluestone-200">{queue.queueName}</h3>
 
         {!tournamentOwner ? null : (
           <Button

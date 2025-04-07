@@ -23,7 +23,7 @@ export default function Header() {
           className={`p-2 text-sm text-bluestone-200 border-2 border-bluestone-200 rounded ${home ? "" : "hover:bg-bluestone-200"}`}
           aria-disabled={home}
         >
-          <TennisLogo className="w-[40px] h-[40px]" />
+          <TennisLogo className="w-[30px] h-[30px]" />
         </Link>
 
         {userSettingsPath && (

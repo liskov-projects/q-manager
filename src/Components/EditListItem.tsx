@@ -67,7 +67,7 @@ export default function EditListItem({
         </Button>
         <label htmlFor="names">Name</label>
         <input
-          className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200 py-3"
+          className="w-full rounded focus:outline-none focus:ring-2 focus:ring-brick-200 py-1 px-2"
           type="text"
           name="names"
           id="names"
@@ -77,7 +77,7 @@ export default function EditListItem({
 
         <label htmlFor="name">Categories</label>
         <input
-          className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+          className="w-full rounded focus:outline-none focus:ring-2 focus:ring-brick-200 py-1 px-2"
           type="text"
           name="categories"
           id="categories"
@@ -87,7 +87,7 @@ export default function EditListItem({
 
         <label htmlFor="phoneNumbers">Phone Numbers</label>
         <input
-          className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200"
+          className="rounded focus:outline-none focus:ring-2 focus:ring-brick-200 w-full py-1 px-2"
           type="text"
           name="phoneNumbers"
           id="phoneNumbers"

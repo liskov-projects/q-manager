@@ -51,11 +51,11 @@ export default function TournamentCard({ tournament }: { tournament: TTournament
         </Link>
       </div>
       {/* Description & Categories */}
-      <div className="flex-grow text-lg m-2 text-gray-600 font-semibold text-center">
+      <div className="flex-grow text-md m-1 text-gray-600 font-semibold text-center">
         {description}
       </div>
       {tournament.eventDate ? (
-        <div className="flex-grow text-lg m-2 text-gray-600 font-semibold text-center">
+        <div className="flex-grow text-sm font-bold m-1 text-bluestone-400 text-center">
           {formattedDate}
         </div>
       ) : null}

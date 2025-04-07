@@ -18,7 +18,7 @@ export default function ButtonGroup({}) {
   return (
     <div className="my-1">
       <SectionHeader>Bulk Actions</SectionHeader>
-      <div className="flex flex-col justify-around h-auto my-3">
+      <div className="flex flex-col justify-around h-auto">
         <div className="flex">
           <Button
             className="bg-bluestone-200 hover:bg-tennis-100 text-shell-50 hover:text-shell-300 py-2 h-[45px] w-[250px] px-4 rounded my-2 mx-2 text-nowrap"
