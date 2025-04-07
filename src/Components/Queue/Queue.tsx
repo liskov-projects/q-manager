@@ -101,43 +101,44 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
 
       {isExpanded && (
         <>
-          {queue.queueItems.length > 0 ? (
-            <ul className="mb-4 h-[auto] overflow-visible">
-              {queue.queueItems.map((item: TPlayer, itemIndex: number) => (
-                <li
-                  key={item._id}
-                  className="flex flex-col items-center w-[100%]"
-                  onDragEnter={() => handleDragEnter(itemIndex)}
-                  onDragLeave={() => handleDragLeave()}
-                  onDrop={() => {
-                    console.log("DROP IN FRONT END");
-                    setIsDraggedOver(false);
-                    socket?.emit("playerDropped", {
-                      message: "playerDropped from DropZone",
-                      draggedItem,
-                      dropTarget: queue._id,
-                      queue,
-                      index: itemIndex,
-                      tournamentId: currentTournament?._id,
-                    });
-                  }}
-                  onDragOver={(event) => {
-                    event.preventDefault();
-                  }}
-                >
-                  <DropZone
-                    hoveredDropZoneIndex={hoveredDropZoneIndex}
-                    isDraggedOver={isDraggedOver}
-                    index={itemIndex}
-                  />
-                  <QueuePositionLabel index={itemIndex} />
-                  <QueueListItem
-                    item={item}
-                    queueId={queue._id}
-                    index={itemIndex} // Pass index to handle drop events
-                  />
-                </li>
-              ))}
+          <ul className="mb-4 h-[auto] overflow-visible">
+            {queue.queueItems.map((item: TPlayer, itemIndex: number) => (
+              <li
+                key={item._id}
+                className="flex flex-col items-center w-[100%]"
+                onDragEnter={() => handleDragEnter(itemIndex)}
+                onDragLeave={() => handleDragLeave()}
+                onDrop={() => {
+                  console.log("DROP IN FRONT END");
+                  setIsDraggedOver(false);
+                  socket?.emit("playerDropped", {
+                    message: "playerDropped from DropZone",
+                    draggedItem,
+                    dropTarget: queue._id,
+                    queue,
+                    index: itemIndex,
+                    tournamentId: currentTournament?._id,
+                  });
+                }}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                }}
+              >
+                <DropZone
+                  hoveredDropZoneIndex={hoveredDropZoneIndex}
+                  isDraggedOver={isDraggedOver}
+                  index={itemIndex}
+                />
+                <QueuePositionLabel index={itemIndex} />
+                <QueueListItem
+                  item={item}
+                  queueId={queue._id}
+                  index={itemIndex} // Pass index to handle drop events
+                />
+              </li>
+            ))}
+            {/* NOTE: the last dropZone in the list? */}
+            {queue.queueItems.length > 0 && (
               <li
                 onDragEnter={() => handleDragEnter(0)}
                 onDragLeave={() => handleDragLeave()}
@@ -149,7 +150,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
                     draggedItem,
                     dropTarget: queue._id,
                     queue,
-                    index: queue.queueItems.length - 1,
+                    index: -1,
                     tournamentId: currentTournament?._id,
                   });
                 }}
@@ -157,15 +158,16 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
                   event.preventDefault();
                 }}
               >
-                {/* <span>No items</span> */}
                 <DropZone
                   hoveredDropZoneIndex={hoveredDropZoneIndex}
-                  index={queue.queueItems.length - 1}
+                  index={-1}
                   isDraggedOver={isDraggedOver}
                 />
               </li>
-            </ul>
-          ) : (
+            )}
+          </ul>
+          {/* // NOTE: empty queue zone */}
+          {queue.queueItems.length === 0 && (
             <div
               onDragEnter={() => handleDragEnter(0)}
               onDragLeave={() => handleDragLeave()}
@@ -185,7 +187,6 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
                 event.preventDefault();
               }}
             >
-              {/* <span>No items</span> */}
               <DropZone
                 hoveredDropZoneIndex={hoveredDropZoneIndex}
                 index={0}
