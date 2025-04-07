@@ -1,5 +1,5 @@
 // hooks
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { useSocket } from "@/context/SocketContext";
 
@@ -24,6 +24,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
   const [hoveredDropZoneIndex, setHoveredDropZoneIndex] = useState<number | null>(null);
   const [isExpanded, setIsExpanded] = useState(true);
 
+  // caclculates how far in the component tree you are
   const dragCounter = useRef(0);
 
   const handleDragEnter = (itemIndex: number) => {
@@ -39,6 +40,17 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       setHoveredDropZoneIndex(null);
     }
   };
+
+  useEffect(() => {
+    const handleDragEnd = () => {
+      setIsDraggedOver(false);
+      setHoveredDropZoneIndex(null);
+      dragCounter.current = 0;
+    };
+    // use this to trully reset the dragged item
+    window.addEventListener("dragend", handleDragEnd);
+    return () => window.removeEventListener("dragend", handleDragEnd);
+  }, []);
 
   return (
     <div
@@ -138,38 +150,8 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
               </li>
             ))}
             {/* NOTE: the last dropZone in the list? */}
-            {queue.queueItems.length > 0 && (
-              <li
-                onDragEnter={() => handleDragEnter(0)}
-                onDragLeave={() => handleDragLeave()}
-                onDrop={() => {
-                  console.log("DROP IN FRONT END");
-                  setIsDraggedOver(false);
-                  socket?.emit("playerDropped", {
-                    message: "playerDropped from DropZone",
-                    draggedItem,
-                    dropTarget: queue._id,
-                    queue,
-                    index: -1,
-                    tournamentId: currentTournament?._id,
-                  });
-                }}
-                onDragOver={(event) => {
-                  event.preventDefault();
-                }}
-              >
-                <DropZone
-                  hoveredDropZoneIndex={hoveredDropZoneIndex}
-                  index={-1}
-                  isDraggedOver={isDraggedOver}
-                />
-              </li>
-            )}
-          </ul>
-          {/* // NOTE: empty queue zone */}
-          {queue.queueItems.length === 0 && (
-            <div
-              onDragEnter={() => handleDragEnter(0)}
+            <li
+              onDragEnter={() => handleDragEnter(queue.queueItems.length)}
               onDragLeave={() => handleDragLeave()}
               onDrop={() => {
                 console.log("DROP IN FRONT END");
@@ -189,12 +171,13 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
             >
               <DropZone
                 hoveredDropZoneIndex={hoveredDropZoneIndex}
-                index={0}
+                index={queue.queueItems.length}
                 isDraggedOver={isDraggedOver}
-                inEmptyList={true}
+                isEmptyList={queue.queueItems.length === 0 && true}
+                isEndZone
               />
-            </div>
-          )}
+            </li>
+          </ul>
         </>
       )}
     </div>

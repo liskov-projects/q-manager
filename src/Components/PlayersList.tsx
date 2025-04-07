@@ -1,8 +1,7 @@
 "use client";
 // hooks
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
-import useDragNDrop from "@/hooks/useDragNDrop";
 import { useSocket } from "@/context/SocketContext";
 // components
 import DropZone from "./DropZone";
@@ -44,6 +43,17 @@ export default function PlayersList({
       setHoveredDropZoneIndex(null);
     }
   };
+
+  useEffect(() => {
+    const handleDragEnd = () => {
+      setIsDraggedOver(false);
+      setHoveredDropZoneIndex(null);
+      dragCounter.current = 0;
+    };
+    // use this to trully reset the dragged item
+    window.addEventListener("dragend", handleDragEnd);
+    return () => window.removeEventListener("dragend", handleDragEnd);
+  }, []);
   //
   // decides how to filter the players list
   const filteredPlayers = players.filter((player: TPlayer) => {

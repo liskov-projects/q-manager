@@ -6,6 +6,7 @@ type DropZoneProps = {
   hoveredDropZoneIndex: number | null;
   index: number;
   inEmptyList: boolean;
+  isEndZone: boolean;
 };
 
 export default function DropZone({
@@ -13,17 +14,20 @@ export default function DropZone({
   hoveredDropZoneIndex,
   index,
   inEmptyList,
+  isEndZone,
 }: DropZoneProps) {
   const { tournamentOwner, draggedItem } = useTournamentsAndQueuesContext();
-  const isActive = isDraggedOver && hoveredDropZoneIndex === index;
+
+  const isActive = isDraggedOver && draggedItem && hoveredDropZoneIndex === index;
 
   // let for working out the value
   let zoneHeight = "h-[0px]";
+
   if (inEmptyList) {
     zoneHeight = "h-[50px]";
   } else if (draggedItem === null) {
     zoneHeight = "h-[0px]";
-  } else if (index === -1) {
+  } else if (isEndZone) {
     // end of the list
     zoneHeight = isActive ? "h-[50px]" : "h-[25px]";
   } else {
