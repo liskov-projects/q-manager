@@ -31,6 +31,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const setCurrentTournamentRef = useRef(setCurrentTournament);
   setCurrentTournamentRef.current = setCurrentTournament;
 
+  const favouritePlayersRef = useRef(favouritePlayers);
+  favouritePlayersRef.current = favouritePlayers;
+
   const handleDropRef = useRef(handleDrop);
   handleDropRef.current = handleDrop;
 
@@ -93,11 +96,12 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
       try {
         handleDropRef.current(draggedItem, index, dropTarget);
-        console.log("favPlayers", favouritePlayers);
-        console.log("Checking if player is a favourite...");
-        const isFavourite = favouritePlayers.some((fav: string) => fav === draggedItem._id);
+        console.log("Favourite players:", favouritePlayersRef.current);
+        console.log("Dragged ID:", draggedItem._id);
 
-        console.log("Is Favourite:", isFavourite); // Logs the result of the favourite check
+        const isFavourite = favouritePlayersRef.current.some(
+          (fav: TPlayer) => fav._id === draggedItem._id
+        );
 
         if (isFavourite) {
           console.log(`Player ${draggedItem.names || "player"} added to ${dropTarget} queue`);

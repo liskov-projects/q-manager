@@ -11,8 +11,8 @@ const FavouriteItemsContext = createContext<TFavouriteItemsContext | null>(null)
 export function FavouriteItemsProvider({ children }: { children: React.ReactNode }) {
   const [appUser, setAppUser] = useState<TUser>(null);
 
-  const [favouritePlayers, setFavouritePlayers] = useState<TPlayer[]>([]);
-  const [favouriteTournaments, setFavouriteTournaments] = useState<TPlayer[]>([]);
+  const [favouritePlayers, setFavouritePlayers] = useState<string[]>([]);
+  const [favouriteTournaments, setFavouriteTournaments] = useState<string[]>([]);
 
   const { user, isSignedIn, isLoaded } = useUser();
 
