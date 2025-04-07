@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+// packages
+import { Toaster } from "sonner";
 // import "@/app/globals.css";
 import "./globals.css";
 import Header from "@/Components/Header";
@@ -38,17 +40,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Toaster position="top-right" closeButton richColors />
         <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
           <TournamentsAndQueuesProvider>
-            <SocketProvider>
-              <FavouriteItemsProvider>
+            <FavouriteItemsProvider>
+              <SocketProvider>
                 <div className="flex flex-col min-h-screen">
                   <Header />
                   <main className="flex-1">{children}</main>
-                  {/* <Footer /> */}
+                  <Footer />
                 </div>
-              </FavouriteItemsProvider>
-            </SocketProvider>
+              </SocketProvider>
+            </FavouriteItemsProvider>
           </TournamentsAndQueuesProvider>
         </ClerkProvider>
       </body>

@@ -1,9 +1,11 @@
 "use client";
-
+import { toast } from "sonner";
 import { createContext, useContext, useEffect, ReactNode, useState, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import { useTournamentsAndQueuesContext } from "./TournamentsAndQueuesContext";
+import { useFavourites } from "./FavouriteItemsContext";
 import useDragNDrop from "@/hooks/useDragNDrop";
+import { TPlayer } from "@/types/Types";
 
 const SOCKET_URL =
   process.env.NEXT_PUBLIC_SOCKET_URL ||
@@ -23,6 +25,7 @@ const SocketContext = createContext<SocketContextType | null>(null);
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const { setCurrentTournament } = useTournamentsAndQueuesContext();
   const { handleDrop } = useDragNDrop();
+  const { favouritePlayers } = useFavourites();
 
   // ✅ Create stable refs to avoid dependency issues
   const setCurrentTournamentRef = useRef(setCurrentTournament);
@@ -90,6 +93,19 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
       try {
         handleDropRef.current(draggedItem, index, dropTarget);
+        console.log("favPlayers", favouritePlayers);
+        console.log("Checking if player is a favourite...");
+        const isFavourite = favouritePlayers.some((fav: string) => fav === draggedItem._id);
+
+        console.log("Is Favourite:", isFavourite); // Logs the result of the favourite check
+
+        if (isFavourite) {
+          console.log(`Player ${draggedItem.names || "player"} added to ${dropTarget} queue`);
+          toast(`Added ${draggedItem.names || "player"} in ${dropTarget} queue`);
+        } else {
+          console.log("Player is not a favourite.");
+        }
+
         // setCurrentTournament(updatedTournament);
       } catch (error) {
         if (error instanceof Error) {
