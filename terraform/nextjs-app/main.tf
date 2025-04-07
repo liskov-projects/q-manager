@@ -12,16 +12,6 @@ resource "google_cloud_run_service_iam_binding" "public_access" {
   ]
 }
 
-resource "google_storage_bucket" "tournament_images" {
-  name     = "tournament-images-q-manager-453001"
-  location = "australia-southeast2"
-
-  # Optional but smart: prevent accidental deletion
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
 resource "google_cloud_run_service" "nextjs_app" {
   name     = "nextjs-app-${var.env}"
   location = var.region
