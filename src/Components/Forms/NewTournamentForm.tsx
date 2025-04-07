@@ -184,7 +184,7 @@ export default function NewTournamentForm() {
   }
   if (!isSignedIn) {
     return (
-      <div className="text-center mt-8 text-lg font-extrabold text-bluestone-200 mt-0">
+      <div className="text-center text-lg font-extrabold text-bluestone-200 mt-0">
         You need to sign in to create a tournament.
       </div>
     );

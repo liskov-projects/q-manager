@@ -37,7 +37,7 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
         </button>
       </div>
 
-      <div className="flex flex-col lg:flex-row justify-around px-2">
+      <div className="flex flex-col lg:flex-row justify-around px-1">
         {/* Section for adding players and viewing unprocessed list */}
         <div
           className={`p-2 w-full lg:w-1/5 xl:w-1/6 ${

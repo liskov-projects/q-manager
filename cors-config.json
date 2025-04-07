@@ -5,7 +5,7 @@
       "https://nextjs-app-qa-5flfrae4oq-km.a.run.app",
       "https://your-prod-url.com"
     ],
-    "method": ["PUT", "GET", "HEAD"],
+    "method": ["GET", "HEAD", "PUT", "OPTIONS"],
     "responseHeader": ["Content-Type"],
     "maxAgeSeconds": 3600
   }
