@@ -26,6 +26,7 @@ const config: Config = {
         shake: "shake 0.5s ease-in-out",
       },
       boxShadow: {
+        "inner-top-right-sm": "inset -3px 3px 5px rgba(0, 0, 0, 0.15)",
         "left-bottom-lg": "-4px 4px 10px rgba(0, 0, 0, 0.5)",
       },
       colors: {

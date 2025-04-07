@@ -106,7 +106,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
             </div>
           </Button>
           <QueueStatus queue={queue} />
-          <ButtonExpand isExpanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)} />
+          {/* <ButtonExpand isExpanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)} /> */}
         </>
       )}
 

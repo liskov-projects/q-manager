@@ -25,7 +25,7 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
   return (
     <>
       {/* Mobile toggle button group */}
-      <div className="lg:hidden flex justify-around my-4">
+      <div className="md:hidden flex justify-around my-4">
         <button onClick={() => setVisibleSection("queues")} className="p-2 bg-sky-200 rounded">
           Queues
         </button>
@@ -40,7 +40,7 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
       <div className="flex flex-col lg:flex-row justify-around px-2">
         {/* Section for adding players and viewing unprocessed list */}
         <div
-          className={`p-2 w-full lg:w-1/5 ${
+          className={`p-2 w-full lg:w-1/5 xl:w-1/6 ${
             visibleSection === "unprocessed" ? "block" : "hidden lg:block"
           }`}
         >
@@ -55,7 +55,7 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
         </div>
 
         <div
-          className={`p-1 w-full lg:w-3/5 ${
+          className={`p-1 w-full lg:w-3/5 xl:w-4/6 ${
             visibleSection === "queues" ? "block" : "hidden lg:block"
           }`}
         >
@@ -66,7 +66,7 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
 
         {/* Processed players section */}
         <div
-          className={`p-1 w-full lg:w-1/5 ${
+          className={`p-1 w-full lg:w-1/5 xl:w-1/6 ${
             visibleSection === "processed" ? "block" : "hidden lg:block"
           }`}
         >

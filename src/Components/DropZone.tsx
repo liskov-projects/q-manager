@@ -39,7 +39,7 @@ export default function DropZone({
 
   return (
     <div
-      className={`drop-zone w-[95%] transition-all duration-200 bg-gray-300 my-2 rounded oveflow-hidden ${zoneHeight}`}
+      className={`drop-zone w-[95%] transition-all duration-200 bg-gray-300 my-2 rounded oveflow-hidden ${zoneHeight} shadow-inner-top-right-sm`}
     />
   );
 }

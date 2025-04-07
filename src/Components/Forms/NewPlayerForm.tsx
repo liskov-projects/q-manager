@@ -112,17 +112,16 @@ export default function NewPlayerForm() {
   return (
     <>
       <div className="flex items-center justify-between">
-        <SectionHeader className="flex items-center justify-center gap-x-2 h-full">
+        <SectionHeader className="flex items-center justify-center gap-x-1 h-full">
           <span>Match</span>
-          {/* ➕ */}
-          <FontAwesomeIcon icon={faPersonCirclePlus} />
+          <FontAwesomeIcon icon={faPersonCirclePlus} className="text-md" />
         </SectionHeader>
 
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
           className="bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-1 px-2 rounded position-center"
         >
-          {`${isExpanded ? "hide " : "show"} the form`}
+          {`${isExpanded ? "Hide " : "show"} form`}
         </Button>
       </div>
 
@@ -217,11 +216,11 @@ export default function NewPlayerForm() {
                 </option>
               ))}
             </select>
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1">
               {selectedCategories.map((category) => (
                 <span
                   key={category}
-                  className=" my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
+                  className="px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
                 >
                   {category}
                   <button
@@ -234,7 +233,7 @@ export default function NewPlayerForm() {
               ))}
             </div>
 
-            <Button className=" ml-6 bg-bluestone-200 text-shell-50 hover:bg-tennis-100  hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
+            <Button className="mt-2 bg-bluestone-200 text-shell-50 hover:bg-tennis-100  hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
               Add match
             </Button>
           </div>
