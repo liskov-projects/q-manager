@@ -150,6 +150,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
             ))}
             {/* NOTE: the last dropZone in the list? */}
             <li
+              className="flex flex-col items-center w-[100%]"
               onDragEnter={() => handleDragEnter(queue.queueItems.length)}
               onDragLeave={() => handleDragLeave()}
               onDrop={() => {
