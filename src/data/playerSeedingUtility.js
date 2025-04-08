@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 // import playerSeeds from "./playerSeeds.js";
-import playersData from "./playersData.js";
+// import playersData from "./playersData.js";
+import updatedPlayersData from "./UPDATEDplayersData.js";
 import dotenv from "dotenv";
 import path from "path";
 
@@ -32,8 +33,8 @@ const seedPlayers = async () => {
     const tournamentCollection = db.collection("tournaments");
 
     // Insert players into the players collection
-    await playerCollection.insertMany(playersData);
-    console.log(`Inserted ${playersData.length} players into the database`);
+    await playerCollection.insertMany(updatedPlayersData);
+    console.log(`Inserted ${updatedPlayersData.length} players into the database`);
 
     // Fetch all players and tournaments
     const newPlayers = await playerCollection.find().toArray();
@@ -45,45 +46,58 @@ const seedPlayers = async () => {
 
     console.log(`Found ${tournaments.length} tournaments`);
 
-    // Calculate the number of players per tournament
-    const numTournaments = tournaments.length;
-    const numPlayersPerTournament = Math.floor(newPlayers.length / numTournaments);
-    let remainingPlayers = newPlayers.length % numTournaments;
+    // // Calculate the number of players per tournament
+    // const numTournaments = tournaments.length;
+    // const numPlayersPerTournament = Math.floor(newPlayers.length / numTournaments);
+    // let remainingPlayers = newPlayers.length % numTournaments;
 
-    let playerIndex = 0;
+    // let playerIndex = 0;
 
+    // for (const tournament of tournaments) {
+    //   const playersToInsert = [];
+
+    //   // Distribute a base number of players to this tournament
+    //   for (let i = 0; i < numPlayersPerTournament; i++) {
+    //     if (playerIndex < newPlayers.length) {
+    //       playersToInsert.push({
+    //         ...newPlayers[playerIndex],
+    //         tournamentId: tournament._id.toString(),
+    //       });
+    //       playerIndex++;
+    //     }
+    //   }
+
+    //   // Distribute any remaining players one by one
+    //   if (remainingPlayers > 0 && playerIndex < newPlayers.length) {
+    //     playersToInsert.push({
+    //       ...newPlayers[playerIndex],
+    //       tournamentId: tournament._id.toString(),
+    //     });
+    //     playerIndex++;
+    //     remainingPlayers--;
+    //   }
+
+    // // Assign players to queues evenly
+    // const numQueues = tournament.queues.length;
+    // const updatedQueues = tournament.queues.map((queue, index) => ({
+    //   ...queue,
+    //   queueItems: playersToInsert.filter((_, idx) => idx % numQueues === index)
+    // }));
+
+    // Update the tournament document in the database
+    //   await tournamentCollection.updateOne(
+    //     { _id: tournament._id },
+    //     { $set: { unProcessedQItems: playersToInsert } }
+    //   );
+
+    //   console.log(`Assigned ${playersToInsert.length} players to tournament "${tournament.name}"`);
+    // }
     for (const tournament of tournaments) {
-      const playersToInsert = [];
+      const playersToInsert = newPlayers.map((player) => ({
+        ...player,
+        tournamentId: tournament._id.toString(),
+      }));
 
-      // Distribute a base number of players to this tournament
-      for (let i = 0; i < numPlayersPerTournament; i++) {
-        if (playerIndex < newPlayers.length) {
-          playersToInsert.push({
-            ...newPlayers[playerIndex],
-            tournamentId: tournament._id.toString(),
-          });
-          playerIndex++;
-        }
-      }
-
-      // Distribute any remaining players one by one
-      if (remainingPlayers > 0 && playerIndex < newPlayers.length) {
-        playersToInsert.push({
-          ...newPlayers[playerIndex],
-          tournamentId: tournament._id.toString(),
-        });
-        playerIndex++;
-        remainingPlayers--;
-      }
-
-      // // Assign players to queues evenly
-      // const numQueues = tournament.queues.length;
-      // const updatedQueues = tournament.queues.map((queue, index) => ({
-      //   ...queue,
-      //   queueItems: playersToInsert.filter((_, idx) => idx % numQueues === index)
-      // }));
-
-      // Update the tournament document in the database
       await tournamentCollection.updateOne(
         { _id: tournament._id },
         { $set: { unProcessedQItems: playersToInsert } }

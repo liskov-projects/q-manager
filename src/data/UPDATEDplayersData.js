@@ -1,4 +1,4 @@
-const playersData = [
+const updatedPlayersData = [
   {
     names: "Isabella Smith vs Harper Anderson",
     categories: ["female", "OPEN"],
@@ -751,4 +751,4 @@ const playersData = [
   },
 ];
 
-export default playersData;
+export default updatedPlayersData;
