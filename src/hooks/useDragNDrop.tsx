@@ -48,6 +48,8 @@ const useDragNDrop = () => {
       queueItems: queue.queueItems.filter((item: TPlayer) => item._id !== draggedItem._id),
     }));
 
+    let queueToSplice = null;
+
     // adds items to the corresponding group
     if (dropTarget === "unprocessed") {
       newUnprocessedItems?.splice(index, 0, draggedItem);
@@ -55,7 +57,7 @@ const useDragNDrop = () => {
       newProcessedItems?.splice(index, 0, draggedItem);
     } else {
       console.log("GETTING TO QUEUE SPLICE");
-      const queueToSplice = newQueues?.find((queue: TQueue) => queue._id === dropTarget);
+      queueToSplice = newQueues?.find((queue: TQueue) => queue._id === dropTarget);
       console.log(queueToSplice);
 
       if (queueToSplice) {
@@ -89,6 +91,7 @@ const useDragNDrop = () => {
         categories: prev.categories ?? [],
       };
     });
+    return queueToSplice;
   };
 
   return {

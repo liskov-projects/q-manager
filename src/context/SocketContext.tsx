@@ -6,6 +6,7 @@ import { useTournamentsAndQueuesContext } from "./TournamentsAndQueuesContext";
 import { useFavourites } from "./FavouriteItemsContext";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import { TPlayer } from "@/types/Types";
+import Button from "@/Components/Buttons/Button";
 
 const SOCKET_URL =
   process.env.NEXT_PUBLIC_SOCKET_URL ||
@@ -89,23 +90,35 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     });
     //
     socketInstance.on("playerDropped", ({ draggedItem, index, dropTarget }) => {
-      console.log("PLAYER DROPPED");
-      console.log(draggedItem);
-      console.log(index);
-      console.log(dropTarget);
+      // console.log("PLAYER DROPPED");
+      // console.log(draggedItem);
+      // console.log(index);
+      // console.log(dropTarget);
 
       try {
-        handleDropRef.current(draggedItem, index, dropTarget);
-        console.log("Favourite players:", favouritePlayersRef.current);
-        console.log("Dragged ID:", draggedItem._id);
+        const queueToSplice = handleDropRef.current(draggedItem, index, dropTarget);
 
         const isFavourite = favouritePlayersRef.current.some(
           (fav: TPlayer) => fav._id === draggedItem._id
         );
 
         if (isFavourite) {
-          console.log(`Player ${draggedItem.names || "player"} added to ${dropTarget} queue`);
-          toast(`Added ${draggedItem.names || "player"} in ${dropTarget} queue`);
+          const queueName = queueToSplice?.queueName ?? dropTarget;
+          // toast(`Added ${draggedItem.names || "player"} to ${queueName}`);
+          toast.custom((t) => (
+            <div className="bg-bluestone-200 text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm">
+              <Button
+                onClick={() => toast.dismiss(t)}
+                className="w-6 h-6 flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-300 transition"
+                aria-label="Close"
+              >
+                ×
+              </Button>
+              <span className="ml-8">
+                {draggedItem.names} added to {queueName}
+              </span>
+            </div>
+          ));
         } else {
           console.log("Player is not a favourite.");
         }

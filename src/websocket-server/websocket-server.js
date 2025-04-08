@@ -151,6 +151,7 @@ io.on("connection", async (socket) => {
     console.log("📡 Sent io.emit(deletePlayer)", tournamentId);
   });
 
+  // TODO: what is happening here & in the hook? Socket context calls the hook
   socket.on("playerDropped", async ({ message, draggedItem, dropTarget, tournamentId, index }) => {
     console.log(message, draggedItem);
     console.log("drop target", dropTarget);
@@ -180,6 +181,7 @@ io.on("connection", async (socket) => {
         (item) => item._id.toString() !== draggedItem._id.toString()
       ),
     }));
+    console.log("IN WEBSOCKET");
 
     // adds items to the corresponding group
     if (dropTarget === "unprocessed") {
