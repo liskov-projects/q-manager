@@ -7,6 +7,10 @@ import { useFavourites } from "./FavouriteItemsContext";
 import useDragNDrop from "@/hooks/useDragNDrop";
 import { TPlayer } from "@/types/Types";
 import Button from "@/Components/Buttons/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaCross } from "react-icons/fa";
+import { icon } from "@fortawesome/fontawesome-svg-core";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 const SOCKET_URL =
   process.env.NEXT_PUBLIC_SOCKET_URL ||
@@ -106,13 +110,13 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
           const queueName = queueToSplice?.queueName ?? dropTarget;
           // toast(`Added ${draggedItem.names || "player"} to ${queueName}`);
           toast.custom((t) => (
-            <div className="bg-bluestone-200 text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm">
+            <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm">
               <Button
                 onClick={() => toast.dismiss(t)}
-                className="w-6 h-6 flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-300 transition"
+                className={` hover:tennis-200 px-2 py-3 w-6 h-6 flex items-center self-center justify-center rounded-full bg-white text-gray-700 hover:bg-gray-200 transition`}
                 aria-label="Close"
               >
-                ×
+                <FontAwesomeIcon icon={faClose} />
               </Button>
               <span className="ml-8">
                 {draggedItem.names} added to {queueName}

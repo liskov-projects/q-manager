@@ -9,7 +9,7 @@ export default function User() {
   const { isSignedIn, user } = useUser();
 
   return (
-    <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+    <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 w-full justify-end">
       {isSignedIn ? (
         <div className="flex items-center gap-2 sm:gap-3">
           <Image

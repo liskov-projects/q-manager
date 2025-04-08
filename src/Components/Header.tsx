@@ -18,7 +18,7 @@ export default function Header({ children, className }: { children: ReactNode })
   return (
     <header className="w-full flex flex-wrap items-center justify-between gap-4 p-4 sm:flex-nowrap sm:gap-0">
       {/* Buttons section */}
-      <div className="flex items-center gap-2 flex-shrink-0">
+      <div className="flex items-center gap-2 flex-shrink-0 w-[40%]">
         <Link
           href="/all-tournaments"
           className={`p-2 text-sm text-bluestone-200 border-2 border-bluestone-200 rounded ${home ? "" : "hover:bg-bluestone-200"}`}
@@ -41,7 +41,7 @@ export default function Header({ children, className }: { children: ReactNode })
       <h1 className="text-bluestone-200 text-4xl font-bold mb-4 mt-4">{children}</h1>
 
       {/* Right Section: User Info */}
-      <div className="flex-shrink-0">
+      <div className="flex-shrink-0 w-[40%] flex-end">
         <User />
       </div>
     </header>
