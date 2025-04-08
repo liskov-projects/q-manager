@@ -197,7 +197,16 @@ export default function NewTournamentForm() {
       </div>
 
       {isExpanded && (
-        <form className="flex flex-col items-start justify-around" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col items-start justify-around"
+          onSubmit={handleSubmit}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault(); // Prevent default action (i.e., form submission on Enter key press)
+              handleSubmit(e); // Trigger form submit
+            }
+          }}
+        >
           <div className="flex flex-col">
             <label htmlFor="name">Tournament Name</label>
             <input
@@ -234,7 +243,6 @@ export default function NewTournamentForm() {
               </div>
             )}
           </div>
-
           <label htmlFor="description">Description</label>
           <input
             type="text"
@@ -243,7 +251,6 @@ export default function NewTournamentForm() {
             onChange={handleChange}
             className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
           />
-
           <label htmlFor="numberOfQueues">Number of Queues</label>
           <input
             placeholder="3"
@@ -262,7 +269,6 @@ export default function NewTournamentForm() {
             onChange={handleChange}
             className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
           />
-
           <Button className="self-center my-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
             Add the Tournament!
           </Button>
