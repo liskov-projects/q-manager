@@ -38,11 +38,7 @@ export default function Header({ children, className }: { children: ReactNode })
       </div>
 
       {/* Center Title */}
-      <h1
-        className={` ${className ? className : "text-xl sm:text-2xl text-heading text-center sm:ml-[-4rem]"}`}
-      >
-        {children}
-      </h1>
+      <h1 className="text-bluestone-200 text-4xl font-bold mb-4 mt-4">{children}</h1>
 
       {/* Right Section: User Info */}
       <div className="flex-shrink-0">
