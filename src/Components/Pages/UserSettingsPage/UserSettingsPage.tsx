@@ -3,6 +3,7 @@
 import { useFavourites } from "@/context/FavouriteItemsContext";
 import { useUser } from "@clerk/nextjs";
 // components
+import Header from "@/Components/Header";
 import Favourites from "./Favourites";
 import SectionHeader from "@/Components/SectionHeader";
 import UserData from "./UserData";
@@ -19,12 +20,11 @@ export default function UserSettingsPage() {
   return (
     <div className="m-4 max-w-[1200px] mx-auto">
       {/* header section */}
-      <SectionHeader>
-        <span className="truncate max-w-full text-2xl font-bold block">
-          {appUser?.userName}&rsquo;s Dashboard
-        </span>
-      </SectionHeader>
-      <span className="text-center text-lg sm:text-xl font-medium block mb-4">
+      <Header> {appUser?.userName}&rsquo;s Dashboard</Header>
+      {/* <SectionHeader>
+        <span className="truncate max-w-full text-2xl font-bold block mt-4"></span>
+      </SectionHeader> */}
+      <span className="text-center text-lg sm:text-xl font-medium block mb-4 mt-4">
         Hello <span title={appUser?.userName}>{appUser?.userName}</span>, you can manage your
         favourites and settings here.
       </span>
