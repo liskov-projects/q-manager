@@ -19,12 +19,7 @@ const QueueStatus = ({ queue }: { queue: TQueue }) => {
 
   // Determine the display message based on queue status
   const displayMessage =
-    queue.queueItems.length === 0 ? (
-      <div className="flex flex-col items-center font-bold text-shell-200">
-        <div> No one on court </div>
-        <img src="/snoopy-sleeping.gif" alt="No one on court" className="w-32 h-auto mx-auto " />
-      </div>
-    ) : queueLength > 0 ? (
+    queue.queueItems.length === 0 ? null : queueLength > 0 ? (
       <div className="flex items-center justify-between">
         <span>Number in queue:</span>
         <span className="ml-2 flex items-center justify-center w-12 h-12 border-4 border-black bg-slate-200 text-black font-bold">

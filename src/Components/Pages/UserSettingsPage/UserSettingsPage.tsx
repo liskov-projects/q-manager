@@ -36,7 +36,7 @@ export default function UserSettingsPage() {
           <SectionHeader>Manage Favourites</SectionHeader>
           {!hasFavourites ? (
             <div className="text-center">
-              <img src="/snoopy-tennis-funny.gif" alt="no favourites" className="w-32 mx-auto" />
+              <img src="/snoopy_raining.gif" alt="no favourites" className="w-32 mx-auto" />
               <p className="text-gray-600 mt-2">No favourites yet — go add some!</p>
             </div>
           ) : (
