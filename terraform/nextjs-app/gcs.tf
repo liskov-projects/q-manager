@@ -5,6 +5,18 @@ resource "google_storage_bucket" "tournament_images" {
 
   uniform_bucket_level_access = true
 
+  # ✅ CORS settings to allow browser access from frontend apps
+  cors {
+    origin          = [
+      "http://localhost:3000",
+      "https://nextjs-app-qa-5flfrae4oq-km.a.run.app",
+      "https://your-prod-url.com" # 👈 Replace or update this when your custom domain is live
+    ]
+    method          = ["GET", "HEAD", "PUT", "OPTIONS"]
+    response_header = ["Content-Type"]
+    max_age_seconds = 3600
+  }
+
   # Optional cleanup rule after 1 year
   lifecycle_rule {
     action {
