@@ -16,9 +16,9 @@ export default function Header({ children, className }: { children: ReactNode })
   const userSettingsPath = path === "/all-tournaments/user-settings";
 
   return (
-    <header className="w-full flex flex-wrap items-center justify-between gap-4 p-4 sm:flex-nowrap sm:gap-0">
-      {/* Buttons section */}
-      <div className="flex items-center gap-2 flex-shrink-0 w-[40%]">
+    <header className="w-full flex items-center justify-between px-4 py-2 gap-4">
+      {/* Left Wing */}
+      <div className="flex items-center gap-2 flex-shrink-0 w-[30%] min-w-[100px]">
         <Link
           href="/all-tournaments"
           className={`p-2 text-sm text-bluestone-200 border-2 border-bluestone-200 rounded ${home ? "" : "hover:bg-bluestone-200"}`}
@@ -38,10 +38,14 @@ export default function Header({ children, className }: { children: ReactNode })
       </div>
 
       {/* Center Title */}
-      <h1 className="text-bluestone-200 text-4xl font-bold mb-4 mt-4">{children}</h1>
+      <div className="flex-1 flex justify-center">
+        <h1 className="text-center font-bold text-2xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl text-bluestone-200 truncate">
+          {children}
+        </h1>
+      </div>
 
-      {/* Right Section: User Info */}
-      <div className="flex-shrink-0 w-[40%] flex-end">
+      {/* Right Wing */}
+      <div className="flex items-center justify-end flex-shrink-0 w-[30%] min-w-[100px]">
         <User />
       </div>
     </header>

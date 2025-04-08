@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="flex flex-row mt-4 justify-around items-center w-full p-4 bg-shell-75">
-      <div className=" flex flex-row  text-bluestone-200 gap-[100%]">
+    <div className="h-auto flex flex-row mt-2 justify-between items-center w-full p-2 bg-shell-75 px-8">
+      <div className="flex flex-row  text-bluestone-200 gap-2">
         <ul className="text-xl flex flex-col">
           <li className="font-bold">Contact us:</li>
           <li>email: info@liskov.dev</li>
@@ -14,7 +14,7 @@ export default function Footer() {
             href="https://www.linkedin.com/company/96348690/"
             className="underline hover:text-brick-100 hover:underline"
           >
-            linkedIn
+            LinkedIn
           </Link>
         </ul>
         <ul className="text-xl flex flex-col">
