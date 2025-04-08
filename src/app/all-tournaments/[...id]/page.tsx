@@ -21,7 +21,7 @@ export default function TournamentPage() {
   }, [categories]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center">
       {/* Header and Category List */}
       <Header>{name}</Header>
       <CategoryList
