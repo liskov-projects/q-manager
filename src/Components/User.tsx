@@ -15,7 +15,7 @@ export default function User() {
           <Image
             src={user.imageUrl}
             alt="User Profile"
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
+            className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover"
             width={48}
             height={48}
           />
