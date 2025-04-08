@@ -12,6 +12,8 @@ import BulkImport from "./UserSettingsPage/BulkImport";
 
 export default function TournamentQueuesPage({ tournamentId }: { tournamentId: string }) {
   const [visibleSection, setVisibleSection] = useState("queues");
+  const [showAlternateView, setShowAlternateView] = useState(false);
+  const [showsFavourites, setShowsFavourites] = useState(false);
 
   const { currentTournament, tournamentOwner } = useTournamentsAndQueuesContext();
 
@@ -36,48 +38,58 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
           Processed
         </button>
       </div>
+      <div className="flex flex-col">
+        <ButtonGroup
+          tournamentId={tournamentId}
+          showsFavourites={showsFavourites}
+          setShowsFavourites={setShowsFavourites}
+          showAlternateView={showAlternateView}
+          setShowAlternateView={setShowAlternateView}
+        />
+        <div className="flex flex-col lg:flex-row justify-around px-1">
+          {/* Section for adding players and viewing unprocessed list */}
+          <div
+            className={`p-2 w-full lg:w-1/5 xl:w-1/6 ${
+              visibleSection === "unprocessed" ? "block" : "hidden lg:block"
+            }`}
+          >
+            {tournamentOwner && <NewPlayerForm />}
+            {/* IMPORTANT: where to put? WORKS: */}
+            {/* {tournamentOwner && <BulkImport tournamentId={tournamentId} />} */}
+            <PlayersList
+              title={"Unprocessed Matches"}
+              players={currentTournament.unProcessedQItems}
+              zone={"unprocessed"}
+            />
+          </div>
 
-      <div className="flex flex-col lg:flex-row justify-around px-1">
-        {/* Section for adding players and viewing unprocessed list */}
-        <div
-          className={`p-2 w-full lg:w-1/5 xl:w-1/6 ${
-            visibleSection === "unprocessed" ? "block" : "hidden lg:block"
-          }`}
-        >
-          {tournamentOwner && <NewPlayerForm />}
-          {/* IMPORTANT: where to put? WORKS: */}
-          {/* {tournamentOwner && <BulkImport tournamentId={tournamentId} />} */}
-          <PlayersList
-            title={"Unprocessed Matches"}
-            players={currentTournament.unProcessedQItems}
-            zone={"unprocessed"}
-          />
-        </div>
+          <div
+            className={`p-1 w-full lg:w-3/5 xl:w-4/6 ${
+              visibleSection === "queues" ? "block" : "hidden lg:block"
+            }`}
+          >
+            {/* FIXME: buttons for users that don't manage tourn where they toggle show only their fav players */}
 
-        <div
-          className={`p-1 w-full lg:w-3/5 xl:w-4/6 ${
-            visibleSection === "queues" ? "block" : "hidden lg:block"
-          }`}
-        >
-          {/* FIXME: buttons for users that don't manage tourn where they toggle show only their fav players */}
+            <QueuesContainer
+              showAlternateView={showAlternateView}
+              showsFavourites={showsFavourites}
+            />
+          </div>
 
-          <QueuesContainer />
-        </div>
-
-        {/* Processed players section */}
-        <div
-          className={`p-1 w-full lg:w-1/5 xl:w-1/6 ${
-            visibleSection === "processed" ? "block" : "hidden lg:block"
-          }`}
-        >
-          {/* <SectionHeader>Button Group</SectionHeader> */}
-          <ButtonGroup tournamentId={tournamentId} />
-          <PlayersList
-            title={"Processed Matches"}
-            players={currentTournament.processedQItems}
-            zone={"processed"}
-          />
-          {/* <ProcessedPlayers /> */}
+          {/* Processed players section */}
+          <div
+            className={`p-1 w-full lg:w-1/5 xl:w-1/6 ${
+              visibleSection === "processed" ? "block" : "hidden lg:block"
+            }`}
+          >
+            {/* <SectionHeader>Button Group</SectionHeader> */}
+            <PlayersList
+              title={"Processed Matches"}
+              players={currentTournament.processedQItems}
+              zone={"processed"}
+            />
+            {/* <ProcessedPlayers /> */}
+          </div>
         </div>
       </div>
     </>
