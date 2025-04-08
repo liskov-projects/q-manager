@@ -1,4 +1,5 @@
 "use client";
+import { ReactNode } from "react";
 // hooks
 import { usePathname, useRouter } from "next/navigation";
 // components
@@ -7,7 +8,7 @@ import Link from "next/link";
 import Button from "./Buttons/Button";
 import TennisLogo from "./TennisLogo";
 
-export default function Header() {
+export default function Header({ children, className }: { children: ReactNode }) {
   const path = usePathname();
   const router = useRouter();
 
@@ -37,8 +38,10 @@ export default function Header() {
       </div>
 
       {/* Center Title */}
-      <h1 className="text-xl sm:text-2xl text-heading text-center sm:ml-[-4rem]">
-        Queue Management
+      <h1
+        className={` ${className ? className : "text-xl sm:text-2xl text-heading text-center sm:ml-[-4rem]"}`}
+      >
+        {children}
       </h1>
 
       {/* Right Section: User Info */}
