@@ -27,14 +27,31 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
   return (
     <>
       {/* Mobile toggle button group */}
-      <div className="md:hidden flex justify-around my-4">
-        <button onClick={() => setVisibleSection("queues")} className="p-2 bg-sky-200 rounded">
-          Queues
-        </button>
-        <button onClick={() => setVisibleSection("unprocessed")} className="p-2 bg-sky-200 rounded">
+      <div className="w-full md:hidden flex justify-around my-3">
+        <button
+          onClick={() => setVisibleSection("unprocessed")}
+          className={`p-2 rounded bg-sky-300 ${
+            visibleSection === "unprocessed" ? "border-2 border-bluestone-400 font-bold" : ""
+          }`}
+        >
           Unprocessed
         </button>
-        <button onClick={() => setVisibleSection("processed")} className="p-2 bg-sky-200 rounded">
+
+        <button
+          onClick={() => setVisibleSection("queues")}
+          className={`p-2 rounded bg-sky-300 ${
+            visibleSection === "queues" ? "border-2 border-bluestone-400 font-bold" : ""
+          }`}
+        >
+          Queues
+        </button>
+
+        <button
+          onClick={() => setVisibleSection("processed")}
+          className={`p-2 rounded bg-sky-300 ${
+            visibleSection === "processed" ? "border-2 border-bluestone-400 font-bold" : ""
+          }`}
+        >
           Processed
         </button>
       </div>

@@ -43,14 +43,14 @@ export default function PlayerListItem({ item, zone }: { item: TPlayer; zone: st
     <>
       {!editMode ? (
         <div
-          className={`${tournamentOwner && "cursor-pointer"} h-auto w-full px-3 py-2 rounded-lg shadow-left-bottom-lg flex flex-col justify-between items-center my-1`}
+          className={`${tournamentOwner && "cursor-pointer"} h-auto w-full px-3 py-2 rounded-md shadow-left-bottom-lg flex flex-col justify-between items-center my-1`}
           draggable={`${!tournamentOwner ? false : true}`}
           onDragStart={() => handleDragStart(item)}
           onDragOver={(e) => handleDragOver(e)}
         >
           {/* Player Name */}
           <div className="w-full flex justify-between mb-2">
-            <div className="player-name font-bold text-lg w-[65%]">{item.names}</div>
+            <div className="player-name font-bold text-sm w-[65%]">{item.names}</div>
             {!tournamentOwner ? null : (
               <Button
                 onClick={() => {

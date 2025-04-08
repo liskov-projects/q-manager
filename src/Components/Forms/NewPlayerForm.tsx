@@ -128,7 +128,7 @@ export default function NewPlayerForm() {
 
       {isExpanded && (
         <form
-          className="flex flex-row items-center justify-around px-3 py-2 mt-2 mb-4 rounded-sm shadow-left-bottom-lg"
+          className="flex flex-row items-center justify-around px-3 py-4 mt-2 mb-4 rounded-md shadow-left-bottom-lg"
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col">

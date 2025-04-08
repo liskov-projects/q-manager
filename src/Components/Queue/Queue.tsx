@@ -58,7 +58,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       onDragOver={(event) => event.preventDefault()}
     >
       <div className="flex flex-row justify-between items-center">
-        <h3 className="text-xl font-semibold text-bluestone-200">{queue.queueName}</h3>
+        <h3 className="text-xl font-semibold text-bluestone-200 mb-2">{queue.queueName}</h3>
 
         {!tournamentOwner ? null : (
           <Button
@@ -113,41 +113,52 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       {isExpanded && (
         <>
           <ul className="mb-4 h-[auto] overflow-visible">
-            {queue.queueItems.map((item: TPlayer, itemIndex: number) => (
-              <li
-                key={item._id}
-                className="flex flex-col items-center w-[100%]"
-                onDragEnter={() => handleDragEnter(itemIndex)}
-                onDragLeave={() => handleDragLeave()}
-                onDrop={() => {
-                  console.log("DROP IN FRONT END");
-                  setIsDraggedOver(false);
-                  socket?.emit("playerDropped", {
-                    message: "playerDropped from DropZone",
-                    draggedItem,
-                    dropTarget: queue._id,
-                    queue,
-                    index: itemIndex,
-                    tournamentId: currentTournament?._id,
-                  });
-                }}
-                onDragOver={(event) => {
-                  event.preventDefault();
-                }}
-              >
-                <DropZone
-                  hoveredDropZoneIndex={hoveredDropZoneIndex}
-                  isDraggedOver={isDraggedOver}
-                  index={itemIndex}
+            {queue.queueItems.length === 0 ? (
+              <div className="flex flex-col items-center font-bold text-shell-200">
+                <div> No one on court </div>
+                <img
+                  src="/snoopy-sleeping.gif"
+                  alt="No one on court"
+                  className="w-32 h-auto mx-auto "
                 />
-                <QueuePositionLabel index={itemIndex} />
-                <QueueListItem
-                  item={item}
-                  queueId={queue._id}
-                  index={itemIndex} // Pass index to handle drop events
-                />
-              </li>
-            ))}
+              </div>
+            ) : (
+              queue.queueItems.map((item: TPlayer, itemIndex: number) => (
+                <li
+                  key={item._id}
+                  className="flex flex-col items-center w-[100%]"
+                  onDragEnter={() => handleDragEnter(itemIndex)}
+                  onDragLeave={() => handleDragLeave()}
+                  onDrop={() => {
+                    console.log("DROP IN FRONT END");
+                    setIsDraggedOver(false);
+                    socket?.emit("playerDropped", {
+                      message: "playerDropped from DropZone",
+                      draggedItem,
+                      dropTarget: queue._id,
+                      queue,
+                      index: itemIndex,
+                      tournamentId: currentTournament?._id,
+                    });
+                  }}
+                  onDragOver={(event) => {
+                    event.preventDefault();
+                  }}
+                >
+                  <DropZone
+                    hoveredDropZoneIndex={hoveredDropZoneIndex}
+                    isDraggedOver={isDraggedOver}
+                    index={itemIndex}
+                  />
+                  <QueuePositionLabel index={itemIndex} />
+                  <QueueListItem
+                    item={item}
+                    queueId={queue._id}
+                    index={itemIndex} // Pass index to handle drop events
+                  />
+                </li>
+              ))
+            )}
             {/* NOTE: the last dropZone in the list? */}
             <li
               className="flex flex-col items-center w-[100%]"
