@@ -132,7 +132,9 @@ export default function NewPlayerForm() {
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col">
-            <label htmlFor="name">Players</label>
+            <label className="font-semibold text-md" htmlFor="name">
+              Players
+            </label>
             <input
               type="text"
               name="names"
@@ -141,7 +143,9 @@ export default function NewPlayerForm() {
               className={inputStyles}
             />
 
-            <label htmlFor="phoneNumbers">Phone Number(s)</label>
+            <label className="font-semibold text-md" htmlFor="phoneNumbers">
+              Phone Number(s)
+            </label>
             <input
               type="text"
               name="phoneNumbers"
@@ -150,44 +154,28 @@ export default function NewPlayerForm() {
               className={inputStyles}
             />
 
-            {/* <label htmlFor="categories">Categories</label>
+            <label htmlFor="categories" className="font-semibold text-md">
+              Categories (doubles, A Grade, Women&apos;s)
+            </label>
 
             <select
               name="categories"
-              value={newPlayers.categories}
+              value=""
               onChange={handleCategoryChange}
-              className={inputStyles}
+              className="focus:outline rounded-md px-2 py-2 focus:ring-2 focus:ring-brick-200 mb-3 w-full border-2 border-gray-300"
             >
-              <option value="">Select categories</option>
-              {currentTournament?.categories.map((category: string, idx: number) => (
+              <option value="">Select existing categories (doubles, etc)</option>
+              {uniqueCategories.map((category: string, idx: number) => (
                 <option key={idx} value={category}>
                   {category}
                 </option>
               ))}
             </select>
-            <div className="mt-2 mb-2 flex flex-wrap gap-1">
-              {selectedCategories.map((category) => (
-                <span
-                  key={category}
-                  className=" my-1 px-2 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
-                >
-                  {category}
-                  <button
-                    onClick={() => removeCategory(category)}
-                    className="ml-2 text-sm text-white-500"
-                  >
-                    ✕
-                  </button>
-                </span>
-              ))}
-            </div> */}
 
-            <label htmlFor="categories" className="text-xl">
-              Categories
+            <label className="font-semibold text-md" htmlFor="customCategory">
+              Add Custom Category
             </label>
-
-            <label htmlFor="customCategory">Add Custom Category</label>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mb-2">
               <input
                 type="text"
                 name="customCategory"
@@ -204,19 +192,6 @@ export default function NewPlayerForm() {
               </Button>
             </div>
 
-            <select
-              name="categories"
-              value=""
-              onChange={handleCategoryChange}
-              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full border-2 border-gray-300"
-            >
-              <option value="">Select categories (doubles, teens)</option>
-              {uniqueCategories.map((category: string, idx: number) => (
-                <option key={idx} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
             <div className="flex flex-wrap gap-1">
               {selectedCategories.map((category) => (
                 <span

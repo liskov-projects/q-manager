@@ -66,7 +66,7 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
         <div className="flex flex-col lg:flex-row justify-around px-1">
           {/* Section for adding players and viewing unprocessed list */}
           <div
-            className={`p-2 w-full lg:w-1/5 xl:w-1/6 ${
+            className={`p-2 w-full lg:w-1/5 ${
               visibleSection === "unprocessed" ? "block" : "hidden lg:block"
             }`}
           >
@@ -74,14 +74,14 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
             {/* IMPORTANT: where to put? WORKS: */}
             {/* {tournamentOwner && <BulkImport tournamentId={tournamentId} />} */}
             <PlayersList
-              title={"Unprocessed Matches"}
+              title={"Upcoming Matches"}
               players={currentTournament.unProcessedQItems}
               zone={"unprocessed"}
             />
           </div>
 
           <div
-            className={`p-1 w-full lg:w-3/5 xl:w-4/6 ${
+            className={`p-1 w-full lg:w-3/5 ${
               visibleSection === "queues" ? "block" : "hidden lg:block"
             }`}
           >
@@ -95,13 +95,13 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
 
           {/* Processed players section */}
           <div
-            className={`p-1 w-full lg:w-1/5 xl:w-1/6 ${
+            className={`p-1 w-full lg:w-1/5 ${
               visibleSection === "processed" ? "block" : "hidden lg:block"
             }`}
           >
             {/* <SectionHeader>Button Group</SectionHeader> */}
             <PlayersList
-              title={"Processed Matches"}
+              title={"Finished Matches"}
               players={currentTournament.processedQItems}
               zone={"processed"}
             />

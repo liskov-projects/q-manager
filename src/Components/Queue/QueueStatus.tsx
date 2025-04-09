@@ -20,9 +20,9 @@ const QueueStatus = ({ queue }: { queue: TQueue }) => {
   // Determine the display message based on queue status
   const displayMessage =
     queue.queueItems.length === 0 ? null : queueLength > 0 ? (
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-3 py-1">
         <span>Number in queue:</span>
-        <span className="ml-2 flex items-center justify-center w-12 h-12 border-4 border-black bg-slate-200 text-black font-bold">
+        <span className="flex items-center justify-center w-12 h-12 border-4 border-black bg-slate-200 text-black font-bold">
           {queueLength}
         </span>
       </div>
@@ -36,7 +36,9 @@ const QueueStatus = ({ queue }: { queue: TQueue }) => {
     );
 
   return (
-    <div className={`p-2 rounded text-black font-extrabold ${backgroundColor} `}>
+    <div
+      className={`${displayMessage ? "p-2" : "p-0"} rounded text-black font-extrabold ${backgroundColor} `}
+    >
       {displayMessage}
     </div>
   );

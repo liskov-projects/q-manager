@@ -36,7 +36,7 @@ export default function QueuesGridAlternate() {
 
               {/* Q or "No one is playing!" */}
               {queue.queueItems.length === 0 ? (
-                <div className="text-2xl font-bold px-1 py-0.5 bg-white border-4 border-black text-black rounded">
+                <div className="text-2xl lg:text-xl font-bold px-[3px] py-[1px] bg-white border-4 border-black text-black rounded">
                   No one on court!
                 </div>
               ) : (

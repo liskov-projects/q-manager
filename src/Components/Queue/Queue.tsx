@@ -54,7 +54,7 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
 
   return (
     <div
-      className="rounded-lg shadow-left-bottom-lg p-2 flex flex-col border-3 border-grey-300 !overflow-visible"
+      className="w-full rounded-lg shadow-left-bottom-lg p-2 flex flex-col border-3 border-grey-300 !overflow-visible"
       onDragOver={(event) => event.preventDefault()}
     >
       <div className="flex flex-row justify-between items-center">
@@ -114,12 +114,12 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
         <>
           <ul className="mb-4 h-[auto] overflow-visible">
             {queue.queueItems.length === 0 ? (
-              <div className="flex flex-col items-center font-bold text-shell-200">
-                <div> No one on court </div>
+              <div className="w-full min-w-full flex flex-col items-center font-bold text-shell-200">
+                <div className="w-full text-center"> No one on court </div>
                 <img
                   src="/snoopy-sleeping.gif"
                   alt="No one on court"
-                  className="w-32 h-auto mx-auto "
+                  className="w-32 h-auto mx-auto"
                 />
               </div>
             ) : (

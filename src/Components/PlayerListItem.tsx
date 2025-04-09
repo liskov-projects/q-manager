@@ -50,7 +50,7 @@ export default function PlayerListItem({ item, zone }: { item: TPlayer; zone: st
         >
           {/* Player Name */}
           <div className="w-full flex justify-between mb-2">
-            <div className="player-name font-bold text-sm w-[65%]">{item.names}</div>
+            <div className="player-name text-gray-500 font-bold text-sm w-[65%]">{item.names}</div>
             {!tournamentOwner ? null : (
               <Button
                 onClick={() => {
