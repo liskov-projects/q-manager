@@ -19,7 +19,7 @@ export default function QueuesGridAlternate() {
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 text-black">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-5 text-black">
       {currentTournament?.queues.map((queue: TQueue) => {
         const queueLength = queue.queueItems.length - 1;
         const isEmpty = queueLength <= 0;
@@ -30,15 +30,19 @@ export default function QueuesGridAlternate() {
               className={`absolute inset-0 flex flex-col items-center justify-between border-8 border-black text-center p-2 ${getBackgroundColor(queueLength)}`}
             >
               {/* Queue name */}
-              <h3 className="text-md font-bold">{queue.queueName}</h3>
+              <h3 className="text-xl px-2 py-2 bg-white border-4 border-black text-black rounded flex items-center justify-center font-black">
+                {queue.queueName}
+              </h3>
 
               {/* Q or "No one is playing!" */}
-              {isEmpty ? (
-                <div className="text-lg font-bold">No one is playing!</div>
+              {queue.queueItems.length === 0 ? (
+                <div className="text-2xl font-bold px-1 py-0.5 bg-white border-4 border-black text-black rounded">
+                  No one on court!
+                </div>
               ) : (
                 <div className="flex items-center justify-center text-2xl font-extrabold">
                   <span className="mr-2">Q:</span>
-                  <div className="w-10 h-10 bg-white border-4 border-black text-black rounded flex items-center justify-center text-xl font-black">
+                  <div className="w-14 h-14 bg-white border-4 border-black text-black rounded flex items-center justify-center text-3xl font-black">
                     {queueLength}
                   </div>
                 </div>
@@ -46,7 +50,7 @@ export default function QueuesGridAlternate() {
 
               {/* Icon */}
               <div className="text-3xl">
-                {isEmpty ? (
+                {queue.queueItems.length === 0 ? (
                   <FaMoon title="No one on court" />
                 ) : (
                   <FaTableTennis title="Player on court" />
