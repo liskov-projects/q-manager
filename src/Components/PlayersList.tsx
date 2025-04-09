@@ -68,7 +68,7 @@ export default function PlayersList({
   return (
     <div id="modal-root">
       <SectionHeader>{title}</SectionHeader>
-      <div className="flex flex-col shadow-left-bottom-lg items-center h-auto overflow-hidden hover:overflow-y-auto w-full mt-3 p-4">
+      <div className="flex flex-col shadow-left-bottom-lg items-center h-auto overflow-hidden hover:overflow-y-auto w-full mt-3 p-4 rounded-lg">
         <input
           className="w-full focus:outline-none focus:ring-2 focus:ring-brick-200 my-2 py-2 px-2 rounded-sm border-2 border-gray-300"
           type="text"

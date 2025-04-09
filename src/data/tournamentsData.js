@@ -6,27 +6,67 @@ const tournamentsData = [
     image: "https://storage.googleapis.com/tournament-images-q-manager-453001/mod-grass-court.jpeg",
     queues: [
       {
-        queueName: "Location 1",
+        queueName: "Court 1",
         queueItems: [],
       },
       {
-        queueName: "Location 2",
+        queueName: "Court 2",
         queueItems: [],
       },
       {
-        queueName: "Location 3",
+        queueName: "Court 3",
         queueItems: [],
       },
       {
-        queueName: "Location 4",
+        queueName: "Court 4",
         queueItems: [],
       },
       {
-        queueName: "Location 5",
+        queueName: "Court 5",
         queueItems: [],
       },
       {
-        queueName: "Location 6",
+        queueName: "Court 6",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 7",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 8",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 9",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 10",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 11",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 12",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 13",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 14",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 15",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 16",
         queueItems: [],
       },
     ],
@@ -41,27 +81,67 @@ const tournamentsData = [
     image: "https://storage.googleapis.com/tournament-images-q-manager-453001/clay-high-angle.jpeg",
     queues: [
       {
-        queueName: "Location 1",
+        queueName: "Court 1",
         queueItems: [],
       },
       {
-        queueName: "Location 2",
+        queueName: "Court 2",
         queueItems: [],
       },
       {
-        queueName: "Location 3",
+        queueName: "Court 3",
         queueItems: [],
       },
       {
-        queueName: "Location 4",
+        queueName: "Court 4",
         queueItems: [],
       },
       {
-        queueName: "Location 5",
+        queueName: "Court 5",
         queueItems: [],
       },
       {
-        queueName: "Location 6",
+        queueName: "Court 6",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 7",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 8",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 9",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 10",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 11",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 12",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 13",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 14",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 15",
+        queueItems: [],
+      },
+      {
+        queueName: "Court 16",
         queueItems: [],
       },
     ],

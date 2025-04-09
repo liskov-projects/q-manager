@@ -117,7 +117,7 @@ export default function NewPlayerForm() {
     <>
       <div className="flex items-center justify-between">
         <SectionHeader className="flex items-center justify-center gap-x-1 h-full">
-          <span>Match</span>
+          <span>Matches</span>
           <FontAwesomeIcon icon={faPersonCirclePlus} className="text-md" />
         </SectionHeader>
 
@@ -131,7 +131,7 @@ export default function NewPlayerForm() {
 
       {isExpanded && (
         <form
-          className="flex flex-row items-center justify-around px-3 py-4 mt-2 mb-4 rounded-md shadow-left-bottom-lg"
+          className="flex flex-row items-center justify-around px-3 py-4 mt-2 mb-4 rounded-lg shadow-left-bottom-lg"
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col">
