@@ -5,7 +5,7 @@ export default function TagsList({ item }: { item: TPlayer | string[] }) {
   const list = categories.map((category: string[], idx: number) => (
     <li
       key={idx}
-      className="flex flex-wrap text-xs font-semibold h-auto border-solid border-2 rounded border-shell-300 px-1 py-[1px] m-[1px]"
+      className="flex flex-wrap text-xs font-semibold h-auto border-solid border-2 rounded border-shell-300 px-1 py-[1px] m-[2px]"
     >
       {category}
     </li>

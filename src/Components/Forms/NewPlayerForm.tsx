@@ -19,6 +19,7 @@ export default function NewPlayerForm() {
   const { socket } = useSocket();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
+  // TODO: review the cateogries
   const [newPlayers, setNewPlayers] = useState<TPlayer>({
     names: "",
     categories: "",
@@ -34,9 +35,9 @@ export default function NewPlayerForm() {
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  useEffect(() => {
-    setSelectedCategories(currentTournament?.categories || []);
-  }, [currentTournament?.categories]);
+  // useEffect(() => {
+  //   setSelectedCategories(currentTournament?.categories || []);
+  // }, [currentTournament?.categories]);
 
   function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const category = e.target.value;
@@ -87,6 +88,8 @@ export default function NewPlayerForm() {
       categories: "",
       phoneNumbers: "",
     });
+
+    setSelectedCategories([]);
 
     console.log("newItem", newItem);
   }
