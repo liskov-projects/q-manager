@@ -56,6 +56,16 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
     fetchTournament(tournamentId);
   }, [params?.id]); // runs when `pathname` changes
 
+  const allPlayers = useMemo(() => {
+    return tournaments.flatMap((tournament) => {
+      const unprocessed = tournament.unProcessedQItems || [];
+      const processed = tournament.processedQItems || [];
+      const queueItems = tournament.queues?.flatMap((q) => q.queueItems || []) || [];
+
+      return [...unprocessed, ...processed, ...queueItems];
+    });
+  }, [tournaments]);
+
   // gets a single tournament directly from the API
   const fetchTournament = async (tournamentId: string) => {
     try {
@@ -109,6 +119,7 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
         fetchTournaments,
         justDropped,
         setJustDropped,
+        allPlayers,
       }}
     >
       {children}

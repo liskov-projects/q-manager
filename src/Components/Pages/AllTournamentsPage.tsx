@@ -11,21 +11,32 @@ import { AnimatePresence, motion } from "framer-motion";
 import Header from "../Header";
 
 export default function AllTournamentsPage() {
-  const { tournaments } = useTournamentsAndQueuesContext();
+  const { tournaments, allPlayers } = useTournamentsAndQueuesContext();
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
 
   const tournamentsToShow = tournaments
     .filter((tournament: TTournament) => {
       const searchLower = search.toLowerCase();
-      return (
-        search.length === 0 ||
+
+      const allTournamentPlayers = [
+        ...tournament.unProcessedQItems,
+        ...tournament.processedQItems,
+        ...tournament.queues.flatMap((queue) => queue.queueItems),
+      ];
+
+      const foundTournament =
         tournament.name.toLowerCase().includes(searchLower) ||
         tournament.description.toLowerCase().includes(searchLower) ||
         tournament.categories.some((category: string) =>
           category.toLowerCase().includes(searchLower)
-        )
+        );
+
+      const foundByPlayer = allTournamentPlayers.some((player) =>
+        player.names.toLowerCase().includes(searchLower)
       );
+
+      return search.length === 0 || foundTournament || foundByPlayer;
     })
     .sort((a: TTournament, b: TTournament) => a.name.localeCompare(b.name));
 
