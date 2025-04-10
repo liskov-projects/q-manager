@@ -45,14 +45,14 @@ export default function QueueListItem({
     <div
       key={item._id}
       id={item._id}
-      className={`z-100 overflow-hidden ${tournamentOwner && "cursor-pointer"}  ${index === 0 ? "bg-green-600 hover:bg-green-700 text-shell-50 border-4 border-black" : "border-[1px] border-gray-400 hover:bg-gray-200"} p-2 shadow-left-bottom-lg w-[95%] left-bottom-lg rounded-md text-sm font-bold mb-2 text-center ${className} ${justDropped?._id === item._id ? "animate-shake bg-yellow-200" : className}`}
+      className={`z-100 overflow-hidden ${tournamentOwner && "cursor-pointer"}  ${index === 0 ? "bg-green-600 hover:bg-green-700 text-shell-50 border-4 border-black" : "border-[1px] border-gray-400 hover:bg-gray-200"} p-2 shadow-left-bottom-lg w-[95%] left-bottom-lg rounded-md text-sm font-bold mb-[3px] text-center ${className} ${justDropped?._id === item._id ? "animate-shake bg-yellow-200" : className}`}
       draggable={`${!tournamentOwner ? false : true}`}
       onDragStart={() => handleDragStart(item)}
       onDragOver={(e) => handleDragOver(e)}
     >
       <div className="flex justify-between">
         <div
-          className={`mb-1 ${index === 0 ? "text-white tracking-wide [text-shadow:_0.5px_0.5px_1px_black] font-extrabold" : "text-gray-500"} font-bold w-[70%] border-white`}
+          className={`mb-1 ${index === 0 ? "text-white tracking-wide [text-shadow:_-0.5px_0.5px_1px_black] font-extrabold" : "text-gray-500"} font-bold w-[70%] border-white`}
         >
           {item.names}
         </div>
