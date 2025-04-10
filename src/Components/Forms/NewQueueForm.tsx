@@ -11,7 +11,7 @@ import Button from "../Buttons/Button";
 
 export default function NewQueueForm() {
   const { isSignedIn } = useUser();
-  const { currentTournament } = useTournamentsAndQueuesContext();
+  const { currentTournament, tournamentOwner } = useTournamentsAndQueuesContext();
   const [canEdit, setCanEdit] = useState(false);
   const [newQueue, setNewQueue] = useState<TQueue>({
     queueName: "",
@@ -63,7 +63,7 @@ export default function NewQueueForm() {
   }
 
   // hides the components from guests
-  if (!isSignedIn) return null;
+  if (!tournamentOwner) return null;
 
   return (
     <div>
