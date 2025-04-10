@@ -74,7 +74,7 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
             {/* IMPORTANT: where to put? WORKS: */}
             {/* {tournamentOwner && <BulkImport tournamentId={tournamentId} />} */}
             <PlayersList
-              title={"Upcoming Matches"}
+              title={"Unscheduled Matches"}
               players={currentTournament.unProcessedQItems}
               zone={"unprocessed"}
             />

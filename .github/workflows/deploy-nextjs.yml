@@ -37,7 +37,7 @@ jobs:
 
       - name: Configure Docker to Use Google Cloud Credentials
         run: |
-          gcloud auth configure-docker australia-southeast2-docker.pkg.dev
+          gcloud auth configure-docker australia-southeast1-docker.pkg.dev
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
@@ -75,7 +75,7 @@ jobs:
           echo "Listing files in current context:"
           ls -al
 
-          IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
+          IMAGE_NAME="australia-southeast1-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
 
           # 🔍 Print each command before executing it
           set -x
@@ -99,7 +99,7 @@ jobs:
       - name: Terraform Apply
         working-directory: terraform/nextjs-app
         run: |
-          IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
+          IMAGE_NAME="australia-southeast1-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
 
           terraform apply \
             -var="image_tag=$IMAGE_NAME" \

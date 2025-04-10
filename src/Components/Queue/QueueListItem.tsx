@@ -52,7 +52,7 @@ export default function QueueListItem({
     >
       <div className="flex justify-between">
         <div
-          className={`mb-1 ${index === 0 ? "text-white tracking-wide [text-shadow:_0.5px_0.5px_1px_black] font-extrabold" : "text-gray-500"} font-bold w-[70%]`}
+          className={`mb-1 ${index === 0 ? "text-white tracking-wide [text-shadow:_0.5px_0.5px_1px_black] font-extrabold" : "text-gray-500"} font-bold w-[70%] border-white`}
         >
           {item.names}
         </div>
