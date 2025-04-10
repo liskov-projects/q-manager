@@ -27,7 +27,7 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
   return (
     <>
       {/* Mobile toggle button group */}
-      <div className="w-full md:hidden flex justify-around my-3">
+      <div className="w-[100%] md:hidden flex justify-around my-3">
         <button
           onClick={() => setVisibleSection("unprocessed")}
           className={`p-2 rounded bg-sky-300 ${
@@ -55,7 +55,7 @@ export default function TournamentQueuesPage({ tournamentId }: { tournamentId: s
           Processed
         </button>
       </div>
-      <div className="flex flex-col">
+      <div className="w-[100%] flex flex-col">
         <ButtonGroup
           tournamentId={tournamentId}
           showsFavourites={showsFavourites}
