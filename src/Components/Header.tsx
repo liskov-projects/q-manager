@@ -16,7 +16,7 @@ export default function Header({ children, className }: { children: ReactNode })
   const userSettingsPath = path === "/all-tournaments/user-settings";
 
   return (
-    <header className="w-full flex items-center justify-between px-4 py-2">
+    <header className={`w-full flex items-center justify-between px-4 py-2`}>
       {/* Left Wing */}
       <div className="flex items-center gap-2 w-[30%] min-w-[100px]">
         <Link
