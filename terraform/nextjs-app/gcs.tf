@@ -9,7 +9,7 @@ resource "google_storage_bucket" "tournament_images" {
   cors {
     origin          = [
       "http://localhost:3000",
-      "https://nextjs-app-qa-5flfrae4oq-km.a.run.app",
+      "https://q-manager.qa.liskov.dev",
       "https://your-prod-url.com" # 👈 Replace or update this when your custom domain is live
     ]
     method          = ["GET", "HEAD", "PUT", "OPTIONS"]

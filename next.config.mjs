@@ -3,8 +3,8 @@
 const port = process.env.PORT || 3000;
 console.log(`✅ Next.js running on port ${port}`);
 
-console.log("NEXT_PUBLIC_MONGO_URI:", process.env.NEXT_PUBLIC_MONGO_URI);
-console.log("CLERK_PUBLISHABLE_KEY:", process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+// console.log("NEXT_PUBLIC_MONGO_URI:", process.env.NEXT_PUBLIC_MONGO_URI);
+// console.log("CLERK_PUBLISHABLE_KEY:", process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 const nextConfig = {
   output: "standalone", // ✅ Makes the app self-contained for Cloud Run
