@@ -27,7 +27,7 @@ dotenv.config({ path: envPath });
 const PORT = process.env.NEXT_PUBLIC_PORT || 4000;
 
 const allowedOrigins =
-  ENV === "qa" ? ["https://nextjs-app-qa-5flfrae4oq-km.a.run.app"] : ["http://localhost:3000"];
+  ENV === "qa" ? ["https://q-manager.qa.liskov.dev"] : ["http://localhost:3000"];
 
 console.log("Running in:", ENV);
 console.log("Allowed origins:", allowedOrigins);

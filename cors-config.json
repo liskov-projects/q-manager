@@ -2,7 +2,7 @@
   {
     "origin": [
       "http://localhost:3000",
-      "https://nextjs-app-qa-5flfrae4oq-km.a.run.app",
+      "https://https://q-manager.qa.liskov.dev",
       "https://your-prod-url.com"
     ],
     "method": ["GET", "HEAD", "PUT", "OPTIONS"],
