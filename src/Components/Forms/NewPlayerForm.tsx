@@ -123,7 +123,7 @@ export default function NewPlayerForm() {
 
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-1 px-2 rounded position-center"
+          className="bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 md:text-md md:px-1 py-1 px-2 rounded position-center"
         >
           {`${isExpanded ? "Hide " : "show"} form`}
         </Button>
