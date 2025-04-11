@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { TTournament } from "@/types/Types";
 import SectionHeader from "@/Components/SectionHeader";
@@ -17,7 +17,14 @@ export default function AllTournamentsPage() {
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
   const { isSignedIn, user } = useUser();
-  const { appUser, favouriteTournaments } = useFavourites();
+  const { appUser, favouriteTournaments, setAppUser, setFavouriteTournaments } = useFavourites();
+
+  useEffect(() => {
+    if (!isSignedIn) {
+      setAppUser(null);
+      setFavouriteTournaments([]);
+    }
+  }, [isSignedIn]);
 
   const tournamentsToShow = tournaments
     .filter((tournament: TTournament) => {
