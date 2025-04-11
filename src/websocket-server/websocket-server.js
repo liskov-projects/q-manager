@@ -54,6 +54,45 @@ const io = new Server(server, {
   },
 });
 
+function findDuplicatePlayersInTournament(tournament) {
+  const seen = new Map(); // Map<playerId, location[]>
+
+  const logLocation = (player, location) => {
+    const id = typeof player._id === "string" ? player._id : player._id.toString();
+    if (!seen.has(id)) {
+      seen.set(id, []);
+    }
+    seen.get(id).push(location);
+  };
+
+  // Scan unProcessedQItems
+  tournament.unProcessedQItems.forEach((player) => logLocation(player, "unProcessedQItems"));
+
+  // Scan processedQItems
+  tournament.processedQItems.forEach((player) => logLocation(player, "processedQItems"));
+
+  // Scan all queues
+  tournament.queues.forEach((queue) => {
+    queue.queueItems.forEach((player) => {
+      logLocation(player, `queue: ${queue.queueName || queue._id}`);
+    });
+  });
+
+  // Identify duplicates
+  const duplicates = Array.from(seen.entries()).filter(([_, locations]) => locations.length > 1);
+
+  if (duplicates.length > 0) {
+    console.warn("🧨 DUPLICATE PLAYERS FOUND:");
+    duplicates.forEach(([id, locations]) => {
+      console.warn(`Player ID ${id} found in: ${locations.join(", ")}`);
+    });
+  } else {
+    console.log("✅ No duplicate players found in this tournament.");
+  }
+
+  return duplicates.map(([id]) => id);
+}
+
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
 });
@@ -166,22 +205,36 @@ io.on("connection", async (socket) => {
     }
 
     //removes item from their source arrays
-    const newUnprocessedItems = tournamentToDeleteFrom.unProcessedQItems.filter(
-      (item) => item._id.toString() !== draggedItem._id.toString()
-    );
+    const newUnprocessedItems = tournamentToDeleteFrom.unProcessedQItems.filter((item) => {
+      const isSame = item._id.toString() === draggedItem._id.toString();
+      if (isSame) {
+        console.log("🚷 DRAG REMOVED PLAYER from queue");
+        console.log("Removed:", draggedItem);
+      }
+      return !isSame;
+    });
 
-    const newProcessedItems = tournamentToDeleteFrom.processedQItems.filter(
-      (item) => item._id.toString() !== draggedItem._id.toString()
-    );
+    const newProcessedItems = tournamentToDeleteFrom.processedQItems.filter((item) => {
+      const isSame = item._id.toString() === draggedItem._id.toString();
+      if (isSame) {
+        console.log("🚷 DRAG REMOVED PLAYER from queue");
+        console.log("Removed:", draggedItem);
+      }
+      return !isSame;
+    });
 
     // makes a copy of the queues & ensures there're no references to MongoDB properties (pure JS object) with .toObject()
     const newQueues = tournamentToDeleteFrom.queues.map((queue) => ({
       ...queue.toObject(), //here
-      queueItems: queue.queueItems.filter(
-        (item) => item._id.toString() !== draggedItem._id.toString()
-      ),
+      queueItems: queue.queueItems.filter((item) => {
+        const isSame = item._id.toString() === draggedItem._id.toString();
+        if (isSame) {
+          console.log("🚷 DRAG REMOVED PLAYER from queue");
+          console.log("Removed:", draggedItem);
+        }
+        return !isSame;
+      }),
     }));
-    console.log("IN WEBSOCKET");
 
     // adds items to the corresponding group
     if (dropTarget === "unprocessed") {
@@ -213,8 +266,10 @@ io.on("connection", async (socket) => {
       { new: true }
     );
 
-    // console.log("UPDATED TOURNAMENT");
-    // console.log(updatedTournament);
+    console.log("UPDATED TOURNAMENT");
+    console.log(updatedTournament);
+    console.log("IN THE DRAG AND DROP");
+    findDuplicatePlayersInTournament(updatedTournament);
 
     io.emit("playerDropped", {
       message: "roundtrip made for the playerDropped",
@@ -228,6 +283,7 @@ io.on("connection", async (socket) => {
     console.log("📡 Sent io.emit(playerDropped)");
   });
 
+  // ADD PLAYER TO SHORTEST QUEUE
   socket.on("addPlayerToShortestQ", async ({ playerData, tournamentId }) => {
     console.log(`Player: ${JSON.stringify(playerData)} added to Queue`);
 
@@ -265,6 +321,10 @@ io.on("connection", async (socket) => {
       },
       { new: true }
     );
+
+    console.log("ADD PLAYER TO SHORTEST QUEUE");
+    findDuplicatePlayersInTournament(updatedTournament);
+
     if (!updatedTournament) socket.emit({ error: "error updating the tournament" });
 
     // broadcasts the updated data
@@ -308,6 +368,9 @@ io.on("connection", async (socket) => {
       { new: true }
     );
 
+    console.log("ADD ALL PLAYERS TO QUEUES");
+    findDuplicatePlayersInTournament(updatedTournament);
+
     // broadcasts updated data
     io.emit("addAllPlayersToQueues", {
       message: "all Players added to queues",
@@ -344,6 +407,9 @@ io.on("connection", async (socket) => {
       { new: true }
     );
 
+    console.log("UNPROCESS ALL PLAYERS");
+    findDuplicatePlayersInTournament(updatedTournament);
+
     // emits the event to the front
     io.emit("uprocessAllPlayers", {
       message: "All player are removed from the queues",
@@ -376,6 +442,9 @@ io.on("connection", async (socket) => {
       { new: true }
     );
 
+    console.log("PROCESS ALL PLAYERS");
+    findDuplicatePlayersInTournament(updatedTournament);
+
     // emits the event to the front
     io.emit("uprocessAllPlayers", {
       message: "All player are removed from the queues",
@@ -403,6 +472,9 @@ io.on("connection", async (socket) => {
       },
       { new: true }
     );
+
+    console.log("REDISTRIBUTE");
+    findDuplicatePlayersInTournament(updatedTournament);
 
     // Emit the updated tournament data to all clients
     io.emit("redistributePlayers", {
@@ -446,6 +518,9 @@ io.on("connection", async (socket) => {
         },
         { new: true }
       );
+
+      console.log("PROCESS QUEUE ONE STEP");
+      findDuplicatePlayersInTournament(updatedTournament);
 
       if (!updatedTournament) {
         return socket.emit("error", {
