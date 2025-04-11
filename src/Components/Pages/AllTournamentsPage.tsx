@@ -9,21 +9,17 @@ import TournamentCard from "@/Components/Tournaments/TournamentCard";
 import NewTournamentForm from "@/Components/Forms/NewTournamentForm";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "../Header";
+import { useUser } from "@clerk/nextjs";
 
 export default function AllTournamentsPage() {
   const { tournaments, allPlayers } = useTournamentsAndQueuesContext();
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
+  const { isSignedIn, user } = useUser();
 
   const tournamentsToShow = tournaments
     .filter((tournament: TTournament) => {
       const searchLower = search.toLowerCase();
-
-      const allTournamentPlayers = [
-        ...tournament.unProcessedQItems,
-        ...tournament.processedQItems,
-        ...tournament.queues.flatMap((queue) => queue.queueItems),
-      ];
 
       const foundTournament =
         tournament.name.toLowerCase().includes(searchLower) ||
@@ -32,11 +28,7 @@ export default function AllTournamentsPage() {
           category.toLowerCase().includes(searchLower)
         );
 
-      const foundByPlayer = allTournamentPlayers.some((player) =>
-        player.names.toLowerCase().includes(searchLower)
-      );
-
-      return search.length === 0 || foundTournament || foundByPlayer;
+      return search.length === 0 || foundTournament;
     })
     .sort((a: TTournament, b: TTournament) => a.name.localeCompare(b.name));
 
