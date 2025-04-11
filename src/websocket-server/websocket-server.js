@@ -361,6 +361,48 @@ io.on("connection", async (socket) => {
     console.log("📡 Sent io.emit(playerAddedToShortestQ)", tournamentId, playerData);
   });
 
+  socket.on("addAllPlayersToQueues", async ({ tournament }) => {
+    //  call db
+    const foundTournament = await TournamentModel.findById(tournament._id);
+    if (!foundTournament) socket.emit({ error: "Tournament not found in addPlayerToShortestQ" });
+    // update the data - backend
+    //NOTE: makes a pool of ALL players | or we want only UNPROCESSED?
+    const unassignedPlayers = [...tournament.unProcessedQItems, ...tournament.processedQItems];
+
+    // update the queues
+    const updatedQueues = [...foundTournament?.queues];
+
+    unassignedPlayers.forEach((player) => {
+      const targetQeueue = updatedQueues.reduce((shortest, current) =>
+        current.queueItems.length < shortest.queueItems.length ? current : shortest
+      );
+      if (!targetQeueue) socket.emit({ error: "no valid queue found" });
+
+      targetQeueue.queueItems.push(player);
+    });
+    // call db to save
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournament._id,
+      {
+        $set: {
+          unProcessedQItems: [],
+          processedQItems: [],
+          queues: updatedQueues,
+        },
+      },
+      { new: true }
+    );
+
+    console.log("ADD ALL PLAYERS TO QUEUES");
+    findDuplicatePlayersInTournament(updatedTournament);
+
+    // broadcasts updated data
+    io.emit("addAllPlayersToQueues", {
+      message: "all Players added to queues",
+      updatedTournament,
+    });
+  });
+
   socket.on("uprocessAllPlayers", async ({ tournament }) => {
     // db call to get the data
     const foundTournament = await TournamentModel.findById(tournament._id);
@@ -435,7 +477,6 @@ io.on("connection", async (socket) => {
     });
   });
 
-  // NEW:
   socket.on("redistributePlayers", async ({ tournamentId, balancedQueues }) => {
     // Find the tournament from the database
     const foundTournament = await TournamentModel.findById(tournamentId);
