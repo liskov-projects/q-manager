@@ -10,12 +10,14 @@ import NewTournamentForm from "@/Components/Forms/NewTournamentForm";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "../Header";
 import { useUser } from "@clerk/nextjs";
+import { useFavourites } from "@/context/FavouriteItemsContext";
 
 export default function AllTournamentsPage() {
   const { tournaments, allPlayers } = useTournamentsAndQueuesContext();
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
   const { isSignedIn, user } = useUser();
+  const { appUser, favouriteTournaments } = useFavourites();
 
   const tournamentsToShow = tournaments
     .filter((tournament: TTournament) => {
@@ -31,6 +33,10 @@ export default function AllTournamentsPage() {
       return search.length === 0 || foundTournament;
     })
     .sort((a: TTournament, b: TTournament) => a.name.localeCompare(b.name));
+
+  const managedTournaments = tournamentsToShow.filter(
+    (t: TTournament) => t.adminUser === appUser?._id
+  );
 
   return (
     <>
@@ -71,16 +77,44 @@ export default function AllTournamentsPage() {
         </div>
 
         {/* Tournaments section */}
-        <div className="flex-1 order-2 lg:order-1">
-          <div className="flex items-center justify-between mb-2">
-            <SectionHeader>Tournaments</SectionHeader>
-          </div>
+        <div className="flex flex-col">
+          {managedTournaments.length > 0 ? (
+            <div className="flex-1 order-2 lg:order-1">
+              <div className="flex items-center justify-between mb-4">
+                <SectionHeader>Managed Tournaments</SectionHeader>
+              </div>
 
-          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {tournamentsToShow.map((tournament: TTournament, index: number) => (
-              <TournamentCard key={index} tournament={tournament} />
-            ))}
-          </ul>
+              <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {managedTournaments.map((tournament: TTournament, index: number) => (
+                  <TournamentCard key={index} tournament={tournament} />
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          {favouriteTournaments.length > 0 ? (
+            <div className="flex-1 order-2 lg:order-1">
+              <div className="flex items-center justify-between mb-4 mt-4">
+                <SectionHeader>Favourite Tournaments</SectionHeader>
+              </div>
+
+              <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {favouriteTournaments.map((tournament: TTournament, index: number) => (
+                  <TournamentCard key={index} tournament={tournament} />
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          <div className="flex-1 order-2 lg:order-1">
+            <div className="flex items-center justify-between mb-4 mt-4">
+              <SectionHeader>All Tournaments</SectionHeader>
+            </div>
+
+            <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {tournamentsToShow.map((tournament: TTournament, index: number) => (
+                <TournamentCard key={index} tournament={tournament} />
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Sidebar for large screens only */}
