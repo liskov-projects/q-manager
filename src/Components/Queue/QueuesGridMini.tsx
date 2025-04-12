@@ -19,7 +19,8 @@ export default function QueuesGridAlternate() {
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-3 gap-5 text-black">
+    <div className="grid gap-5 text-black grid-cols-[repeat(auto-fit,minmax(165px,1fr))]">
+      {/* <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-3 xl:grid-cols-3 gap-5 text-black"> */}
       {currentTournament?.queues.map((queue: TQueue) => {
         const queueLength = queue.queueItems.length - 1;
         const isEmpty = queueLength <= 0;
