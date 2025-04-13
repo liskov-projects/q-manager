@@ -50,8 +50,8 @@ export default function AllTournamentsPage() {
       <Header>Queue Manager</Header>
       <div className="p-4 w-full flex flex-col lg:flex-row gap-3">
         {/* Small/medium: search and toggle button above list */}
-        <div className="block lg:hidden order-1 mb-0">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-4">
+        <div className="block lg:hidden mb-0">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-2">
             <input
               className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 w-full sm:w-[60%]"
               type="text"
@@ -84,7 +84,7 @@ export default function AllTournamentsPage() {
         </div>
 
         {/* Tournaments section */}
-        <div className="flex flex-col">
+        <div className="flex flex-col lg:w-3/4">
           {managedTournaments.length > 0 ? (
             <div className="flex-1 order-2 lg:order-1">
               <div className="flex items-center justify-between mb-4">
@@ -125,7 +125,7 @@ export default function AllTournamentsPage() {
         </div>
 
         {/* Sidebar for large screens only */}
-        <div className="hidden lg:flex w-full lg:w-[25%] flex-col gap-4 order-3">
+        <div className="hidden lg:flex lg:w-1/4 flex-col gap-4 order-3">
           <SectionHeader>Tournament functions</SectionHeader>
 
           <div className="shadow-left-bottom-lg flex flex-col items-start p-4 rounded-md">
