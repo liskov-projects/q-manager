@@ -510,58 +510,79 @@ io.on("connection", async (socket) => {
 
   socket.on("processQueueOneStep", async ({ tournamentId, queueIndex }) => {
     try {
-      // Fetch the tournament from DB
+      // 🧠 Fetch the tournament
       const foundTournament = await TournamentModel.findById(tournamentId);
       if (!foundTournament) {
         return socket.emit("error", {
-          message: "Tournament not found in processOnePlayer",
+          message: "Tournament not found in processQueueOneStep",
         });
       }
 
-      // Ensure the queue index is valid
-      if (queueIndex < 0 || queueIndex >= foundTournament.queues.length) {
+      const queues = foundTournament.queues || [];
+
+      // ✅ Guard against invalid queue index
+      if (typeof queueIndex !== "number" || queueIndex < 0 || queueIndex >= queues.length) {
         return socket.emit("error", { message: "Invalid queue index" });
       }
 
-      // Get the queue and remove the first player
-      const queueToUpdate = foundTournament.queues[queueIndex];
-      const processedPlayer = queueToUpdate.queueItems.shift();
+      // 🧼 Copy the queue to avoid mutating the Mongoose document directly
+      const queueToUpdate = { ...queues[queueIndex].toObject() };
+      const queueItems = [...queueToUpdate.queueItems];
 
-      if (!processedPlayer) {
-        return socket.emit("error", { message: "No player to process in this queue" });
+      // 🚫 If no players to process, bail out
+      if (queueItems.length === 0) {
+        return socket.emit("error", {
+          message: "No player to process in this queue",
+        });
       }
 
-      // Update the tournament
+      // ✅ Safely remove the first player
+      const processedPlayer = queueItems.shift();
+
+      if (!processedPlayer || !processedPlayer._id) {
+        return socket.emit("error", {
+          message: "Invalid player data when processing",
+        });
+      }
+
+      // 🧼 Also make sure to remove this player from processedQItems if they're already there
+      const cleanedProcessedQItems = foundTournament.processedQItems.filter(
+        (item) => item._id.toString() !== processedPlayer._id.toString()
+      );
+
+      // 💾 Update the queue and processed items
       const updatedTournament = await TournamentModel.findByIdAndUpdate(
         tournamentId,
         {
           $set: {
-            [`queues.${queueIndex}.queueItems`]: queueToUpdate.queueItems,
+            [`queues.${queueIndex}.queueItems`]: queueItems,
+            processedQItems: [...cleanedProcessedQItems, processedPlayer],
           },
-          $push: { processedQItems: processedPlayer },
         },
         { new: true }
       );
 
-      console.log("PROCESS QUEUE ONE STEP");
-      findDuplicatePlayersInTournament(updatedTournament);
-
       if (!updatedTournament) {
         return socket.emit("error", {
-          message: "Error updating tournament in processOnePlayer",
+          message: "Error updating tournament in processQueueOneStep",
         });
       }
 
-      // Emit the updated data
+      console.log("✅ PROCESS QUEUE ONE STEP");
+      findDuplicatePlayersInTournament(updatedTournament);
+
+      // 📡 Emit success
       io.emit("processQueueOneStep", {
         message: "One player processed from queue",
         updatedTournament,
       });
 
-      console.log("📡 Sent io.emit(processOnePlayer)", updatedTournament);
+      console.log("📡 Sent io.emit(processQueueOneStep)");
     } catch (error) {
-      console.error("Error in processOnePlayer:", error);
-      socket.emit("error", { message: "Internal server error in processOnePlayer" });
+      console.error("❌ Error in processQueueOneStep:", error);
+      socket.emit("error", {
+        message: "Internal server error in processQueueOneStep",
+      });
     }
   });
 
