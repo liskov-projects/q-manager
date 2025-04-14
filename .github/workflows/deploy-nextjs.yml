@@ -86,7 +86,7 @@ jobs:
             --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
             --build-arg CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}" \
             --build-arg NEXT_PUBLIC_SOCKET_URL="${{ secrets.SOCKET_URL }}" \
-            --build-arg NEXT_PUBLIC_CLERK_FRONTEND_API="${{ secrets.CLERK_FRONTEND_API_QA }}" \
+            --build-arg NEXT_PUBLIC_CLERK_FRONTEND_API="${{ env.CLERK_FRONTEND_API_DEBUG }}"
             --build-arg TAILWIND_CONFIG="tailwind.config.ts"
 
       - name: Setup Terraform
