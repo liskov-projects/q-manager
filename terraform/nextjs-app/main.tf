@@ -66,7 +66,7 @@ resource "google_cloud_run_service" "nextjs_app" {
 
         env {
           name  = "NEXT_PUBLIC_CLERK_FRONTEND_API"
-          value = var.clerk_frontend_api
+          value = var.clerk_frontend_api_key
         }
 
         # ✅ Startup probe – waits for the container to start
