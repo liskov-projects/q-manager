@@ -41,7 +41,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Toaster position="top-right" closeButton richColors />
-        <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
+        <ClerkProvider
+          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+          frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API}
+        >
           <TournamentsAndQueuesProvider>
             <FavouriteItemsProvider>
               <SocketProvider>

@@ -15,7 +15,6 @@ on:
 
 env:
   ENVIRONMENT: "qa"
-  CLERK_FRONTEND_API_DEBUG: "clerk.your-real-key.production.clerk.accounts.dev"
 
 jobs:
   deploy:
@@ -81,12 +80,12 @@ jobs:
           # 🔍 Print each command before executing it
           set -x
 
-          docker buildx build --no-cache --progress=plain --platform=linux/amd64 -t "$IMAGE_NAME" --push -f Dockerfile . \
+          docker buildx build --no-cache --platform=linux/amd64 -t "$IMAGE_NAME" --push -f Dockerfile . \
             --build-arg NEXT_PUBLIC_MONGO_URI="${{ secrets.MONGO_URI }}" \
             --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
             --build-arg CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}" \
             --build-arg NEXT_PUBLIC_SOCKET_URL="${{ secrets.SOCKET_URL }}" \
-            --build-arg NEXT_PUBLIC_CLERK_FRONTEND_API="${{ env.CLERK_FRONTEND_API_DEBUG }}"
+            --build-arg NEXT_PUBLIC_CLERK_FRONTEND_API="${{ secrets.CLERK_FRONTEND_API_QA }}" \
             --build-arg TAILWIND_CONFIG="tailwind.config.ts"
 
       - name: Setup Terraform
@@ -113,6 +112,6 @@ jobs:
             -var="env=${{ env.ENVIRONMENT }}" \
             -var="socket_url=${{ secrets.SOCKET_URL }}" \
             -var="google_bucket_credentials=${{ secrets.GOOGLE_BUCKET_CREDENTIALS }}" \
-            --build-arg NEXT_PUBLIC_CLERK_FRONTEND_API="${{ secrets.CLERK_FRONTEND_API_QA }}"
+            -var="clerk_frontend_api_key=${{ secrets.CLERK_FRONTEND_API_QA }}" \
             -lock-timeout=90s \
             -auto-approve
