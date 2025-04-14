@@ -4,10 +4,11 @@ import localFont from "next/font/local";
 import { Toaster } from "sonner";
 // import "@/app/globals.css";
 import "./globals.css";
-import Header from "@/Components/Header";
+
 import Footer from "@/Components/Svgs/Footer";
 // contexts
 import { ClerkProvider } from "@clerk/nextjs";
+
 import { TournamentsAndQueuesProvider } from "@/context/TournamentsAndQueuesContext";
 import { SocketProvider } from "@/context/SocketContext";
 import { FavouriteItemsProvider } from "@/context/FavouriteItemsContext";
@@ -41,10 +42,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Toaster position="top-right" closeButton richColors />
-        <ClerkProvider
-          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
-          frontendApi={process.env.NEXT_PUBLIC_CLERK_FRONTEND_API}
-        >
+        <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
           <TournamentsAndQueuesProvider>
             <FavouriteItemsProvider>
               <SocketProvider>
