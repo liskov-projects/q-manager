@@ -111,5 +111,6 @@ jobs:
             -var="env=${{ env.ENVIRONMENT }}" \
             -var="socket_url=${{ secrets.SOCKET_URL }}" \
             -var="google_bucket_credentials=${{ secrets.GOOGLE_BUCKET_CREDENTIALS }}" \
+            -var="clerk_frontend_api_key=${{ secrets.CLERK_FRONTEND_API_QA }}" \
             -lock-timeout=90s \
             -auto-approve
