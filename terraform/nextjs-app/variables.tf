@@ -42,6 +42,6 @@ variable "google_bucket_credentials" {
   type = string
 }
 
-variable "clerk_frontend_api" {
+variable "clerk_frontend_api_key" {
   type = string
 }
