@@ -45,14 +45,14 @@ export default function UserSettingsPage() {
         </div>
 
         {/* Right: User Info and Notifications */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col items-center w-[100%] gap-6">
           {appUser ? (
             <>
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 w-[100%]">
                 <SectionHeader>Edit Your Info</SectionHeader>
                 <UserData userData={appUser} />
               </div>
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 w-[100%]">
                 <SectionHeader>Notification Preferences</SectionHeader>
                 <UserNotifications />
               </div>

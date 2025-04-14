@@ -64,11 +64,11 @@ export default function UserData({ userData }: { userData: TUser }) {
       </ToggleSwitch>
       <fieldset disabled={!canEdit}>
         <form className="flex flex-col" onSubmit={handleUpdatedData}>
-          <label className="h-30 w-[85%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
+          <label className="h-30 w-[100%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
             Name:
             <input type="text" value={updatedData.name} onChange={handleChange} name="name" />
           </label>
-          <label className="h-30 w-[85%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
+          <label className="h-30 w-[100%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
             Phone Number:
             <input
               type="text"
