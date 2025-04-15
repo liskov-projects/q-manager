@@ -18,7 +18,7 @@ async function seedTournaments() {
   const client = new MongoClient(MONGO_URI);
   try {
     await client.connect();
-    const db = client.db("qManager");
+    const db = client.db("q-manager-qa");
 
     // 🔄 Clear existing tournaments
     await db.collection("tournaments").deleteMany({});

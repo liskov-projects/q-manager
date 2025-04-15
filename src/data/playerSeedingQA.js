@@ -20,7 +20,7 @@ const seedPlayers = async () => {
 
   try {
     await client.connect();
-    const db = client.db("qManager");
+    const db = client.db("q-manager-qa");
 
     await db.collection("players").deleteMany({});
     await db.collection("users").deleteMany({});

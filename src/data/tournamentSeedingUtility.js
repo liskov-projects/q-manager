@@ -9,7 +9,7 @@ dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 const MONGO_URI = process.env.MONGO_URI;
 
 if (!MONGO_URI) {
-  throw new Error("MONGO_URI is undefined in TournamentSeeding! Check your .env file.");
+  throw new Error("MONGO_URI is undefined in Tournament Seeding! Check your .env file.");
 }
 
 async function seedTournaments() {
