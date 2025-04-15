@@ -71,6 +71,7 @@ export async function PUT(req: NextRequest) {
   try {
     const { username, phoneNumber } = await req.json();
     const { userId } = getAuth(req);
+    console.log("USERNAME IN PUT");
     console.log(username);
     if (!userId) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });

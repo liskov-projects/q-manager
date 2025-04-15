@@ -25,7 +25,7 @@ const seedPlayers = async () => {
     await db.collection("players").deleteMany({});
     await db.collection("users").deleteMany({});
 
-    const playerCollection = db.collection("players");
+    // const playerCollection = db.collection("players");
     const tournamentCollection = db.collection("tournaments");
 
     const tournaments = await tournamentCollection.find().toArray();

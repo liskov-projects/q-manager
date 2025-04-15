@@ -30,11 +30,19 @@ const seedPlayersIntoDevTournaments = async () => {
     }
 
     for (const tournament of tournaments) {
-      const players = updatedPlayersData.map((player) => ({
-        ...player,
-        _id: new ObjectId(),
-        tournamentId: tournament._id.toString(),
-      }));
+      const players = updatedPlayersData.map((player, idx) => {
+        const newPlayer = {
+          _id: new ObjectId(),
+          ...player,
+          tournamentId: tournament._id.toString(),
+        };
+        if (!newPlayer._id) {
+          console.warn(`❗ Player at index ${idx} has invalid _id`);
+        }
+        return newPlayer;
+      });
+
+      // console.log(players.map((p) => p._id)); // 👀 Check actual ids
 
       await tournamentCollection.updateOne(
         { _id: tournament._id },

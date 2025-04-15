@@ -24,6 +24,8 @@ async function seedTournaments() {
 
     // NEW: clears up the collection if it exists to avoid duplication
     await db.collection("tournaments").deleteMany({});
+    await db.collection("players").deleteMany({});
+
     const tournamentCollection = db.collection("tournaments");
 
     // Ensure each queue gets an ObjectId before insertion
