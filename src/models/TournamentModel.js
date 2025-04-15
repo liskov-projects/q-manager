@@ -6,7 +6,7 @@ export const tournamentSchema = new mongoose.Schema(
   {
     // is it neede here?
     _id: { type: mongoose.Types.ObjectId, auto: true, required: true },
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
     categories: [{ type: String, required: true }],
     adminUser: String,
     image: { type: String },
