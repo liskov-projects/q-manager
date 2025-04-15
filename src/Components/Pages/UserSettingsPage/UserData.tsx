@@ -11,11 +11,11 @@ export default function UserData({ userData }: { userData: TUser }) {
   const [canEdit, setCanEdit] = useState<boolean>(false);
   // console.log(userData);
   const [updatedData, setUpdatedData] = useState<Partial<TUser>>({
-    name: userData.userName,
+    name: userData.username,
     phoneNumber: userData.phoneNumber,
   });
 
-  const { userName } = userData;
+  const { username } = userData;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -60,7 +60,7 @@ export default function UserData({ userData }: { userData: TUser }) {
   return (
     <>
       <ToggleSwitch isOn={canEdit} setIsOn={setCanEdit}>
-        Edit {userName}&apos;s info
+        Edit {username}&apos;s info
       </ToggleSwitch>
       <fieldset disabled={!canEdit}>
         <form className="flex flex-col" onSubmit={handleUpdatedData}>

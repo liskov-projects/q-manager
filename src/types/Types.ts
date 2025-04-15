@@ -32,7 +32,8 @@ export type TTournament = {
 // User Type
 export type TUser = {
   _id?: string;
-  userName: string;
+  clerkId: string;
+  username: string;
   phoneNumber?: string;
   favouritePlayers: string[];
   favouriteTournaments: string[];

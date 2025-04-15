@@ -9,7 +9,7 @@ import { TournamentModel } from "@/models/TournamentModel";
 export async function GET(req: NextRequest) {
   await dbConnect();
 
-  //  automatically gets userID so we don't need the forlder [...id]
+  //  automatically gets userID so we don't need the folder [...id]
   const { userId } = getAuth(req);
 
   if (!userId) {
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   }
 
   // finds the user and gets favouritePlayers arr as ObjectId[]
-  const user = await UserModel.findById(userId);
+  const user = await UserModel.findOne({ clerkId: userId });
 
   if (!user) {
     return NextResponse.json({ error: "No user" }, { status: 404 });
@@ -72,7 +72,8 @@ export async function POST(req: NextRequest) {
 
   const { playerId } = await req.json();
 
-  const user = await UserModel.findById(userId);
+  const user = await UserModel.findOne({ clerkId: userId });
+
   if (!user) {
     return NextResponse.json({ error: "No user" }, { status: 500 });
   }
@@ -94,7 +95,7 @@ export async function DELETE(req: NextRequest) {
 
   const { playerId } = await req.json();
 
-  const user = await UserModel.findById(userId);
+  const user = await UserModel.findOne({ clerkId: userId });
 
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });

@@ -6,23 +6,25 @@ import { getAuth } from "@clerk/nextjs/server";
 export async function POST(req: NextRequest) {
   await dbConnect();
 
-  const { username, phoneNumber } = await req.json();
+  const { username } = await req.json();
   const { userId } = getAuth(req);
 
   // checks existing user
-  const existingUser = await UserModel.findById(userId);
+  const existingUser = await UserModel.findOne({ clerkId: userId });
 
   if (!existingUser) {
     // creates a new one
     const newUser = new UserModel({
-      _id: userId,
-      userName: username,
-      phoneNumber: phoneNumber,
+      clerkId: userId,
+      username: username,
       favouritePlayers: [],
       favouriteTournaments: [],
     });
+
     await newUser.save();
-    console.log("NEW USER");
+    console.log("NEW USER CREATED");
+    console.log(newUser);
+
     return NextResponse.json(
       { message: "User created successfully", user: newUser },
       { status: 201 }

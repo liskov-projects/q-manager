@@ -20,12 +20,12 @@ export default function UserSettingsPage() {
   return (
     <div className="m-4 max-w-[1200px] mx-auto">
       {/* header section */}
-      <Header> {appUser?.userName}&rsquo;s Dashboard</Header>
+      <Header> {appUser?.username}&rsquo;s Dashboard</Header>
       {/* <SectionHeader>
         <span className="truncate max-w-full text-2xl font-bold block mt-4"></span>
       </SectionHeader> */}
       <span className="text-center text-lg sm:text-xl font-medium block mb-4 mt-4">
-        Hello <span title={appUser?.userName}>{appUser?.userName}</span>, you can manage your
+        Hello <span title={appUser?.username}>{appUser?.username}</span>, you can manage your
         favourites and settings here.
       </span>
 

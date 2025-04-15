@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   }
 
   // finds the user and gets favouriteTournaments arr as ObjectId[]
-  const user = await UserModel.findById(userId)
+  const user = await UserModel.findOne({ clerkId: userId })
     .populate({
       path: "favouriteTournaments",
       select: "_id name categories",
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
   const { tournamentId, username } = await req.json();
   console.log("username", username);
 
-  const user = await UserModel.findById(userId).populate("favouriteTournaments");
+  const user = await UserModel.findOne({ clerkId: userId }).populate("favouriteTournaments");
 
   if (!user) {
     return NextResponse.json({ error: "user not found" }, { status: 404 });
@@ -72,7 +72,7 @@ export async function DELETE(req: NextRequest) {
 
   const { tournamentId } = await req.json();
   // console.log(tournamentId);
-  const user = await UserModel.findById(userId).populate("favouriteTournaments");
+  const user = await UserModel.findOne({ clerkId: userId }).populate("favouriteTournaments");
 
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });

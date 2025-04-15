@@ -8,11 +8,13 @@ export async function GET(req: NextRequest) {
 
   try {
     const { userId } = getAuth(req);
+
     if (!userId) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findOne({ clerkId: userId });
+
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
@@ -34,22 +36,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    let user = await UserModel.findById(userId);
+    let user = await UserModel.findOne({ clerkId: userId });
 
     if (!user) {
       user = new UserModel({
-        _id: userId,
-        userName: username,
+        clerkId: userId,
+        username: username,
         phoneNumber,
         favouritePlayers: [],
         favouriteTournaments: [],
       });
+
       await user.save();
       return NextResponse.json(user, { status: 201 });
     } else {
       // console.log("CHANGING USER DATA");
-      const updatedUser = await UserModel.findByIdAndUpdate(
-        userId,
+      const updatedUser = await UserModel.findOneAndUpdate(
+        { clerkId: userId },
         { username, phoneNumber },
         { new: true } // Return updated doc
       );
@@ -73,15 +76,15 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findOne({ clerkId: userId });
 
     if (!user) {
       return NextResponse.json({ error: "User doesn't exist" }, { status: 404 });
     } else {
       // console.log("CHANGING USER DATA");
-      const updatedUser = await UserModel.findByIdAndUpdate(
-        userId,
-        { userName: username, phoneNumber: phoneNumber },
+      const updatedUser = await UserModel.findOneAndUpdate(
+        { clerkId: userId },
+        { username: username, phoneNumber: phoneNumber },
         { new: true, runValidators: true }
       );
       console.log("Updated user:", updatedUser);

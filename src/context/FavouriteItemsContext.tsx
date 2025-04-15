@@ -58,13 +58,12 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   const addUser = async (user: ClerkUser): Promise<TUser | null> => {
     if (!user) return;
     const { id, username } = user;
-    const phoneNumber = "add the number to receive notifications";
 
     try {
       const response = await fetch(`/api/user/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, username, phoneNumber }),
+        body: JSON.stringify({ clerkId: id, username }),
       });
 
       const data = await response.json();
