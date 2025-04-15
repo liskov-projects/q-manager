@@ -88,6 +88,8 @@ The Queue Management App is a React-based application designed to facilitate the
 
 # Functions
 
+All going to websockets
+
 ## handleAddToShortestQueue
 
 Assigns a player to the shortest queue by comparing the length of queueItems.
