@@ -205,7 +205,7 @@ This README explains the setup, configuration, and deployment process for the **
 1. **Next.js App**
 
    - A Next.js app configured for standalone build mode
-   - Uses `NEXT_PUBLIC_MONGO_URI` and `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` environment variables
+   - Uses `MONGO_URI` and `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` environment variables
 
 2. **Docker**
 
@@ -342,7 +342,7 @@ resource "google_cloud_run_service" "nextjs_app" {
         }
 
         env {
-          name  = "NEXT_PUBLIC_MONGO_URI"
+          name  = "MONGO_URI"
           value = var.mongo_uri
         }
 
@@ -424,7 +424,7 @@ jobs:
         run: |
           IMAGE_NAME="australia-southeast2-docker.pkg.dev/q-manager-453001/q-manager-nextjs/nextjs-app:${{ github.sha }}"
           docker buildx build --platform=linux/amd64 \
-            --build-arg NEXT_PUBLIC_MONGO_URI="${{ secrets.MONGO_URI }}" \
+            --build-arg MONGO_URI="${{ secrets.MONGO_URI }}" \
             --build-arg NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
             -t "$IMAGE_NAME" -f Dockerfile . --push
 

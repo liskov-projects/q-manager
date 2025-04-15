@@ -19,7 +19,7 @@ resource "google_cloud_run_service" "websocket_server" {
           value = "production"
         }
         env {
-          name  = "NEXT_PUBLIC_MONGO_URI"
+          name  = "MONGO_URI"
           value = var.mongo_uri
         }
         env {

@@ -9,7 +9,7 @@ steps:
     env:
       - "NODE_ENV=production"
       - "NEXT_PUBLIC_WEBSOCKET_URL=${_WEBSOCKET_URL}"
-      - "NEXT_PUBLIC_MONGO_URI=${_MONGO_URI}"
+      - "MONGO_URI=${_MONGO_URI}"
       - "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${_CLERK_PUBLISHABLE_KEY}"
 
   - name: "node:20"
@@ -18,7 +18,7 @@ steps:
     env:
       - "NODE_ENV=production"
       - "NEXT_PUBLIC_WEBSOCKET_URL=${_WEBSOCKET_URL}"
-      - "NEXT_PUBLIC_MONGO_URI=${_MONGO_URI}"
+      - "MONGO_URI=${_MONGO_URI}"
       - "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${_CLERK_PUBLISHABLE_KEY}"
 
   - name: "gcr.io/k8s-skaffold/pack"
@@ -29,7 +29,7 @@ steps:
         "--builder=gcr.io/buildpacks/builder:v1",
         "--env=NODE_ENV=production",
         "--env=NEXT_PUBLIC_WEBSOCKET_URL=${_WEBSOCKET_URL}",
-        "--env=NEXT_PUBLIC_MONGO_URI=${_MONGO_URI}",
+        "--env=MONGO_URI=${_MONGO_URI}",
         "--env=NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${_CLERK_PUBLISHABLE_KEY}",
       ]
 

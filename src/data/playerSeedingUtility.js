@@ -7,7 +7,7 @@ import path from "path";
 // Load from .env.local
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
-const MONGO_URI = process.env.NEXT_PUBLIC_MONGO_URI;
+const MONGO_URI = process.env.MONGO_URI;
 
 if (!MONGO_URI) {
   throw new Error("MONGO_URI is undefined in PlayerSeeding! Check your .env.local file.");
