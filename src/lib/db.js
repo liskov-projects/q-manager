@@ -15,7 +15,7 @@ dotenv.config({ path: envPath });
 
 // console.log("Loaded ENV from:", envPath);
 // console.log("PORT =", process.env.NEXT_PUBLIC_PORT);
-// console.log("NEXT_PUBLIC_MONGO_URI =", process.env.NEXT_PUBLIC_MONGO_URI);
+console.log("NEXT_PUBLIC_MONGO_URI =", process.env.NEXT_PUBLIC_MONGO_URI);
 
 const MONGO_URI = process.env.NEXT_PUBLIC_MONGO_URI;
 
