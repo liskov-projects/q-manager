@@ -12,7 +12,10 @@
     "seed:players": "node src/data/playerSeedingUtility.js",
     "seed:tournaments": "node src/data/tournamentSeedingUtility.js",
     "seed:both": "node src/data/tournamentSeedingUtility.js && node src/data/playerSeedingUtility.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "seed:qa:tournaments": "node src/data/tournamentSeedingQA.js",
+    "seed:qa:players": "node src/data/playerSeedingQA.js",
+    "seed:qa:both": "npm run seed:qa:tournaments && npm run seed:qa:players"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.3.4",

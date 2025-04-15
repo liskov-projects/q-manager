@@ -1,119 +1,56 @@
-import { MongoClient } from "mongodb";
-// import playerSeeds from "./playerSeeds.js";
-// import playersData from "./playersData.js";
+// src/data/playerSeedingUtility.js (Dev version)
+import { MongoClient, ObjectId } from "mongodb";
 import updatedPlayersData from "./UPDATEDplayersData.js";
 import dotenv from "dotenv";
 import path from "path";
 
-// Load from the project root
+// Load from .env.local
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
 const MONGO_URI = process.env.NEXT_PUBLIC_MONGO_URI;
 
 if (!MONGO_URI) {
-  throw new Error("MONGO_URI is undefined in PlayerSeeding! Check your .env file.");
+  throw new Error("MONGO_URI is undefined in PlayerSeeding! Check your .env.local file.");
 }
-const seedPlayers = async () => {
-  console.log("Starting the player seeding process...");
+
+const seedPlayersIntoDevTournaments = async () => {
+  console.log("🌱 Seeding players into dev tournaments...");
 
   const client = new MongoClient(MONGO_URI);
 
   try {
-    // Connect to MongoDB
     await client.connect();
     const db = client.db("qManager");
 
-    console.log("Connected to MongoDB");
-
-    // NEW: clears up the collection if it exists to avoid duplication
-    await db.collection("players").deleteMany({});
-    await db.collection("users").deleteMany({});
-    // Fetch or create the players collection
-    const playerCollection = db.collection("players");
     const tournamentCollection = db.collection("tournaments");
-
-    // Insert players into the players collection
-    await playerCollection.insertMany(updatedPlayersData);
-    console.log(`Inserted ${updatedPlayersData.length} players into the database`);
-
-    // Fetch all players and tournaments
-    const newPlayers = await playerCollection.find().toArray();
     const tournaments = await tournamentCollection.find().toArray();
 
-    if (!tournaments || tournaments.length === 0) {
+    if (!tournaments.length) {
       throw new Error("No tournaments found in the database");
     }
 
-    console.log(`Found ${tournaments.length} tournaments`);
-
-    // // Calculate the number of players per tournament
-    // const numTournaments = tournaments.length;
-    // const numPlayersPerTournament = Math.floor(newPlayers.length / numTournaments);
-    // let remainingPlayers = newPlayers.length % numTournaments;
-
-    // let playerIndex = 0;
-
-    // for (const tournament of tournaments) {
-    //   const playersToInsert = [];
-
-    //   // Distribute a base number of players to this tournament
-    //   for (let i = 0; i < numPlayersPerTournament; i++) {
-    //     if (playerIndex < newPlayers.length) {
-    //       playersToInsert.push({
-    //         ...newPlayers[playerIndex],
-    //         tournamentId: tournament._id.toString(),
-    //       });
-    //       playerIndex++;
-    //     }
-    //   }
-
-    //   // Distribute any remaining players one by one
-    //   if (remainingPlayers > 0 && playerIndex < newPlayers.length) {
-    //     playersToInsert.push({
-    //       ...newPlayers[playerIndex],
-    //       tournamentId: tournament._id.toString(),
-    //     });
-    //     playerIndex++;
-    //     remainingPlayers--;
-    //   }
-
-    // // Assign players to queues evenly
-    // const numQueues = tournament.queues.length;
-    // const updatedQueues = tournament.queues.map((queue, index) => ({
-    //   ...queue,
-    //   queueItems: playersToInsert.filter((_, idx) => idx % numQueues === index)
-    // }));
-
-    // Update the tournament document in the database
-    //   await tournamentCollection.updateOne(
-    //     { _id: tournament._id },
-    //     { $set: { unProcessedQItems: playersToInsert } }
-    //   );
-
-    //   console.log(`Assigned ${playersToInsert.length} players to tournament "${tournament.name}"`);
-    // }
     for (const tournament of tournaments) {
-      const playersToInsert = newPlayers.map((player) => ({
+      const players = updatedPlayersData.map((player) => ({
         ...player,
+        _id: new ObjectId(),
         tournamentId: tournament._id.toString(),
       }));
 
       await tournamentCollection.updateOne(
         { _id: tournament._id },
-        { $set: { unProcessedQItems: playersToInsert } }
+        { $set: { unProcessedQItems: players } }
       );
 
-      console.log(`Assigned ${playersToInsert.length} players to tournament "${tournament.name}"`);
+      console.log(`✅ Inserted ${players.length} players into "${tournament.name}"`);
     }
 
-    console.log("Player seeding completed successfully");
+    console.log("✅ Dev player seeding complete.");
   } catch (error) {
-    console.error("Error seeding players:", error);
+    console.error("❌ Seeding error:", error);
   } finally {
-    // Close the MongoDB connection
     await client.close();
-    console.log("MongoDB connection closed");
+    console.log("🔌 MongoDB connection closed");
   }
 };
 
-seedPlayers();
+seedPlayersIntoDevTournaments();
