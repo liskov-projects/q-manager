@@ -6,6 +6,9 @@ import { getAuth } from "@clerk/nextjs/server";
 export async function POST(req: NextRequest) {
   await dbConnect();
 
+  console.log("REQ IN POST");
+  console.log(req);
+
   const { username } = await req.json();
   const { userId } = getAuth(req);
 

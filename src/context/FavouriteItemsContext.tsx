@@ -58,11 +58,12 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   const addUser = async (user: ClerkUser): Promise<TUser | null> => {
     if (!user) return;
     const { id } = user;
+
+    console.log("USER IN ADDUSER");
+    console.log(user);
+
     const username =
       user.username || user.firstName || user.emailAddresses?.[0]?.emailAddress || "Unnamed User";
-
-    console.log("USERNAME IN ADDUSER");
-    console.log(user);
 
     try {
       const response = await fetch(`/api/user/`, {
