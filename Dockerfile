@@ -41,7 +41,7 @@ COPY --from=builder /app/.next/static ./.next/static
 
 
 # ✅ Pass NODE_ENV to production
-ENV NODE_ENV="production"
+ENV NODE_ENV="qa"
 
 # ✅ Expose port and start
 EXPOSE 8080

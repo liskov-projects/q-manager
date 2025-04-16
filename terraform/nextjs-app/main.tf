@@ -31,7 +31,7 @@ resource "google_cloud_run_service" "nextjs_app" {
 
         env {
           name  = "NODE_ENV"
-          value = "production"
+          value = "qa"
         }
 
         env {
