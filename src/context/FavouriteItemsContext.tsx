@@ -56,20 +56,28 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   }, [appUser]);
 
   const addUser = async (user: ClerkUser): Promise<TUser | null> => {
-    if (!user) return;
-    const { id } = user;
+    if (!user) return null;
 
-    console.log("USER IN ADDUSER");
-    console.log(user);
+    const { id: clerkId } = user;
 
+    // Define a username with fallback priority
     const username =
       user.username || user.firstName || user.emailAddresses?.[0]?.emailAddress || "Unnamed User";
 
+    const usedFallback =
+      !user.username && !user.firstName && !user.emailAddresses?.[0]?.emailAddress;
+
+    console.log("👤 Sending user to API:", {
+      clerkId,
+      username,
+      usedFallback,
+    });
+
     try {
-      const response = await fetch(`/api/user/`, {
+      const response = await fetch("/api/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clerkId: id, username }),
+        body: JSON.stringify({ clerkId, username, usedFallback }),
       });
 
       const data = await response.json();
