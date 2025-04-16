@@ -7,6 +7,8 @@ import path from "path";
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
 const MONGO_URI = process.env.MONGO_URI;
+console.log("MONGO URI");
+console.log(MONGO_URI);
 
 if (!MONGO_URI) {
   throw new Error("MONGO_URI is undefined in Tournament Seeding! Check your .env file.");
@@ -24,7 +26,7 @@ async function seedTournaments() {
 
     // NEW: clears up the collection if it exists to avoid duplication
     await db.collection("tournaments").deleteMany({});
-    await db.collection("players").deleteMany({});
+    // await db.collection("players").deleteMany({});
 
     const tournamentCollection = db.collection("tournaments");
 

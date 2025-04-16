@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
         )
       );
     });
-    //
+
     const foundPlayer = tournaments
       .flatMap((tournament: TTournament) => [
         ...tournament.queues.flatMap((queue: TQueue) => queue.queueItems),

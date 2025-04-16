@@ -72,7 +72,7 @@ const tournamentsData = [
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual echuca regional tournament.",
+    description: "The annual Echuca regional tournament.",
   },
   {
     name: "Ballarat Open",
@@ -147,7 +147,7 @@ const tournamentsData = [
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual ballarat open tournament.",
+    description: "The annual Ballarat open tournament.",
   },
   {
     name: "Melbourne Championship",
@@ -182,7 +182,7 @@ const tournamentsData = [
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual melbourne championship tournament.",
+    description: "The annual Melbourne Championship tournament.",
   },
   {
     name: "Geelong Invitational",
@@ -217,7 +217,7 @@ const tournamentsData = [
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual geelong invitational tournament.",
+    description: "The annual Geelong Invitational tournament.",
   },
   {
     name: "Bendigo Cup",
@@ -253,7 +253,7 @@ const tournamentsData = [
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual bendigo cup tournament.",
+    description: "The annual Bendigo Cup tournament.",
   },
   {
     name: "Shepparton Classic",
@@ -289,7 +289,7 @@ const tournamentsData = [
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual shepparton classic tournament.",
+    description: "The annual Shepparton Classic tournament.",
   },
   {
     name: "Warrnambool Series",
@@ -325,7 +325,7 @@ const tournamentsData = [
     ],
     processedQItems: [],
     unProcessedQItems: [],
-    description: "The annual warrnambool series tournament.",
+    description: "The annual Warrnambool Series tournament.",
   },
 ];
 
