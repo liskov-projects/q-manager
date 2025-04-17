@@ -7,29 +7,18 @@ import cors from "cors";
 import dbConnect from "../lib/db.js";
 import { TournamentModel } from "../models/TournamentModel.js";
 
-import path from "path";
-import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const ENVIRONMENT = process.env.ENVIRONMENT || "development";
 
-const ENV = process.env.ENV || "development";
-
-// ✅ Look for .env.local in the root directory
-const envPath =
-  ENV === "qa"
-    ? path.resolve(__dirname, "../../.env.qa") // Go two levels up for root
-    : path.resolve(__dirname, "../../.env.local");
-
-dotenv.config({ path: envPath });
+dotenv.config();
 
 const PORT = process.env.NEXT_PUBLIC_PORT || 4000;
 
 const allowedOrigins =
-  ENV === "qa" ? ["https://q-manager.qa.liskov.dev"] : ["http://localhost:3000"];
+  ENVIRONMENT === "qa" ? ["https://q-manager.qa.liskov.dev"] : ["http://localhost:3000"];
 
-console.log("Running in:", ENV);
+console.log("Running in:", ENVIRONMENT);
 console.log("Allowed origins:", allowedOrigins);
 
 const app = express();

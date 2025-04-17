@@ -23,7 +23,7 @@ resource "google_cloud_run_service" "websocket_server" {
           value = var.mongo_uri
         }
         env {
-          name  = "ENV"
+          name  = "ENVIRONMENT"
           value = var.env // "qa", "prod", etc..
         }
       }
