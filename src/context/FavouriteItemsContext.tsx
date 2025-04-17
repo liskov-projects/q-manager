@@ -51,8 +51,10 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
   }, [user?.id, isSignedIn, isLoaded]);
 
   useEffect(() => {
-    getFavouritePlayers();
-    getFavouriteTournaments();
+    if (isSignedIn) {
+      getFavouritePlayers();
+      getFavouriteTournaments();
+    }
   }, [appUser]);
 
   const addUser = async (user: ClerkUser): Promise<TUser | null> => {
