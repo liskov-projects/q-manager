@@ -9,9 +9,11 @@ const __dirname = path.dirname(__filename);
 
 console.log("getting in db.js NODE_ENV");
 console.log(process.env.NODE_ENV);
+// console.log("process.env", process.env);
+console.log("process.env.ENVIRONMENT", process.env.ENVIRONMENT);
 
 // Load .env.local in dev/qa, let real envs come through in prod
-if (process.env.NODE_ENV !== "qa") {
+if (process.env.ENVIRONMENT !== "qa") {
   const envPath = path.resolve(__dirname, "../../.env.local");
   dotenv.config({ path: envPath });
   console.log("🔧 Loaded ENV from", envPath);
@@ -24,7 +26,7 @@ console.log("📡 MONGO_URI =", process.env.MONGO_URI);
 const MONGO_URI = process.env.MONGO_URI;
 let MONGO_DB_NAME = "";
 // const MONGO_DB_NAME = process.env.MONGO_DB_NAME || "qManager";
-if (process.env.NODE_ENV === "qa") {
+if (process.env.ENVIRONMENT === "qa") {
   MONGO_DB_NAME = "q-manager-qa";
 } else {
   MONGO_DB_NAME = "qManager";
