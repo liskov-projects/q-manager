@@ -32,7 +32,7 @@ if (process.env.ENVIRONMENT === "qa") {
   MONGO_DB_NAME = "qManager";
 }
 
-console.log("📂 MONGO_DB_NAME =", process.env.MONGO_DB_NAME);
+console.log("📂 MONGO_DB_NAME =", MONGO_DB_NAME);
 
 if (!MONGO_URI) {
   throw new Error("❌ MONGO_URI is not defined in environment variables.");
