@@ -18,6 +18,9 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { name, categories, adminUser, image, description, numberOfQueues, eventDate } = body;
 
+  console.log("BODY IN TOURNAMENT POST");
+  console.log(body);
+
   // makes sure we don't have name duplicates
   const existingName = await TournamentModel.findOne({ name });
   console.log("Received eventDate:", eventDate);
@@ -30,12 +33,10 @@ export async function POST(req: NextRequest) {
 
   const queues = [];
   for (let i = 0; i < parseInt(numberOfQueues, 10); i++) {
-    queues.push(
-      new QueueModel({
-        queueName: `queue ${i + 1}`,
-        queueItems: [],
-      })
-    );
+    queues.push({
+      queueName: `queue ${i + 1}`,
+      queueItems: [],
+    });
   }
 
   const newTournament = new TournamentModel({

@@ -1,4 +1,5 @@
-// hooks
+"use client";
+
 import { useState, useEffect } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { useUser } from "@clerk/nextjs";
@@ -7,9 +8,7 @@ import { TTournament } from "@/types/Types";
 // components
 import Button from "../Buttons/Button";
 import SectionHeader from "../SectionHeader";
-import { error } from "console";
 
-// allows for partial form from existing Type
 type TTournamentForm = Partial<TTournament> & {
   numberOfQueues: number | string;
   image?: string | File;
@@ -26,77 +25,63 @@ export default function NewTournamentForm() {
     adminUser: "",
     image: "",
     description: "",
-    numberOfQueues: "",
+    numberOfQueues: 3, // ✅ Start at 3
     eventDate: "",
   });
 
-  // any signed in user can create a new tournamnet
   const { isSignedIn, user } = useUser();
   const { fetchTournaments, uniqueCategories } = useTournamentsAndQueuesContext();
-
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
-  const [customCategory, setCustomCategory] = useState("");
 
   useEffect(() => {
     setSelectedCategories(newTournament?.categories || []);
   }, [newTournament?.categories]);
-
-  // console.log(uniqueCategories);
-
-  function handleCategoryChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    const category = e.target.value;
-    if (category && !selectedCategories.includes(category)) {
-      setSelectedCategories([...selectedCategories, category]);
-    }
-  }
-
-  function removeCategory(categoryToRemove: string) {
-    setSelectedCategories(selectedCategories.filter((cat) => cat !== categoryToRemove));
-  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type, files } = e.target;
 
     if (type === "file" && files && files[0]) {
       setErrorMessage("");
-
       const file = files[0];
-
       setNewTournament({
         ...newTournament,
         [name]: file,
       });
-
       const objectUrl = URL.createObjectURL(file);
       setPreviewUrl(objectUrl);
     } else {
-      setNewTournament({
-        ...newTournament,
-        [name]: type === "number" ? Number(value) : value,
-      });
+      if (name === "numberOfQueues") {
+        const num = Math.max(0, Number(value)); // ✅ no negatives
+        setNewTournament({
+          ...newTournament,
+          [name]: num,
+        });
+      } else {
+        setNewTournament({
+          ...newTournament,
+          [name]: value,
+        });
+      }
     }
   }
 
-  function handleCustomCategoryChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setCustomCategory(e.target.value);
+  function increaseQueues() {
+    setNewTournament((prev) => ({
+      ...prev,
+      numberOfQueues: typeof prev.numberOfQueues === "number" ? prev.numberOfQueues + 1 : 1,
+    }));
   }
-  function addCustomCategory(e) {
-    e.preventDefault();
-    if (
-      customCategory &&
-      !uniqueCategories.includes(customCategory) &&
-      !selectedCategories.includes(customCategory)
-    ) {
-      uniqueCategories.push(customCategory);
-      setSelectedCategories([...selectedCategories, customCategory]);
-    }
-    setCustomCategory(""); // Clear input field
+
+  function decreaseQueues() {
+    setNewTournament((prev) => ({
+      ...prev,
+      numberOfQueues:
+        typeof prev.numberOfQueues === "number" ? Math.max(0, prev.numberOfQueues - 1) : 0,
+    }));
   }
-  //
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // console.log("handle submit tournament");
 
     let imageUrl = "";
 
@@ -105,20 +90,16 @@ export default function NewTournamentForm() {
       return;
     }
 
-    if (newTournament.image && newTournament.image instanceof File) {
+    if (newTournament.image instanceof File) {
       const file = newTournament.image;
-
       const res = await fetch(
         `/api/gcs-uploads?fileName=${encodeURIComponent(file.name)}&fileType=${encodeURIComponent(file.type)}`
       );
-
       const { uploadUrl, publicUrl } = await res.json();
 
       await fetch(uploadUrl, {
         method: "PUT",
-        headers: {
-          "Content-Type": file.type,
-        },
+        headers: { "Content-Type": file.type },
         body: file,
       });
 
@@ -127,13 +108,11 @@ export default function NewTournamentForm() {
       setPreviewUrl(null);
     }
 
-    // data to send to backend
     const eventDate = newTournament.eventDate ? newTournament.eventDate : null;
 
     const newItem = {
       name: newTournament.name,
       categories: selectedCategories,
-      // TODO: change to user._id (user from MongoDB) | now it's from useUser hook (clerk)
       adminUser: user?.id,
       image: imageUrl,
       description: newTournament.description,
@@ -141,34 +120,25 @@ export default function NewTournamentForm() {
       eventDate: eventDate,
     };
 
-    // console.log("Data sent to backend: ", newItem);
-
     try {
       const res = await fetch("/api/tournament", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem),
       });
 
       if (res.ok) {
-        const data = await res.json();
-        console.log("Added: ", data);
         fetchTournaments();
         setSuccessMessage("Tournament added");
       } else if (res.status === 409) {
         setErrorMessage("Tournament with this name already exists");
       } else {
-        console.error("Error response:", res);
         throw new Error("Error adding item, status: " + res.status);
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error("Error adding item: ", err.message);
         setErrorMessage("Error adding tournament");
-      } else {
-        console.error("Unknown error: ", err);
       }
     }
 
@@ -178,11 +148,11 @@ export default function NewTournamentForm() {
       adminUser: "",
       image: "",
       description: "",
-      numberOfQueues: "",
+      numberOfQueues: 3, // ✅ Reset back to 3 after submit
       eventDate: "",
     });
-    // console.log(newTournament);
   }
+
   if (!isSignedIn) {
     return (
       <div className="text-center text-lg font-extrabold text-bluestone-200 mt-0">
@@ -203,47 +173,49 @@ export default function NewTournamentForm() {
           onSubmit={handleSubmit}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              e.preventDefault(); // Prevent default action (i.e., form submission on Enter key press)
-              handleSubmit(e); // Trigger form submit
+              e.preventDefault();
+              handleSubmit(e);
             }
           }}
         >
-          <div className="flex flex-col">
-            <label htmlFor="name">Tournament Name</label>
-            <input
-              type="text"
-              name="name"
-              value={newTournament.name}
-              onChange={handleChange}
-              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
-            />
+          {/* Tournament Name */}
+          <label htmlFor="name">Tournament Name</label>
+          <input
+            type="text"
+            name="name"
+            value={newTournament.name}
+            onChange={handleChange}
+            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
+          />
 
-            <label htmlFor="image">
-              Tournament Image <span className="text-brick-200">*</span>
-            </label>
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleChange}
-              className={`focus:outline rounded-md px-3 py-2 focus:ring-2 mb-2 w-full ${
-                !newTournament.image && errorMessage
-                  ? "border-2 border-brick-200"
-                  : "focus:ring-brick-200"
-              }`}
-            />
+          {/* Tournament Image Upload */}
+          <label htmlFor="image">
+            Tournament Image <span className="text-brick-200">*</span>
+          </label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+            className={`focus:outline rounded-md px-3 py-2 focus:ring-2 mb-2 w-full ${
+              !newTournament.image && errorMessage
+                ? "border-2 border-brick-200"
+                : "focus:ring-brick-200"
+            }`}
+          />
 
-            {previewUrl && (
-              <div>
-                <p className="text-sm text-gray-600">Image Preview:</p>
-                <img
-                  src={previewUrl}
-                  alt="Tournament Preview"
-                  className="rounded-md w-48 h-32 object-cover border border-gray-300"
-                />
-              </div>
-            )}
-          </div>
+          {previewUrl && (
+            <div>
+              <p className="text-sm text-gray-600">Image Preview:</p>
+              <img
+                src={previewUrl}
+                alt="Tournament Preview"
+                className="rounded-md w-48 h-32 object-cover border border-gray-300 mb-2"
+              />
+            </div>
+          )}
+
+          {/* Description */}
           <label htmlFor="description">Description</label>
           <input
             type="text"
@@ -252,17 +224,38 @@ export default function NewTournamentForm() {
             onChange={handleChange}
             className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
           />
+
+          {/* Number of Queues with + and - */}
           <label htmlFor="numberOfQueues">Number of Queues</label>
-          <input
-            placeholder="3"
-            type="number"
-            name="numberOfQueues"
-            value={newTournament.numberOfQueues}
-            onChange={handleChange}
-            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
-          />
-          {/* NEW: */}
-          <label htmlFor="numberOfQueues">Date</label>
+          <div className="flex items-center gap-2 mb-4">
+            <button
+              type="button"
+              onClick={decreaseQueues}
+              className="bg-brick-200 text-white px-3 py-1 rounded hover:bg-brick-300"
+              disabled={newTournament.numberOfQueues === 0}
+            >
+              -
+            </button>
+            <input
+              placeholder="3"
+              type="number"
+              name="numberOfQueues"
+              min="0"
+              value={newTournament.numberOfQueues}
+              onChange={handleChange}
+              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 w-20 text-center"
+            />
+            <button
+              type="button"
+              onClick={increaseQueues}
+              className="bg-brick-200 text-white px-3 py-1 rounded hover:bg-brick-300"
+            >
+              +
+            </button>
+          </div>
+
+          {/* Date */}
+          <label htmlFor="eventDate">Date</label>
           <input
             type="date"
             name="eventDate"
@@ -270,9 +263,13 @@ export default function NewTournamentForm() {
             onChange={handleChange}
             className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
           />
+
+          {/* Submit Button */}
           <Button className="self-center my-6 bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded">
             Add the Tournament!
           </Button>
+
+          {/* Messages */}
           {errorMessage && (
             <span className="text-brick-200 text-center text-xl">{errorMessage}</span>
           )}
@@ -284,55 +281,3 @@ export default function NewTournamentForm() {
     </div>
   );
 }
-
-/* <label htmlFor="categories" className="text-xl">
-              Categories
-            </label>
-
-            <label htmlFor="customCategory">Add Custom Category</label>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                name="customCategory"
-                value={customCategory}
-                onChange={handleCustomCategoryChange}
-                className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
-              />
-              <Button
-                type="button"
-                onClick={(e) => addCustomCategory(e)}
-                className="bg-bluestone-200 text-shell-50 hover:text-shell-300 hover:bg-tennis-200 py-2 px-4 rounded"
-              >
-                Add
-              </Button>
-            </div>
-
-            <select
-              name="categories"
-              value=""
-              onChange={handleCategoryChange}
-              className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 my-3 w-full"
-            >
-              <option value="">Select categories (doubles, teens)</option>
-              {uniqueCategories.map((category, idx) => (
-                <option key={idx} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {selectedCategories.map((category) => (
-                <span
-                  key={category}
-                  className=" my-1 px-3 py-1 bg-brick-200 text-white rounded-full text-sm font-medium"
-                >
-                  {category}
-                  <button
-                    onClick={() => removeCategory(category)}
-                    className="ml-2 text-sm text-white-500"
-                  >
-                    ✕
-                  </button>
-                </span>
-              ))}
-            </div> */
