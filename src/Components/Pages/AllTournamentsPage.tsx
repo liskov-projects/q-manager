@@ -42,7 +42,7 @@ export default function AllTournamentsPage() {
     .sort((a: TTournament, b: TTournament) => a.name.localeCompare(b.name));
 
   const managedTournaments = tournamentsToShow.filter(
-    (t: TTournament) => t.adminUser === appUser?._id
+    (t: TTournament) => t.adminUser === appUser?.clerkId
   );
 
   return (
