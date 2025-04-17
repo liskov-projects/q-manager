@@ -38,12 +38,12 @@ export async function POST(req: NextRequest) {
   console.log("phoneNumbers: ", phoneNumbers);
   console.log("tournament id ", tournamentId);
   // creates a new entry using the incoming data
-  const newPlayer = new PlayerModel({
+  const newPlayer = {
     names,
     categories,
     phoneNumbers,
     tournamentId,
-  });
+  };
 
   const updatedTournament = await TournamentModel.findOneAndUpdate(
     { _id: tournamentId },

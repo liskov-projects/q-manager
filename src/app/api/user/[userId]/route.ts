@@ -39,13 +39,13 @@ export async function POST(req: NextRequest) {
     let user = await UserModel.findOne({ clerkId: userId });
 
     if (!user) {
-      user = new UserModel({
+      user = {
         clerkId: userId,
         username: username,
         phoneNumber,
         favouritePlayers: [],
         favouriteTournaments: [],
-      });
+      };
 
       await user.save();
       return NextResponse.json(user, { status: 201 });
