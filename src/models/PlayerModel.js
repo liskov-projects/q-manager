@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export const playerSchema = new mongoose.Schema(
   {
-    _id: { type: mongoose.Types.ObjectId },
+    // _id: { type: mongoose.Types.ObjectId },
     names: { type: String, required: true },
     categories: [{ type: String, required: true }],
     phoneNumbers: [{ type: String, required: true }],
