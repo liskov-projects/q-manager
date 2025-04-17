@@ -19,7 +19,7 @@ const ENV = process.env.ENV || "development";
 // ✅ Look for .env.local in the root directory
 const envPath =
   ENV === "qa"
-    ? path.resolve(__dirname, "../../.env.production") // Go two levels up for root
+    ? path.resolve(__dirname, "../../.env.qa") // Go two levels up for root
     : path.resolve(__dirname, "../../.env.local");
 
 dotenv.config({ path: envPath });

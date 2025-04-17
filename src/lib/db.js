@@ -7,8 +7,11 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+console.log("getting in db.js NODE_ENV");
+console.log(process.env.NODE_ENV);
+
 // Load .env.local in dev/qa, let real envs come through in prod
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "qa") {
   const envPath = path.resolve(__dirname, "../../.env.local");
   dotenv.config({ path: envPath });
   console.log("🔧 Loaded ENV from", envPath);
@@ -19,10 +22,15 @@ console.log("📡 MONGO_URI =", process.env.MONGO_URI);
 // console.log("📂 MONGO_DB_NAME =", process.env.MONGO_DB_NAME);
 
 const MONGO_URI = process.env.MONGO_URI;
+let MONGO_DB_NAME = "";
 // const MONGO_DB_NAME = process.env.MONGO_DB_NAME || "qManager";
-const MONGO_DB_NAME = "q-manager-qa" || "qManager";
+if (process.env.NODE_ENV === "qa") {
+  MONGO_DB_NAME = "q-manager-qa";
+} else {
+  MONGO_DB_NAME = "qManager";
+}
 
-console.log("📂 MONGO_DB_NAME =", process.env.MONGO_DB_NAME);
+// console.log("📂 MONGO_DB_NAME =", process.env.MONGO_DB_NAME);
 
 if (!MONGO_URI) {
   throw new Error("❌ MONGO_URI is not defined in environment variables.");

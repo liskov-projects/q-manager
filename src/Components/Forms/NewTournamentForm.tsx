@@ -133,6 +133,7 @@ export default function NewTournamentForm() {
     const newItem = {
       name: newTournament.name,
       categories: selectedCategories,
+      // TODO: change to user._id (user from MongoDB) | now it's from useUser hook (clerk)
       adminUser: user?.id,
       image: imageUrl,
       description: newTournament.description,
