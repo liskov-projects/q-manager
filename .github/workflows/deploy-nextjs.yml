@@ -111,7 +111,7 @@ jobs:
             -var="mongo_uri=${{ secrets.MONGO_URI }}" \
             -var="clerk_secret_key=${{ secrets.CLERK_SECRET_KEY }}" \
             -var="clerk_publishable_key=${{ secrets.CLERK_PUBLISHABLE_KEY }}" \
-            -var="env=${{ env.ENVIRONMENT }}" \
+            -var="env=qa" \
             -var="socket_url=${{ secrets.SOCKET_URL }}" \
             -var="google_bucket_credentials=${{ secrets.GOOGLE_BUCKET_CREDENTIALS }}" \
             -var="clerk_frontend_api_key=${{ secrets.CLERK_FRONTEND_API_QA }}" \
