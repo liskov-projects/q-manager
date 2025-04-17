@@ -57,12 +57,12 @@ export default function Queue({ queue, index }: { queue: TQueue; index: number }
       className="w-full rounded-lg shadow-left-bottom-lg p-2 flex flex-col border-3 border-grey-300 !overflow-visible"
       onDragOver={(event) => event.preventDefault()}
     >
-      <div className="flex flex-row justify-between items-center">
-        <h3 className="text-xl font-semibold text-bluestone-200 mb-2">{queue.queueName}</h3>
+      <div className="mx-1 flex flex-row justify-between items-center">
+        <h3 className="text-xl font-semibold text-bluestone-200">{queue.queueName}</h3>
 
         {!tournamentOwner ? null : (
           <Button
-            className="mx-2 px-3 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out flex items-center justify-center"
+            className="px-3 py-2 text-[0.75rem] font-bold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out flex items-center justify-center"
             onClick={() => {
               console.log("current tournament after q is deleted", currentTournament);
               if (socket) {

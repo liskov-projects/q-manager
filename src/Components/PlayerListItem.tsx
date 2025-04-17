@@ -54,10 +54,10 @@ export default function PlayerListItem({ item, zone }: { item: TPlayer; zone: st
             {!tournamentOwner ? null : (
               <Button
                 onClick={() => {
-                  console.log("clicked the button to see the item ", item);
+                  // console.log("clicked the button to see the item ", item);
                   if (socket)
                     socket.emit("addPlayerToShortestQ", {
-                      message: "emitting add to shortes",
+                      message: "emitting add to shortest",
                       playerData: item,
                       tournamentId: currentTournament?._id,
                     });
