@@ -107,7 +107,20 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         );
 
         if (isFavourite) {
-          const queueName = queueToSplice?.queueName ?? dropTarget;
+          let message;
+          if (queueToSplice?.queueName) {
+            message = (
+              <span className="ml-8">
+                {draggedItem.names} added to {queueToSplice?.queueName} at position {index}
+              </span>
+            );
+          } else if (dropTarget === "unprocessed") {
+            return;
+          } else {
+            message = (
+              <span className="ml-8">{draggedItem.names} finished playing for the day</span>
+            );
+          }
           // toast(`Added ${draggedItem.names || "player"} to ${queueName}`);
           toast.custom((t) => (
             <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm">
@@ -118,9 +131,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
               >
                 <FontAwesomeIcon icon={faClose} />
               </Button>
-              <span className="ml-8">
-                {draggedItem.names} added to {queueName}
-              </span>
+              {message}
             </div>
           ));
         } else {
@@ -169,9 +180,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         setCurrentTournamentRef.current(updatedTournament);
       } catch (error) {
         if (error instanceof Error) {
-          console.error("addAllFromUnscheduled failed in context", error.message);
+          console.error("addAllFromOneList failed in context", error.message);
         } else {
-          console.error("addAllFromUnscheduled failed in context", error);
+          console.error("addAllFromOneList failed in context", error);
         }
       }
     });
