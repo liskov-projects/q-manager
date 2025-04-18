@@ -15,10 +15,11 @@ import { faPersonCirclePlus } from "@fortawesome/free-solid-svg-icons";
 export default function NewPlayerForm() {
   // just check if logged in as the dropdown list is restricted to only the tournaments created by the logged in user
   const { isSignedIn } = useUser();
-  const { currentTournament, uniqueCategories } = useTournamentsAndQueuesContext();
+  const { currentTournament, setCurrentTournament } = useTournamentsAndQueuesContext();
   const { socket } = useSocket();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
+  const tournamentCategories = currentTournament.categories;
   // TODO: review the cateogries
   const [newPlayers, setNewPlayers] = useState<TPlayer>({
     names: "",
@@ -99,14 +100,17 @@ export default function NewPlayerForm() {
 
   function addCustomCategory(e) {
     e.preventDefault();
-    if (
-      customCategory &&
-      !uniqueCategories.includes(customCategory) &&
-      !selectedCategories.includes(customCategory)
-    ) {
-      uniqueCategories.push(customCategory);
+    if (customCategory && !selectedCategories.includes(customCategory)) {
+      const updatedCategories = [...(currentTournament.categories || []), customCategory];
+
+      setCurrentTournament({
+        ...currentTournament,
+        categories: updatedCategories,
+      });
+
       setSelectedCategories([...selectedCategories, customCategory]);
     }
+
     setCustomCategory(""); // Clear input field
   }
 
@@ -168,7 +172,7 @@ export default function NewPlayerForm() {
               className="focus:outline rounded-md px-2 py-2 focus:ring-2 focus:ring-brick-200 mb-3 w-full border-2 border-gray-300"
             >
               <option value="">Select existing categories (doubles, etc)</option>
-              {uniqueCategories.map((category: string, idx: number) => (
+              {tournamentCategories.map((category: string, idx: number) => (
                 <option key={idx} value={category}>
                   {category}
                 </option>
