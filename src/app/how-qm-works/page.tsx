@@ -1,4 +1,5 @@
 import Header from "@/Components/Header";
+import LiskovLogo from "@/Components/Svgs/LiskovLogo";
 
 export default function HowQMWorks() {
   return (
@@ -25,6 +26,29 @@ export default function HowQMWorks() {
           </span>
         </div>
       </div>
+      <QManagerEmbed />
     </>
+  );
+}
+
+function QManagerEmbed() {
+  return (
+    <div className="w-full flex flex-col justify-center mt-8 p-4">
+      <div className="w-full">
+        <div className="relative w-[90%] mx-auto pb-[56.25%]">
+          {/* 16:9 aspect ratio box */}
+          <iframe
+            loading="lazy"
+            src="https://www.canva.com/design/DAGkAmlDwmw/zfpVliCqERF0H_VJTLfshQ/view?embed"
+            allowFullScreen
+            className="absolute top-0 left-0 w-full h-full rounded-lg border-none shadow-lg"
+          ></iframe>
+        </div>
+      </div>
+      <div className="flex flex-row items-center justify-center mt-4">
+        <p className="pr-2 text-bluestone-200 font-semibold">Q-Manager by</p>
+        <LiskovLogo width="w-[40px]" height="h-[40px]" />
+      </div>
+    </div>
   );
 }

@@ -1,9 +1,13 @@
 import Link from "next/link";
 
-export default function LiskovLogo() {
+export default function LiskovLogo({ width = "w-full", height = "h-full" }) {
   return (
     <Link href="https://www.liskov.dev/" target="_blank">
-      <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <svg
+        viewBox="0 0 500 500"
+        xmlns="http://www.w3.org/2000/svg"
+        className={`${width}, ${height}`}
+      >
         <ellipse
           style={{ fill: "none", strokeWidth: "5px", stroke: "rgb(227, 224, 224)" }}
           cx="240.788"
