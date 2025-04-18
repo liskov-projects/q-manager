@@ -1,4 +1,5 @@
 import Header from "@/Components/Header";
+import SectionHeader from "@/Components/SectionHeader";
 import LiskovLogo from "@/Components/Svgs/LiskovLogo";
 
 export default function HowQMWorks() {
@@ -26,6 +27,9 @@ export default function HowQMWorks() {
           </span>
         </div>
       </div>
+      <SectionHeader className="pt-4 text-4xl font-semibold">
+        Q-Manager Beginners&apos; Guide
+      </SectionHeader>
       <QManagerEmbed />
     </>
   );
