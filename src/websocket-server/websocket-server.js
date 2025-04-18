@@ -392,6 +392,74 @@ io.on("connection", async (socket) => {
     });
   });
 
+  // NEW:
+  socket.on("addAllFromOneList", async ({ tournament, listName }) => {
+    if (!tournament || !listName) {
+      socket.emit("error", { error: "Missing tournament or list name" });
+      return;
+    }
+
+    const foundTournament = await TournamentModel.findById(tournament._id);
+    if (!foundTournament) {
+      socket.emit("error", { error: "Tournament not found in addAllFromOneList" });
+      return;
+    }
+
+    let unassignedPlayers = [];
+    let updatedProcessedQItems = [];
+
+    if (listName === "Unscheduled Matches") {
+      unassignedPlayers = [...foundTournament.unProcessedQItems];
+      updatedProcessedQItems = [...foundTournament.processedQItems];
+    } else {
+      unassignedPlayers = [...foundTournament.processedQItems];
+      updatedProcessedQItems = [...foundTournament.unProcessedQItems];
+    }
+
+    const updatedQueues = [...foundTournament.queues];
+
+    for (const player of unassignedPlayers) {
+      const targetQueue = updatedQueues.reduce((shortest, current) =>
+        current.queueItems.length < shortest.queueItems.length ? current : shortest
+      );
+
+      if (!targetQueue) {
+        socket.emit("error", { error: "No valid queue found" });
+        return;
+      }
+
+      targetQueue.queueItems.push(player);
+    }
+
+    const updateFields = {
+      queues: updatedQueues,
+    };
+
+    if (listName === "Unscheduled Matches") {
+      updateFields.unProcessedQItems = [];
+      updateFields.processedQItems = foundTournament.processedQItems;
+    } else {
+      updateFields.processedQItems = [];
+      updateFields.unProcessedQItems = foundTournament.unProcessedQItems;
+    }
+
+    const updatedTournament = await TournamentModel.findByIdAndUpdate(
+      tournament._id,
+      { $set: updateFields },
+      { new: true }
+    );
+
+    console.log("ADD ALL PLAYERS from the list TO QUEUES");
+    findDuplicatePlayersInTournament(updatedTournament);
+
+    io.emit("addAllFromOneList", {
+      message: "All players from one list added to queues",
+      updatedTournament,
+    });
+  });
+  ///
+
+  // WORKS:
   socket.on("uprocessAllPlayers", async ({ tournament }) => {
     // db call to get the data
     const foundTournament = await TournamentModel.findById(tournament._id);

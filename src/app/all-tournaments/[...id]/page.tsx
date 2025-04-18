@@ -130,17 +130,26 @@ export default function TournamentPage() {
 
         {tournamentOwner && (
           <>
-            <Button className="text-lg ml-4" onClick={() => setShowQR(!showQR)}>
+            <Button
+              className="px-2 text-[0.75rem] text-lg ml-4 transform transition-transform duration-150 hover:-translate-y-0.5 ease-in-out overflow-visible"
+              onClick={() => setShowQR(!showQR)}
+            >
               <FontAwesomeIcon icon={faQrcode} />
             </Button>
             {showQR && (
               <div className="flex flex-col items-center mt-2" ref={qrRef}>
                 <QRCodeCanvas value={tournamentUrl} size={180} includeMargin={true} />
                 <div className="flex gap-2 mt-2">
-                  <Button className="px-3 py-1 text-sm" onClick={generateQR}>
+                  <Button
+                    className="px-3 py-1 text-sm border-2 border-bluestone-200 rounded hover:bg-brick-200 hover:text-shell-300 hover:border-brick-100 hover:text-shell-75"
+                    onClick={generateQR}
+                  >
                     Download QR
                   </Button>
-                  <Button className="px-3 py-1 text-sm" onClick={printQR}>
+                  <Button
+                    className="px-3 py-1 text-sm border-2 border-bluestone-200 rounded hover:bg-brick-200 hover:text-shell-300 hover:border-brick-100 hover:text-shell-75"
+                    onClick={printQR}
+                  >
                     Print QR
                   </Button>
                 </div>

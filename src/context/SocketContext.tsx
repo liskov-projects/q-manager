@@ -163,6 +163,20 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
+    // NEW:
+    socketInstance.on("addAllFromOneList", ({ updatedTournament }) => {
+      try {
+        setCurrentTournamentRef.current(updatedTournament);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error("addAllFromUnscheduled failed in context", error.message);
+        } else {
+          console.error("addAllFromUnscheduled failed in context", error);
+        }
+      }
+    });
+
+    ///
     socketInstance.on("uprocessAllPlayers", ({ updatedTournament }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
