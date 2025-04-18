@@ -1,19 +1,24 @@
 "use client";
-import { useState, useEffect } from "react";
+// libraries
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { QRCodeCanvas } from "qrcode.react";
+// hooks
+import { useState, useEffect, useRef } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
+// components
 import TournamentQueuesPage from "@/Components/Pages/TournamentQueuesPage";
-// import TournamentCategories from "@/Components/Tournaments/TournamentCategories";
 import CategoryList from "@/Components/Tournaments/CategoryList";
-import Image from "next/image";
 import Header from "@/Components/Header";
 import Button from "@/Components/Buttons/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash, faQrcode } from "@fortawesome/free-solid-svg-icons";
 
+// TODO: clean up & move formattedDate in the context
 export default function TournamentPage() {
   const [editMode, toggleEditMode] = useState(false);
+  const [showQR, setShowQR] = useState(false);
 
-  const { currentTournament, setCurrentTournament, tournamentOwner } =
+  const qrRef = useRef(null);
+  const { currentTournament, setCurrentTournament, tournamentOwner, currentTournamentRef } =
     useTournamentsAndQueuesContext();
 
   // console.log("CURRENT TOURNAMENT", currentTournament);
@@ -69,6 +74,45 @@ export default function TournamentPage() {
     }
   }
 
+  function generateQR() {
+    const canvas = qrRef.current?.querySelector("canvas");
+    if (!canvas) return;
+
+    const pngUrl = canvas.toDataURL("image/png");
+    const downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = `${name.replace(/\s+/g, "_")}_qr.png`;
+    downloadLink.click();
+  }
+
+  function printQR() {
+    const canvas = qrRef.current?.querySelector("canvas");
+    if (!canvas) return;
+
+    const dataUrl = canvas.toDataURL("image/png");
+
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) return;
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Print QR Code</title>
+          <style>
+            body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+            img { max-width: 100%; }
+          </style>
+        </head>
+        <body>
+          <img src="${dataUrl}" onload="window.print(); window.close()" />
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  }
+
+  const tournamentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/tournament/${currentTournamentRef._id}`;
+
   return (
     <div className="flex flex-col items-center justify-center">
       {/* Header and Category List */}
@@ -86,9 +130,22 @@ export default function TournamentPage() {
 
         {tournamentOwner && (
           <>
-            {/* <Button className="text-lg ml-4" onClick={() => toggleEditMode((prev) => !prev)}>
-              <FontAwesomeIcon icon={faPencil} />
-            </Button> */}
+            <Button className="text-lg ml-4" onClick={() => setShowQR(!showQR)}>
+              <FontAwesomeIcon icon={faQrcode} />
+            </Button>
+            {showQR && (
+              <div className="flex flex-col items-center mt-2" ref={qrRef}>
+                <QRCodeCanvas value={tournamentUrl} size={180} includeMargin={true} />
+                <div className="flex gap-2 mt-2">
+                  <Button className="px-3 py-1 text-sm" onClick={generateQR}>
+                    Download QR
+                  </Button>
+                  <Button className="px-3 py-1 text-sm" onClick={printQR}>
+                    Print QR
+                  </Button>
+                </div>
+              </div>
+            )}
             {editMode ? (
               <Button
                 className="mx-2 px-3 text-[0.75rem] font-semibold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out "
