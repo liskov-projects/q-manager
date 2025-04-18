@@ -95,12 +95,6 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
     setTournaments(tournamentsData);
   };
 
-  //WORKS: Derived Categories from Players for one tournament
-  const uniqueCategories = useMemo(() => {
-    const categories = tournaments.flatMap((tournament) => tournament.categories || []);
-    return Array.from(new Set(categories));
-  }, [tournaments]);
-
   // console.log("in the context ", uniqueCategories);
 
   return (
@@ -108,7 +102,6 @@ export const TournamentsAndQueuesProvider = ({ children }: { children: ReactNode
       value={{
         draggedItem,
         setDraggedItem,
-        uniqueCategories,
         currentTournament,
         setCurrentTournament,
         currentTournamentRef,
@@ -232,4 +225,10 @@ export const useTournamentsAndQueuesContext = (): TTournamentsAndQueuesContextPr
       };
     });
   };
- */
+
+  //WORKS: Derived Categories from players in a tournament
+  const uniqueCategories = useMemo(() => {
+    const categories = allPlayers.map((player) => player.categories || []);
+    return Array.from(new Set(categories));
+  }, [currentTournament]);
+  */
