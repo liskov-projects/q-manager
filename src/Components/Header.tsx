@@ -7,6 +7,14 @@ import User from "@/Components/User";
 import Link from "next/link";
 import Button from "./Buttons/Button";
 import TennisLogo from "./TennisLogo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaInfo, FaInfoCircle } from "react-icons/fa";
+import {
+  faInfo,
+  faInfoCircle,
+  faQuestion,
+  faQuestionCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Header({ children, className }: { children: ReactNode }) {
   const path = usePathname();
