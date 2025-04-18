@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaCross } from "react-icons/fa";
 import { icon } from "@fortawesome/fontawesome-svg-core";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { TTournament } from "@/types/Types.js";
 
 const SOCKET_URL =
   process.env.NEXT_PUBLIC_SOCKET_URL ||
@@ -55,6 +56,35 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       console.log("✅ WebSocket Connected, Socket ID:", socketInstance.id);
     });
 
+    // utilities to help
+    // 1.
+    const showToast = (message: string, playerData: TPlayer, t?: any) => {
+      try {
+        // setCurrentTournamentRef.current(updatedTournament);
+        const isFavourite = favouritePlayersRef.current.some(
+          (fav: TPlayer) => fav._id === playerData?._id
+        );
+        if (isFavourite) {
+          toast.custom((t) => (
+            <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm">
+              <Button
+                onClick={() => toast.dismiss(t)}
+                className="hover:tennis-200 px-2 py-3 w-6 h-6 flex items-center justify-center rounded-full bg-white text-gray-700 hover:bg-gray-200 transition"
+                aria-label="Close"
+              >
+                <FontAwesomeIcon icon={faClose} />
+              </Button>
+              <span>
+                {playerData.names} {message}
+              </span>
+            </div>
+          ));
+        }
+      } catch (error) {
+        console.error(`${event} failed in context`, error);
+      }
+    };
+
     socketInstance.on("playerAdded", ({ updatedTournament }) => {
       // console.log("PLAYER ADDED BY WEBSOCKET:", playerData);
       // console.log(message)
@@ -96,43 +126,15 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     socketInstance.on("playerDropped", ({ draggedItem, index, dropTarget }) => {
       try {
         const queueToSplice = handleDropRef.current(draggedItem, index, dropTarget);
-
-        const isFavourite = favouritePlayersRef.current.some(
-          (fav: TPlayer) => fav._id === draggedItem._id
-        );
-
-        if (isFavourite) {
-          let message;
-          if (queueToSplice?.queueName) {
-            message = (
-              <span className="ml-8">
-                {draggedItem.names} added to {queueToSplice?.queueName} at position {index}
-              </span>
-            );
-          } else if (dropTarget === "unprocessed") {
-            return;
-          } else {
-            message = (
-              <span className="ml-8">{draggedItem.names} finished playing for the day</span>
-            );
-          }
-          // toast(`Added ${draggedItem.names || "player"} to ${queueName}`);
-          toast.custom((t) => (
-            <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm">
-              <Button
-                onClick={() => toast.dismiss(t)}
-                className={` hover:tennis-200 px-2 py-3 w-6 h-6 flex items-center self-center justify-center rounded-full bg-white text-gray-700 hover:bg-gray-200 transition`}
-                aria-label="Close"
-              >
-                <FontAwesomeIcon icon={faClose} />
-              </Button>
-              {message}
-            </div>
-          ));
+        let message;
+        if (queueToSplice?.queueName) {
+          message = `added to ${queueToSplice?.queueName} at position ${index}`;
+        } else if (dropTarget === "processed") {
+          message = "finished for the day";
         } else {
-          console.log("Player is not a favourite.");
+          return;
         }
-
+        showToast(message, draggedItem);
         // setCurrentTournament(updatedTournament);
       } catch (error) {
         if (error instanceof Error) {
@@ -150,30 +152,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         console.log("PP", playerPosition);
         try {
           setCurrentTournamentRef.current(updatedTournament);
-          // handleAddToShortestQueue(playerData, updatedTournament);
-          const isFavourite = favouritePlayersRef.current.some(
-            (fav: TPlayer) => fav._id === playerData._id
-          );
-
-          if (isFavourite) {
-            toast.custom((t) => (
-              <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm">
-                <Button
-                  onClick={() => toast.dismiss(t)}
-                  className={` hover:tennis-200 px-2 py-3 w-6 h-6 flex items-center self-center justify-center rounded-full bg-white text-gray-700 hover:bg-gray-200 transition`}
-                  aria-label="Close"
-                >
-                  <FontAwesomeIcon icon={faClose} />
-                </Button>
-                <span>
-                  {playerData?.names} in {playerPosition.position} of {playerPosition.queueName} of
-                  {updatedTournament.name}
-                </span>
-              </div>
-            ));
-          } else {
-            console.log("Player is not a favourite.");
-          }
+          const message = `are added to the ${playerPosition.queueName} at position ${playerPosition.position}`;
+          showToast(message, playerData);
         } catch (error) {
           if (error instanceof Error) {
             console.error("addPlayerToShortestQ failed in context", error.message);
@@ -196,7 +176,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
-    // NEW:
     socketInstance.on("addAllFromOneList", ({ updatedTournament }) => {
       try {
         setCurrentTournamentRef.current(updatedTournament);
