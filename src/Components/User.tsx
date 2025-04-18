@@ -1,11 +1,10 @@
 "use client";
-import { SignOutButton, useUser, SignedOut } from "@clerk/nextjs";
-import { useRouter, usePathname } from "next/navigation";
+import { SignOutButton, useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faInfoCircle, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
-import Button from "./Buttons/Button";
+import { faStar, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function User() {
   const { isSignedIn, user } = useUser();
