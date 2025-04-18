@@ -304,6 +304,10 @@ io.on("connection", async (socket) => {
 
     const targetQueueId = shortestQ._id.toString();
 
+    const playerPosition = {
+      queueName: shortestQ.queueName,
+      position: shortestQ.queueItems.length,
+    };
     // 🧼 🆕 SAFELY rebuild queues and insert player only once
     const newQueues = foundTournament.queues.map((queue) => {
       const isTarget = queue._id.toString() === targetQueueId;
@@ -316,8 +320,8 @@ io.on("connection", async (socket) => {
       return {
         ...queue.toObject(),
         queueItems: isTarget
-          ? [...filteredQueueItems, playerData] // ✅ Add to the target queue
-          : filteredQueueItems, // 🚫 Ensure removed everywhere else
+          ? [...filteredQueueItems, playerData] //  Add to the target queue
+          : filteredQueueItems, //  Ensure removed everywhere else
       };
     });
 
@@ -345,6 +349,7 @@ io.on("connection", async (socket) => {
       message: "Player added to the shortest queue",
       updatedTournament,
       playerData,
+      playerPosition,
     });
 
     console.log("📡 Sent io.emit(playerAddedToShortestQ)", tournamentId, playerData);
@@ -392,7 +397,6 @@ io.on("connection", async (socket) => {
     });
   });
 
-  // NEW:
   socket.on("addAllFromOneList", async ({ tournament, listName }) => {
     if (!tournament || !listName) {
       socket.emit("error", { error: "Missing tournament or list name" });
@@ -457,9 +461,7 @@ io.on("connection", async (socket) => {
       updatedTournament,
     });
   });
-  ///
 
-  // WORKS:
   socket.on("uprocessAllPlayers", async ({ tournament }) => {
     // db call to get the data
     const foundTournament = await TournamentModel.findById(tournament._id);

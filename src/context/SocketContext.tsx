@@ -94,11 +94,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     });
     //
     socketInstance.on("playerDropped", ({ draggedItem, index, dropTarget }) => {
-      // console.log("PLAYER DROPPED");
-      // console.log(draggedItem);
-      // console.log(index);
-      // console.log(dropTarget);
-
       try {
         const queueToSplice = handleDropRef.current(draggedItem, index, dropTarget);
 
@@ -148,19 +143,46 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       }
     });
 
-    socketInstance.on("addPlayerToShortestQ", ({ playerData, updatedTournament }) => {
-      console.log(playerData);
-      try {
-        setCurrentTournamentRef.current(updatedTournament);
-        // handleAddToShortestQueue(playerData, updatedTournament);
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error("addPlayerToShortestQ failed in context", error.message);
-        } else {
-          console.error("addPlayerToShortestQ failed in context", error);
+    socketInstance.on(
+      "addPlayerToShortestQ",
+      ({ playerData, updatedTournament, playerPosition }) => {
+        console.log(playerData);
+        console.log("PP", playerPosition);
+        try {
+          setCurrentTournamentRef.current(updatedTournament);
+          // handleAddToShortestQueue(playerData, updatedTournament);
+          const isFavourite = favouritePlayersRef.current.some(
+            (fav: TPlayer) => fav._id === playerData._id
+          );
+
+          if (isFavourite) {
+            toast.custom((t) => (
+              <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm">
+                <Button
+                  onClick={() => toast.dismiss(t)}
+                  className={` hover:tennis-200 px-2 py-3 w-6 h-6 flex items-center self-center justify-center rounded-full bg-white text-gray-700 hover:bg-gray-200 transition`}
+                  aria-label="Close"
+                >
+                  <FontAwesomeIcon icon={faClose} />
+                </Button>
+                <span>
+                  {playerData?.names} in {playerPosition.position} of {playerPosition.queueName} of
+                  {updatedTournament.name}
+                </span>
+              </div>
+            ));
+          } else {
+            console.log("Player is not a favourite.");
+          }
+        } catch (error) {
+          if (error instanceof Error) {
+            console.error("addPlayerToShortestQ failed in context", error.message);
+          } else {
+            console.error("addPlayerToShortestQ failed in context", error);
+          }
         }
       }
-    });
+    );
 
     socketInstance.on("addAllPlayersToQueues", ({ updatedTournament }) => {
       try {
