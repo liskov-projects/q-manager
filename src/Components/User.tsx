@@ -1,13 +1,15 @@
 "use client";
-import { SignOutButton, useUser } from "@clerk/nextjs";
+import { SignOutButton, useUser, SignedOut } from "@clerk/nextjs";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faInfoCircle, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import Button from "./Buttons/Button";
 
 export default function User() {
   const { isSignedIn, user } = useUser();
-
+  const pathname = usePathname();
   return (
     <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 w-full justify-end">
       {isSignedIn ? (
@@ -34,7 +36,7 @@ export default function User() {
             <FontAwesomeIcon icon={faStar} />
           </Link>
           <div className="p-1 sm:px-2 text-sm sm:text-base text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100">
-            <SignOutButton>Sign out</SignOutButton>
+            <SignOutButton redirectUrl={pathname}>Sign out</SignOutButton>
           </div>
         </div>
       ) : (
