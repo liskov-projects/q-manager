@@ -58,7 +58,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     // utilities to help
     // 1.
-    const showToast = (message: string, playerData: TPlayer, t?: any) => {
+    const showToast = (message: string, playerData: TPlayer) => {
       try {
         // setCurrentTournamentRef.current(updatedTournament);
         const isFavourite = favouritePlayersRef.current.some(

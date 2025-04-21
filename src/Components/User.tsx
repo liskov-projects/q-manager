@@ -21,7 +21,7 @@ export default function User() {
             height={48}
           />
           <Link
-            href="/how-qm-works"
+            href="/how-q-manager-works"
             className="p-1 sm:px-2 text-sm sm:text-base text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100"
           >
             <FontAwesomeIcon icon={faInfoCircle} />
@@ -41,7 +41,7 @@ export default function User() {
       ) : (
         <>
           <Link
-            href="/how-qm-works"
+            href="/how-q-manager-works"
             className="p-1 sm:px-2 text-sm sm:text-base text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100"
           >
             <FontAwesomeIcon icon={faInfoCircle} />

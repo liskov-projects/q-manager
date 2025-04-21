@@ -5,19 +5,19 @@ import LiskovLogo from "@/Components/Svgs/LiskovLogo";
 export default function HowQMWorks() {
   return (
     <>
-      <Header>All you might want to know about Q-Manager</Header>
-      <div className="w-full flex justify-center mt-8 p-4">
-        <div className="w-1/2">
+      <Header>Q-Manager Guide</Header>
+      <div className="w-full flex flex-col md:flex-row justify-center mt-8 p-3">
+        <div className="w-full md:w-1/2 flex justify-center">
           <video
             controls
-            className="max-w-[90%] max-h-[500px] rounded-md mx-auto border-2 border-bluestone-300 rounded-xl shadow-lg bg-transparent"
+            className="max-w-[90%] max-h-[500px] rounded-xl mx-auto border-2 border-bluestone-300 shadow-lg bg-transparent"
           >
             <source src="/q-manager-vid.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
-        <div className="w-1/2 flex items-center p-4">
-          <span className="text-xl font-semibold tracking-wide p-4">
+        <div className="w-full md:w-1/2 flex items-center p-5">
+          <span className="text-xl font-semibold tracking-wide">
             This video is a quick overview of what Q-Manager is capable of. It’s not a complete
             guide, but a preview of what’s possible.
             <hr className="border-t border-bluestone-300 my-4" />
