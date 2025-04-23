@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export type TPlayer = {
   _id?: string; // Optional ID from MongoDB
   names?: string;
-  categories?: string | string[]; // A single category or multiple
+  categories?: string[]; // A single category or multiple
   phoneNumbers?: string[];
   tournamentId: string; // The ID of the associated tournament
 };
