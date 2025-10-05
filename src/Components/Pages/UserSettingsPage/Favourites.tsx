@@ -19,32 +19,32 @@ export default function Favourites() {
           No favourite players
         </span>
       ) : (
-        <ul>
+        <ul className="flex flex-col items-center ">
           {favouritePlayers.map((player: TPlayer) => (
             <li
               key={player._id}
-              className="h-30 w-[100%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
+              className="h-30 w-[85%] p-1 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-1"
             >
-              <span className="ml-8 font-bold text-bluestone-200 w-[55%]">{player.names}</span>
+              <span className="pl-2 font-bold text-bluestone-200 w-[75%]">{player.names}</span>
               <span className="text-bluestone-200"> in {player.tournamentName}</span>
               <StarItem playerId={player._id} />
             </li>
           ))}
         </ul>
       )}
-      <SectionHeader className="mt-8">Favourite Tournaments</SectionHeader>
+      <SectionHeader className="mt-8 ">Favourite Tournaments</SectionHeader>
       {favouriteTournaments.length === 0 ? (
         <span className="h-30 w-[100%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
           No favourite tournaments
         </span>
       ) : (
-        <ul>
+        <ul className="flex flex-col items-center">
           {favouriteTournaments.map((tournament: TTournament) => (
             <li
               key={tournament._id}
-              className="h-30 w-[85%] p-2 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2"
+              className="h-30 w-[85%] p-1 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-1"
             >
-              <span className="ml-8 font-bold text-bluestone-200">{tournament.name}</span>
+              <span className="pl-2 font-bold text-bluestone-200 w-[75%]">{tournament.name}</span>
               <Link href={`/all-tournaments/${tournament._id}`}>Visit</Link>
               <StarItem tournamentId={tournament._id} />
             </li>

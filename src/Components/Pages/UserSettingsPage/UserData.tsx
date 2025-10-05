@@ -64,23 +64,30 @@ export default function UserData({ userData }: { userData: TUser }) {
       </ToggleSwitch>
       <fieldset disabled={!canEdit}>
         <form className="flex flex-col" onSubmit={handleUpdatedData}>
-          <label className="h-30 w-[100%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
+          <label className="h-30 w-[100%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center">
             Name:
-            <input type="text" value={updatedData.name} onChange={handleChange} name="name" />
+            <input
+              type="text"
+              value={updatedData.name}
+              onChange={handleChange}
+              name="name"
+              className="rounded pl-2"
+            />
           </label>
-          <label className="h-30 w-[100%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
+          <label className="h-30 w-[100%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2 ">
             Phone Number:
             <input
               type="text"
               value={updatedData.phoneNumber}
               onChange={handleChange}
               name="phoneNumber"
+              className="rounded pl-2"
             />
           </label>
           {canEdit && (
             <Button
               type="submit"
-              className="py-1 px-2 self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] hover:bg-bluestone-200 hover:text-shell-100"
+              className="py-1 px-2 self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] hover:bg-bluestone-200 hover:text-shell-100  "
             >
               Save changes
             </Button>
