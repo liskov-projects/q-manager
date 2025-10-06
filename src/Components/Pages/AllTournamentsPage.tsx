@@ -126,10 +126,10 @@ export default function AllTournamentsPage() {
 
         {/* Sidebar for large screens only */}
         <div className="hidden lg:flex lg:w-1/4 flex-col gap-4 order-3">
-          <SectionHeader>Tournament functions</SectionHeader>
+          {/* <SectionHeader>Tournament functions</SectionHeader>  */}
 
-          <div className="shadow-left-bottom-lg flex flex-col items-start p-4 rounded-md">
-            <SectionHeader>Search tournaments:</SectionHeader>
+          <div className="shadow-left-bottom-lg flex flex-col mt-11 items-start p-4 rounded-md">
+            <SectionHeader>Search Tournaments:</SectionHeader>
             <input
               className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mt-2 w-full"
               type="text"
