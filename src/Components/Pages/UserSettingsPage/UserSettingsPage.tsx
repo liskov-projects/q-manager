@@ -31,7 +31,7 @@ export default function UserSettingsPage() {
       </span>
 
       {/* grid layout that stacks on smaller screens */}
-      <div className="grid mt-20 items-start mx-auto  grid-cols-1 md:grid-cols-2 gap-6 p-4">
+      <div className="grid mt-10 items-start mx-auto  grid-cols-1 md:grid-cols-2 gap-6 p-4">
         {/* Left: Favourites */}
 
         <div className="flex flex-col w-[100%] mx-auto gap-4">

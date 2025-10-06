@@ -47,7 +47,7 @@ export default function Header({ children, className }: { children: ReactNode })
 
       {/* Center Title */}
       <div className="flex-1 flex justify-center">
-        <h1 className="text-center font-bold text-xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl text-bluestone-200 truncate">
+        <h1 className="text-center p-1 font-bold text-xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl text-bluestone-200 truncate">
           {children}
         </h1>
       </div>

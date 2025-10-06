@@ -23,10 +23,10 @@ export default function Favourites() {
           {favouritePlayers.map((player: TPlayer) => (
             <li
               key={player._id}
-              className="h-30 w-[85%] p-1 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-1"
+              className="h-30 w-[90%] p-1 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-1"
             >
-              <span className="pl-2 font-bold text-bluestone-200 w-[75%]">{player.names}</span>
-              <span className="text-bluestone-200"> in {player.tournamentName}</span>
+              <span className="pl-2 font-bold text-bluestone-200 w-[65%]">{player.names}</span>
+              <span className="text-bluestone-200">  {player.tournamentName}</span>
               <StarItem playerId={player._id} />
             </li>
           ))}
@@ -42,9 +42,9 @@ export default function Favourites() {
           {favouriteTournaments.map((tournament: TTournament) => (
             <li
               key={tournament._id}
-              className="h-30 w-[85%] p-1 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-1"
+              className="h-30 w-[90%] p-1 bg-shell-75 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-1"
             >
-              <span className="pl-2 font-bold text-bluestone-200 w-[75%]">{tournament.name}</span>
+              <span className="pl-2 font-bold text-bluestone-200 w-[65%]">{tournament.name}</span>
               <Link href={`/all-tournaments/${tournament._id}`}>Visit</Link>
               <StarItem tournamentId={tournament._id} />
             </li>

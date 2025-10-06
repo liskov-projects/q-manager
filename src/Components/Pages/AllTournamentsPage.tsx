@@ -48,7 +48,7 @@ export default function AllTournamentsPage() {
   return (
     <>
       <Header>Queue Manager</Header>
-      <div className="p-4 w-full flex flex-col lg:flex-row gap-3">
+      <div className="p-4 w-full mt-10 flex flex-col lg:flex-row gap-3">
         {/* Small/medium: search and toggle button above list */}
         <div className="block lg:hidden mb-0">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-2">
@@ -100,7 +100,7 @@ export default function AllTournamentsPage() {
           ) : null}
           {favouriteTournaments.length > 0 ? (
             <div className="flex-1 order-2 lg:order-1">
-              <div className="flex items-center justify-between mb-4 mt-4">
+              <div className="flex items-center justify-between mb-4">
                 <SectionHeader>Favourite Tournaments</SectionHeader>
               </div>
 
