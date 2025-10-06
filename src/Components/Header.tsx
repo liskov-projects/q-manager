@@ -31,6 +31,7 @@ export default function Header({ children, className }: { children: ReactNode })
           href="/all-tournaments"
           className={`p-2 text-sm text-bluestone-200 border-2 border-bluestone-200 rounded ${home ? "" : "hover:bg-bluestone-200"}`}
           aria-disabled={home}
+          title="Home"
         >
           <TennisLogo className="w-[30px] h-[30px]" />
         </Link>
