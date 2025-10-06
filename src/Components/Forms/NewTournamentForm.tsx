@@ -181,6 +181,7 @@ export default function NewTournamentForm() {
           {/* Tournament Name */}
           <label htmlFor="name">Tournament Name</label>
           <input
+            id="name"
             type="text"
             name="name"
             value={newTournament.name}
@@ -189,12 +190,12 @@ export default function NewTournamentForm() {
           />
 
           {/* Tournament Image Upload */}
-          <label htmlFor="image" className="cursor-pointer flex flex-col">
+          <label htmlFor="image" className=" flex flex-col">
             <div>
               Tournament Image <span className="text-brick-200">*</span>{" "}
             </div>
             <button
-              className="bg-gray-200  items-center rounded-md shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all duration-150"
+              className="bg-gray-200  items-center cursor-pointer rounded-md shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all duration-150"
               onClick={() => document.getElementById("image")?.click()}
               type="button"
             >
@@ -228,6 +229,7 @@ export default function NewTournamentForm() {
           {/* Description */}
           <label htmlFor="description">Description</label>
           <input
+            id="description"
             type="text"
             name="description"
             value={newTournament.description}
@@ -247,6 +249,7 @@ export default function NewTournamentForm() {
               -
             </button>
             <input
+              id="numberOfQueues"
               placeholder="3"
               type="number"
               name="numberOfQueues"
@@ -267,11 +270,12 @@ export default function NewTournamentForm() {
           {/* Date */}
           <label htmlFor="eventDate">Date</label>
           <input
+            id="eventDate"
             type="date"
             name="eventDate"
             value={newTournament.eventDate}
             onChange={handleChange}
-            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full"
+            className="focus:outline rounded-md px-3 py-2 focus:ring-2 focus:ring-brick-200 mb-2 w-full cursor-pointer"
           />
 
           {/* Submit Button */}
