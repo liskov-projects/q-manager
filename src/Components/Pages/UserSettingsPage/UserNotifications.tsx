@@ -9,7 +9,7 @@ export default function UserNotifications() {
   return (
     <div>
       <ToggleSwitch isOn={notificationsOn} setIsOn={setNotificationsOn}>
-        allow notifications 
+        <p className="p-1">Allow notifications </p>
       </ToggleSwitch>
     </div>
   );

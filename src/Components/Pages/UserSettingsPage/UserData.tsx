@@ -60,11 +60,11 @@ export default function UserData({ userData }: { userData: TUser }) {
   return (
     <>
       <ToggleSwitch isOn={canEdit} setIsOn={setCanEdit}>
-        Edit {username}&apos;s info
+        <p className="p-1" >Edit {username}&apos;s info</p>
       </ToggleSwitch>
       <fieldset disabled={!canEdit}>
         <form className="flex flex-col" onSubmit={handleUpdatedData}>
-          <label className="h-30 w-[100%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center">
+          <label className="h-30 w-[100%] p-2 pl-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center">
             Name:
             <input
               type="text"
@@ -74,7 +74,7 @@ export default function UserData({ userData }: { userData: TUser }) {
               className="rounded pl-2"
             />
           </label>
-          <label className="h-30 w-[100%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2 ">
+          <label className="h-30 w-[100%] p-2 pl-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2 ">
             Phone Number:
             <input
               type="text"
