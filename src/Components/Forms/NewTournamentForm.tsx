@@ -163,7 +163,7 @@ export default function NewTournamentForm() {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-start">
         <SectionHeader>Add New Tournament</SectionHeader>
       </div>
 
@@ -189,21 +189,31 @@ export default function NewTournamentForm() {
           />
 
           {/* Tournament Image Upload */}
-          <label htmlFor="image">
-            Tournament Image <span className="text-brick-200">*</span>
+          <label htmlFor="image" className="cursor-pointer flex flex-col">
+            <div>
+              Tournament Image <span className="text-brick-200">*</span>{" "}
+            </div>
+            <button
+              className="bg-gray-200  items-center rounded-md shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all duration-150"
+              onClick={() => document.getElementById("image")?.click()}
+              type="button"
+            >
+              Choose File
+            </button>
           </label>
+
           <input
+            id="image"
             type="file"
             name="image"
             accept="image/*"
             onChange={handleChange}
-            className={`focus:outline rounded-md px-3 py-2 focus:ring-2 mb-2 w-full ${
+            className={`focus:outline rounded-md px-3 py-2 focus:ring-2 mb-2 w-full hidden ${
               !newTournament.image && errorMessage
                 ? "border-2 border-brick-200"
                 : "focus:ring-brick-200"
             }`}
           />
-
           {previewUrl && (
             <div>
               <p className="text-sm text-gray-600">Image Preview:</p>
