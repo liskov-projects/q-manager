@@ -66,19 +66,17 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         );
         if (isFavourite) {
           toast.custom((t) => (
-            <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm ">         
-              <div className="flex-col justify-between">
-                <div className="mb-2"><span>
-                  <strong>{playerData.names}</strong> 
-                </span></div>
-                <div> {message} </div>
-              </div>
+            <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm">
               <Button
                 onClick={() => toast.dismiss(t)}
-                className="ml-4 hover:tennis-200 px-2 py-3 w-6 h-6 flex items-center justify-center rounded-full bg-white text-gray-700 hover:bg-gray-200 transition"
-                aria-label="Close">
+                className="hover:tennis-200 px-2 py-3 w-6 h-6 flex items-center justify-center rounded-full bg-white text-gray-700 hover:bg-gray-200 transition"
+                aria-label="Close"
+              >
                 <FontAwesomeIcon icon={faClose} />
               </Button>
+              <span>
+                {playerData.names} {message}
+              </span>
             </div>
           ));
         }
@@ -130,7 +128,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         const queueToSplice = handleDropRef.current(draggedItem, index, dropTarget);
         let message;
         if (queueToSplice?.queueName) {
-          message = `Added to ${queueToSplice?.queueName} at position ${index}`;
+          message = `added to ${queueToSplice?.queueName} at position ${index}`;
         } else if (dropTarget === "processed") {
           message = "finished for the day";
         } else {
@@ -154,7 +152,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         console.log("PP", playerPosition);
         try {
           setCurrentTournamentRef.current(updatedTournament);
-          const message = `Added to the ${playerPosition.queueName} at position ${playerPosition.position}`;
+          const message = `are added to the ${playerPosition.queueName} at position ${playerPosition.position}`;
           showToast(message, playerData);
         } catch (error) {
           if (error instanceof Error) {
