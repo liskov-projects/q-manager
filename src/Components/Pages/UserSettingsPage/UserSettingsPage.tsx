@@ -12,6 +12,7 @@ import UserNotifications from "./UserNotifications";
 export default function UserSettingsPage() {
   const { isSignedIn } = useUser();
   const { appUser, favouritePlayers, favouriteTournaments } = useFavourites();
+  
 
   if (!isSignedIn) return <div className="text-center text-lg mt-8">Not signed in</div>;
 

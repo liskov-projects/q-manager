@@ -10,7 +10,7 @@ import TournamentQueuesPage from "@/Components/Pages/TournamentQueuesPage";
 import CategoryList from "@/Components/Tournaments/CategoryList";
 import Header from "@/Components/Header";
 import Button from "@/Components/Buttons/Button";
-import { faPencil, faTrash, faQrcode } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash, faQrcode, faBottleDroplet } from "@fortawesome/free-solid-svg-icons";
 
 // TODO: clean up & move formattedDate in the context
 export default function TournamentPage() {
@@ -117,12 +117,13 @@ export default function TournamentPage() {
     <div className="flex flex-col items-center justify-center">
       {/* Header and Category List */}
 
-      <Header>
+      <Header >
         {editMode ? (
           <input
-            className={inputStyles}
+            className="p-1"
             value={editedName}
             onChange={(e) => setEditedName(e.target.value)}
+            style={{ width: `${editedName.length + 2}ch` }}
           />
         ) : (
           <span>{name}</span>
@@ -131,10 +132,10 @@ export default function TournamentPage() {
         {tournamentOwner && (
           <>
             <Button
-              className="px-2 text-[0.75rem] text-lg ml-4 transform transition-transform duration-150 hover:-translate-y-0.5 ease-in-out overflow-visible"
+              className="px-2 text-[0.75rem]  text-lg ml-4 transform transition-transform duration-150 hover:-translate-y-0.5 ease-in-out overflow-visible"
               onClick={() => setShowQR(!showQR)}
             >
-              <FontAwesomeIcon icon={faQrcode} />
+              <FontAwesomeIcon title="QR Code" icon={faQrcode} />
             </Button>
             {showQR && (
               <div className="flex flex-col items-center mt-2" ref={qrRef}>
@@ -156,18 +157,31 @@ export default function TournamentPage() {
               </div>
             )}
             {editMode ? (
-              <Button
-                className="mx-2 px-3 text-[0.75rem] font-semibold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out "
-                onClick={handleSave}
-              >
-                Save
-              </Button>
+              <div>
+                <Button
+                  className="mx-2 px-3 text-[0.75rem] font-semibold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out "
+                  onClick={handleSave}
+                >
+                  Save
+                </Button>
+                <label htmlFor="image">
+                  <button
+                    type="button"
+                    onClick={() => document.getElementById("editImage")?.click()}
+                    className="bg-gray-200 items-center cursor-pointer rounded-md shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all duration-150 text-sm p-2"
+                  >
+                    Choose Image
+                  </button>
+                </label>
+                <input type="file" id="editImage" hidden />
+              </div>
             ) : (
               <Button
                 className="px-2 py-2 text-[0.75rem] text-lg ml-4 transform transition-transform duration-150 hover:-translate-y-0.5 ease-in-out overflow-visible"
                 onClick={() => toggleEditMode((prev) => !prev)}
               >
                 <FontAwesomeIcon
+                  title="Edit"
                   icon={faPencil}
                   className="transform transition-transform duration-150 rotate-0 hover:rotate-90"
                 />
