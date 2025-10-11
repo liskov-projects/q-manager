@@ -112,6 +112,7 @@ export default function TournamentPage() {
   }
 
   const tournamentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/tournament/${currentTournamentRef._id}`;
+  const inputRef = useRef(null);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -167,13 +168,13 @@ export default function TournamentPage() {
                 <label htmlFor="image">
                   <button
                     type="button"
-                    onClick={() => document.getElementById("editImage")?.click()}
+                    onClick={() => inputRef.current?.click()}
                     className="bg-gray-200 items-center cursor-pointer rounded-md shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all duration-150 text-sm p-2"
                   >
                     Choose Image
                   </button>
                 </label>
-                <input type="file" id="editImage" hidden />
+                <input type="file" ref={inputRef} hidden />
               </div>
             ) : (
               <Button

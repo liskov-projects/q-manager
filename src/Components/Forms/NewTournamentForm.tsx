@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { useUser } from "@clerk/nextjs";
 // types
@@ -32,7 +32,7 @@ export default function NewTournamentForm() {
   const { isSignedIn, user } = useUser();
   const { fetchTournaments, uniqueCategories } = useTournamentsAndQueuesContext();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-
+  const inputRef = useRef(null);
   useEffect(() => {
     setSelectedCategories(newTournament?.categories || []);
   }, [newTournament?.categories]);
@@ -196,7 +196,7 @@ export default function NewTournamentForm() {
             </div>
             <button
               className="bg-gray-200  items-center cursor-pointer rounded-md shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all duration-150"
-              onClick={() => document.getElementById("image")?.click()}
+              onClick={() => inputRef.current?.click()}
               type="button"
             >
               Choose File
@@ -204,14 +204,12 @@ export default function NewTournamentForm() {
           </label>
 
           <input
-            id="image"
+            ref={inputRef}
             type="file"
             name="image"
             accept="image/*"
             onChange={handleChange}
-            className={`focus:outline rounded-md px-3 py-2 focus:ring-2 mb-2 w-full hidden
-                : "focus:ring-brick-200"
-            }`}
+            className="hidden"
           />
           {previewUrl && (
             <div>
