@@ -9,7 +9,6 @@ import ToggleSwitch from "@/Components/Buttons/ToggleSwitch";
 
 export default function UserData({ userData }: { userData: TUser }) {
   const [canEdit, setCanEdit] = useState<boolean>(false);
-  // console.log(userData);
   const [updatedData, setUpdatedData] = useState<Partial<TUser>>({
     name: userData.username,
     phoneNumber: userData.phoneNumber,

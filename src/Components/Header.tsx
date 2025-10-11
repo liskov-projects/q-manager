@@ -35,15 +35,6 @@ export default function Header({ children, className }: { children: ReactNode })
         >
           <TennisLogo className="w-[30px] h-[30px]" />
         </Link>
-
-        {/* {userSettingsPath && (
-          <Button
-            onClick={() => router.back()}
-            className="py-1 px-2 text-sm text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100"
-          >
-            Back
-          </Button>
-        )} */}
       </div>
 
       {/* Center Title */}
