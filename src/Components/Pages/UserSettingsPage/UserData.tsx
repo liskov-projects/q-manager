@@ -6,6 +6,7 @@ import { TUser } from "@/types/Types";
 //  components
 import Button from "@/Components/Buttons/Button";
 import ToggleSwitch from "@/Components/Buttons/ToggleSwitch";
+import { useDeprecatedAnimatedState } from "framer-motion";
 
 export default function UserData({ userData }: { userData: TUser }) {
   const [canEdit, setCanEdit] = useState<boolean>(false);
@@ -17,7 +18,11 @@ export default function UserData({ userData }: { userData: TUser }) {
   const { username } = userData;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    let { value } = e.target;
+    if (name === "phoneNumber") {
+      value = value.replace(/[^0-9+\s()-]/g, "");
+    }
     setUpdatedData((prev: Partial<TUser>) => ({ ...prev, [name]: value }));
   };
 
@@ -59,34 +64,39 @@ export default function UserData({ userData }: { userData: TUser }) {
   return (
     <>
       <ToggleSwitch isOn={canEdit} setIsOn={setCanEdit}>
-        <p className="p-1" >Edit {username}&apos;s info</p>
+        <p className="p-1">Edit {username}&apos;s info</p>
       </ToggleSwitch>
       <fieldset disabled={!canEdit}>
-        <form className="flex flex-col" onSubmit={handleUpdatedData}>
-          <label className="h-30 w-[100%] p-2 pl-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center">
+        <form className="flex w-full flex-col" onSubmit={handleUpdatedData}>
+          <label className="h-30 w-[100%] p-2 pl-2 mt-1 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center">
             Name:
             <input
               type="text"
               value={updatedData.name}
               onChange={handleChange}
               name="name"
-              className="rounded pl-2"
+              className="rounded pl-2 flex "
+              style={{ width: `${updatedData.name ? updatedData.name.length + 2 : +10}ch` }}
             />
           </label>
-          <label className="h-30 w-[100%] p-2 pl-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2 ">
+          <label className="h-30 w-[100%] p-2 pl-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row gap-20 justify-between items-center my-2 ">
             Phone Number:
             <input
-              type="text"
+              type="tel"
               value={updatedData.phoneNumber}
               onChange={handleChange}
               name="phoneNumber"
               className="rounded pl-2"
+              style={{
+                width: `${updatedData.phoneNumber ? updatedData.phoneNumber.length + 2 : +10}ch`,
+              }}
             />
           </label>
+
           {canEdit && (
             <Button
               type="submit"
-              className="py-1 px-2 self-center ml-2 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] hover:bg-bluestone-200 hover:text-shell-100  "
+              className="py-1 px-2 self-center mt-5 text-l text-bluestone-200 border-2 border-bluestone-200 rounded-[5px] hover:bg-bluestone-200 hover:text-shell-100  "
             >
               Save changes
             </Button>

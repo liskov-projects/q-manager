@@ -209,9 +209,7 @@ export default function NewTournamentForm() {
             name="image"
             accept="image/*"
             onChange={handleChange}
-            className={`focus:outline rounded-md px-3 py-2 focus:ring-2 mb-2 w-full hidden ${
-              !newTournament.image && errorMessage
-                ? "border-2 border-brick-200"
+            className={`focus:outline rounded-md px-3 py-2 focus:ring-2 mb-2 w-full hidden
                 : "focus:ring-brick-200"
             }`}
           />

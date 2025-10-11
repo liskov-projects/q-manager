@@ -117,13 +117,13 @@ export default function TournamentPage() {
     <div className="flex flex-col items-center justify-center">
       {/* Header and Category List */}
 
-      <Header >
+      <Header>
         {editMode ? (
           <input
             className="p-1"
             value={editedName}
             onChange={(e) => setEditedName(e.target.value)}
-            style={{ width: `${editedName.length + 2}ch` }}
+            style={{ width: `${editedName ? editedName.length + 2 : +5}ch` }}
           />
         ) : (
           <span>{name}</span>

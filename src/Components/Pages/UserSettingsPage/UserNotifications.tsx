@@ -7,8 +7,8 @@ import ToggleSwitch from "@/Components/Buttons/ToggleSwitch";
 export default function UserNotifications() {
   const [notificationsOn, setNotificationsOn] = useState(false);
   return (
-    <div>
-      <ToggleSwitch isOn={notificationsOn} setIsOn={setNotificationsOn}>
+    <div className="flex w-full">
+      <ToggleSwitch  isOn={notificationsOn} setIsOn={setNotificationsOn}>
         <p className="p-1">Allow notifications </p>
       </ToggleSwitch>
     </div>

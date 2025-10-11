@@ -30,10 +30,10 @@ export default function UserSettingsPage() {
       </span>
 
       {/* grid layout that stacks on smaller screens */}
-      <div className="grid mt-10 items-start mx-auto  grid-cols-1 md:grid-cols-2 gap-6 p-4">
+      <div className=" grid mt-10  gap-5 grid-cols-1 md:grid-cols-2 p-4">
         {/* Left: Favourites */}
 
-        <div className="flex flex-col w-[100%] mx-auto gap-4">
+        <div className="flex  w-[100%] ">
           {!hasFavourites ? (
             <div className="text-center">
               <img src="/snoopy_raining.gif" alt="no favourites" className="w-32 mx-auto" />
@@ -43,18 +43,17 @@ export default function UserSettingsPage() {
             <Favourites />
           )}
         </div>
-        <div className="grid mx-auto  grid-cols-1  md:grid-cols-[minmax(250px,350px)_minmax(250px,350px)] gap-6">
+        <div className="flex  w-[100%] ">
           {appUser ? (
             <>
-              <div className="flex items-center flex-col ">
-                <SectionHeader className="">Edit Your Info</SectionHeader>
-                <div className="grid w-[100%] gap-4 ">
+              <div className="flex w-full  flex-col ">
+                <SectionHeader>Edit Your Info</SectionHeader>
+                <div className="w-[100%] flex flex-col mb-1px ">
                   <UserData userData={appUser} />
                 </div>
-              </div>
-              <div className="flex items-center flex-col ">
-                <SectionHeader>Notification Preferences</SectionHeader>
-                <div className="grid w-[100%]">
+
+                <SectionHeader className="mt-4 ">Notification Preferences</SectionHeader>
+                <div className="flex flex-col w-[100%] ">
                   <UserNotifications />
                 </div>
               </div>
