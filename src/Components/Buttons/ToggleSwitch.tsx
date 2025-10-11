@@ -10,7 +10,7 @@ export default function ToggleSwitch({
   children: ReactNode;
 }) {
   return (
-    <label className="h-30 w-[85%] p-2 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-2">
+    <label className="h-30 w-[100%] p-1 bg-shell-75 text-bluestone-200 rounded-lg shadow-left-bottom-lg flex flex-row justify-between items-center my-1">
       {children}
       <div
         className={`w-14 h-8 flex items-center rounded-full p-1 cursor-pointer transition duration-300

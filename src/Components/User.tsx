@@ -23,6 +23,7 @@ export default function User() {
           <Link
             href="/how-q-manager-works"
             className="p-1 sm:px-2 text-sm sm:text-base text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100"
+            title="Info"
           >
             <FontAwesomeIcon icon={faInfoCircle} />
             {/* <FontAwesomeIcon icon={faQuestionCircle} /> */}
@@ -43,8 +44,10 @@ export default function User() {
           <Link
             href="/how-q-manager-works"
             className="p-1 sm:px-2 text-sm sm:text-base text-bluestone-200 border-2 border-bluestone-200 rounded hover:bg-bluestone-200 hover:text-shell-100"
+            
           >
-            <FontAwesomeIcon icon={faInfoCircle} />
+            
+            <FontAwesomeIcon icon={faInfoCircle}/>
             {/* <FontAwesomeIcon icon={faQuestionCircle} /> */}
           </Link>
           <Link

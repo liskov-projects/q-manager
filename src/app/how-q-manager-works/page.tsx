@@ -6,7 +6,7 @@ export default function HowQMWorks() {
   return (
     <>
       <Header>Q-Manager Guide</Header>
-      <div className="w-full flex flex-col md:flex-row justify-center mt-8 p-3">
+      <div className="w-full flex flex-col md:flex-row justify-center mt-10 p-3">
         <div className="w-full md:w-1/2 flex justify-center">
           <video
             controls
