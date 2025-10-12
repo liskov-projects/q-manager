@@ -121,7 +121,7 @@ export default function TournamentPage() {
       <Header>
         {editMode ? (
           <input
-            className="p-1"
+            className="overflow-hidden h-10 leading-8 p-1"
             value={editedName}
             onChange={(e) => setEditedName(e.target.value)}
             style={{ width: `${editedName ? editedName.length + 2 : +5}ch` }}
@@ -159,6 +159,7 @@ export default function TournamentPage() {
             )}
             {editMode ? (
               <div>
+                {}
                 <Button
                   className="mx-2 px-3 text-[0.75rem] font-semibold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out "
                   onClick={handleSave}
