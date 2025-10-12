@@ -54,7 +54,13 @@ export default function NewPlayerForm() {
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
   ) {
-    setNewPlayers({ ...newPlayers, [e.target.name]: e.target.value });
+    const { name } = e.target;
+    let { value } = e.target;
+
+    if (name === "phoneNumbers") {
+      value = value.replace(/[^0-9+\s()-]/g, "");
+    }
+    setNewPlayers({ ...newPlayers, [e.target.name]: value });
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
