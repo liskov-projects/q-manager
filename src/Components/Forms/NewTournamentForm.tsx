@@ -92,16 +92,23 @@ export default function NewTournamentForm() {
 
     if (newTournament.image instanceof File) {
       const file = newTournament.image;
+      const fileType = file.type || "application/octet-stream";
       const res = await fetch(
-        `/api/gcs-uploads?fileName=${encodeURIComponent(file.name)}&fileType=${encodeURIComponent(file.type)}`
+        `/api/gcs-uploads?fileName=${encodeURIComponent(file.name)}&fileType=${encodeURIComponent(fileType)}`
       );
       const { uploadUrl, publicUrl } = await res.json();
 
-      await fetch(uploadUrl, {
+      const putRes = await fetch(uploadUrl, {
         method: "PUT",
-        headers: { "Content-Type": file.type },
+        headers: { "Content-Type": fileType },
         body: file,
       });
+
+      if (!putRes.ok) {
+        const errText = await putRes.text().catch(() => "");
+        console.error("GCS PUT failed:", putRes.status, putRes.statusText, errText);
+        throw new Error(`Upload failed: ${putRes.status}`);
+      }
 
       imageUrl = publicUrl;
       URL.revokeObjectURL(previewUrl || "");
