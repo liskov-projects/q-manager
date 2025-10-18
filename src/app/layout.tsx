@@ -48,7 +48,7 @@ export default function RootLayout({
             signIn: {
               start: {
                 // title: "Hi there",
-                subtitle: "To continue as Guest, close this modal.",
+                subtitle: "To continue as a Guest, close this modal.",
                 actionText: "Don't have account?",
               },
             },
