@@ -20,6 +20,7 @@ export default function TournamentPage() {
   const [pendingImage, setPendingImage] = useState<File | null>(null);
 
   const qrRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const { currentTournament, setCurrentTournament, tournamentOwner, currentTournamentRef } =
     useTournamentsAndQueuesContext();
 
@@ -54,7 +55,7 @@ export default function TournamentPage() {
     // cleanup old preview
     if (previewUrl) URL.revokeObjectURL(previewUrl);
 
-    setPendingImage(file); 
+    setPendingImage(file);
     const objectUrl = URL.createObjectURL(file);
     setPreviewUrl(objectUrl);
   }
