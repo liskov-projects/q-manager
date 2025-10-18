@@ -1,7 +1,14 @@
 "use client";
+import { useEffect, useRef } from "react";
+import {
+  useClerk,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
 
-import { useEffect } from "react";
-import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 // to redirect the user to a specific route after logginin
 import { useRouter } from "next/navigation";
 import { useFavourites } from "@/context/FavouriteItemsContext";
@@ -9,8 +16,32 @@ import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn, user, isLoaded } = useUser();
   const { addUser } = useFavourites();
+
+  const { openSignIn } = useClerk();
+  const opened = useRef(false);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    if (opened.current) return;
+    if (isSignedIn) return;
+    {
+      opened.current = true;
+
+      openSignIn({
+        afterSignInUrl: "/",
+        afterSignUpUrl: "/",
+
+        appearance: {
+          elements: {
+            modalBackdrop: "z-[60] bg-black/60 backdrop-blur-sm",
+            modalContent: "z-[80] rounded-2xl shadow-2xl",
+          },
+        },
+      });
+    }
+  }, [openSignIn]);
 
   useEffect(() => {
     if (isSignedIn) {
@@ -24,20 +55,26 @@ export default function LoginPage() {
   }, [isSignedIn, user]);
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="flex flex-col items-center p-8 rounded-lg shadow-lg max-w-md w-full">
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-        <SignedOut>
-          <h2 className="text-3xl font-bold text-center text-bluestone-300 mb-6">Sign In</h2>
-          <div className="flex items-center justify-center cursor-pointer bg-tennis-200 text-bluestone-300 px-6 py-3 rounded-lg shadow-lg hover:bg-tennis-100 transition duration-300 ease-in-out transform hover:scale-105">
-            <SignInButton>Click to Sign In</SignInButton>
-          </div>
-        </SignedOut>
+    <div className="flex flex-col h-full justify-center items-center bg-black bg-opacity-60 backdrop-blur-sm ">
+      <div className="flex flex-col items-center gap-6 p-8 rounded-2xl border border-cyan-400 bg-white/10 backdrop-blur-md shadow-2xl max-w-md w-full transition-all duration-300 hover:border-cyan-300 hover:shadow-cyan-200/30">
+        <div className="flex items-center gap-4">
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <SignInButton
+              mode="modal"
+              className="flex items-center justify-center cursor-pointer bg-tennis-200 text-bluestone-300 px-6 py-3 rounded-lg shadow-lg hover:bg-tennis-100 transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              Sign In
+            </SignInButton>
+          </SignedOut>
+        </div>
         <Link
           href="/"
-          className="flex my-6 text-bluestone-300 no-underline hover:text-bluestone-100 hover:underline"
+          className=" mx-auto w-max
+                   px-4 py-2 text-sm font-medium text-white/90
+                   bg-black/60 rounded-full backdrop-blur-md hover:text-white"
         >
           Continue as a Guest
         </Link>
