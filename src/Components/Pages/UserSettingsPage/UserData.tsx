@@ -6,7 +6,6 @@ import { TUser } from "@/types/Types";
 //  components
 import Button from "@/Components/Buttons/Button";
 import ToggleSwitch from "@/Components/Buttons/ToggleSwitch";
-import { useDeprecatedAnimatedState } from "framer-motion";
 
 export default function UserData({ userData }: { userData: TUser }) {
   const [canEdit, setCanEdit] = useState<boolean>(false);
