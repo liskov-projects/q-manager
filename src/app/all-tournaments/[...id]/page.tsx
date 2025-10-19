@@ -10,7 +10,7 @@ import TournamentQueuesPage from "@/Components/Pages/TournamentQueuesPage";
 import CategoryList from "@/Components/Tournaments/CategoryList";
 import Header from "@/Components/Header";
 import Button from "@/Components/Buttons/Button";
-import { faPencil, faTrash, faQrcode, faBottleDroplet } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash, faQrcode } from "@fortawesome/free-solid-svg-icons";
 
 // TODO: clean up & move formattedDate in the context
 export default function TournamentPage() {
