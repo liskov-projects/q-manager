@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="h-auto flex flex-row justify-between items-center w-full p-4 bg-shell-75 mt-2">
+    <div className="h-auto flex flex-row justify-between items-center w-full p-4 bg-shell-75 ">
       {/* Left Section */}
       <div className="flex flex-row items-center text-bluestone-200 gap-3 sm:gap-6 md:gap-12">
         {/* Contact Block */}

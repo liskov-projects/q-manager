@@ -4,6 +4,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useTournamentsAndQueuesContext } from "@/context/TournamentsAndQueuesContext";
 import { useSocket } from "@/context/SocketContext";
+//clerk
+import { useUser } from "@clerk/nextjs";
 
 // components
 import DropZone from "./DropZone";
@@ -74,23 +76,27 @@ export default function PlayersList({
     }
   };
 
+  const { isSignedIn } = useUser();
+
   return (
     <div id="modal-root">
       <div className="flex flex-col items-center">
         <SectionHeader>{title}</SectionHeader>
-        <Button
-          className="mt-2 bg-bluestone-200 border-2 border-transparent hover:bg-tennis-200 text-shell-50 hover:text-shell-300 py-2 h-fit w-fit px-4 rounded text-nowrap font-bold hover:border-2 hover:border-bluestone-200"
-          onClick={() => {
-            if (socket) {
-              socket.emit("addAllFromOneList", {
-                tournament: currentTournament,
-                listName: title,
-              });
-            }
-          }}
-        >
-          Add All
-        </Button>
+        {isSignedIn && (
+          <Button
+            className="mt-2 bg-bluestone-200 border-2 border-transparent hover:bg-tennis-200 text-shell-50 hover:text-shell-300 py-2 h-fit w-fit px-4 rounded text-nowrap font-bold hover:border-2 hover:border-bluestone-200"
+            onClick={() => {
+              if (socket) {
+                socket.emit("addAllFromOneList", {
+                  tournament: currentTournament,
+                  listName: title,
+                });
+              }
+            }}
+          >
+            Add All
+          </Button>
+        )}
       </div>
 
       <div className="flex flex-col shadow-left-bottom-lg items-center h-auto overflow-hidden hover:overflow-y-auto w-full mt-3 p-4 rounded-lg">

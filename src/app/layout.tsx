@@ -42,7 +42,18 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Toaster position="top-right" closeButton richColors />
-        <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
+        <ClerkProvider
+          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+          localization={{
+            signIn: {
+              start: {
+                // title: "Hi there",
+                subtitle: "To continue as a Guest, close this modal.",
+                actionText: "Don't have account?",
+              },
+            },
+          }}
+        >
           <TournamentsAndQueuesProvider>
             <FavouriteItemsProvider>
               <SocketProvider>
