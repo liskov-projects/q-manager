@@ -19,7 +19,7 @@ export default function Favourites() {
           No favourite players
         </span>
       ) : (
-        <ul className="flex flex-col w-full items-center ">
+        <ul className="flex pl-2 flex-col w-full items-center ">
           {favouritePlayers.map((player: TPlayer) => (
             <li
               key={player._id}
