@@ -55,8 +55,8 @@ export default function LoginPage() {
   }, [isSignedIn, user]);
 
   return (
-    <div className="flex flex-col h-full justify-center items-center bg-black bg-opacity-60 backdrop-blur-sm ">
-      <div className="flex flex-col items-center gap-6 p-8 rounded-2xl border border-cyan-400 bg-white/10 backdrop-blur-md shadow-2xl max-w-md w-full transition-all duration-300 hover:border-cyan-300 hover:shadow-cyan-200/30">
+    <div className="flex flex-col h-full justify-center items-center bg-shell75 bg-opacity-60 backdrop-blur-sm ">
+      <div className="flex flex-col items-center gap-6 p-8 rounded-2xl border border-cyan-400 bg-bluestone-200 backdrop-blur-md shadow-2xl max-w-md w-full transition-all duration-300 hover:border-cyan-300 hover:shadow-cyan-200/30">
         <div className="flex items-center gap-4">
           <SignedIn>
             <UserButton />
