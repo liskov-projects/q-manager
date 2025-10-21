@@ -66,17 +66,20 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         );
         if (isFavourite) {
           toast.custom((t) => (
-            <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm ">         
+            <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm ">
               <div className="flex-col justify-between">
-                <div className="mb-2"><span>
-                  <strong>{playerData.names}</strong> 
-                </span></div>
+                <div className="mb-2">
+                  <span>
+                    <strong>{playerData.names}</strong>
+                  </span>
+                </div>
                 <div> {message} </div>
               </div>
               <Button
                 onClick={() => toast.dismiss(t)}
                 className="ml-4 hover:tennis-200 px-2 py-3 w-6 h-6 flex items-center justify-center rounded-full bg-white text-gray-700 hover:bg-gray-200 transition"
-                aria-label="Close">
+                aria-label="Close"
+              >
                 <FontAwesomeIcon icon={faClose} />
               </Button>
             </div>
@@ -136,7 +139,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         } else {
           return;
         }
-        showToast(message, draggedItem);
+        if (localStorage.getItem("notifs-on") === "true") {
+          showToast(message, draggedItem);
+        }
         // setCurrentTournament(updatedTournament);
       } catch (error) {
         if (error instanceof Error) {
@@ -155,7 +160,9 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         try {
           setCurrentTournamentRef.current(updatedTournament);
           const message = `Added to the ${playerPosition.queueName} at position ${playerPosition.position}`;
-          showToast(message, playerData);
+          if (localStorage.getItem("notifs-on") === "true") {
+            showToast(message, playerData);
+          }
         } catch (error) {
           if (error instanceof Error) {
             console.error("addPlayerToShortestQ failed in context", error.message);

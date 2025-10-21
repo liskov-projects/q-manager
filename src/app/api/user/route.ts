@@ -10,9 +10,9 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { username, clerkId, usedFallback, emailAddress } = body;
+    const { username, clerkId, usedFallback, emailAddress, notificationPreference } = body;
 
-    console.log("📦 Body received:", { clerkId, username, usedFallback, emailAddress });
+    console.log("📦 Body received:", { clerkId, username, usedFallback, emailAddress, notificationPreference });
 
     if (!clerkId || typeof clerkId !== "string") {
       return NextResponse.json({ error: "Missing or invalid Clerk ID" }, { status: 400 });
@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
       emailAddress,
       favouritePlayers: [],
       favouriteTournaments: [],
+      notificationPreference,
     });
 
     await newUser.save();

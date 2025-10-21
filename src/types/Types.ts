@@ -37,6 +37,7 @@ export type TUser = {
   phoneNumber?: string;
   favouritePlayers: string[];
   favouriteTournaments: string[];
+  notificationPreference: boolean;
 };
 
 // Tournament and Queues Context Props

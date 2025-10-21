@@ -59,7 +59,7 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
 
   const addUser = async (user: ClerkUser): Promise<TUser | null> => {
     if (!user) return null;
-
+    
     const { id: clerkId, emailAddress } = user;
 
     // Define a username with fallback priority
@@ -69,18 +69,21 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
     const usedFallback =
       !user.username && !user.firstName && !user.emailAddresses?.[0]?.emailAddress;
 
-    console.log("👤 Sending user to API:", {
+    const newUser = {
       clerkId,
       username,
       usedFallback,
       emailAddress,
-    });
+      notificationPreference: false,
+    };
+
+    console.log("👤 Sending user to API:", newUser);
 
     try {
       const response = await fetch("/api/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clerkId, username, usedFallback, emailAddress }),
+        body: JSON.stringify(newUser),
       });
 
       const data = await response.json();
@@ -242,7 +245,8 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
     }
   };
 
-  //   console.log("fav players: ", favouritePlayers);
+
+  // console.log("fav players: ", favouritePlayers);
   // console.log("fav TOURNAMENTS: ", favouriteTournaments);
 
   return (

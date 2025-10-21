@@ -16,7 +16,7 @@ export default function UserSettingsPage() {
   if (!isSignedIn) return <div className="text-center text-lg mt-8">Not signed in</div>;
 
   const hasFavourites = favouritePlayers?.length > 0 || favouriteTournaments?.length > 0;
-
+  console.log(appUser);
   return (
     <div className="m-4 max-w-[1200px] mx-auto">
       {/* header section */}
