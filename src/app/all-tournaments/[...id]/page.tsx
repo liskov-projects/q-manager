@@ -16,8 +16,11 @@ import { faPencil, faTrash, faQrcode } from "@fortawesome/free-solid-svg-icons";
 export default function TournamentPage() {
   const [editMode, toggleEditMode] = useState(false);
   const [showQR, setShowQR] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [pendingImage, setPendingImage] = useState<File | null>(null);
 
   const qrRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const { currentTournament, setCurrentTournament, tournamentOwner, currentTournamentRef } =
     useTournamentsAndQueuesContext();
 
@@ -44,8 +47,55 @@ export default function TournamentPage() {
   const inputStyles =
     "rounded focus:outline-blue focus:ring-2 focus:ring-brick-200 py-1 px-2 border-2 border-gray-300";
 
+  //on handle change for changing tournamend image
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // cleanup old preview
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+
+    setPendingImage(file);
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewUrl(objectUrl);
+  }
+
   async function handleSave() {
     if (!currentTournament?._id) return;
+
+    console.log(currentTournament._id);
+    let imageUrl: string | null =
+      typeof currentTournament.image === "string" ? currentTournament.image : null;
+
+    if (pendingImage instanceof File) {
+      const file = pendingImage;
+      const fileType = file.type || "application/octet-stream";
+      const res = await fetch(
+        `/api/gcs-uploads?fileName=${encodeURIComponent(file.name)}&fileType=${encodeURIComponent(fileType)}`
+      );
+
+      console.log(res);
+      const { uploadUrl, publicUrl } = await res.json();
+
+      try {
+        const putRes = await fetch(uploadUrl, {
+          method: "PUT",
+          headers: { "Content-Type": fileType },
+          body: file,
+        });
+        if (!putRes.ok) {
+          const errText = await putRes.text().catch(() => "");
+          throw new Error(`Upload failed: ${putRes.status}${putRes.statusText} ${errText}`);
+        }
+      } catch (err) {
+        console.error("GCS PUT failed:", err);
+      }
+
+      imageUrl = publicUrl;
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      setPreviewUrl(null);
+      setPendingImage(null);
+    }
 
     try {
       const response = await fetch(`/api/tournament/${currentTournament._id}`, {
@@ -56,6 +106,7 @@ export default function TournamentPage() {
         body: JSON.stringify({
           name: editedName,
           categories: editedCategories,
+          ...(imageUrl ? { image: imageUrl } : {}),
         }),
       });
 
@@ -65,6 +116,7 @@ export default function TournamentPage() {
 
       const updatedTournament = await response.json();
 
+      console.log(updatedTournament);
       setCurrentTournament(updatedTournament);
 
       toggleEditMode(false);
@@ -156,12 +208,44 @@ export default function TournamentPage() {
               </div>
             )}
             {editMode ? (
-              <Button
-                className="mx-2 px-3 text-[0.75rem] font-semibold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out "
-                onClick={handleSave}
-              >
-                Save
-              </Button>
+              <div>
+                {}
+                <Button
+                  className="mx-2 px-3 text-[0.75rem] font-semibold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out "
+                  onClick={handleSave}
+                >
+                  Save
+                </Button>
+                <label htmlFor="image">
+                  <button
+                    type="button"
+                    onClick={() => inputRef.current?.click()}
+                    className="bg-gray-200 items-center cursor-pointer rounded-md shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all duration-150 text-sm p-2"
+                  >
+                    Choose Image
+                  </button>
+                  <div>
+                    {previewUrl && (
+                      <div className="flex flex-col items-center">
+                        <p className="text-sm text-gray-600">Image Preview:</p>
+                        <img
+                          className="rounded-md w-48 h-32 object-cover border border-gray-300 mb-2 text-sm text-gray-600"
+                          src={previewUrl}
+                          alt="Tournament Preview"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  ref={inputRef}
+                  hidden
+                  onChange={handleChange}
+                />
+              </div>
             ) : (
               <Button
                 className="px-2 py-2 text-[0.75rem] text-lg ml-4 transform transition-transform duration-150 hover:-translate-y-0.5 ease-in-out overflow-visible"
