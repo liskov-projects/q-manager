@@ -81,6 +81,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
                 className="ml-4 hover:tennis-200 px-2 py-3 w-6 h-6 flex items-center justify-center rounded-full bg-white text-gray-700 hover:bg-gray-200 transition"
                 aria-label="Close"
               >
+                aria-label="Close"
+              >
                 <FontAwesomeIcon icon={faClose} />
               </Button>
             </div>
