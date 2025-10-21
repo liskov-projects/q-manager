@@ -31,8 +31,8 @@ const SocketContext = createContext<SocketContextType | null>(null);
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const { setCurrentTournament } = useTournamentsAndQueuesContext();
   const { handleDrop } = useDragNDrop();
-  const { favouritePlayers } = useFavourites();
-
+  const { appUser, favouritePlayers } = useFavourites();
+  
   // ✅ Create stable refs to avoid dependency issues
   const setCurrentTournamentRef = useRef(setCurrentTournament);
   setCurrentTournamentRef.current = setCurrentTournament;
@@ -58,7 +58,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     // utilities to help
     // 1.
-    const showToast = (message: string, playerData: TPlayer) => {
+    const showToast = (message: string, playerData: TPlayer, appUser: Boolean) => {
+      if(appUser === false) {return;}
       try {
         // setCurrentTournamentRef.current(updatedTournament);
         const isFavourite = favouritePlayersRef.current.some(
@@ -139,9 +140,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         } else {
           return;
         }
-        if (localStorage.getItem("notifs-on") === "true") {
-          showToast(message, draggedItem);
-        }
+        showToast(message, draggedItem, appUser);
         // setCurrentTournament(updatedTournament);
       } catch (error) {
         if (error instanceof Error) {
@@ -160,9 +159,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         try {
           setCurrentTournamentRef.current(updatedTournament);
           const message = `Added to the ${playerPosition.queueName} at position ${playerPosition.position}`;
-          if (localStorage.getItem("notifs-on") === "true") {
-            showToast(message, playerData);
-          }
+          showToast(message, playerData, appUser);
         } catch (error) {
           if (error instanceof Error) {
             console.error("addPlayerToShortestQ failed in context", error.message);
