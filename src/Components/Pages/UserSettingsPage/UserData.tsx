@@ -8,9 +8,7 @@ import Button from "@/Components/Buttons/Button";
 import ToggleSwitch from "@/Components/Buttons/ToggleSwitch";
 
 export default function UserData({ userData }: { userData: TUser }) {
-  const [updatedNotification, setUpdatedNotification] = useState<Boolean>(false);
   const [canEdit, setCanEdit] = useState<boolean>(false);
-  console.log(`initial notification ${updatedNotification}`);
   const [updatedData, setUpdatedData] = useState<Partial<TUser>>({
     name: userData.username,
     phoneNumber: userData.phoneNumber,
@@ -25,7 +23,6 @@ export default function UserData({ userData }: { userData: TUser }) {
       value = value.replace(/[^0-9+\s()-]/g, "");
     }
     setUpdatedData((prev: Partial<TUser>) => ({ ...prev, [name]: value }));
-    setUpdatedNotification((prev) => prev != prev);
   };
 
   const handleUpdatedData = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +30,7 @@ export default function UserData({ userData }: { userData: TUser }) {
 
     const updatedUser = {
       ...updatedData,
-      userNotification: updatedNotification,
+
       username: updatedData.name,
       phoneNumber: updatedData.phoneNumber,
     };
@@ -61,7 +58,6 @@ export default function UserData({ userData }: { userData: TUser }) {
     }
 
     setCanEdit(false);
-    console.log(`initial notification ${updatedNotification}`);
   };
 
   return (
