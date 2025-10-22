@@ -18,7 +18,7 @@ export default function UserNotifications({ userData }: { userData: TUser }) {
   });
 
   useEffect(() => {
-    setUpdatedData((prev) => ({ ...prev, userNotification: updatedNotification }));
+    setUpdatedData((prev) => ({ ...prev, UserNotification: updatedNotification }));
   }, [updatedNotification]);
 
   const handleUpdateData = async () => {
