@@ -57,10 +57,8 @@ export default function RootLayout({
           <TournamentsAndQueuesProvider>
             <FavouriteItemsProvider>
               <SocketProvider>
-                <div className="flex flex-col h-screen">
-                  <main className="flex-1  flex-row justify-center content-center ">
-                    {children}
-                  </main>
+                <div className="flex flex-col min-h-screen">
+                  <main className="flex-row flex-1">{children}</main>
                   <Footer />
                 </div>
               </SocketProvider>

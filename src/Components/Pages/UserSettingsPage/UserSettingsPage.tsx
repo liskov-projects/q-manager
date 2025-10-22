@@ -18,22 +18,22 @@ export default function UserSettingsPage() {
   const hasFavourites = favouritePlayers?.length > 0 || favouriteTournaments?.length > 0;
 
   return (
-    <div className="m-4 max-w-[1200px] mx-auto">
+    <div className=" w-full mx-auto">
       {/* header section */}
       <Header> {appUser?.username}&rsquo;s Dashboard</Header>
       {/* <SectionHeader>
         <span className="truncate max-w-full text-2xl font-bold block mt-4"></span>
       </SectionHeader> */}
-      <span className="text-center text-lg sm:text-xl font-medium block mb-4 mt-4">
+      <span className="text-center text-lg sm:text-xl font-medium block mb-4">
         Hello <span title={appUser?.username}>{appUser?.username}</span>, you can manage your
         favourites and settings here.
       </span>
 
       {/* grid layout that stacks on smaller screens */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+      <div className=" grid mt-10  gap-5 grid-cols-1 md:grid-cols-2 p-4">
         {/* Left: Favourites */}
-        <div className="flex flex-col gap-4">
-          <SectionHeader>Manage Favourites</SectionHeader>
+
+        <div className="flex  w-[100%] ">
           {!hasFavourites ? (
             <div className="text-center">
               <img src="/snoopy_raining.gif" alt="no favourites" className="w-32 mx-auto" />
@@ -43,18 +43,19 @@ export default function UserSettingsPage() {
             <Favourites />
           )}
         </div>
-
-        {/* Right: User Info and Notifications */}
-        <div className="flex flex-col items-center w-[100%] gap-6">
+        <div className="flex  w-[100%] ">
           {appUser ? (
             <>
-              <div className="flex flex-col gap-4 w-[100%]">
+              <div className="flex w-full  flex-col ">
                 <SectionHeader>Edit Your Info</SectionHeader>
-                <UserData userData={appUser} />
-              </div>
-              <div className="flex flex-col gap-4 w-[100%]">
-                <SectionHeader>Notification Preferences</SectionHeader>
-                <UserNotifications />
+                <div className="w-[100%] flex flex-col mb-1px ">
+                  <UserData userData={appUser} />
+                </div>
+
+                <SectionHeader className="mt-4 ">Notification Preferences</SectionHeader>
+                <div className="flex flex-col w-[100%] ">
+                  <UserNotifications />
+                </div>
               </div>
             </>
           ) : (

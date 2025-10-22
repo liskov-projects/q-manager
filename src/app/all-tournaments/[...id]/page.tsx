@@ -112,6 +112,7 @@ export default function TournamentPage() {
   }
 
   const tournamentUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/tournament/${currentTournamentRef._id}`;
+  const inputRef = useRef(null);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -120,9 +121,10 @@ export default function TournamentPage() {
       <Header>
         {editMode ? (
           <input
-            className={inputStyles}
+            className="overflow-hidden h-10 leading-8 p-1"
             value={editedName}
             onChange={(e) => setEditedName(e.target.value)}
+            style={{ width: `${editedName ? editedName.length + 2 : +5}ch` }}
           />
         ) : (
           <span>{name}</span>
@@ -131,10 +133,10 @@ export default function TournamentPage() {
         {tournamentOwner && (
           <>
             <Button
-              className="px-2 text-[0.75rem] text-lg ml-4 transform transition-transform duration-150 hover:-translate-y-0.5 ease-in-out overflow-visible"
+              className="px-2 text-[0.75rem]  text-lg ml-4 transform transition-transform duration-150 hover:-translate-y-0.5 ease-in-out overflow-visible"
               onClick={() => setShowQR(!showQR)}
             >
-              <FontAwesomeIcon icon={faQrcode} />
+              <FontAwesomeIcon title="QR Code" icon={faQrcode} />
             </Button>
             {showQR && (
               <div className="flex flex-col items-center mt-2" ref={qrRef}>
@@ -156,18 +158,32 @@ export default function TournamentPage() {
               </div>
             )}
             {editMode ? (
-              <Button
-                className="mx-2 px-3 text-[0.75rem] font-semibold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out "
-                onClick={handleSave}
-              >
-                Save
-              </Button>
+              <div>
+                {}
+                <Button
+                  className="mx-2 px-3 text-[0.75rem] font-semibold rounded text-shell-100 bg-brick-200 hover:bg-tennis-50 hover:text-shell-300 transition-colors duration-200 ease-in-out "
+                  onClick={handleSave}
+                >
+                  Save
+                </Button>
+                <label htmlFor="image">
+                  <button
+                    type="button"
+                    onClick={() => inputRef.current?.click()}
+                    className="bg-gray-200 items-center cursor-pointer rounded-md shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all duration-150 text-sm p-2"
+                  >
+                    Choose Image
+                  </button>
+                </label>
+                <input type="file" ref={inputRef} hidden />
+              </div>
             ) : (
               <Button
                 className="px-2 py-2 text-[0.75rem] text-lg ml-4 transform transition-transform duration-150 hover:-translate-y-0.5 ease-in-out overflow-visible"
                 onClick={() => toggleEditMode((prev) => !prev)}
               >
                 <FontAwesomeIcon
+                  title="Edit"
                   icon={faPencil}
                   className="transform transition-transform duration-150 rotate-0 hover:rotate-90"
                 />
