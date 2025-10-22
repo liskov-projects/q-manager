@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { username, clerkId, usedFallback, emailAddress } = body;
+    const { username, clerkId, usedFallback, emailAddress, userNotification } = body;
 
     console.log("📦 Body received:", { clerkId, username, usedFallback, emailAddress });
 
@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
       emailAddress,
       favouritePlayers: [],
       favouriteTournaments: [],
+      userNotification,
     });
 
     await newUser.save();
