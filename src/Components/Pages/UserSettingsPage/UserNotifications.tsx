@@ -12,23 +12,14 @@ export default function UserNotifications({ userData }: { userData: TUser }) {
     userData.userNotification
   );
 
-  //might be payload
-  const [updatedData, setUpdatedData] = useState<Partial<TUser>>({
-    userNotification: userData.userNotification,
-  });
-
-  useEffect(() => {
-    setUpdatedData((prev) => ({ ...prev, UserNotification: updatedNotification }));
-  }, [updatedNotification]);
-
-  const handleUpdateData = async () => {
+  const handleUpdateData = async (nextValue: boolean) => {
     try {
       const res = await fetch(`/api/user/${userData._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify({ userNotification: nextValue }),
       });
       if (res.ok) {
         const data = await res.json();
@@ -47,8 +38,11 @@ export default function UserNotifications({ userData }: { userData: TUser }) {
     <div>
       <ToggleSwitch
         isOn={updatedNotification}
-        setIsOn={setUpdatedNotification}
-        onClick={handleUpdateData}
+        setIsOn={(next: boolean) => {
+          console.log(next);
+          setUpdatedNotification(next);
+          void handleUpdateData(next);
+        }}
       >
         allow notifications here
       </ToggleSwitch>

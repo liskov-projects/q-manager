@@ -15,6 +15,7 @@ export default function UserData({ userData }: { userData: TUser }) {
   });
 
   const { username } = userData;
+  console.log(username);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = e.target;

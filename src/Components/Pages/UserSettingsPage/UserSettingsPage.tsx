@@ -54,7 +54,7 @@ export default function UserSettingsPage() {
 
                 <SectionHeader className="mt-4 ">Notification Preferences</SectionHeader>
                 <div className="flex flex-col w-[100%] ">
-                  <UserNotifications />
+                  <UserNotifications userData={appUser} />
                 </div>
               </div>
             </>
