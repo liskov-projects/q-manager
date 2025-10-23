@@ -1,12 +1,14 @@
 "use client";
 // hooks
-import { useState, useEffect } from "react";
+import { useState } from "react";
 //types
 import { TUser } from "@/types/Types";
 // components
 import ToggleSwitch from "@/Components/Buttons/ToggleSwitch";
+import { useFavourites } from "@/context/FavouriteItemsContext";
 
 export default function UserNotifications({ userData }: { userData: TUser }) {
+  const { setAppUser } = useFavourites();
   //source of truth
   const [updatedNotification, setUpdatedNotification] = useState<boolean>(
     userData.userNotification
@@ -24,6 +26,7 @@ export default function UserNotifications({ userData }: { userData: TUser }) {
       if (res.ok) {
         const data = await res.json();
         console.log("NotificationsStatus", data);
+        setAppUser((prev) => (prev ? { ...prev, userNotification: nextValue } : prev));
       }
     } catch (err) {
       if (err instanceof Error) {
