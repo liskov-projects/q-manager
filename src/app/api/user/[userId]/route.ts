@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
         phoneNumber,
         favouritePlayers: [],
         favouriteTournaments: [],
+        notificationPreference: false,
       };
 
       await user.save();
@@ -69,7 +70,10 @@ export async function PUT(req: NextRequest) {
   await dbConnect();
 
   try {
-    const { username, phoneNumber } = await req.json();
+    const { username, phoneNumber} = await req.json();
+    
+    console.log("📦 Body received: in the specific user route", { username, phoneNumber});
+
     const { userId } = getAuth(req);
     console.log("USERNAME IN PUT");
     console.log(username);
@@ -80,12 +84,12 @@ export async function PUT(req: NextRequest) {
     const user = await UserModel.findOne({ clerkId: userId });
 
     if (!user) {
-      return NextResponse.json({ error: "User doesn't exist" }, { status: 404 });
+     return NextResponse.json({ error: "User doesn't exist" }, { status: 404 });
     } else {
       // console.log("CHANGING USER DATA");
       const updatedUser = await UserModel.findOneAndUpdate(
         { clerkId: userId },
-        { username: username, phoneNumber: phoneNumber },
+        { username: username, phoneNumber: phoneNumber},
         { new: true, runValidators: true }
       );
       console.log("Updated user:", updatedUser);

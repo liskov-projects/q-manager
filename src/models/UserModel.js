@@ -9,7 +9,7 @@ export const userSchema = new mongoose.Schema(
     phoneNumber: { type: String },
     favouritePlayers: [{ type: mongoose.Types.ObjectId, ref: "PlayerModel" }],
     favouriteTournaments: [{ type: mongoose.Types.ObjectId, ref: "TournamentModel" }],
-    notificationPreference: {type: Boolean, required: false},
+    notificationPreference: {type: Boolean, required: true},
   },
   { collection: "users" }
 );

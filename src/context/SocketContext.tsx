@@ -58,8 +58,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     // utilities to help
     // 1.
-    const showToast = (message: string, playerData: TPlayer, appUser: Boolean) => {
-      if(appUser === false) {return;}
+    const showToast = (message: string, playerData: TPlayer, notif: Boolean) => {
+      if(notif === false) {return;}
       try {
         // setCurrentTournamentRef.current(updatedTournament);
         const isFavourite = favouritePlayersRef.current.some(
@@ -79,8 +79,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
               <Button
                 onClick={() => toast.dismiss(t)}
                 className="ml-4 hover:tennis-200 px-2 py-3 w-6 h-6 flex items-center justify-center rounded-full bg-white text-gray-700 hover:bg-gray-200 transition"
-                aria-label="Close"
-              >
                 aria-label="Close"
               >
                 <FontAwesomeIcon icon={faClose} />
@@ -142,7 +140,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         } else {
           return;
         }
-        showToast(message, draggedItem, appUser);
+        console.log(appUser?.notificationPreference);
+        showToast(message, draggedItem, appUser?.notificationPreference);
         // setCurrentTournament(updatedTournament);
       } catch (error) {
         if (error instanceof Error) {
@@ -161,7 +160,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         try {
           setCurrentTournamentRef.current(updatedTournament);
           const message = `Added to the ${playerPosition.queueName} at position ${playerPosition.position}`;
-          showToast(message, playerData, appUser);
+        console.log(appUser?.notificationPreference);
+          showToast(message, playerData, appUser.notificationPreference);
         } catch (error) {
           if (error instanceof Error) {
             console.error("addPlayerToShortestQ failed in context", error.message);

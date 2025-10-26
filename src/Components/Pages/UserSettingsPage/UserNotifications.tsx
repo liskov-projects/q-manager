@@ -9,14 +9,16 @@ import { headers } from "next/headers.js";
 
 
 export default function UserNotifications() {
-  const {appUser, setAppUser} = useFavourites();
-
+  const {appUser} = useFavourites();
+   
   const [notificationsOn, setNotificationsOn] = useState(appUser?.notificationPreference || false);
-
-  const handleNotifications = async (appUser:TUser) => {
+  
+  const handleNotifications = async () => {
     if(appUser === null) return;
     try{
-      const response = await fetch("/api/user", {method: "POST", headers: {"Content-Type" : "application/json"}, body : JSON.stringify({appUser})});
+      console.log(appUser, "Matt was here");
+
+      const response = await fetch(`/api/user/${appUser._id}/notification-change`, {method: "PUT", headers: {"Content-Type" : "application/json"}, body : JSON.stringify({notificationPreference: appUser.notificationPreference})});
       const data = await response.json();
       if (response.ok) {
         return data;
@@ -25,35 +27,22 @@ export default function UserNotifications() {
         console.warn("Failed to Update Notification", data);
         return null;
       }
+      
     } catch(err) {
         throw new Error("Error update in notification");
     }
   };
 
-  useEffect(() => {
+  useEffect(() => { 
+    console.log(appUser, "Prags was here");
     if(notificationsOn === true) {
-      setAppUser((prev:TUser) => ({
-        ...prev, 
-        notificationPreference: true,
-      }));
+      appUser.notificationPreference = true;
     } else {
-      setAppUser((prev:TUser) => ({
-        ...prev, 
-        notificationPreference: false,
-      }));
+      appUser.notificationPreference = false;
     }
-    handleNotifications(appUser);
+    handleNotifications(); 
   }, [notificationsOn]);
 
-  /*
-  const [notificationsOn, setNotificationsOn] = useState(
-    localStorage.getItem("notifs-on") || false
-  );
-
-  useEffect(() => {
-    localStorage.setItem("notifs-on", String(notificationsOn));
-  }, [notificationsOn]);
-  */
 
   return (
     <div>
