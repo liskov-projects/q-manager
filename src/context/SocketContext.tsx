@@ -34,6 +34,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const { favouritePlayers, appUser } = useFavourites();
   // to read object data app user
   console.log(JSON.stringify(appUser, null, 2));
+  console.log("appuser", appUser);
 
   // ✅ Create stable refs to avoid dependency issues
   const setCurrentTournamentRef = useRef(setCurrentTournament);
