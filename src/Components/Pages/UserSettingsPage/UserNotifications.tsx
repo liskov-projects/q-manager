@@ -7,20 +7,18 @@ import { useFavourites } from "@/context/FavouriteItemsContext";
 import { TUser } from "@/types/Types.js";
 import { headers } from "next/headers.js";
 
-
 export default function UserNotifications() {
-  const {appUser} = useFavourites();
+  const {appUser, setAppUser} = useFavourites();
    
   const [notificationsOn, setNotificationsOn] = useState(appUser?.notificationPreference || false);
   
-  const handleNotifications = async () => {
+  const handleNotifications = async (changedUser: TUser) => {
     if(appUser === null) return;
     try{
-      console.log(appUser, "Matt was here");
-
-      const response = await fetch(`/api/user/${appUser._id}/notification-change`, {method: "PUT", headers: {"Content-Type" : "application/json"}, body : JSON.stringify({notificationPreference: appUser.notificationPreference})});
+      const response = await fetch(`/api/user/${changedUser._id}/notification-change`, {method: "PUT", headers: {"Content-Type" : "application/json"}, body : JSON.stringify({notificationPreference: changedUser.notificationPreference})});
       const data = await response.json();
       if (response.ok) {
+        setAppUser(changedUser);
         return data;
       }
       else {
@@ -34,15 +32,9 @@ export default function UserNotifications() {
   };
 
   useEffect(() => { 
-    console.log(appUser, "Prags was here");
-    if(notificationsOn === true) {
-      appUser.notificationPreference = true;
-    } else {
-      appUser.notificationPreference = false;
-    }
-    handleNotifications(); 
+    const updatedUser = {...appUser, notificationPreference: notificationsOn};
+    handleNotifications(updatedUser);
   }, [notificationsOn]);
-
 
   return (
     <div>

@@ -70,9 +70,9 @@ export async function PUT(req: NextRequest) {
   await dbConnect();
 
   try {
-    const { username, phoneNumber} = await req.json();
+    const { username, phoneNumber } = await req.json();
     
-    console.log("📦 Body received: in the specific user route", { username, phoneNumber});
+    console.log("📦 Body received: in the specific user route", { username, phoneNumber });
 
     const { userId } = getAuth(req);
     console.log("USERNAME IN PUT");
@@ -89,7 +89,7 @@ export async function PUT(req: NextRequest) {
       // console.log("CHANGING USER DATA");
       const updatedUser = await UserModel.findOneAndUpdate(
         { clerkId: userId },
-        { username: username, phoneNumber: phoneNumber},
+        { username: username, phoneNumber: phoneNumber,},
         { new: true, runValidators: true }
       );
       console.log("Updated user:", updatedUser);

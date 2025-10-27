@@ -33,6 +33,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const { handleDrop } = useDragNDrop();
   const { appUser, favouritePlayers } = useFavourites();
   
+  const appUserRef = useRef(appUser?.notificationPreference);
+  appUserRef.current = appUser?.notificationPreference;
   // ✅ Create stable refs to avoid dependency issues
   const setCurrentTournamentRef = useRef(setCurrentTournament);
   setCurrentTournamentRef.current = setCurrentTournament;
@@ -58,9 +60,10 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
     // utilities to help
     // 1.
-    const showToast = (message: string, playerData: TPlayer, notif: Boolean) => {
-      if(notif === false) {return;}
+    const showToast = (message: string, playerData: TPlayer) => {
+      console.log(appUserRef);
       try {
+        if(!appUserRef.current) {return}
         // setCurrentTournamentRef.current(updatedTournament);
         const isFavourite = favouritePlayersRef.current.some(
           (fav: TPlayer) => fav._id === playerData?._id
@@ -89,7 +92,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       } catch (error) {
         console.error(`${event} failed in context`, error);
       }
-    };
+    } ;
 
     socketInstance.on("playerAdded", ({ updatedTournament }) => {
       // console.log("PLAYER ADDED BY WEBSOCKET:", playerData);
@@ -140,8 +143,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         } else {
           return;
         }
-        console.log(appUser?.notificationPreference);
-        showToast(message, draggedItem, appUser?.notificationPreference);
+        showToast(message, draggedItem);
         // setCurrentTournament(updatedTournament);
       } catch (error) {
         if (error instanceof Error) {
@@ -160,8 +162,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         try {
           setCurrentTournamentRef.current(updatedTournament);
           const message = `Added to the ${playerPosition.queueName} at position ${playerPosition.position}`;
-        console.log(appUser?.notificationPreference);
-          showToast(message, playerData, appUser.notificationPreference);
+          showToast(message, playerData);
         } catch (error) {
           if (error instanceof Error) {
             console.error("addPlayerToShortestQ failed in context", error.message);
