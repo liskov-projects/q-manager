@@ -1,6 +1,7 @@
 "use client";
 // hooks
 import { useState } from "react";
+import { useFavourites } from "@/context/FavouriteItemsContext";
 // types
 import { TUser } from "@/types/Types";
 //  components
@@ -8,6 +9,7 @@ import Button from "@/Components/Buttons/Button";
 import ToggleSwitch from "@/Components/Buttons/ToggleSwitch";
 
 export default function UserData({ userData }: { userData: TUser }) {
+  const {setAppUser} = useFavourites();
   const [canEdit, setCanEdit] = useState<boolean>(false);
   const [updatedData, setUpdatedData] = useState<Partial<TUser>>({
     name: userData.username,
@@ -46,6 +48,7 @@ export default function UserData({ userData }: { userData: TUser }) {
 
       if (res.ok) {
         const data = await res.json();
+        setAppUser((prev)=>prev?{...prev,username:updatedData.name,phoneNumber:updatedData.phoneNumber}:prev)
         console.log("Added: ", data);
       }
     } catch (err: unknown) {
