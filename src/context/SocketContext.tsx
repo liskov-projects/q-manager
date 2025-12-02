@@ -77,7 +77,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         const isFavourite = favouritePlayersRef.current.some(
           (fav: TPlayer) => fav._id === playerData?._id
         );
-        if (isFavourite && userNotification) {
+        if (userNotification && isFavourite) {
           toast.custom((t) => (
             <div className="bg-bluestone-200 rounded text-white px-4 py-3 rounded-2xl shadow-lg flex items-center justify-between w-full max-w-sm ">
               <div className="flex-col justify-between">

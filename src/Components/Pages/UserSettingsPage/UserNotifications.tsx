@@ -7,16 +7,14 @@ import { TUser } from "@/types/Types";
 import ToggleSwitch from "@/Components/Buttons/ToggleSwitch";
 import { useFavourites } from "@/context/FavouriteItemsContext";
 
-export default function UserNotifications({ userData }: { userData: TUser }) {
-  const { setAppUser } = useFavourites();
+export default function UserNotifications() {
+  const { setAppUser, appUser } = useFavourites();
   //source of truth
-  const [updatedNotification, setUpdatedNotification] = useState<boolean>(
-    userData.userNotification
-  );
+  const [updatedNotification, setUpdatedNotification] = useState<boolean>(appUser.userNotification);
 
   const handleUpdateData = async (nextValue: boolean) => {
     try {
-      const res = await fetch(`/api/user/${userData._id}`, {
+      const res = await fetch(`/api/user/${appUser._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
