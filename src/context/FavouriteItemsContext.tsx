@@ -69,18 +69,20 @@ export function FavouriteItemsProvider({ children }: { children: React.ReactNode
     const usedFallback =
       !user.username && !user.firstName && !user.emailAddresses?.[0]?.emailAddress;
 
+    const userNotification = user.userNotification ?? false;
     console.log("👤 Sending user to API:", {
       clerkId,
       username,
       usedFallback,
       emailAddress,
+      userNotification,
     });
 
     try {
       const response = await fetch("/api/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clerkId, username, usedFallback, emailAddress }),
+        body: JSON.stringify({ clerkId, username, usedFallback, emailAddress, userNotification }),
       });
 
       const data = await response.json();

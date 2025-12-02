@@ -7,6 +7,8 @@ import { TUser } from "@/types/Types";
 //  components
 import Button from "@/Components/Buttons/Button";
 import ToggleSwitch from "@/Components/Buttons/ToggleSwitch";
+import { useFavourites } from "@/context/FavouriteItemsContext";
+import { PhoneNumber } from "@clerk/nextjs/server";
 
 export default function UserData({ userData }: { userData: TUser }) {
   const {setAppUser} = useFavourites();
@@ -50,6 +52,9 @@ export default function UserData({ userData }: { userData: TUser }) {
         const data = await res.json();
         setAppUser((prev)=>prev?{...prev,username:updatedData.name,phoneNumber:updatedData.phoneNumber}:prev)
         console.log("Added: ", data);
+        setAppUser((prev) =>
+          prev ? { username: updatedData.name, phoneNumber: updatedData.phoneNumber } : prev
+        );
       }
     } catch (err: unknown) {
       if (err instanceof Error) {

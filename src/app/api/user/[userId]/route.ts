@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
   await dbConnect();
 
   try {
-    const { username, phoneNumber } = await req.json();
+    const { username, phoneNumber, userNotification } = await req.json();
     const { userId } = getAuth(req);
     if (!userId) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
         phoneNumber,
         favouritePlayers: [],
         favouriteTournaments: [],
+        userNotification,
       };
 
       await user.save();
@@ -53,7 +54,7 @@ export async function POST(req: NextRequest) {
       // console.log("CHANGING USER DATA");
       const updatedUser = await UserModel.findOneAndUpdate(
         { clerkId: userId },
-        { username, phoneNumber },
+        { $set: { username: username, phoneNumber: phoneNumber, userNotification } },
         { new: true } // Return updated doc
       );
       // console.log("Updated user:", updatedUser);
@@ -69,7 +70,7 @@ export async function PUT(req: NextRequest) {
   await dbConnect();
 
   try {
-    const { username, phoneNumber } = await req.json();
+    const { username, phoneNumber, userNotification } = await req.json();
     const { userId } = getAuth(req);
     console.log("USERNAME IN PUT");
     console.log(username);
@@ -85,7 +86,7 @@ export async function PUT(req: NextRequest) {
       // console.log("CHANGING USER DATA");
       const updatedUser = await UserModel.findOneAndUpdate(
         { clerkId: userId },
-        { username: username, phoneNumber: phoneNumber },
+        { $set: { username: username, phoneNumber: phoneNumber, userNotification } },
         { new: true, runValidators: true }
       );
       console.log("Updated user:", updatedUser);
