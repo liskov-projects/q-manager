@@ -10,7 +10,7 @@ import { useFavourites } from "@/context/FavouriteItemsContext";
 import { PhoneNumber } from "@clerk/nextjs/server";
 
 export default function UserData({ userData }: { userData: TUser }) {
-  const { setAppUser } = useFavourites();
+  const {setAppUser} = useFavourites();
   const [canEdit, setCanEdit] = useState<boolean>(false);
   const [updatedData, setUpdatedData] = useState<Partial<TUser>>({
     name: userData.username,
